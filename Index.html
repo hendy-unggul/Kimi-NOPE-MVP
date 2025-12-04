@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AnonZ - Social for GenZ</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">AnonZ</h1>
+            <p class="hero-subtitle">Social for GenZ</p>
+            <p class="hero-description">Bebas berekspresi, 100% anonim. Kami hanya menggunakan username Telegram Anda.</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Hashtag Selection Section -->
+        <section class="card glass-card">
+            <h2 class="section-title">🕶️ Pilih 3 Hal yang Bikin Kesel</h2>
+            <p class="section-subtitle">Ini akan jadi identitas anonim kamu</p>
+            
+            <div class="hashtag-categories">
+                <!-- POPCULTURE -->
+                <div class="category">
+                    <h3 class="category-title">🎬 POPCULTURE <span class="category-badge">Gateway</span></h3>
+                    <div class="hashtag-list">
+                        <button class="hashtag-btn" data-category="popculture">#FilmEndingGaje</button>
+                        <button class="hashtag-btn" data-category="popculture">#BeliTiketJualGinjal</button>
+                        <button class="hashtag-btn" data-category="popculture">#InfluencerNgehek</button>
+                    </div>
+                </div>
+
+                <!-- PERSONAL PAIN -->
+                <div class="category">
+                    <h3 class="category-title">💔 PERSONAL PAIN <span class="category-badge">Depth</span></h3>
+                    <div class="hashtag-list">
+                        <button class="hashtag-btn" data-category="personal">#DiGhostingGebetan</button>
+                        <button class="hashtag-btn" data-category="personal">#DiajakJalanTapiKempes</button>
+                        <button class="hashtag-btn" data-category="personal">#MagangDigajiSertifikat</button>
+                    </div>
+                </div>
+
+                <!-- SOCIAL SICKNESS -->
+                <div class="category">
+                    <h3 class="category-title">🤮 SOCIAL SICKNESS <span class="category-badge">Patterns</span></h3>
+                    <div class="hashtag-list">
+                        <button class="hashtag-btn" data-category="social">#RencanaPinjamPlan</button>
+                        <button class="hashtag-btn" data-category="social">#DramaQueenAnjay</button>
+                        <button class="hashtag-btn" data-category="social">#BacotLambeTurah</button>
+                    </div>
+                </div>
+
+                <!-- MOVEMENT -->
+                <div class="category">
+                    <h3 class="category-title">✊ MOVEMENT <span class="category-badge">Action</span></h3>
+                    <div class="hashtag-list">
+                        <button class="hashtag-btn" data-category="movement">#SayNOPEBukanPilihan</button>
+                        <button class="hashtag-btn" data-category="movement">#NOPEItuHakKita</button>
+                        <button class="hashtag-btn" data-category="movement">#NOPEBersamaKitaKita</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="selection-counter">
+                <span id="counter">0</span>/3 hashtag terpilih
+            </div>
+        </section>
+
+        <!-- Post Section -->
+        <section class="card glass-card">
+            <h2 class="section-title">💢 Luapkan Kesal Pertamamu!</h2>
+            <p class="section-subtitle">Max 280 karakter. Ini akan jadi post pertamamu.</p>
+            
+            <div class="post-container">
+                <textarea 
+                    class="post-input" 
+                    placeholder="Tulis unek-unekmu di sini..." 
+                    maxlength="280"
+                    id="postInput"
+                ></textarea>
+                <div class="post-footer">
+                    <span class="char-counter"><span id="charCount">0</span>/280</span>
+                    <button class="btn-primary" id="postBtn">🔥 Posting</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Feed Section -->
+        <section class="feed-section">
+            <h2 class="section-title">🔥 Feed Terbaru</h2>
+            <div class="feed-container" id="feedContainer">
+                <!-- Sample posts -->
+                <article class="post-card glass-card">
+                    <div class="post-header">
+                        <span class="post-anon-id">@anon_tokyo#FilmEndingGaje</span>
+                        <span class="post-time">2m</span>
+                    </div>
+                    <p class="post-content">Baru nonton film endingnya gaje banget, feelingnya mau nonton 2 jam buat apa coba?!</p>
+                    <div class="post-actions">
+                        <button class="action-btn">🔥 <span>24</span></button>
+                        <button class="action-btn">💬 <span>5</span></button>
+                    </div>
+                </article>
+            </div>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
