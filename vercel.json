@@ -1,0 +1,18 @@
+{
+  "project": {
+    "framework": {
+      "name": "static-site",
+      "output": "public",
+      "functions": false
+    }
+  },
+  "builds": [
+    {
+      "src": "index.html",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "public"
+      }
+    }
+  ]
+}
