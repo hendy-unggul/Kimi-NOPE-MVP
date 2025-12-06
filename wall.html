@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dinding Kekesalan - Global Feed</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #0f0f1e;
+            color: white;
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 3px solid #ff6b6b;
+        }
+        .header h1 {
+            color: #ff6b6b;
+            font-size: 2.8em;
+            margin: 0 0 10px;
+            letter-spacing: -0.5px;
+        }
+        .header p {
+            color: #aaa;
+            font-size: 1.1em;
+            margin: 5px 0;
+        }
+        .live-badge {
+            display: inline-block;
+            background: #2ecc71;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: bold;
+            margin-top: 10px;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.7; }
+            100% { opacity: 1; }
+        }
+        .rant-card {
+            background: #1a1a2e;
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 25px;
+            border-left: 6px solid #ff6b6b;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .rant-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(255,107,107,0.2);
+        }
+        .rant-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .user-tags {
+            font-size: 15px;
+            color: #ffd166;
+            font-weight: bold;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .user-tags span {
+            background: rgba(255, 209, 102, 0.1);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.9em;
+        }
+        .timestamp {
+            font-size: 0.85em;
+            color: #888;
+            white-space: nowrap;
+        }
+        .rant-content {
+            font-size: 1.1em;
+            line-height: 1.7;
+            margin-bottom: 25px;
+            color: #e0e0e0;
+            padding: 15px;
+            background: rgba(255,255,255,0.03);
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+        .reactions {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        .reaction-btn {
+            background: transparent;
+            border: 2px solid #394867;
+            border-radius: 50px;
+            padding: 10px 22px;
+            color: white;
+            font-size: 15px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.2s;
+            font-weight: 600;
+        }
+        .reaction-btn:hover {
+            transform: translateY(-3px);
+        }
+        .reaction-btn.ifeelyou:hover {
+            border-color: #2ecc71;
+            background: rgba(46, 204, 113, 0.15);
+            box-shadow: 0 5px 15px rgba(46, 204, 113, 0.3);
+        }
+        .reaction-btn.bighug:hover {
+            border-color: #3498db;
+            background: rgba(52, 152, 219, 0.15);
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+        }
+        .reaction-btn.prodofyou:hover {
+            border-color: #9b59b6;
+            background: rgba(155, 89, 182, 0.15);
+            box-shadow: 0 5px 15px rgba(155, 89, 182, 0.3);
+        }
+        .count {
+            background: rgba(255,255,255,0.1);
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 0.9em;
+            font-weight: bold;
+            min-width: 30px;
+            text-align: center;
+        }
+        .navigation {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 50px 0 30px;
+            flex-wrap: wrap;
+        }
+        .nav-btn {
+            padding: 16px 35px;
+            background: linear-gradient(135deg, #ff6b6b, #ff4757);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            text-align: center;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+        }
+        .nav-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 107, 107, 0.6);
+        }
+        .nav-btn.secondary {
+            background: #394867;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        .nav-btn.secondary:hover {
+            background: #4a5a7a;
+        }
+        .notification-badge {
+            position: fixed;
+            top: 25px;
+            right: 25px;
+            background: #ff6b6b;
+            color: white;
+            border-radius: 50%;
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2em;
+            cursor: pointer;
+            box-shadow: 0 6px 20px rgba(255, 107, 107, 0.6);
+            z-index: 1000;
+            transition: transform 0.3s;
+            border: 3px solid white;
+        }
+        .notification-badge:hover {
+            transform: scale(1.1);
+        }
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #888;
+            font-size: 1.2em;
+        }
+        .empty-state .emoji {
+            font-size: 3em;
+            margin-bottom: 20px;
+        }
+        .sample-notice {
+            text-align: center;
+            color: #ffd166;
+            font-size: 0.95em;
+            margin: 30px 0;
+            padding: 15px;
+            background: rgba(255, 209, 102, 0.1);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 209, 102, 0.3);
+        }
+        .stats-bar {
+            display: flex;
+            justify-content: space-between;
+            background: rgba(255,255,255,0.05);
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            font-size: 0.9em;
+            color: #aaa;
+        }
+        @media (max-width: 600px) {
+            body { padding: 15px; }
+            .header h1 { font-size: 2em; }
+            .reactions { justify-content: center; }
+            .rant-header { flex-direction: column; }
+            .navigation { flex-direction: column; }
+            .nav-btn { justify-content: center; }
+        }
+    </style>
+</head>
+<body>
+    <!-- NOTIFICATION BADGE -->
+    <div id="notificationBadge" class="notification-badge" onclick="showNotifications()" style="display:none;">
+        <span id="notificationCount">0</span>
+    </div>
+    
+    <div class="container">
+        <!-- HEADER -->
+        <div class="header">
+            <h1>💢 DINDING KEKESALAN 💢</h1>
+            <p>Tempat semua kesel berkumpul. Kamu nggak sendiri.</p>
+            <div class="live-badge">🟢 LIVE FEED • UPDATE REAL-TIME</div>
+        </div>
+        
+        <!-- STATS BAR -->
+        <div class="stats-bar">
+            <div>📊 Total Rant: <span id="totalRants">0</span></div>
+            <div>🔥 Total Reaksi: <span id="totalReactions">0</span></div>
+            <div>👥 Online: <span id="onlineCount">1</span></div>
+        </div>
+        
+        <!-- RANT CONTAINER -->
+        <div id="rantContainer">
+            <!-- Rants will be loaded here -->
+        </div>
+        
+        <!-- EMPTY STATE -->
+        <div id="emptyState" class="empty-state" style="display:none;">
+            <div class="emoji">😴</div>
+            <h3>Belum ada kesel yang diposting</h3>
+            <p>Jadilah yang pertama melampiaskan kekesalanmu!</p>
+            <a href="rage.html" class="nav-btn" style="display:inline-block; margin-top:20px; padding:12px 25px;">
+                💥 POST RAGE PERTAMAMU
+            </a>
+        </div>
+        
+        <!-- SAMPLE NOTICE -->
+        <div class="sample-notice">
+            🐒 Data di bawah adalah contoh. Rant-mu akan muncul di sini setelah posting!
+        </div>
+        
+        <!-- NAVIGATION -->
+        <div class="navigation">
+            <a href="index.html" class="nav-btn secondary">
+                🏠 PILIH HASHTAG
+            </a>
+            <a href="rage.html" class="nav-btn">
+                ✍️ TULIS RAGE BARU
+            </a>
+        </div>
+    </div>
+    
+    <!-- NOTIFICATION PANEL -->
+    <div id="notificationPanel" style="display:none; position:fixed; top:85px; right:25px; width:320px; background:#1a1a2e; border-radius:12px; padding:20px; box-shadow:0 10px 30px rgba(0,0,0,0.7); z-index:999; border:2px solid #ff6b6b; max-height:400px; overflow-y:auto;">
+        <h3 style="margin-top:0; display:flex; justify-content:space-between; align-items:center;">
+            📢 Notifikasi
+            <button onclick="clearNotifications()" style="background:#555; color:white; border:none; padding:5px 12px; border-radius:6px; cursor:pointer; font-size:0.8em;">
+                Clear All
+            </button>
+        </h3>
+        <div id="notificationList">
+            <!-- Notifications will appear here -->
+        </div>
+    </div>
+    
+    <script>
+        // =================== DATA ===================
+        const sampleRants = [
+            {
+                id: 1,
+                tags: ['#FilmEndingGaje', '#DiGhostingGebetan', '#RencanaPinPlan'],
+                content: 'Aku kesel banget nonton film 3 jam, endingnya cuma "it was all a dream". Duit popcorn ilang, waktu terbuang, hati jadi kecewa berat!',
+                timestamp: '2 jam yang lalu',
+                reactions: { ifeelyou: 42, bighug: 18, prodofyou: 7 },
+                userReactions: []
+            },
+            {
+                id: 2,
+                tags: ['#BellTiketJualGinjal', '#MagangDigajiSertifikat'],
+                content: 'Gaji magang cuma cukup buat beli kopi seminggu. Tapi sertifikatnya dibuat seolah-olah aku ngerjain proyek NASA. Kapok!',
+                timestamp: '5 jam yang lalu',
+                reactions: { ifeelyou: 89, bighug: 45, prodofyou: 23 },
+                userReactions: []
+            },
+            {
+                id: 3,
+                tags: ['#InfluencerNgchek', '#DramaQueenAnjay'],
+                content: 'Temen kantor tiap hari drama dikit-dikit bikin status alay. Udah dikasih solusi malah bilang "you just don\'t understand me". Duh!',
+                timestamp: '1 hari yang lalu',
+                reactions: { ifeelyou: 127, bighug: 64, prodofyou: 31 },
+                userReactions: []
+            }
+        ];
+        
+        // =================== STATE ===================
+        let rants = JSON.parse(localStorage.getItem('wallRants')) || sampleRants;
+        let notifications = JSON.parse(localStorage.getItem('rageNotifications')) || [];
+        
+        // =================== INIT ===================
+        document.addEventListener('DOMContentLoaded', function() {
+            renderRants();
+            updateStats();
+            updateNotificationBadge();
+            
+            // Check if new rant was just posted
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('newRant') === 'true') {
+                setTimeout(() => {
+                    alert('🎉 Rant-mu sudah terposting di Dinding Kekesalan!');
+                    // Remove the parameter from URL
+                    window.history.replaceState({}, document.title, window.location.pathname);
+                }, 800);
+            }
+        });
+        
+        // =================== RENDER RANTS ===================
+        function renderRants() {
+            const container = document.getElementById('rantContainer');
+            const emptyState = document.getElementById('emptyState');
+            
+            if (rants.length === 0) {
+                container.innerHTML = '';
+                emptyState.style.display = 'block';
+                return;
+            }
+            
+            emptyState.style.display = 'none';
+            container.innerHTML = '';
+            
+            rants.forEach(rant => {
+                const rantHTML = `
+                    <div class="rant-card" data-id="${rant.id}">
+                        <div class="rant-header">
+                            <div class="user-tags">
+                                ${rant.tags.map(tag => `<span>${tag}</span>`).join('')}
+                            </div>
+                            <div class="timestamp">${rant.timestamp}</div>
+                        </div>
+                        
+                        <div class="rant-content">
+                            "${rant.content}"
+                        </div>
+                        
+                        <div class="reactions">
+                            <button class="reaction-btn ifeelyou" onclick="react(${rant.id}, 'ifeelyou')">
+                                🫂 iFeelYou <span class="count" id="count-${rant.id}-ifeelyou">${rant.reactions.ifeelyou}</span>
+                            </button>
+                            <button class="reaction-btn bighug" onclick="react(${rant.id}, 'bighug')">
+                                🤗 BigHUG <span class="count" id="count-${rant.id}-bighug">${rant.reactions.bighug}</span>
+                            </button>
+                            <button class="reaction-btn prodofyou" onclick="react(${rant.id}, 'prodofyou')">
+                                👏 ProdOfYou <span class="count" id="count-${rant.id}-prodofyou">${rant.reactions.prodofyou}</span>
+                            </button>
+                        </div>
+                    </div>
+                `;
+                container.innerHTML += rantHTML;
+            });
+        }
+        
+        // =================== REACTIONS ===================
+        function react(rantId, reactionType) {
+            const rant = rants.find(r => r.id === rantId);
+            if (!rant) return;
+            
+            const alreadyReacted = rant.userReactions.includes(reactionType);
+            
+            if (!alreadyReacted) {
+                // Add reaction
+                rant.reactions[reactionType] += 1;
+                rant.userReactions.push(reactionType);
+                
+                // Update UI
+                document.getElementById(`count-${rantId}-${reactionType}`).textContent = rant.reactions[reactionType];
+                
+                // Save
+                localStorage.setItem('wallRants', JSON.stringify(rants));
+                updateStats();
+                
+                // Add notification (if not user's own rant)
+                if (rantId > 3) { // Assuming IDs > 3 are user's own
+                    addNotification(rantId, reactionType);
+                }
+                
+                // Visual feedback
+                const btn = document.querySelector(`[onclick="react(${rantId}, '${reactionType}')"]`);
+                btn.style.transform = 'scale(1.1)';
+                setTimeout(() => btn.style.transform = '', 300);
+            }
+        }
+        
+        // =================== STATS ===================
+        function updateStats() {
+            const totalRants = rants.length;
+            const totalReactions = rants.reduce((sum, rant) => 
+                sum + rant.reactions.ifeelyou + rant.reactions.bighug + rant.reactions.prodofyou, 0);
+            
+            document.getElementById('totalRants').textContent = totalRants;
+            document.getElementById('totalReactions').textContent = totalReactions;
+            document.getElementById('onlineCount').textContent = Math.floor(Math.random() * 50) + 20; // Random online count
+        }
+        
+        // =================== NOTIFICATIONS ===================
+        function addNotification(rantId, reactionType) {
+            const reactionNames = {
+                ifeelyou: '🫂 iFeelYou',
+                bighug: '🤗 BigHUG',
+                prodofyou: '👏 ProdOfYou'
+            };
+            
+            const notification = {
+                id: Date.now(),
+                message: `Seseorang memberi reaksi ${reactionNames[reactionType]} pada rant-mu!`,
+                time: 'Baru saja',
+                read: false
+            };
+            
+            notifications.unshift(notification);
+            localStorage.setItem('rageNotifications', JSON.stringify(notifications));
+            updateNotificationBadge();
+        }
+        
+        function updateNotificationBadge() {
+            const unreadCount = notifications.filter(n => !n.read).length;
+            const badge = document.getElementById('notificationBadge');
+            const count = document.getElementById('notificationCount');
+            
+            if (unreadCount > 0) {
+                badge.style.display = 'flex';
+                count.textContent = unreadCount;
+            } else {
+                badge.style.display = 'none';
+            }
+        }
+        
+        function showNotifications() {
+            const panel = document.getElementById('notificationPanel');
+            const isVisible = panel.style.display === 'block';
+            
+            panel.style.display = isVisible ? 'none' : 'block';
+            
+            if (!isVisible) {
+                renderNotifications();
+            }
+        }
+        
+        function renderNotifications() {
+            const list = document.getElementById('notificationList');
+            list.innerHTML = '';
+            
+            if (notifications.length === 0) {
+                list.innerHTML = '<p style="color:#888; text-align:center;">Belum ada notifikasi</p>';
+                return;
+            }
+            
+            notifications.forEach(notif => {
+                const item = document.createElement('div');
+                item.style.padding = '12px';
+                item.style.borderBottom = '1px solid #333';
+                item.style.color = notif.read ? '#888' : 'white';
+                item.style.background = notif.read ? 'transparent' : 'rgba(255,107,107,0.1)';
+                item.style.borderRadius = '8px';
+                item.style.marginBottom = '8px';
+                item.innerHTML = `
+                    <div style="font-weight:bold; margin-bottom:5px;">${notif.message}</div>
+                    <div style="font-size:0.8em; color:#aaa;">${notif.time}</div>
+                `;
+                list.appendChild(item);
+                
+                // Mark as read
+                notif.read = true;
+            });
+            
+            localStorage.setItem('rageNotifications', JSON.stringify(notifications));
+            updateNotificationBadge();
+        }
+        
+        function clearNotifications() {
+            if (confirm('Hapus semua notifikasi?')) {
+                notifications = [];
+                localStorage.setItem('rageNotifications', JSON.stringify([]));
+                updateNotificationBadge();
+                document.getElementById('notificationPanel').style.display = 'none';
+            }
+        }
+        
+        // =================== AUTO REFRESH ===================
+        // Auto-refresh every 30 seconds
+        setInterval(() => {
+            const oldRants = JSON.stringify(rants);
+            const newRants = JSON.parse(localStorage.getItem('wallRants')) || sampleRants;
+            
+            if (oldRants !== JSON.stringify(newRants)) {
+                rants = newRants;
+                renderRants();
+                updateStats();
+            }
+        }, 30000);
+    </script>
+</body>
+</html>
