@@ -85,6 +85,7 @@
             font-weight: bold;
             cursor: pointer;
             transition: background 0.3s;
+            margin-bottom: 30px;
         }
         button:hover {
             background: #ff4757;
@@ -92,6 +93,63 @@
         button:disabled {
             background: #555;
             cursor: not-allowed;
+        }
+
+        /* Halaman Rage (hidden awal) */
+        .rage-page {
+            display: none;
+            background: #0f3460;
+            border-radius: 15px;
+            padding: 25px;
+            margin-top: 30px;
+            border: 3px solid #ff6b6b;
+        }
+        .rage-title {
+            text-align: center;
+            font-size: 24px;
+            color: #ff6b6b;
+            margin-bottom: 20px;
+        }
+        textarea {
+            width: 100%;
+            height: 150px;
+            background: #1a1a2e;
+            border: 2px solid #394867;
+            border-radius: 10px;
+            color: white;
+            font-size: 16px;
+            padding: 15px;
+            margin-bottom: 15px;
+            resize: vertical;
+            font-family: sans-serif;
+        }
+        textarea:focus {
+            outline: none;
+            border-color: #ff6b6b;
+        }
+        .char-count {
+            text-align: right;
+            color: #aaa;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+        .char-count.warning {
+            color: #ffd166;
+        }
+        .char-count.danger {
+            color: #ff6b6b;
+        }
+        .rage-btn {
+            background: linear-gradient(135deg, #ff6b6b, #ff4757);
+            font-size: 20px;
+            padding: 20px;
+        }
+        .selected-tags {
+            background: rgba(255, 107, 107, 0.1);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-left: 4px solid #ff6b6b;
         }
     </style>
 </head>
@@ -155,7 +213,32 @@
 
     <!-- COUNTER & BUTTON -->
     <div class="counter">Dipilih: <span id="selectedCount">0</span>/3</div>
-    <button id="rageBtn" disabled>LANJUT KE RAGE</button>
+    <button id="showRageBtn" disabled>LANJUT KE RAGE</button>
+
+    <!-- HALAMAN RAGE (tersembunyi awal) -->
+    <div id="ragePage" class="rage-page">
+        <div class="rage-title">💢 WINDOWS RAGE 💢</div>
+        
+        <div class="selected-tags">
+            <strong>Identitas Kesel Kamu:</strong><br>
+            <span id="displayTags"></span>
+        </div>
+        
+        <p style="text-align:center;margin-bottom:20px;">
+            <strong>LAMPISAKAN KEKESALANMU!</strong><br>
+            Tulis kekesalanmu dalam <strong>280 huruf</strong>. Akan masuk ke <em>Dinding Kekesalan</em>.
+        </p>
+        
+        <textarea 
+            id="rageText" 
+            placeholder="Tulis kekesalanmu di sini... Contoh: 'Aku kesel banget sama...'" 
+            maxlength="280"
+        ></textarea>
+        
+        <div id="charCount" class="char-count">0/280</div>
+        
+        <button id="submitRageBtn" class="rage-btn">💥 POST KE DINDING KESEL 💥</button>
+    </div>
 
     <script>
         let selected = [];
@@ -192,24 +275,70 @@
                 }
                 
                 // Update counter
-                document.getElementById('selectedCount').textContent = selected.length;
-                
-                // Enable/disable button
-                const rageBtn = document.getElementById('rageBtn');
-                rageBtn.disabled = selected.length !== maxSelections;
-                if (selected.length === maxSelections) {
-                    rageBtn.textContent = `LANJUT KE RAGE (${selected.join(', ')})`;
-                } else {
-                    rageBtn.textContent = 'LANJUT KE RAGE';
-                }
+                updateSelection();
             });
         });
         
-        // TOMBOL RAGE
-        document.getElementById('rageBtn').addEventListener('click', () => {
-            alert(`KAMU SUDAH PILIH 3 HASHTAG:\n${selected.join('\n')}\n\nSekarang lanjut ke halaman RAGE!`);
-            // Di sini bisa redirect ke halaman rage.html
-            // window.location.href = "rage.html";
+        function updateSelection() {
+            document.getElementById('selectedCount').textContent = selected.length;
+            
+            const showRageBtn = document.getElementById('showRageBtn');
+            showRageBtn.disabled = selected.length !== maxSelections;
+            if (selected.length === maxSelections) {
+                showRageBtn.textContent = `✅ LANJUT KE RAGE (${selected.length}/3)`;
+            } else {
+                showRageBtn.textContent = 'LANJUT KE RAGE';
+            }
+        }
+        
+        // TOMBOL TAMPILKAN RAGE PAGE
+        document.getElementById('showRageBtn').addEventListener('click', () => {
+            document.getElementById('ragePage').style.display = 'block';
+            document.getElementById('showRageBtn').style.display = 'none';
+            document.getElementById('displayTags').textContent = selected.join(', ');
+            
+            // Scroll ke rage page
+            document.getElementById('ragePage').scrollIntoView({ behavior: 'smooth' });
+        });
+        
+        // HITUNG KARAKTER TEXTAREA
+        const rageText = document.getElementById('rageText');
+        const charCount = document.getElementById('charCount');
+        
+        rageText.addEventListener('input', () => {
+            const length = rageText.value.length;
+            charCount.textContent = `${length}/280`;
+            
+            // Warna peringatan
+            charCount.classList.remove('warning', 'danger');
+            if (length > 250) {
+                charCount.classList.add('danger');
+            } else if (length > 200) {
+                charCount.classList.add('warning');
+            }
+        });
+        
+        // TOMBOL POST RAGE
+        document.getElementById('submitRageBtn').addEventListener('click', () => {
+            const rageContent = rageText.value.trim();
+            
+            if (rageContent.length === 0) {
+                alert('Tulis dulu kekesalanmu! Jangan kosong.');
+                return;
+            }
+            
+            if (rageContent.length < 10) {
+                alert('Kekesalanmu terlalu pendek! Minimal 10 karakter.');
+                return;
+            }
+            
+            // Simulasi post ke "Dinding Kekesalan"
+            alert(`✅ KESELANMU TERKIRIM!\n\n"${rageContent}"\n\nAkan muncul di Dinding Kekesalan.`);
+            
+            // Reset form (opsional)
+            rageText.value = '';
+            charCount.textContent = '0/280';
+            charCount.classList.remove('warning', 'danger');
         });
     </script>
 </body>
