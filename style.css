@@ -1,46 +1,51 @@
+/* RESET & BASE */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
 body {
   font-family: sans-serif;
   background: #1a1a2e;
   color: white;
-  margin: 0;
   padding: 20px;
+  min-height: 100vh;
+}
+
+.container {
   max-width: 600px;
-  margin: auto;
+  margin: 0 auto;
+  position: relative;
+  min-height: 80vh;
 }
 
-.main-container {
-  transition: all 0.4s ease;
-}
-
-/* ====================
-   SECTION TRANSITIONS
-==================== */
-.hashtag-section {
-  transition: opacity 0.3s, transform 0.3s;
-}
-
-.rage-section {
-  display: none;
+/* PAGE TRANSITION SYSTEM */
+.page {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
   opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.5s, transform 0.5s;
+  transform: translateX(30px);
+  pointer-events: none;
+  transition: opacity 0.4s ease, transform 0.4s ease;
 }
 
-.rage-section.active {
-  display: block;
+.page.active {
   opacity: 1;
-  transform: translateY(0);
+  transform: translateX(0);
+  pointer-events: all;
+  position: relative;
 }
 
-/* ====================
-   HASHTAG STYLES
-==================== */
+/* HASHTAG STYLES */
 .hashtag {
   background: #0f3460;
   border: 2px solid #394867;
   border-radius: 10px;
   padding: 15px;
-  margin: 8px 0;
+  margin: 10px 0;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -53,11 +58,11 @@ body {
 }
 
 .checkbox {
-  width: 22px;
-  height: 22px;
+  width: 24px;
+  height: 24px;
   border: 2px solid #555;
   border-radius: 5px;
-  margin-right: 12px;
+  margin-right: 15px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -74,30 +79,10 @@ body {
   font-weight: bold;
 }
 
-/* ====================
-   PROGRESS BAR
-==================== */
-.progress-container {
-  height: 6px;
-  background: #394867;
-  border-radius: 3px;
-  margin: 25px 0;
-  overflow: hidden;
-}
-
-.progress-bar {
-  height: 100%;
-  background: #ff6b6b;
-  width: 0%;
-  transition: width 0.5s ease;
-}
-
-/* ====================
-   RAGE INPUT
-==================== */
+/* RAGE FORM */
 .rage-input {
   width: 100%;
-  height: 140px;
+  height: 150px;
   background: #162447;
   border: 2px solid #ff6b6b;
   border-radius: 12px;
@@ -109,21 +94,7 @@ body {
   font-family: inherit;
 }
 
-.rage-input:focus {
-  outline: none;
-  border-color: #ffd166;
-}
-
-.char-count {
-  text-align: right;
-  color: #aaa;
-  font-size: 14px;
-  margin-bottom: 20px;
-}
-
-/* ====================
-   BUTTONS
-==================== */
+/* BUTTONS */
 .action-btn {
   width: 100%;
   padding: 18px;
@@ -134,37 +105,24 @@ body {
   font-size: 18px;
   font-weight: bold;
   cursor: pointer;
-  transition: all 0.3s;
-  margin-bottom: 30px;
+  margin-top: 20px;
+  transition: background 0.3s;
 }
 
 .action-btn:hover {
   background: #ff4757;
-  transform: translateY(-2px);
 }
 
 .action-btn:disabled {
   background: #555;
   cursor: not-allowed;
-  transform: none;
 }
 
-/* ====================
-   MISC
-==================== */
-.selected-tags {
-  background: rgba(255, 107, 107, 0.1);
-  border-radius: 10px;
-  padding: 15px;
-  margin: 15px 0;
-  border-left: 4px solid #ff6b6b;
-  font-size: 14px;
-}
-
+/* ZONE HEADERS */
 .zone {
-  margin: 25px 0 15px;
-  padding-bottom: 10px;
-  border-bottom: 2px solid #394867;
+  margin: 25px 0 10px;
   color: #ffd166;
   font-size: 18px;
+  border-bottom: 2px solid #394867;
+  padding-bottom: 8px;
 }
