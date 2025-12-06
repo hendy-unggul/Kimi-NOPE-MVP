@@ -117,5 +117,19 @@
             charCount.textContent = '0/280';
         });
     </script>
+    <!-- Jika ada tombol dengan id -->
+<button id="backButton">Kembali</button>
+<button id="wallButton">Lihat Dinding</button>
+
+<script>
+// Tambah di script yang sudah ada
+document.getElementById('backButton').addEventListener('click', function() {
+    window.location.href = 'index.html';
+});
+
+document.getElementById('wallButton').addEventListener('click', function() {
+    window.location.href = 'wall.html';
+});
+</script>
 </body>
 </html>
