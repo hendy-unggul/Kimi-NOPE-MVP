@@ -92,7 +92,17 @@
             charCount.textContent = `${length}/280`;
             charCount.style.color = length > 250 ? '#ff6b6b' : length > 200 ? '#ffd166' : '#aaa';
         });
-        
+        <div style="margin: 20px 0; padding: 15px; background: rgba(52, 152, 219, 0.1); border-radius: 10px;">
+    <p><strong>📍 Post ke:</strong></p>
+    <label style="display:block; margin:10px 0;">
+        <input type="radio" name="postTo" value="global" checked> 
+        💢 <strong>Dinding Kekesalan</strong> (semua orang bisa lihat)
+    </label>
+    <label style="display:block; margin:10px 0;">
+        <input type="radio" name="postTo" value="sefrek"> 
+        🤝 <strong>SeFrekuensi</strong> (hanya yang punya hashtag sama)
+    </label>
+</div>
         // Submit
         document.getElementById('submitBtn').addEventListener('click', () => {
             const text = rageText.value.trim();
