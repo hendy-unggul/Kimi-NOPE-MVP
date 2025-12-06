@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SeFrekuensi - Komunitas Sesama Kesel</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #0f1a2e;
+            color: white;
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 25px;
+            background: linear-gradient(135deg, #1a2b4a, #2a3b5a);
+            border-radius: 20px;
+            border: 2px solid #3498db;
+            box-shadow: 0 10px 30px rgba(52, 152, 219, 0.3);
+        }
+        .header h1 {
+            color: #3498db;
+            font-size: 2.5em;
+            margin: 0 0 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+        .header p {
+            color: #aaddff;
+            font-size: 1.1em;
+            margin: 10px 0;
+        }
+        .match-badge {
+            display: inline-block;
+            background: #2ecc71;
+            color: white;
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-weight: bold;
+            margin-top: 10px;
+            font-size: 0.9em;
+        }
+        .tabs {
+            display: flex;
+            background: #1a2b4a;
+            border-radius: 12px;
+            padding: 5px;
+            margin-bottom: 30px;
+            border: 1px solid #2a3b5a;
+        }
+        .tab {
+            flex: 1;
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            border-radius: 8px;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        .tab.active {
+            background: #3498db;
+            color: white;
+            box-shadow: 0 4px 15px rgba(52, 152, 219, 0.5);
+        }
+        .tab.inactive {
+            color: #88aadd;
+        }
+        .tab.inactive:hover {
+            background: rgba(52, 152, 219, 0.2);
+        }
+        .community-info {
+            background: rgba(52, 152, 219, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 30px;
+            border: 2px solid rgba(52, 152, 219, 0.3);
+        }
+        .community-info h3 {
+            color: #3498db;
+            margin-top: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .hashtag-pill {
+            display: inline-block;
+            background: rgba(255, 209, 102, 0.2);
+            color: #ffd166;
+            padding: 8px 16px;
+            border-radius: 20px;
+            margin: 5px;
+            font-weight: bold;
+            border: 1px solid rgba(255, 209, 102, 0.3);
+        }
+        .members {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        .member {
+            background: rgba(255,255,255,0.05);
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            border: 1px solid rgba(52, 152, 219, 0.3);
+        }
+        .rant-card {
+            background: #1a2b4a;
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 25px;
+            border-left: 6px solid #3498db;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+        }
+        .rant-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .rant-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .rant-content {
+            font-size: 1.1em;
+            line-height: 1.7;
+            margin-bottom: 25px;
+            color: #e0e0e0;
+            padding: 20px;
+            background: rgba(0,0,0,0.2);
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+        .comments-section {
+            margin-top: 25px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 20px;
+        }
+        .comment-form {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .comment-input {
+            flex: 1;
+            padding: 15px;
+            background: rgba(255,255,255,0.05);
+            border: 2px solid #3498db;
+            border-radius: 12px;
+            color: white;
+            font-size: 1em;
+            font-family: inherit;
+        }
+        .comment-btn {
+            padding: 15px 25px;
+            background: #3498db;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .comment-btn:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+        }
+        .comments-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .comment {
+            background: rgba(52, 152, 219, 0.1);
+            padding: 15px;
+            border-radius: 12px;
+            border: 1px solid rgba(52, 152, 219, 0.3);
+        }
+        .comment-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 0.9em;
+        }
+        .comment-user {
+            color: #3498db;
+            font-weight: bold;
+        }
+        .comment-time {
+            color: #88aadd;
+        }
+        .comment-content {
+            color: #d0e0ff;
+            line-height: 1.6;
+        }
+        .reactions {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        .reaction-btn {
+            background: transparent;
+            border: 2px solid #394867;
+            border-radius: 50px;
+            padding: 8px 20px;
+            color: white;
+            font-size: 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s;
+        }
+        .reaction-btn:hover {
+            transform: translateY(-2px);
+        }
+        .count {
+            background: rgba(255,255,255,0.1);
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 0.9em;
+            font-weight: bold;
+        }
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #88aadd;
+            font-size: 1.2em;
+        }
+        .empty-state .emoji {
+            font-size: 3em;
+            margin-bottom: 20px;
+        }
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+        .nav-btn {
+            padding: 15px 30px;
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1em;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            text-align: center;
+            transition: all 0.3s;
+        }
+        .nav-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(52, 152, 219, 0.6);
+        }
+        .nav-btn.secondary {
+            background: #1a2b4a;
+            border: 2px solid #3498db;
+        }
+        @media (max-width: 600px) {
+            .header h1 { font-size: 2em; }
+            .tabs { flex-direction: column; }
+            .comment-form { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- HEADER -->
+        <div class="header">
+            <h1>🤝 SeFrekuensi</h1>
+            <p>Komunitas kecil dengan kesel yang sama. Bebas berkomentar!</p>
+            <div class="match-badge">🔒 PRIVATE GROUP • HASHMATCH</div>
+        </div>
+        
+        <!-- TABS -->
+        <div class="tabs">
+            <div class="tab active">🤝 SeFrekuensi</div>
+            <a href="wall.html" class="tab inactive">💢 Dinding Kekesalan</a>
+        </div>
+        
+        <!-- COMMUNITY INFO -->
+        <div class="community-info">
+            <h3>👥 Komunitas Kamu</h3>
+            <p>Kamu satu frekuensi dengan <strong id="memberCount">3</strong> orang yang sama-sama kesel dengan:</p>
+            <div id="communityTags">
+                <!-- Hashtag akan diisi JavaScript -->
+            </div>
+            <div class="members">
+                <div class="member">🐵 MonyetKesel_42</div>
+                <div class="member">😤 GeramGila_7</div>
+                <div class="member">💥 BomEmosi_19</div>
+                <div class="member" id="youMarker">⭐ <strong>KAMU</strong></div>
+            </div>
+            <p style="margin-top:15px; font-size:0.9em; color:#88aadd;">
+                💬 Di sini kalian bisa saling komentar, bukan cuma reaksi emoji!
+            </p>
+        </div>
+        
+        <!-- RANTS FROM COMMUNITY -->
+        <div id="rantsContainer">
+            <!-- Rant komunitas akan dimuat di sini -->
+        </div>
+        
+        <!-- EMPTY STATE -->
+        <div id="emptyState" class="empty-state" style="display:none;">
+            <div class="emoji">👂</div>
+            <h3>Belum ada yang posting di komunitas</h3>
+            <p>Jadilah yang pertama berbagi kesel dengan frekuensi sama!</p>
+            <a href="rage.html" class="nav-btn" style="display:inline-block; margin-top:20px; padding:12px 25px;">
+                💬 POST KE KOMUNITAS
+            </a>
+        </div>
+        
+        <!-- NAVIGATION -->
+        <div class="nav-buttons">
+            <a href="index.html" class="nav-btn secondary">🏠 Ganti Hashtag</a>
+            <a href="rage.html" class="nav-btn">✍️ Post Baru</a>
+            <a href="wall.html" class="nav-btn">🌍 Lihat Global</a>
+        </div>
+    </div>
+    
+    <script>
+        // =================== STATE ===================
+        const myHashtags = JSON.parse(localStorage.getItem('selectedHashtags')) || [];
+        let communityRants = JSON.parse(localStorage.getItem('sefrekRants')) || [];
+        
+        // =================== INIT ===================
+        document.addEventListener('DOMContentLoaded', function() {
+            displayMyHashtags();
+            loadCommunityRants();
+            updateMemberCount();
+        });
+        
+        // =================== DISPLAY HASHTAGS ===================
+        function displayMyHashtags() {
+            const container = document.getElementById('communityTags');
+            
+            if (myHashtags.length === 0) {
+                container.innerHTML = '<p style="color:#ff6b6b;">⚠️ Kamu belum pilih hashtag! <a href="index.html">Pilih dulu</a></p>';
+                return;
+            }
+            
+            container.innerHTML = myHashtags.map(tag => 
+                `<span class="hashtag-pill">${tag}</span>`
+            ).join('');
+        }
+        
+        // =================== LOAD COMMUNITY RANTS ===================
+        function loadCommunityRants() {
+            const container = document.getElementById('rantsContainer');
+            const emptyState = document.getElementById('emptyState');
+            
+            // Filter rant yang memiliki hashtag sama dengan user
+            const filteredRants = communityRants.filter(rant => 
+                arraysEqual(rant.tags.sort(), myHashtags.sort())
+            );
+            
+            if (filteredRants.length === 0) {
+                container.innerHTML = '';
+                emptyState.style.display = 'block';
+                return;
+            }
+            
+            emptyState.style.display = 'none';
+            container.innerHTML = '';
+            
+            filteredRants.forEach(rant => {
+                const rantHTML = `
+                    <div class="rant-card" data-id="${rant.id}">
+                        <div class="rant-header">
+                            <div class="rant-tags">
+                                ${rant.tags.map(tag => `<span class="hashtag-pill">${tag}</span>`).join('')}
+                            </div>
+                            <div style="color:#88aadd; font-size:0.9em;">${rant.timestamp}</div>
+                        </div>
+                        
+                        <div class="rant-content">
+                            "${rant.content}"
+                        </div>
+                        
+                        <div class="reactions">
+                            <button class="reaction-btn" onclick="reactToRant(${rant.id}, 'support')">
+                                👍 Support <span class="count" id="support-${rant.id}">${rant.reactions?.support || 0}</span>
+                            </button>
+                            <button class="reaction-btn" onclick="reactToRant(${rant.id}, 'hug')">
+                                🤗 Virtual Hug <span class="count" id="hug-${rant.id}">${rant.reactions?.hug || 0}</span>
+                            </button>
+                            <button class="reaction-btn" onclick="reactToRant(${rant.id}, 'relate')">
+                                🔥 Sama! <span class="count" id="relate-${rant.id}">${rant.reactions?.relate || 0}</span>
+                            </button>
+                        </div>
+                        
+                        <div class="comments-section">
+                            <div class="comment-form">
+                                <input type="text" 
+                                       class="comment-input" 
+                                       placeholder="Tulis komentar untuk ${rant.tags[0]}..."
+                                       id="comment-input-${rant.id}">
+                                <button class="comment-btn" onclick="addComment(${rant.id})">
+                                    💬 Kirim
+                                </button>
+                            </div>
+                            
+                            <div class="comments-list" id="comments-${rant.id}">
+                                ${renderComments(rant.comments || [])}
+                            </div>
+                        </div>
+                    </div>
+                `;
+                container.innerHTML += rantHTML;
+            });
+        }
+        
+        // =================== REACTIONS ===================
+        function reactToRant(rantId, reactionType) {
+            const rant = communityRants.find(r => r.id === rantId);
+            if (!rant) return;
+            
+            if (!rant.reactions) rant.reactions = { support: 0, hug: 0, relate: 0 };
+            rant.reactions[reactionType] = (rant.reactions[reactionType] || 0) + 1;
+            
+            // Update UI
+            document.getElementById(`${reactionType}-${rantId}`).textContent = rant.reactions[reactionType];
+            
+            // Save
+            localStorage.setItem('sefrekRants', JSON.stringify(communityRants));
+        }
+        
+        // =================== COMMENTS ===================
+        function addComment(rantId) {
+            const input = document.getElementById(`comment-input-${rantId}`);
+            const commentText = input.value.trim();
+            
+            if (!commentText) return;
+            
+            const rant = communityRants.find(r => r.id === rantId);
+            if (!rant) return;
+            
+            if (!rant.comments) rant.comments = [];
+            
+            const newComment = {
+                id: Date.now(),
+                user: "Kamu",
+                content: commentText,
+                time: "Baru saja"
+            };
+            
+            rant.comments.unshift(newComment);
+            
+            // Update UI
+            const commentsList = document.getElementById(`comments-${rantId}`);
+            commentsList.innerHTML = renderComments(rant.comments) + commentsList.innerHTML;
+            
+            // Clear input
+            input.value = '';
+            
+            // Save
+            localStorage.setItem('sefrekRants', JSON.stringify(communityRants));
+            
+            // Notify
+            showToast('💬 Komentar terkirim ke komunitas!');
+        }
+        
+        function renderComments(comments) {
+            if (!comments || comments.length === 0) {
+                return '<p style="color:#88aadd; text-align:center; padding:20px;">Belum ada komentar</p>';
+            }
+            
+            return comments.map(comment => `
+                <div class="comment">
+                    <div class="comment-header">
+                        <span class="comment-user">${comment.user}</span>
+                        <span class="comment-time">${comment.time}</span>
+                    </div>
+                    <div class="comment-content">${comment.content}</div>
+                </div>
+            `).join('');
+        }
+        
+        // =================== UTILITIES ===================
+        function arraysEqual(a, b) {
+            if (a.length !== b.length) return false;
+            for (let i = 0; i < a.length; i++) {
+                if (a[i] !== b[i]) return false;
+            }
+            return true;
+        }
+        
+        function updateMemberCount() {
+            // Simulasi: 1-5 member dengan hashtag sama
+            const count = Math.floor(Math.random() * 5) + 1;
+            document.getElementById('memberCount').textContent = count;
+        }
+        
+        function showToast(message) {
+            // Create toast
+            const toast = document.createElement('div');
+            toast.style.cssText = `
+                position: fixed;
+                bottom: 30px;
+                left: 50%;
+                transform: translateX(-50%);
+                background: #3498db;
+                color: white;
+                padding: 15px 25px;
+                border-radius: 12px;
+                box-shadow: 0 5px 20px rgba(52, 152, 219, 0.5);
+                z-index: 1000;
+                font-weight: bold;
+            `;
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            
+            // Remove after 3 seconds
+            setTimeout(() => {
+                toast.remove();
+            }, 3000);
+        }
+        
+        // =================== SAMPLE DATA ===================
+        // Add sample data if empty
+        if (communityRants.length === 0) {
+            communityRants = [
+                {
+                    id: 1001,
+                    tags: ['#FilmEndingGaje', '#DiGhostingGebetan', '#RencanaPinPlan'],
+                    content: 'Gw capek banget sama ending film yang bikin penasaran tapi nggak jelas. Sama kayak doi yang ghosting gw tiba-tiba!',
+                    timestamp: '3 jam yang lalu',
+                    reactions: { support: 5, hug: 3, relate: 8 },
+                    comments: [
+                        { id: 1, user: 'MonyetKesel_42', content: 'Sama bro! Gw juga baru nonton film gitu, kesel banget!', time: '2 jam lalu' },
+                        { id: 2, user: 'GeramGila_7', content: 'Ghosting itu sakit banget sih. Virtual hug buat lo!', time: '1 jam lalu' }
+                    ]
+                },
+                {
+                    id: 1002,
+                    tags: ['#FilmEndingGaje', '#DiGhostingGebetan', '#RencanaPinPlan'],
+                    content: 'Ada yang pernah ngerasain di-ghosting tapi terus doi muncul lagi kayak nggak ada apa-apa? Gila nggak sih?',
+                    timestamp: '1 hari yang lalu',
+                    reactions: { support: 12, hug: 7, relate: 15 },
+                    comments: [
+                        { id: 3, user: 'BomEmosi_19', content: 'PERNAH! Terus acting innocent. Gemesin!', time: '20 jam lalu' }
+                    ]
+                }
+            ];
+            localStorage.setItem('sefrekRants', JSON.stringify(communityRants));
+        }
+    </script>
+</body>
+</html>
