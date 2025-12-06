@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Pilih 3 Hal yang Bikin Kesel</title>
+    <title>Kesel → Rage Flowless</title>
     <style>
         body {
             font-family: sans-serif;
@@ -12,69 +12,116 @@
             max-width: 600px;
             margin: auto;
         }
-        .zone {
-            background: #162447;
-            border-radius: 15px;
-            padding: 20px;
-            margin-bottom: 25px;
-            border-left: 5px solid #ff6b6b;
+        
+        /* Container utama */
+        .main-container {
+            transition: all 0.4s ease;
         }
-        .zone-title {
-            font-size: 18px;
-            font-weight: bold;
-            margin-bottom: 15px;
-            color: #ffd166;
+        
+        /* Section pilih hashtag */
+        .hashtag-section {
+            transition: opacity 0.3s, transform 0.3s;
         }
-        .zone-subtitle {
-            font-size: 14px;
-            color: #aaa;
-            margin-bottom: 15px;
+        
+        /* Rage section - muncul menggantikan */
+        .rage-section {
+            display: none;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s, transform 0.5s;
         }
+        
+        .rage-section.active {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Hashtag items */
         .hashtag {
             background: #0f3460;
             border: 2px solid #394867;
             border-radius: 10px;
             padding: 15px;
-            margin-bottom: 10px;
+            margin: 8px 0;
             cursor: pointer;
-            transition: all 0.2s;
             display: flex;
             align-items: center;
+            transition: all 0.2s;
         }
-        .hashtag:hover {
-            border-color: #ff6b6b;
-            background: #1b3b6a;
-        }
+        
         .hashtag.selected {
             border-color: #2ecc71;
-            background: rgba(46, 204, 113, 0.1);
+            background: rgba(46, 204, 113, 0.15);
         }
+        
         .checkbox {
-            width: 24px;
-            height: 24px;
+            width: 22px;
+            height: 22px;
             border: 2px solid #555;
             border-radius: 5px;
-            margin-right: 15px;
+            margin-right: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
         }
+        
         .selected .checkbox {
             background: #2ecc71;
             border-color: #2ecc71;
         }
+        
         .selected .checkbox::after {
             content: "✓";
             color: white;
             font-weight: bold;
         }
-        .counter {
-            text-align: center;
-            font-size: 20px;
+        
+        /* Progress bar */
+        .progress-container {
+            height: 6px;
+            background: #394867;
+            border-radius: 3px;
             margin: 25px 0;
-            color: #ffd166;
+            overflow: hidden;
         }
-        button {
+        
+        .progress-bar {
+            height: 100%;
+            background: #ff6b6b;
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+        
+        /* Rage textarea */
+        .rage-input {
+            width: 100%;
+            height: 140px;
+            background: #162447;
+            border: 2px solid #ff6b6b;
+            border-radius: 12px;
+            color: white;
+            font-size: 16px;
+            padding: 15px;
+            margin: 20px 0 10px;
+            resize: vertical;
+            font-family: inherit;
+        }
+        
+        .rage-input:focus {
+            outline: none;
+            border-color: #ffd166;
+        }
+        
+        .char-count {
+            text-align: right;
+            color: #aaa;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+        
+        /* Button */
+        .action-btn {
             width: 100%;
             padding: 18px;
             background: #ff6b6b;
@@ -84,262 +131,256 @@
             font-size: 18px;
             font-weight: bold;
             cursor: pointer;
-            transition: background 0.3s;
-            margin-bottom: 30px;
+            transition: all 0.3s;
         }
-        button:hover {
+        
+        .action-btn:hover {
             background: #ff4757;
+            transform: translateY(-2px);
         }
-        button:disabled {
+        
+        .action-btn:disabled {
             background: #555;
             cursor: not-allowed;
+            transform: none;
         }
-
-        /* Halaman Rage (hidden awal) */
-        .rage-page {
-            display: none;
-            background: #0f3460;
-            border-radius: 15px;
-            padding: 25px;
-            margin-top: 30px;
-            border: 3px solid #ff6b6b;
-        }
-        .rage-title {
-            text-align: center;
-            font-size: 24px;
-            color: #ff6b6b;
-            margin-bottom: 20px;
-        }
-        textarea {
-            width: 100%;
-            height: 150px;
-            background: #1a1a2e;
-            border: 2px solid #394867;
-            border-radius: 10px;
-            color: white;
-            font-size: 16px;
-            padding: 15px;
-            margin-bottom: 15px;
-            resize: vertical;
-            font-family: sans-serif;
-        }
-        textarea:focus {
-            outline: none;
-            border-color: #ff6b6b;
-        }
-        .char-count {
-            text-align: right;
-            color: #aaa;
-            font-size: 14px;
-            margin-bottom: 20px;
-        }
-        .char-count.warning {
-            color: #ffd166;
-        }
-        .char-count.danger {
-            color: #ff6b6b;
-        }
-        .rage-btn {
-            background: linear-gradient(135deg, #ff6b6b, #ff4757);
-            font-size: 20px;
-            padding: 20px;
-        }
+        
+        /* Tag display */
         .selected-tags {
             background: rgba(255, 107, 107, 0.1);
             border-radius: 10px;
             padding: 15px;
-            margin-bottom: 20px;
+            margin: 15px 0;
             border-left: 4px solid #ff6b6b;
+            font-size: 14px;
+        }
+        
+        /* Zone headers */
+        .zone {
+            margin: 25px 0 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #394867;
+            color: #ffd166;
+            font-size: 18px;
         }
     </style>
 </head>
 <body>
-    <h2 style="text-align:center;">Pilih 3 Hal yang Bikin Kesel</h2>
-    <p style="text-align:center;color:#aaa;">Ini akan jadi identitas anonim kamu</p>
-
-    <!-- ZONA 1 -->
-    <div class="zone">
-        <div class="zone-title">POPCULTURE (Gateway)</div>
-        <div class="zone-subtitle">Pilih yang paling bikin kesel</div>
-        <div class="hashtag" data-zone="1" data-tag="#FilmEndingGaje">
-            <div class="checkbox"></div>
-            #FilmEndingGaje
-        </div>
-        <div class="hashtag" data-zone="1" data-tag="#BellTiketJualGinjal">
-            <div class="checkbox"></div>
-            #BellTiketJualGinjal
-        </div>
-        <div class="hashtag" data-zone="1" data-tag="#InfluencerNgchek">
-            <div class="checkbox"></div>
-            #InfluencerNgchek
-        </div>
-    </div>
-
-    <!-- ZONA 2 -->
-    <div class="zone">
-        <div class="zone-title">PERSONAL PAIN (Depth)</div>
-        <div class="zone-subtitle">Yang bikin sakit hati</div>
-        <div class="hashtag" data-zone="2" data-tag="#DiGhostingGebetan">
-            <div class="checkbox"></div>
-            #DiGhostingGebetan
-        </div>
-        <div class="hashtag" data-zone="2" data-tag="#DiajakJalanTapiKempes">
-            <div class="checkbox"></div>
-            #DiajakJalanTapiKempes
-        </div>
-        <div class="hashtag" data-zone="2" data-tag="#MagangDigajiSertifikat">
-            <div class="checkbox"></div>
-            #MagangDigajiSertifikat
-        </div>
-    </div>
-
-    <!-- ZONA 3 -->
-    <div class="zone">
-        <div class="zone-title">SOCIAL SICKNESS (Patterns)</div>
-        <div class="zone-subtitle">Pola sosial yang bikin gemes</div>
-        <div class="hashtag" data-zone="3" data-tag="#RencanaPinPlan">
-            <div class="checkbox"></div>
-            #RencanaPinPlan
-        </div>
-        <div class="hashtag" data-zone="3" data-tag="#DramaQueenAnjay">
-            <div class="checkbox"></div>
-            #DramaQueenAnjay
-        </div>
-        <div class="hashtag" data-zone="3" data-tag="#BacotLambeTurah">
-            <div class="checkbox"></div>
-            #BacotLambeTurah
-        </div>
-    </div>
-
-    <!-- COUNTER & BUTTON -->
-    <div class="counter">Dipilih: <span id="selectedCount">0</span>/3</div>
-    <button id="showRageBtn" disabled>LANJUT KE RAGE</button>
-
-    <!-- HALAMAN RAGE (tersembunyi awal) -->
-    <div id="ragePage" class="rage-page">
-        <div class="rage-title">💢 WINDOWS RAGE 💢</div>
+    <div class="main-container">
         
-        <div class="selected-tags">
-            <strong>Identitas Kesel Kamu:</strong><br>
-            <span id="displayTags"></span>
+        <!-- SECTION 1: PILIH HASHTAG -->
+        <div id="hashtagSection" class="hashtag-section">
+            <h2>🎯 PILIH 3 HAL YANG BIKIN KESEL</h2>
+            <p style="color: #aaa;">Pilih 1 dari tiap zona (identitas anonimmu)</p>
+            
+            <div class="progress-container">
+                <div id="progressBar" class="progress-bar"></div>
+            </div>
+            
+            <div class="zone">🎬 POPCULTURE</div>
+            <div class="hashtag" data-zone="1" data-tag="#FilmEndingGaje">
+                <div class="checkbox"></div>
+                #FilmEndingGaje
+            </div>
+            <div class="hashtag" data-zone="1" data-tag="#BellTiketJualGinjal">
+                <div class="checkbox"></div>
+                #BellTiketJualGinjal
+            </div>
+            <div class="hashtag" data-zone="1" data-tag="#InfluencerNgchek">
+                <div class="checkbox"></div>
+                #InfluencerNgchek
+            </div>
+            
+            <div class="zone">💔 PERSONAL PAIN</div>
+            <div class="hashtag" data-zone="2" data-tag="#DiGhostingGebetan">
+                <div class="checkbox"></div>
+                #DiGhostingGebetan
+            </div>
+            <div class="hashtag" data-zone="2" data-tag="#DiajakJalanTapiKempes">
+                <div class="checkbox"></div>
+                #DiajakJalanTapiKempes
+            </div>
+            <div class="hashtag" data-zone="2" data-tag="#MagangDigajiSertifikat">
+                <div class="checkbox"></div>
+                #MagangDigajiSertifikat
+            </div>
+            
+            <div class="zone">😤 SOCIAL SICKNESS</div>
+            <div class="hashtag" data-zone="3" data-tag="#RencanaPinPlan">
+                <div class="checkbox"></div>
+                #RencanaPinPlan
+            </div>
+            <div class="hashtag" data-zone="3" data-tag="#DramaQueenAnjay">
+                <div class="checkbox"></div>
+                #DramaQueenAnjay
+            </div>
+            <div class="hashtag" data-zone="3" data-tag="#BacotLambeTurah">
+                <div class="checkbox"></div>
+                #BacotLambeTurah
+            </div>
+            
+            <div class="selected-tags" id="selectedPreview" style="display:none;">
+                <strong>Pilihanmu:</strong> <span id="previewTags"></span>
+            </div>
+            
+            <button id="continueBtn" class="action-btn" disabled>
+                ⚡ LANJUT TULIS RAGE
+            </button>
         </div>
         
-        <p style="text-align:center;margin-bottom:20px;">
-            <strong>LAMPISAKAN KEKESALANMU!</strong><br>
-            Tulis kekesalanmu dalam <strong>280 huruf</strong>. Akan masuk ke <em>Dinding Kekesalan</em>.
-        </p>
+        <!-- SECTION 2: TULIS RAGE -->
+        <div id="rageSection" class="rage-section">
+            <h2>💥 LAMPISAKAN KEKESALANMU</h2>
+            
+            <div class="selected-tags">
+                <strong>Identitas Kesel Kamu:</strong><br>
+                <span id="displayTags"></span>
+            </div>
+            
+            <p>Tulis kekesalanmu dalam <strong>280 huruf</strong>:</p>
+            
+            <textarea 
+                id="rageText" 
+                class="rage-input"
+                placeholder="Aku kesel banget karena..."
+                maxlength="280"
+            ></textarea>
+            
+            <div id="charCount" class="char-count">0/280</div>
+            
+            <div style="display:flex; gap:10px;">
+                <button id="backBtn" class="action-btn" style="background:#394867;">
+                    ← KEMBALI
+                </button>
+                <button id="submitBtn" class="action-btn">
+                    💢 POST KE DINDING KESEL
+                </button>
+            </div>
+        </div>
         
-        <textarea 
-            id="rageText" 
-            placeholder="Tulis kekesalanmu di sini... Contoh: 'Aku kesel banget sama...'" 
-            maxlength="280"
-        ></textarea>
-        
-        <div id="charCount" class="char-count">0/280</div>
-        
-        <button id="submitRageBtn" class="rage-btn">💥 POST KE DINDING KESEL 💥</button>
     </div>
 
     <script>
         let selected = [];
         const maxSelections = 3;
         
-        // KLIK HASHTAG
-        document.querySelectorAll('.hashtag').forEach(item => {
-            item.addEventListener('click', () => {
-                const tag = item.getAttribute('data-tag');
-                const zone = item.getAttribute('data-zone');
-                
-                if (item.classList.contains('selected')) {
-                    // Hapus jika sudah dipilih
-                    item.classList.remove('selected');
-                    selected = selected.filter(t => t !== tag);
-                } else {
-                    // Cek apakah sudah max 3
-                    if (selected.length >= maxSelections) {
-                        alert(`Sudah pilih ${maxSelections} hashtag! Hapus dulu salah satu.`);
-                        return;
-                    }
-                    // Cek apakah zona ini sudah dipilih
-                    const zoneAlreadySelected = selected.some(t => {
-                        const selectedItem = document.querySelector(`[data-tag="${t}"]`);
-                        return selectedItem.getAttribute('data-zone') === zone;
-                    });
-                    
-                    if (!zoneAlreadySelected) {
-                        item.classList.add('selected');
-                        selected.push(tag);
-                    } else {
-                        alert(`Hanya boleh pilih 1 hashtag per zona!`);
-                    }
-                }
-                
-                // Update counter
-                updateSelection();
-            });
-        });
-        
-        function updateSelection() {
-            document.getElementById('selectedCount').textContent = selected.length;
+        // PROGRESS & STATE
+        function updateUI() {
+            const progress = (selected.length / maxSelections) * 100;
+            document.getElementById('progressBar').style.width = `${progress}%`;
             
-            const showRageBtn = document.getElementById('showRageBtn');
-            showRageBtn.disabled = selected.length !== maxSelections;
-            if (selected.length === maxSelections) {
-                showRageBtn.textContent = `✅ LANJUT KE RAGE (${selected.length}/3)`;
+            const continueBtn = document.getElementById('continueBtn');
+            const canContinue = selected.length === maxSelections;
+            
+            continueBtn.disabled = !canContinue;
+            continueBtn.textContent = canContinue 
+                ? `⚡ LANJUT TULIS RAGE (${selected.length}/${maxSelections})` 
+                : `Pilih ${maxSelections - selected.length} lagi`;
+            
+            // Preview selected tags
+            const preview = document.getElementById('selectedPreview');
+            const previewTags = document.getElementById('previewTags');
+            
+            if (selected.length > 0) {
+                preview.style.display = 'block';
+                previewTags.textContent = selected.join(', ');
             } else {
-                showRageBtn.textContent = 'LANJUT KE RAGE';
+                preview.style.display = 'none';
             }
         }
         
-        // TOMBOL TAMPILKAN RAGE PAGE
-        document.getElementById('showRageBtn').addEventListener('click', () => {
-            document.getElementById('ragePage').style.display = 'block';
-            document.getElementById('showRageBtn').style.display = 'none';
-            document.getElementById('displayTags').textContent = selected.join(', ');
-            
-            // Scroll ke rage page
-            document.getElementById('ragePage').scrollIntoView({ behavior: 'smooth' });
+        // HASHTAG SELECTION
+        document.querySelectorAll('.hashtag').forEach(item => {
+            item.addEventListener('click', () => {
+                const tag = item.dataset.tag;
+                const zone = item.dataset.zone;
+                
+                if (item.classList.contains('selected')) {
+                    // Deselect
+                    item.classList.remove('selected');
+                    selected = selected.filter(t => t !== tag);
+                } else {
+                    // Check limits
+                    if (selected.length >= maxSelections) {
+                        alert(`Maksimal ${maxSelections} pilihan!`);
+                        return;
+                    }
+                    
+                    // Check zone already selected
+                    const zoneSelected = selected.some(t => {
+                        const elem = document.querySelector(`[data-tag="${t}"]`);
+                        return elem.dataset.zone === zone;
+                    });
+                    
+                    if (zoneSelected) {
+                        alert('Hanya 1 pilihan per zona!');
+                        return;
+                    }
+                    
+                    // Select
+                    item.classList.add('selected');
+                    selected.push(tag);
+                }
+                
+                updateUI();
+            });
         });
         
-        // HITUNG KARAKTER TEXTAREA
+        // CONTINUE TO RAGE
+        document.getElementById('continueBtn').addEventListener('click', () => {
+            document.getElementById('hashtagSection').style.opacity = '0';
+            document.getElementById('hashtagSection').style.transform = 'translateY(-20px)';
+            document.getElementById('hashtagSection').style.pointerEvents = 'none';
+            
+            setTimeout(() => {
+                document.getElementById('hashtagSection').style.display = 'none';
+                document.getElementById('rageSection').classList.add('active');
+                document.getElementById('displayTags').textContent = selected.join(', ');
+            }, 300);
+        });
+        
+        // BACK BUTTON
+        document.getElementById('backBtn').addEventListener('click', () => {
+            document.getElementById('rageSection').classList.remove('active');
+            
+            setTimeout(() => {
+                document.getElementById('hashtagSection').style.display = 'block';
+                document.getElementById('hashtagSection').style.opacity = '1';
+                document.getElementById('hashtagSection').style.transform = 'translateY(0)';
+                document.getElementById('hashtagSection').style.pointerEvents = 'all';
+            }, 50);
+        });
+        
+        // CHARACTER COUNT
         const rageText = document.getElementById('rageText');
         const charCount = document.getElementById('charCount');
         
         rageText.addEventListener('input', () => {
-            const length = rageText.value.length;
-            charCount.textContent = `${length}/280`;
-            
-            // Warna peringatan
-            charCount.classList.remove('warning', 'danger');
-            if (length > 250) {
-                charCount.classList.add('danger');
-            } else if (length > 200) {
-                charCount.classList.add('warning');
-            }
+            const len = rageText.value.length;
+            charCount.textContent = `${len}/280`;
+            charCount.style.color = len > 250 ? '#ff6b6b' : len > 200 ? '#ffd166' : '#aaa';
         });
         
-        // TOMBOL POST RAGE
-        document.getElementById('submitRageBtn').addEventListener('click', () => {
-            const rageContent = rageText.value.trim();
+        // SUBMIT RAGE
+        document.getElementById('submitBtn').addEventListener('click', () => {
+            const text = rageText.value.trim();
             
-            if (rageContent.length === 0) {
-                alert('Tulis dulu kekesalanmu! Jangan kosong.');
+            if (text.length < 10) {
+                alert('Minimal 10 karakter untuk kesel yang berarti!');
                 return;
             }
             
-            if (rageContent.length < 10) {
-                alert('Kekesalanmu terlalu pendek! Minimal 10 karakter.');
-                return;
-            }
+            // Simulasi POST
+            alert(`✅ KESELANMU TERKIRIM!\n\n"${text.substring(0, 50)}${text.length > 50 ? '...' : ''}"\n\nTelah masuk ke Dinding Kekesalan.`);
             
-            // Simulasi post ke "Dinding Kekesalan"
-            alert(`✅ KESELANMU TERKIRIM!\n\n"${rageContent}"\n\nAkan muncul di Dinding Kekesalan.`);
-            
-            // Reset form (opsional)
+            // Reset
             rageText.value = '';
             charCount.textContent = '0/280';
-            charCount.classList.remove('warning', 'danger');
+            charCount.style.color = '#aaa';
         });
+        
+        // INIT
+        updateUI();
     </script>
 </body>
 </html>
