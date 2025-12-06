@@ -1,6 +1,7 @@
 {
   "rewrites": [
     { "source": "/", "destination": "/index.html" },
-    { "source": "/rage", "destination": "/rage.html" }
+    { "source": "/rage", "destination": "/rage.html" },
+    { "source": "/wall", "destination": "/wall.html" }
   ]
 }
