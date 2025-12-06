@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Rage - Lampisakan Kekesalanmu</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            background: #1a1a2e;
+            color: white;
+            margin: 0;
+            padding: 20px;
+            max-width: 600px;
+            margin: auto;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .selected-tags {
+            background: rgba(255, 107, 107, 0.1);
+            border-radius: 10px;
+            padding: 15px;
+            margin: 20px 0;
+            border-left: 4px solid #ff6b6b;
+        }
+        textarea {
+            width: 100%;
+            height: 150px;
+            background: #162447;
+            border: 2px solid #ff6b6b;
+            border-radius: 12px;
+            color: white;
+            font-size: 16px;
+            padding: 15px;
+            margin: 20px 0 10px;
+            resize: vertical;
+        }
+        .char-count {
+            text-align: right;
+            color: #aaa;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+        button {
+            width: 100%;
+            padding: 18px;
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #ff4757;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>💢 WINDOWS RAGE 💢</h1>
+        <p>Lampisakan kekesalanmu dalam 280 huruf</p>
+    </div>
+    
+    <div class="selected-tags">
+        <strong>Identitas Kesel Kamu:</strong><br>
+        <span id="displayTags"></span>
+    </div>
+    
+    <textarea 
+        id="rageText" 
+        placeholder="Tulis kekesalanmu di sini..."
+        maxlength="280"
+    ></textarea>
+    
+    <div id="charCount" class="char-count">0/280</div>
+    
+    <button id="submitBtn">💥 POST KE DINDING KESEL 💥</button>
+    
+    <script>
+        // Ambil hashtag dari localStorage
+        const selected = JSON.parse(localStorage.getItem('selectedHashtags')) || [];
+        document.getElementById('displayTags').textContent = selected.join(', ') || 'Tidak ada pilihan';
+        
+        // Character counter
+        const rageText = document.getElementById('rageText');
+        const charCount = document.getElementById('charCount');
+        
+        rageText.addEventListener('input', () => {
+            const length = rageText.value.length;
+            charCount.textContent = `${length}/280`;
+            charCount.style.color = length > 250 ? '#ff6b6b' : length > 200 ? '#ffd166' : '#aaa';
+        });
+        
+        // Submit
+        document.getElementById('submitBtn').addEventListener('click', () => {
+            const text = rageText.value.trim();
+            
+            if (text.length < 10) {
+                alert('Minimal 10 karakter untuk kesel yang berarti!');
+                return;
+            }
+            
+            alert(`✅ KESELANMU TERKIRIM!\n\n"${text}"\n\nAkan muncul di Dinding Kekesalan.`);
+            rageText.value = '';
+            charCount.textContent = '0/280';
+        });
+    </script>
+</body>
+</html>
