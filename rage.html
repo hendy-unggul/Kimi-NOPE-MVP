@@ -1,4 +1,25 @@
-<!DOCTYPE html>
+<script>
+// DEBUG MODE
+console.log('=== DEBUG RAGE.HTML ===');
+console.log('Current URL:', window.location.href);
+console.log('LocalStorage selectedHashtags:', localStorage.getItem('selectedHashtags'));
+console.log('Navigasi tersedia:', {
+    index: window.location.origin + '/index.html',
+    wall: window.location.origin + '/wall.html'
+});
+
+// Test link
+const testLink = document.createElement('a');
+testLink.href = 'index.html';
+testLink.textContent = 'TEST LINK';
+testLink.style.cssText = 'display:block; padding:20px; background:green; color:white; text-align:center; margin:20px;';
+testLink.onclick = function(e) {
+    console.log('Test link clicked');
+    e.preventDefault();
+    window.location.href = 'index.html';
+};
+document.body.prepend(testLink);
+</script><!DOCTYPE html>
 <html>
 <head>
     <title>Rage - Lampisakan Kekesalanmu</title>
