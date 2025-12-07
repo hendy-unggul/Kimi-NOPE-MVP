@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* Global reset */
         * {
             margin: 0;
             padding: 0;
@@ -17,11 +16,10 @@
         body {
             background: #000000;
             color: #ffffff;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
             -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
         }
         
-        /* Remove scrollbar */
         body::-webkit-scrollbar {
             display: none;
         }
@@ -33,35 +31,46 @@
             <!-- Brand Logo -->
             <div class="brand-logo">
                 <h1>NOPE</h1>
-                <div class="tagline">Anonymous Rage</div>
+                <div class="tagline">via Telegram</div>
             </div>
             
-            <!-- Login Form - Clean & Simple -->
+            <!-- Login Form - Clean dengan Telegram -->
             <form id="loginForm" class="login-form">
+                <!-- Telegram Username (auto-filled, read-only) -->
+                <div class="input-group" style="margin-bottom: 15px;">
+                    <label>TELEGRAM ACCOUNT</label>
+                    <div class="telegram-account-display">
+                        <i class="fab fa-telegram"></i>
+                        <span id="telegramUsernameDisplay">@username</span>
+                    </div>
+                </div>
+                
+                <!-- Anonymous Username Input -->
                 <div class="input-group">
                     <label for="anonUsername">
-                        CREATE ANONYMOUS IDENTITY
+                        ANONYMOUS IDENTITY
                     </label>
                     <input 
                         type="text" 
                         id="anonUsername" 
-                        placeholder="e.g., silent_rage" 
+                        placeholder="create username" 
                         autocomplete="off"
                         required
                         maxlength="20"
                         autofocus
                     >
-                    <!-- Feedback akan muncul di sini via JS -->
+                    <div id="usernameFeedback"></div>
                 </div>
                 
                 <button type="submit" class="btn-go" id="submitBtn">
-                    GO!
+                    GO
                 </button>
             </form>
             
             <!-- Clean Note -->
             <div class="login-note">
-                100% anonymous • No registration • No tracking
+                Your Telegram account is only used for access.<br>
+                All content is posted anonymously.
             </div>
         </div>
     </div>
