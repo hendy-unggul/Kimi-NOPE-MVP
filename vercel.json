@@ -1,7 +1,17 @@
 {
-  "rewrites": [
-    { "source": "/", "destination": "/index.html" },
-    { "source": "/rage", "destination": "/rage.html" },
-    { "source": "/wall", "destination": "/wall.html" }
-  ]
+  "name": "blitz-app",
+  "version": "1.0.0",
+  "description": "Platform untuk melampiaskan kekesalan dengan bijak",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx serve .",
+    "dev": "npx serve .",
+    "test": "echo \"No tests specified\" && exit 0"
+  },
+  "keywords": ["blitz", "kekesalan", "social", "platform"],
+  "author": "Blitz Team",
+  "license": "MIT",
+  "devDependencies": {
+    "serve": "^14.0.0"
+  }
 }
