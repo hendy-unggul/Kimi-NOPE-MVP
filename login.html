@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NOPE — Anonymous Rage</title>
+    <title>NOPE</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        /* Global reset */
         * {
             margin: 0;
             padding: 0;
@@ -14,15 +15,15 @@
         }
         
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background: #000000;
+            color: #ffffff;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
         }
         
-        /* Hide scrollbar but keep functionality */
+        /* Remove scrollbar */
         body::-webkit-scrollbar {
-            width: 0px;
-            background: transparent;
+            display: none;
         }
     </style>
 </head>
@@ -32,67 +33,35 @@
             <!-- Brand Logo -->
             <div class="brand-logo">
                 <h1>NOPE</h1>
-                <div class="tagline">Anonymous Rage Platform</div>
+                <div class="tagline">Anonymous Rage</div>
             </div>
             
-            <!-- Stats Bar -->
-            <div class="stats-bar">
-                <div class="stat-item">
-                    <span class="stat-number">10K+</span>
-                    <span class="stat-label">Rages</span>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-number">100%</span>
-                    <span class="stat-label">Anonymous</span>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-number">0</span>
-                    <span class="stat-label">Data Stored</span>
-                </div>
-            </div>
-            
-            <!-- Login Form -->
+            <!-- Login Form - Clean & Simple -->
             <form id="loginForm" class="login-form">
                 <div class="input-group">
-                    <label for="telegramUsername">
-                        <i class="fas fa-at"></i>
-                        Telegram Account
-                    </label>
-                    <input 
-                        type="text" 
-                        id="telegramUsername" 
-                        value="@telegram_user"
-                        readonly
-                    >
-                </div>
-                
-                <div class="input-group">
                     <label for="anonUsername">
-                        <i class="fas fa-user-secret"></i>
-                        Create Anonymous Identity
+                        CREATE ANONYMOUS IDENTITY
                     </label>
                     <input 
                         type="text" 
                         id="anonUsername" 
-                        placeholder="e.g., silent_rage88" 
+                        placeholder="e.g., silent_rage" 
                         autocomplete="off"
                         required
                         maxlength="20"
+                        autofocus
                     >
                     <!-- Feedback akan muncul di sini via JS -->
                 </div>
                 
-                <button type="submit" class="btn-telegram" id="submitBtn">
-                    <i class="fab fa-telegram"></i>
-                    ENTER ANONYMOUSLY
+                <button type="submit" class="btn-go" id="submitBtn">
+                    GO!
                 </button>
             </form>
             
             <!-- Clean Note -->
             <div class="login-note">
-                <strong>100% PRIVATE • NO TRACKING • NO REGISTRATION</strong><br>
-                Your Telegram account is only used for access. 
-                All content is posted under your anonymous identity.
+                100% anonymous • No registration • No tracking
             </div>
         </div>
     </div>
