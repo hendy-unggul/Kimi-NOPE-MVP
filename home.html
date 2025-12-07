@@ -5,60 +5,155 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NOPE - Your Rage Wall</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
         body {
-            background: #000;
-            color: #fff;
+            background: #000000;
+            color: #ffffff;
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            min-height: 100vh;
             padding: 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
             text-align: center;
         }
         
         h1 {
-            margin-top: 100px;
             font-size: 3rem;
-        }
-        
-        p {
-            color: #888;
-            margin-top: 20px;
-        }
-        
-        a {
+            margin: 40px 0 20px;
             color: #ff3b30;
-            text-decoration: none;
-            display: inline-block;
-            margin-top: 30px;
-            padding: 10px 20px;
-            border: 1px solid #ff3b30;
+        }
+        
+        .user-welcome {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 30px;
+        }
+        
+        .hashtags-display {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: left;
+        }
+        
+        .hashtag-item {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 10px 15px;
+            margin: 5px 0;
             border-radius: 8px;
+            display: inline-block;
+            margin-right: 10px;
+            font-weight: bold;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: #ffffff;
+            color: #000000;
+            padding: 15px 30px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: bold;
+            margin: 10px;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn-logout {
+            background: rgba(255, 59, 48, 0.2);
+            color: #ff3b30;
+            border: 1px solid rgba(255, 59, 48, 0.3);
+        }
+        
+        .debug-info {
+            margin-top: 40px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            font-size: 0.9rem;
+            text-align: left;
         }
     </style>
 </head>
 <body>
-    <h1>NOPE WALL</h1>
-    <p>Main feed page - Coming soon</p>
-    <a href="rage.html">Back to Onboarding</a>
-    <br>
-    <a href="login.html">Logout</a>
+    <div class="container">
+        <h1>NOPE WALL</h1>
+        
+        <div id="content">
+            <p>Loading your rage wall...</p>
+        </div>
+        
+        <div class="debug-info">
+            <strong>Debug Info:</strong><br>
+            <div id="debug"></div>
+        </div>
+    </div>
     
     <script>
-        // Check login
+        console.log('Wall page loaded');
+        
+        // Check login and onboarding
         const isLoggedIn = localStorage.getItem('nope_logged_in') === 'true';
         const onboardingComplete = localStorage.getItem('nope_onboarding_complete') === 'true';
         const anonUsername = localStorage.getItem('nope_anon_username');
+        const selectedHashtags = JSON.parse(localStorage.getItem('nope_selected_hashtags') || '[]');
+        
+        console.log('Wall check:', { isLoggedIn, onboardingComplete, anonUsername, selectedHashtags });
+        
+        // Update debug info
+        document.getElementById('debug').innerHTML = `
+            User: ${anonUsername || 'none'}<br>
+            Logged in: ${isLoggedIn}<br>
+            Onboarding complete: ${onboardingComplete}<br>
+            Selected hashtags: ${selectedHashtags.length}
+        `;
         
         if (!isLoggedIn || !anonUsername) {
-            window.location.href = 'login.html';
-        } else if (!onboardingComplete) {
-            window.location.href = 'rage.html';
-        } else {
-            document.body.innerHTML = `
-                <h1>Welcome, ${anonUsername}!</h1>
-                <p>Your rage wall is loading...</p>
-                <div style="margin-top: 50px;">
-                    <a href="login.html" onclick="localStorage.clear()">Logout</a>
-                </div>
+            // Not logged in
+            document.getElementById('content').innerHTML = `
+                <p style="color: #ff3b30;">You are not logged in.</p>
+                <a href="login.html" class="btn">Go to Login</a>
             `;
+        } else if (!onboardingComplete || selectedHashtags.length === 0) {
+            // Onboarding not complete
+            document.getElementById('content').innerHTML = `
+                <p style="color: #ff9500;">Please complete onboarding first.</p>
+                <a href="rage.html" class="btn">Go to Onboarding</a>
+            `;
+        } else {
+            // Everything OK - show wall
+            document.getElementById('content').innerHTML = `
+                <div class="user-welcome">
+                    Welcome back, <strong>${anonUsername}</strong>
+                </div>
+                
+                <div class="hashtags-display">
+                    <p>Your rage hashtags:</p>
+                    ${selectedHashtags.map(tag => `<div class="hashtag-item">${tag}</div>`).join('')}
+                </div>
+                
+                <p style="margin: 30px 0; color: rgba(255, 255, 255, 0.6);">
+                    Your personalized rage feed is coming soon...
+                </p>
+                
+                <a href="rage.html" class="btn">Edit Hashtags</a>
+                <button onclick="logout()" class="btn btn-logout">LOGOUT</button>
+            `;
+        }
+        
+        function logout() {
+            localStorage.clear();
+            window.location.href = 'login.html';
         }
     </script>
 </body>
