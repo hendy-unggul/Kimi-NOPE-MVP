@@ -3,990 +3,407 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Onboarding - NOPE</title>
+    <title>NOPE - Choose Your Rage</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* Onboarding Container */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: #000000;
+            color: #ffffff;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            min-height: 100vh;
+        }
+        
         .onboarding-container {
             max-width: 800px;
             margin: 0 auto;
-            padding: 40px 20px;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
+            padding: 30px 20px;
         }
         
-        /* Progress Bar */
-        .onboarding-progress {
-            display: flex;
-            justify-content: space-between;
+        /* Header */
+        .onboarding-header {
+            text-align: center;
             margin-bottom: 40px;
-            position: relative;
         }
         
-        .onboarding-progress::before {
-            content: '';
-            position: absolute;
-            top: 15px;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: #eee;
-            z-index: 1;
+        .onboarding-header h1 {
+            font-size: 2.5rem;
+            font-weight: 900;
+            margin-bottom: 10px;
+            color: #ffffff;
         }
         
-        .progress-step {
-            text-align: center;
-            position: relative;
-            z-index: 2;
-            flex: 1;
-        }
-        
-        .step-circle {
-            width: 30px;
-            height: 30px;
-            background: white;
-            border: 3px solid #eee;
-            border-radius: 50%;
-            margin: 0 auto 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            color: #999;
-            transition: all 0.3s;
-        }
-        
-        .progress-step.active .step-circle {
-            background: #667eea;
-            border-color: #667eea;
-            color: white;
-        }
-        
-        .progress-step.completed .step-circle {
-            background: #4ecdc4;
-            border-color: #4ecdc4;
-            color: white;
-        }
-        
-        .step-label {
-            font-size: 12px;
-            color: #999;
-        }
-        
-        .progress-step.active .step-label {
-            color: #667eea;
-            font-weight: 600;
-        }
-        
-        /* Step Content */
-        .step-content {
-            display: none;
-            animation: fadeIn 0.5s;
-        }
-        
-        .step-content.active {
-            display: block;
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        /* Step 1: Welcome */
-        .welcome-step {
-            text-align: center;
-            padding: 40px 20px;
-        }
-        
-        .nope-logo-large {
-            font-size: 64px;
-            color: #667eea;
-            margin-bottom: 20px;
-            animation: pulse 2s infinite;
-        }
-        
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-        }
-        
-        .welcome-title {
-            font-size: 36px;
-            margin-bottom: 15px;
-            color: #333;
-        }
-        
-        .welcome-subtitle {
-            font-size: 18px;
-            color: #666;
-            margin-bottom: 30px;
-            line-height: 1.6;
-        }
-        
-        /* Step 2: Choose 3 NOPEs */
-        .choose-nopes-step {
-            padding: 20px 0;
-        }
-        
-        .step-title {
-            font-size: 28px;
-            margin-bottom: 15px;
-            color: #333;
-        }
-        
-        .step-description {
-            color: #666;
-            margin-bottom: 30px;
-            line-height: 1.6;
-        }
-        
-        /* Zone Tabs for NOPE Selection */
-        .zone-tabs {
-            display: flex;
-            border-bottom: 2px solid #eee;
-            margin-bottom: 25px;
-            overflow-x: auto;
-        }
-        
-        .zone-tab {
-            padding: 15px 20px;
-            background: none;
-            border: none;
-            border-bottom: 3px solid transparent;
-            cursor: pointer;
-            white-space: nowrap;
-            font-weight: 600;
-            color: #666;
-            transition: all 0.3s;
-            flex: 1;
-            text-align: center;
-        }
-        
-        .zone-tab:hover {
-            color: #667eea;
-        }
-        
-        .zone-tab.active {
-            color: #667eea;
-            border-bottom-color: #667eea;
-            background: #f8faff;
-        }
-        
-        .zone-tab:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-        
-        /* Zone Info */
-        .zone-info {
-            padding: 15px;
-            background: #f8f9fa;
-            border-radius: 10px;
-            margin-bottom: 25px;
-        }
-        
-        .zone-name {
-            font-weight: bold;
-            color: #333;
-            margin-bottom: 5px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .zone-description {
-            font-size: 14px;
-            color: #666;
+        .onboarding-header p {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 1rem;
+            max-width: 500px;
+            margin: 0 auto;
             line-height: 1.5;
         }
         
-        /* Hashtag Selection */
-        .hashtag-grid {
+        /* Hashtag Grid */
+        .hashtag-selection {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 15px;
-            margin-bottom: 30px;
-            max-height: 300px;
-            overflow-y: auto;
-            padding: 10px;
+            gap: 20px;
+            margin-bottom: 40px;
         }
         
-        .hashtag-option {
-            padding: 20px;
-            background: white;
-            border: 2px solid #e0e0e0;
-            border-radius: 10px;
+        .hashtag-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 25px;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: all 0.2s ease;
+            user-select: none;
         }
         
-        .hashtag-option:hover {
-            border-color: #667eea;
-            background: #f0f7ff;
+        .hashtag-card:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.2);
             transform: translateY(-2px);
         }
         
-        .hashtag-option.selected {
-            border-color: #4ecdc4;
-            background: #f0fffc;
-            box-shadow: 0 5px 15px rgba(78,205,196,0.2);
+        .hashtag-card.selected {
+            background: rgba(255, 59, 48, 0.1);
+            border-color: #ff3b30;
+            box-shadow: 0 5px 20px rgba(255, 59, 48, 0.2);
         }
         
-        .hashtag-zone {
-            font-size: 11px;
-            color: #888;
+        .hashtag-name {
+            font-size: 1.3rem;
+            font-weight: 700;
             margin-bottom: 10px;
+            color: #ffffff;
+        }
+        
+        .hashtag-category {
             display: inline-block;
-            padding: 4px 10px;
-            background: #eee;
-            border-radius: 12px;
-        }
-        
-        .hashtag-text {
-            font-weight: bold;
-            color: #333;
-            margin-bottom: 8px;
-            font-size: 16px;
-        }
-        
-        .hashtag-desc {
-            font-size: 13px;
-            color: #666;
-            line-height: 1.4;
-            margin-bottom: 5px;
-        }
-        
-        .hashtag-example {
-            font-size: 11px;
-            color: #888;
-            font-style: italic;
-            margin-top: 8px;
-            padding-top: 8px;
-            border-top: 1px dashed #eee;
-        }
-        
-        /* Selected NOPEs Preview */
-        .selected-nopes-preview {
-            background: white;
-            border-radius: 15px;
-            padding: 25px;
-            margin-top: 30px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
-            border: 2px solid #f0f0f0;
-        }
-        
-        .preview-title {
-            font-size: 18px;
-            color: #333;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .selected-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-            margin-bottom: 20px;
-        }
-        
-        .selected-tag {
-            padding: 12px 20px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border-radius: 25px;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            box-shadow: 0 3px 10px rgba(102,126,234,0.3);
-        }
-        
-        .remove-tag {
-            background: rgba(255,255,255,0.2);
-            border: none;
-            color: white;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 12px;
-            transition: all 0.3s;
-        }
-        
-        .remove-tag:hover {
-            background: rgba(255,255,255,0.3);
-            transform: scale(1.1);
-        }
-        
-        /* Step 3: Write First Rant */
-        .rant-step {
-            padding: 20px 0;
-        }
-        
-        .rant-counter {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            background: rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.7);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
             margin-bottom: 15px;
         }
         
-        .char-count {
-            font-size: 14px;
-            color: #666;
-        }
-        
-        .char-count.warning {
-            color: #ff6b6b;
-        }
-        
-        .rant-textarea {
-            width: 100%;
-            min-height: 200px;
-            padding: 20px;
-            border: 2px solid #e0e0e0;
-            border-radius: 15px;
-            font-size: 16px;
-            line-height: 1.6;
-            resize: vertical;
-            transition: all 0.3s;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-        }
-        
-        .rant-textarea:focus {
-            outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102,126,234,0.1);
-        }
-        
-        .rant-hint {
-            font-size: 14px;
-            color: #888;
+        .hashtag-count {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.9rem;
             margin-top: 10px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
         }
         
-        /* Navigation Buttons */
-        .onboarding-nav {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 40px;
-            padding-top: 30px;
-            border-top: 1px solid #eee;
+        .hashtag-count i {
+            margin-right: 5px;
         }
         
-        .nav-btn {
-            padding: 12px 30px;
-            border-radius: 25px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            border: 2px solid transparent;
+        /* Selection Counter */
+        .selection-counter {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
         }
         
-        .btn-prev {
-            background: #f8f9fa;
-            color: #666;
-            border-color: #e0e0e0;
+        .counter-number {
+            font-size: 3rem;
+            font-weight: 900;
+            color: #ff3b30;
+            line-height: 1;
         }
         
-        .btn-prev:hover {
-            background: #e9ecef;
+        .counter-text {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
+            margin-top: 10px;
         }
         
-        .btn-next {
-            background: #667eea;
-            color: white;
-        }
-        
-        .btn-next:hover {
-            background: #5a67d8;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(102,126,234,0.3);
-        }
-        
-        .btn-next:disabled {
-            background: #ccc;
-            cursor: not-allowed;
-            transform: none;
-            box-shadow: none;
-        }
-        
-        .btn-skip {
-            background: transparent;
-            color: #888;
+        /* Continue Button */
+        .btn-continue {
+            display: block;
+            width: 200px;
+            margin: 40px auto 0;
+            padding: 18px;
+            background: #ffffff;
+            color: #000000;
             border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: center;
+            text-decoration: none;
         }
         
-        .btn-skip:hover {
-            color: #666;
-            text-decoration: underline;
+        .btn-continue:hover:not(:disabled) {
+            background: rgba(255, 255, 255, 0.9);
+            transform: translateY(-2px);
+        }
+        
+        .btn-continue:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+        
+        /* Back Button */
+        .btn-back {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #ffffff;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            font-size: 1.2rem;
+        }
+        
+        .btn-back:hover {
+            background: rgba(255, 255, 255, 0.2);
         }
         
         /* Responsive */
         @media (max-width: 768px) {
+            .hashtag-selection {
+                grid-template-columns: 1fr;
+            }
+            
+            .onboarding-header h1 {
+                font-size: 2rem;
+            }
+            
+            .counter-number {
+                font-size: 2.5rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
             .onboarding-container {
                 padding: 20px 15px;
             }
             
-            .zone-tabs {
-                flex-wrap: wrap;
-            }
-            
-            .zone-tab {
-                flex: none;
-                padding: 10px 15px;
-                font-size: 14px;
-            }
-            
-            .hashtag-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .welcome-title {
-                font-size: 28px;
-            }
-            
-            .step-title {
-                font-size: 24px;
-            }
-            
-            .onboarding-nav {
-                flex-direction: column;
-                gap: 15px;
-            }
-            
-            .nav-btn {
-                width: 100%;
-                justify-content: center;
+            .btn-back {
+                top: 15px;
+                left: 15px;
             }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <main class="onboarding-container">
-            <!-- Progress Bar -->
-            <div class="onboarding-progress">
-                <div class="progress-step active" id="step-1">
-                    <div class="step-circle">1</div>
-                    <div class="step-label">Welcome</div>
-                </div>
-                <div class="progress-step" id="step-2">
-                    <div class="step-circle">2</div>
-                    <div class="step-label">Choose 3 NOPEs</div>
-                </div>
-                <div class="progress-step" id="step-3">
-                    <div class="step-circle">3</div>
-                    <div class="step-label">First Rant</div>
-                </div>
-            </div>
-
-            <!-- Step 1: Welcome -->
-            <div class="step-content active" id="step-content-1">
-                <div class="welcome-step">
-                    <div class="nope-logo-large">
-                        <i class="fas fa-times-circle"></i>
-                    </div>
-                    
-                    <h1 class="welcome-title">Welcome to NOPE</h1>
-                    
-                    <p class="welcome-subtitle">
-                        A space to say NOPE to things that bother you.<br>
-                        Choose 3 things you're done with, and share your first rant.
-                    </p>
-                    
-                    <div style="max-width: 500px; margin: 30px auto; background: #f8f9fa; padding: 20px; border-radius: 10px;">
-                        <h4 style="margin: 0 0 10px 0; color: #333;">How NOPE Works:</h4>
-                        <ol style="margin: 0; padding-left: 20px; color: #666; line-height: 1.8;">
-                            <li><strong>Choose 3 NOPEs</strong> - Pick hashtags from 4 emotional zones</li>
-                            <li><strong>Write your first rant</strong> - 280 characters to vent</li>
-                            <li><strong>Join the feed</strong> - See what others are saying NOPE to</li>
-                            <li><strong>Monthly artefact</strong> - Upload every 30 days to edit your NOPEs</li>
-                        </ol>
-                    </div>
-                    
-                    <button class="btn-next" onclick="nextStep()" style="margin-top: 20px;">
-                        Let's Begin <i class="fas fa-arrow-right"></i>
-                    </button>
-                </div>
-            </div>
-
-            <!-- Step 2: Choose 3 NOPEs -->
-            <div class="step-content" id="step-content-2">
-                <div class="choose-nopes-step">
-                    <h2 class="step-title">Choose Your 3 NOPEs</h2>
-                    <p class="step-description">
-                        Select one hashtag from each of the first three zones.<br>
-                        These represent what you're currently saying NOPE to.
-                    </p>
-
-                    <!-- Zone Tabs -->
-                    <div class="zone-tabs">
-                        <button class="zone-tab active" onclick="switchZone('popculture')">
-                            1️⃣ POP CULTURE
-                        </button>
-                        <button class="zone-tab" onclick="switchZone('personalpain')">
-                            2️⃣ PERSONAL PAIN
-                        </button>
-                        <button class="zone-tab" onclick="switchZone('socialsickness')">
-                            3️⃣ SOCIAL SICKNESS
-                        </button>
-                        <button class="zone-tab" onclick="switchZone('movement')" disabled>
-                            4️⃣ MOVEMENT 🔒
-                        </button>
-                    </div>
-
-                    <!-- Zone Info -->
-                    <div class="zone-info" id="zone-info">
-                        <div class="zone-name">
-                            <span id="current-zone-emoji">1️⃣</span>
-                            <span id="current-zone-name">POP CULTURE</span>
-                        </div>
-                        <div class="zone-description" id="current-zone-desc">
-                            Gateway to NOPE world - viral, relatable, light things that annoy you
-                        </div>
-                    </div>
-
-                    <!-- Hashtag Selection -->
-                    <div class="hashtag-grid" id="hashtag-grid">
-                        <!-- Populated by JavaScript -->
-                    </div>
-
-                    <!-- Selected NOPEs Preview -->
-                    <div class="selected-nopes-preview" id="selected-preview" style="display: none;">
-                        <div class="preview-title">
-                            <i class="fas fa-check-circle" style="color: #4ecdc4;"></i>
-                            Your Selected NOPEs
-                        </div>
-                        
-                        <div class="selected-tags" id="selected-tags">
-                            <!-- Selected tags will appear here -->
-                        </div>
-                        
-                        <p style="color: #666; font-size: 14px; margin: 0;">
-                            <i class="fas fa-info-circle"></i> 
-                            You can change these after uploading a monthly artefact photo.
-                        </p>
-                    </div>
-                </div>
-
-                <div class="onboarding-nav">
-                    <button class="btn-prev" onclick="prevStep()">
-                        <i class="fas fa-arrow-left"></i> Back
-                    </button>
-                    <button class="btn-next" id="next-step-2" onclick="nextStep()" disabled>
-                        Continue <i class="fas fa-arrow-right"></i>
-                    </button>
-                </div>
-            </div>
-
-            <!-- Step 3: Write First Rant -->
-            <div class="step-content" id="step-content-3">
-                <div class="rant-step">
-                    <h2 class="step-title">Your First Rant</h2>
-                    <p class="step-description">
-                        Write your first 280-character rant. This will be posted to the NOPE feed.<br>
-                        Be honest, be real. This is your space to vent.
-                    </p>
-
-                    <div class="rant-counter">
-                        <div class="char-count" id="char-count">0/280 characters</div>
-                        <div style="font-size: 14px; color: #888;">
-                            <i class="fas fa-hashtag"></i> Your NOPEs will auto-tag
-                        </div>
-                    </div>
-
-                    <textarea 
-                        class="rant-textarea" 
-                        id="rant-textarea" 
-                        placeholder="What's bothering you today? Be specific, be honest. This is your safe space to rant..."
-                        maxlength="280"
-                        oninput="updateCharCount()"
-                    ></textarea>
-
-                    <div class="rant-hint">
-                        <i class="fas fa-lightbulb"></i>
-                        Tip: Focus on how it makes you feel, not just what happened.
-                    </div>
-
-                    <!-- Auto-tags Preview -->
-                    <div style="margin-top: 30px;">
-                        <div style="font-weight: 600; margin-bottom: 10px; color: #333;">
-                            <i class="fas fa-tags"></i> This rant will be tagged with:
-                        </div>
-                        <div id="auto-tags" style="display: flex; flex-wrap: wrap; gap: 10px;">
-                            <!-- Auto-generated from selected NOPEs -->
-                        </div>
-                    </div>
-                </div>
-
-                <div class="onboarding-nav">
-                    <button class="btn-prev" onclick="prevStep()">
-                        <i class="fas fa-arrow-left"></i> Back to NOPEs
-                    </button>
-                    <button class="btn-next" id="submit-rant-btn" onclick="submitRant()">
-                        <i class="fas fa-paper-plane"></i> Post Rant & Finish
-                    </button>
-                </div>
-            </div>
-        </main>
+    <!-- Back Button -->
+    <a href="login.html" class="btn-back">
+        <i class="fas fa-arrow-left"></i>
+    </a>
+    
+    <div class="onboarding-container">
+        <!-- Header -->
+        <div class="onboarding-header">
+            <h1>Choose Your Rage</h1>
+            <p>Select 3 hashtags that represent what annoys you the most. This will customize your feed.</p>
+        </div>
+        
+        <!-- Selection Counter -->
+        <div class="selection-counter">
+            <div class="counter-number" id="selectedCount">0</div>
+            <div class="counter-text">out of 3 selected</div>
+        </div>
+        
+        <!-- Hashtag Grid -->
+        <div class="hashtag-selection" id="hashtagSelection">
+            <!-- Hashtags will be loaded by JavaScript -->
+        </div>
+        
+        <!-- Continue Button -->
+        <button class="btn-continue" id="btnContinue" disabled>
+            CONTINUE
+        </button>
     </div>
-
+    
+    <script src="script.js"></script>
     <script>
-        // NOPE Zones Data
-        const nopeZones = {
-            popculture: {
-                name: "POP CULTURE",
-                emoji: "1️⃣",
-                description: "Gateway to NOPE world - viral, relatable, light things that annoy you",
-                hashtags: [
-                    {
-                        tag: "#FilmEndingGaje",
-                        description: "Film/series ending tidak masuk akal",
-                        example: "Ending Game of Thrones season 8, Titanic yang tenggelam"
-                    },
-                    {
-                        tag: "#BeliTiketJualGinjal", 
-                        description: "Harga tiket konser/event gila-gilaan",
-                        example: "Taylor Swift Eras Tour, Coldplay sky-high prices"
-                    },
-                    {
-                        tag: "#InfluencerNgehek",
-                        description: "Influencer bikin kesal",
-                        example: "Promosi produk sampah, flexing berlebihan"
-                    }
-                ]
-            },
-            
-            personalpain: {
-                name: "PERSONAL PAIN", 
-                emoji: "2️⃣",
-                description: "Deep personal experiences that hurt",
-                hashtags: [
-                    {
-                        tag: "#DighostingGebetan",
-                        description: "Dighosting orang yang disuka",
-                        example: "Chat sudah baca tapi tidak dibales"
-                    },
-                    {
-                        tag: "#DiajakJalanTapiKempes",
-                        description: "Janji jalan-jalan batal",
-                        example: "Diajak ke Bali tapi ujung-ujungnya di rumah aja"
-                    },
-                    {
-                        tag: "#MagangDigajiSertifikat",
-                        description: "Magang cuma dapat sertifikat, bukan duit",
-                        example: "Kerja 3 bulan cuma dapat terima kasih"
-                    }
-                ]
-            },
-            
-            socialsickness: {
-                name: "SOCIAL SICKNESS",
-                emoji: "3️⃣",
-                description: "Toxic social patterns in society", 
-                hashtags: [
-                    {
-                        tag: "#RencanaPlinPlan",
-                        description: "Orang yang plin-plan bikin rencana",
-                        example: "Kata mau ke mall jam 3, jam 4 bilang capek"
-                    },
-                    {
-                        tag: "#DramaQueenAnjay",
-                        description: "Orang yang bikin drama berlebihan",
-                        example: "Masalah kecil dibesar-besarkan kayak sinetron"
-                    },
-                    {
-                        tag: "#BacotLambeTurah",
-                        description: "Banyak omong tapi kosong",
-                        example: "Janji muluk-muluk tapi eksekusi nol"
-                    }
-                ]
-            },
-            
-            movement: {
-                name: "MOVEMENT",
-                emoji: "4️⃣", 
-                description: "Action and mindset change - unlocks after 6 months",
-                locked: true,
-                hashtags: [
-                    {
-                        tag: "#SayNOPEBukanPilihan",
-                        description: "Bilang NOPE itu hak, bukan pilihan",
-                        example: "Menolak toxic work culture itu hak pekerja"
-                    },
-                    {
-                        tag: "#NOPEItuHakKita",
-                        description: "NOPE adalah hak dasar kita",
-                        example: "Hak untuk menolak tanpa merasa bersalah"
-                    },
-                    {
-                        tag: "#NOPEBersamaKitaKuat",
-                        description: "Solidaritas komunitas NOPE",
-                        example: "Support system untuk saling menguatkan"
-                    }
-                ]
-            }
-        };
-
-        // User's selected NOPEs
-        let selectedNOPEs = [];
-        let currentStep = 1;
-
-        // Initialize
+        // Onboarding-specific JavaScript
         document.addEventListener('DOMContentLoaded', function() {
-            // Load zone 1 by default
-            switchZone('popculture');
-        });
-
-        // Navigation between steps
-        function nextStep() {
-            if (currentStep === 1) {
-                // Step 1 → Step 2
-                showStep(2);
-            } else if (currentStep === 2) {
-                // Validate Step 2
-                if (selectedNOPEs.length !== 3) {
-                    alert('Please select exactly 3 NOPEs (one from each of the first 3 zones)');
-                    return;
-                }
-                
-                // Check zones are different
-                const zones = selectedNOPEs.map(n => n.zone);
-                const uniqueZones = [...new Set(zones)];
-                if (uniqueZones.length !== 3) {
-                    alert('Please select one NOPE from each of the first 3 zones');
-                    return;
-                }
-                
-                // Step 2 → Step 3
-                showStep(3);
-                updateAutoTags();
-            }
-        }
-
-        function prevStep() {
-            if (currentStep === 2) {
-                showStep(1);
-            } else if (currentStep === 3) {
-                showStep(2);
-            }
-        }
-
-        function showStep(stepNumber) {
-            // Hide all steps
-            document.querySelectorAll('.step-content').forEach(step => {
-                step.classList.remove('active');
-            });
+            // Check if user is logged in
+            const isLoggedIn = localStorage.getItem('nope_logged_in') === 'true';
+            const anonUsername = localStorage.getItem('nope_anon_username');
             
-            // Update progress steps
-            document.querySelectorAll('.progress-step').forEach((step, index) => {
-                step.classList.remove('active');
-                if (index + 1 < stepNumber) {
-                    step.classList.add('completed');
-                } else if (index + 1 === stepNumber) {
-                    step.classList.add('active');
+            if (!isLoggedIn || !anonUsername) {
+                window.location.href = 'login.html';
+                return;
+            }
+            
+            console.log('Onboarding for:', anonUsername);
+            
+            // Hashtag Data
+            const HASHTAGS = [
+                { id: 1, name: '#MagangDigajiSertifikat', category: 'Personal Pain', posts: 245 },
+                { id: 2, name: '#DiajakJalanTapiKempes', category: 'Personal Pain', posts: 178 },
+                { id: 3, name: '#DiphostingGebetan', category: 'Personal Pain', posts: 312 },
+                { id: 4, name: '#DramaQueenAnjay', category: 'Social Sickness', posts: 189 },
+                { id: 5, name: '#BacotLambeTurah', category: 'Social Sickness', posts: 321 },
+                { id: 6, name: '#RencanaPlinPlan', category: 'Social Sickness', posts: 267 },
+                { id: 7, name: '#BellTiketJualSinjal', category: 'Pop Culture', posts: 89 },
+                { id: 8, name: '#InfluencerNgchek', category: 'Pop Culture', posts: 203 },
+                { id: 9, name: '#FilmEndingGaje', category: 'Pop Culture', posts: 142 }
+            ];
+            
+            let selectedHashtags = [];
+            const MAX_SELECTION = 3;
+            const container = document.getElementById('hashtagSelection');
+            const counter = document.getElementById('selectedCount');
+            const continueBtn = document.getElementById('btnContinue');
+            
+            // Render hashtags
+            function renderHashtags() {
+                container.innerHTML = '';
+                
+                HASHTAGS.forEach(hashtag => {
+                    const isSelected = selectedHashtags.includes(hashtag.id);
+                    
+                    const card = document.createElement('div');
+                    card.className = `hashtag-card ${isSelected ? 'selected' : ''}`;
+                    card.dataset.id = hashtag.id;
+                    
+                    card.innerHTML = `
+                        <div class="hashtag-name">${hashtag.name}</div>
+                        <div class="hashtag-category">${hashtag.category}</div>
+                        <div class="hashtag-count">
+                            <i class="fas fa-fire"></i>
+                            ${hashtag.posts} rages
+                        </div>
+                        ${isSelected ? '<div style="color: #ff3b30; margin-top: 10px; font-weight: 600;">✓ SELECTED</div>' : ''}
+                    `;
+                    
+                    card.addEventListener('click', () => toggleHashtag(hashtag.id));
+                    container.appendChild(card);
+                });
+                
+                updateCounter();
+            }
+            
+            // Toggle hashtag selection
+            function toggleHashtag(id) {
+                const index = selectedHashtags.indexOf(id);
+                
+                if (index === -1) {
+                    // Add if not reached max
+                    if (selectedHashtags.length < MAX_SELECTION) {
+                        selectedHashtags.push(id);
+                    } else {
+                        showNotification(`Max ${MAX_SELECTION} hashtags allowed`);
+                        return;
+                    }
                 } else {
-                    step.classList.remove('completed');
+                    // Remove if already selected
+                    selectedHashtags.splice(index, 1);
                 }
-            });
-            
-            // Show target step
-            document.getElementById(`step-content-${stepNumber}`).classList.add('active');
-            currentStep = stepNumber;
-            
-            // Update buttons
-            updateNavigationButtons();
-        }
-
-        function updateNavigationButtons() {
-            if (currentStep === 2) {
-                const nextButton = document.getElementById('next-step-2');
-                nextButton.disabled = selectedNOPEs.length !== 3;
+                
+                renderHashtags();
+                updateContinueButton();
             }
-        }
-
-        // Zone switching
-        function switchZone(zoneId) {
-            const zone = nopeZones[zoneId];
             
-            // Update active tab
-            document.querySelectorAll('.zone-tab').forEach(tab => {
-                tab.classList.remove('active');
-            });
-            event.target.classList.add('active');
+            // Update counter
+            function updateCounter() {
+                if (counter) {
+                    counter.textContent = selectedHashtags.length;
+                    
+                    // Change color based on selection
+                    if (selectedHashtags.length === MAX_SELECTION) {
+                        counter.style.color = '#ff3b30';
+                    } else if (selectedHashtags.length > 0) {
+                        counter.style.color = '#ff9500';
+                    } else {
+                        counter.style.color = '#8e8e93';
+                    }
+                }
+            }
             
-            // Update zone info
-            document.getElementById('current-zone-emoji').textContent = zone.emoji;
-            document.getElementById('current-zone-name').textContent = zone.name;
-            document.getElementById('current-zone-desc').textContent = zone.description;
+            // Update continue button
+            function updateContinueButton() {
+                if (continueBtn) {
+                    continueBtn.disabled = selectedHashtags.length !== MAX_SELECTION;
+                }
+            }
             
-            // Generate hashtag options
-            const hashtagGrid = document.getElementById('hashtag-grid');
-            hashtagGrid.innerHTML = zone.hashtags.map(hashtag => {
-                const isSelected = selectedNOPEs.some(n => n.tag === hashtag.tag);
-                return `
-                    <div class="hashtag-option ${isSelected ? 'selected' : ''}" 
-                         onclick="selectHashtag('${zoneId}', '${hashtag.tag}')">
-                        <div class="hashtag-zone">${zone.emoji} ${zone.name}</div>
-                        <div class="hashtag-text">${hashtag.tag}</div>
-                        <div class="hashtag-desc">${hashtag.description}</div>
-                        <div class="hashtag-example">e.g., ${hashtag.example}</div>
-                        ${isSelected ? '<div style="margin-top: 10px; font-size: 12px; color: #4ecdc4;"><i class="fas fa-check-circle"></i> Selected</div>' : ''}
-                    </div>
+            // Show notification
+            function showNotification(message) {
+                const notification = document.createElement('div');
+                notification.textContent = message;
+                notification.style.cssText = `
+                    position: fixed;
+                    top: 20px;
+                    right: 20px;
+                    background: rgba(255, 59, 48, 0.9);
+                    color: white;
+                    padding: 15px 25px;
+                    border-radius: 10px;
+                    z-index: 9999;
+                    animation: slideIn 0.3s ease;
+                    font-weight: 600;
+                    backdrop-filter: blur(10px);
                 `;
-            }).join('');
-        }
-
-        // Select/deselect hashtag
-        function selectHashtag(zoneId, tag) {
-            const zone = nopeZones[zoneId];
-            const hashtag = zone.hashtags.find(h => h.tag === tag);
+                
+                document.body.appendChild(notification);
+                
+                setTimeout(() => {
+                    notification.remove();
+                }, 2000);
+            }
             
-            // Check if this zone already has a selection
-            const existingZoneIndex = selectedNOPEs.findIndex(n => n.zone === zoneId);
+            // Continue to next page
+            continueBtn.addEventListener('click', function() {
+                if (selectedHashtags.length !== MAX_SELECTION) return;
+                
+                // Save selected hashtags
+                const selectedHashtagNames = selectedHashtags.map(id => {
+                    const hashtag = HASHTAGS.find(h => h.id === id);
+                    return hashtag ? hashtag.name : '';
+                }).filter(name => name);
+                
+                localStorage.setItem('nope_selected_hashtags', JSON.stringify(selectedHashtagNames));
+                localStorage.setItem('nope_onboarding_complete', 'true');
+                
+                // Show loading
+                continueBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> LOADING...';
+                continueBtn.disabled = true;
+                
+                // Redirect to wall
+                setTimeout(() => {
+                    window.location.href = 'wall.html';
+                }, 1000);
+            });
             
-            if (existingZoneIndex !== -1) {
-                // Replace existing hashtag from same zone
-                selectedNOPEs[existingZoneIndex] = {
-                    zone: zoneId,
-                    tag: hashtag.tag,
-                    desc: hashtag.description
-                };
-            } else {
-                // Check if we have less than 3 NOPEs
-                if (selectedNOPEs.length < 3) {
-                    selectedNOPEs.push({
-                        zone: zoneId,
-                        tag: hashtag.tag,
-                        desc: hashtag.description
-                    });
-                } else {
-                    alert('You can only select 3 NOPEs total. Remove one first or replace existing.');
-                    return;
+            // Initial render
+            renderHashtags();
+            
+            // Add animations
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes slideIn {
+                    from { transform: translateX(100%); opacity: 0; }
+                    to { transform: translateX(0); opacity: 1; }
                 }
-            }
-            
-            // Update UI
-            updateSelectedPreview();
-            updateNavigationButtons();
-            // Refresh current zone view
-            switchZone(zoneId);
-        }
-
-        // Remove selected NOPE
-        function removeNOPE(tag) {
-            selectedNOPEs = selectedNOPEs.filter(n => n.tag !== tag);
-            updateSelectedPreview();
-            updateNavigationButtons();
-            
-            // Refresh current zone view
-            const currentZone = document.querySelector('.zone-tab.active');
-            if (currentZone) {
-                const zoneId = currentZone.textContent.includes('POP CULTURE') ? 'popculture' :
-                              currentZone.textContent.includes('PERSONAL PAIN') ? 'personalpain' :
-                              currentZone.textContent.includes('SOCIAL SICKNESS') ? 'socialsickness' : 'movement';
-                switchZone(zoneId);
-            }
-        }
-
-        // Update selected NOPEs preview
-        function updateSelectedPreview() {
-            const preview = document.getElementById('selected-preview');
-            const tagsContainer = document.getElementById('selected-tags');
-            
-            if (selectedNOPEs.length > 0) {
-                preview.style.display = 'block';
-                tagsContainer.innerHTML = selectedNOPEs.map(nope => `
-                    <div class="selected-tag">
-                        ${nope.tag}
-                        <button class="remove-tag" onclick="removeNOPE('${nope.tag}')">×</button>
-                    </div>
-                `).join('');
-            } else {
-                preview.style.display = 'none';
-            }
-        }
-
-        // Character count for rant
-        function updateCharCount() {
-            const textarea = document.getElementById('rant-textarea');
-            const charCount = document.getElementById('char-count');
-            const count = textarea.value.length;
-            
-            charCount.textContent = `${count}/280 characters`;
-            
-            if (count > 250) {
-                charCount.classList.add('warning');
-            } else {
-                charCount.classList.remove('warning');
-            }
-            
-            // Update submit button
-            const submitBtn = document.getElementById('submit-rant-btn');
-            submitBtn.disabled = count === 0;
-        }
-
-        // Update auto-tags preview
-        function updateAutoTags() {
-            const autoTags = document.getElementById('auto-tags');
-            autoTags.innerHTML = selectedNOPEs.map(nope => `
-                <div style="padding: 8px 15px; background: #f0f7ff; border-radius: 15px; font-size: 14px; color: #667eea; font-weight: 600;">
-                    ${nope.tag}
-                </div>
-            `).join('');
-        }
-
-        // Submit rant and finish onboarding
-        function submitRant() {
-            const rantText = document.getElementById('rant-textarea').value.trim();
-            
-            if (rantText.length === 0) {
-                alert('Please write your rant before posting');
-                return;
-            }
-            
-            if (rantText.length > 280) {
-                alert('Rant must be 280 characters or less');
-                return;
-            }
-            
-            if (selectedNOPEs.length !== 3) {
-                alert('Please select 3 NOPEs first');
-                return;
-            }
-            
-            // Save to localStorage (in real app, would be API call)
-            const userData = {
-                selectedNOPEs: selectedNOPEs,
-                firstRant: rantText,
-                joinDate: new Date().toISOString(),
-                artefacts: []
-            };
-            
-            localStorage.setItem('nopeUserData', JSON.stringify(userData));
-            localStorage.setItem('nopeOnboardingComplete', 'true');
-            
-            // Show success message
-            alert('🎉 Welcome to NOPE! Your first rant has been posted.');
-            
-            // Redirect to home (feed)
-            window.location.href = 'home.html';
-        }
+            `;
+            document.head.appendChild(style);
+        });
     </script>
 </body>
 </html>
