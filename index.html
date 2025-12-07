@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sefrekuensi - Komunitas dengan Kesel yang Sama</title>
+    <title>Sefrekuensi - Zona NOPE</title>
     <link rel="stylesheet" href="style.css">
     <style>
         * {
@@ -21,7 +21,7 @@
         }
         
         .container {
-            max-width: 800px;
+            max-width: 1200px;
             margin: 0 auto;
         }
         
@@ -33,20 +33,15 @@
         }
         
         .logo {
-            font-size: 3.5em;
+            font-size: 3em;
             color: gold;
             margin-bottom: 10px;
-            letter-spacing: 2px;
         }
         
         .tagline {
             font-size: 1.2em;
             color: #aaa;
-            margin-bottom: 25px;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-            line-height: 1.6;
+            margin-bottom: 15px;
         }
         
         .badge {
@@ -60,345 +55,195 @@
             margin: 10px 0;
         }
         
-        .main-content {
-            margin-bottom: 60px;
+        .zones-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
         }
         
-        /* Hashtag Selection Section */
-        .hashtag-section {
+        .zone-card {
             background: rgba(255, 255, 255, 0.05);
             border-radius: 20px;
             padding: 30px;
-            border: 2px solid rgba(255, 215, 0, 0.2);
-            margin-bottom: 30px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-        }
-        
-        .section-title {
-            color: gold;
-            font-size: 1.8em;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .section-title::before {
-            content: "🏷️";
-            font-size: 1.5em;
-        }
-        
-        .section-subtitle {
-            color: #aaa;
-            margin-bottom: 25px;
-            font-size: 1.1em;
-            line-height: 1.6;
-        }
-        
-        .zones-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-        
-        .zone-item {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 15px;
-            padding: 20px;
-            cursor: pointer;
+            border: 2px solid;
             transition: all 0.3s;
-            border: 2px solid transparent;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            height: 100%;
             position: relative;
             overflow: hidden;
         }
         
-        .zone-item:hover {
-            transform: translateY(-3px);
-            background: rgba(255, 255, 255, 0.08);
-        }
-        
-        .zone-item.selected {
-            border-color: gold;
-            background: rgba(255, 215, 0, 0.1);
-            box-shadow: 0 5px 20px rgba(255, 215, 0, 0.1);
+        .zone-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
         }
         
         .zone-number {
             position: absolute;
-            top: 10px;
-            right: 10px;
+            top: 15px;
+            right: 15px;
+            font-size: 2em;
+            opacity: 0.3;
+        }
+        
+        .zone-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .zone-icon {
+            font-size: 2.5em;
+        }
+        
+        .zone-title {
             font-size: 1.5em;
-            opacity: 0.5;
-        }
-        
-        .zone-name {
             color: gold;
-            font-weight: bold;
-            margin-bottom: 8px;
-            font-size: 1.1em;
+            margin-bottom: 5px;
         }
         
-        .zone-desc {
+        .zone-subtitle {
             color: #aaa;
             font-size: 0.9em;
-            margin-bottom: 15px;
-            line-height: 1.4;
+            font-style: italic;
         }
         
-        .zone-tags {
+        /* Zona 1 - POP CULTURE */
+        .zone-1 {
+            border-color: #FF6B6B;
+        }
+        .zone-1 .zone-icon { color: #FF6B6B; }
+        
+        /* Zona 2 - PERSONAL PAIN */
+        .zone-2 {
+            border-color: #4ECDC4;
+        }
+        .zone-2 .zone-icon { color: #4ECDC4; }
+        
+        /* Zona 3 - SOCIAL SICKNESS */
+        .zone-3 {
+            border-color: #FFD166;
+        }
+        .zone-3 .zone-icon { color: #FFD166; }
+        
+        /* Zona 4 - MOVEMENT */
+        .zone-4 {
+            border-color: #06D6A0;
+        }
+        .zone-4 .zone-icon { color: #06D6A0; }
+        
+        .hashtags-container {
             display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
+            flex-direction: column;
+            gap: 15px;
         }
         
-        .zone-tag {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 4px 10px;
-            border-radius: 12px;
-            font-size: 0.8em;
-            color: #ddd;
-        }
-        
-        .zone-tag.selected {
-            background: rgba(255, 215, 0, 0.3);
-            color: gold;
-            font-weight: bold;
-        }
-        
-        /* Kesel Input Section */
-        .kesel-section {
+        .hashtag-item {
             background: rgba(255, 255, 255, 0.05);
-            border-radius: 20px;
-            padding: 30px;
-            border: 2px solid rgba(255, 107, 107, 0.3);
-            margin-bottom: 30px;
-            display: none;
-        }
-        
-        .kesel-section.active {
-            display: block;
-            animation: fadeIn 0.5s;
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        .kesel-title {
-            color: #ff6b6b;
-            font-size: 1.8em;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .kesel-title::before {
-            content: "😠";
-            font-size: 1.5em;
-        }
-        
-        .kesel-input-container {
-            position: relative;
-            margin-bottom: 20px;
-        }
-        
-        .kesel-input {
-            width: 100%;
-            padding: 20px;
-            border-radius: 15px;
-            border: 2px solid rgba(255, 107, 107, 0.5);
-            background: rgba(255, 107, 107, 0.1);
-            color: white;
-            font-size: 1.1em;
-            resize: vertical;
-            min-height: 150px;
-            line-height: 1.6;
-            transition: all 0.3s;
-        }
-        
-        .kesel-input:focus {
-            outline: none;
-            border-color: #ff6b6b;
-            background: rgba(255, 107, 107, 0.15);
-            box-shadow: 0 5px 20px rgba(255, 107, 107, 0.2);
-        }
-        
-        .kesel-input::placeholder {
-            color: rgba(255, 255, 255, 0.5);
-            font-style: italic;
-        }
-        
-        .char-counter {
-            position: absolute;
-            bottom: 10px;
-            right: 10px;
-            color: #aaa;
-            font-size: 0.9em;
-            background: rgba(0, 0, 0, 0.5);
-            padding: 3px 8px;
-            border-radius: 10px;
-        }
-        
-        .char-counter.warning {
-            color: #ffd166;
-        }
-        
-        .char-counter.danger {
-            color: #ff6b6b;
-            font-weight: bold;
-        }
-        
-        .selected-hashtags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-bottom: 25px;
             padding: 15px;
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 10px;
-            min-height: 60px;
-        }
-        
-        .selected-hashtag {
-            background: linear-gradient(135deg, rgba(255, 215, 0, 0.3), rgba(255, 107, 107, 0.3));
-            color: white;
-            padding: 8px 15px;
-            border-radius: 20px;
-            font-weight: bold;
+            border-radius: 12px;
             display: flex;
             align-items: center;
-            gap: 8px;
-            animation: slideIn 0.3s;
-        }
-        
-        .selected-hashtag .remove {
+            gap: 15px;
             cursor: pointer;
-            opacity: 0.7;
-            transition: opacity 0.2s;
+            transition: all 0.3s;
+            border: 2px solid transparent;
         }
         
-        .selected-hashtag .remove:hover {
-            opacity: 1;
+        .hashtag-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateX(5px);
         }
         
-        .no-hashtags {
-            color: #888;
-            font-style: italic;
-            text-align: center;
-            width: 100%;
-            padding: 10px;
+        .hashtag-item.selected {
+            background: rgba(255, 215, 0, 0.1);
+            border-color: gold;
         }
         
-        /* CTA Section */
-        .cta-section {
-            text-align: center;
-            padding: 30px;
-            background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(255, 107, 107, 0.1));
-            border-radius: 20px;
-            border: 2px dashed gold;
-            margin-top: 30px;
+        .hashtag-checkbox {
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         
-        .cta-title {
+        .hashtag-checkbox.selected::after {
+            content: "✓";
             color: gold;
-            font-size: 1.8em;
-            margin-bottom: 15px;
+            font-weight: bold;
         }
         
-        .cta-description {
+        .hashtag-text {
+            font-size: 1.1em;
             color: #ddd;
-            margin-bottom: 25px;
-            line-height: 1.6;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
+            flex-grow: 1;
         }
         
-        .cta-button {
-            padding: 18px 50px;
-            background: linear-gradient(135deg, gold, #ffd700);
+        .hashtag-count {
+            background: rgba(255, 215, 0, 0.2);
+            color: gold;
+            padding: 3px 10px;
+            border-radius: 15px;
+            font-size: 0.9em;
+            font-weight: bold;
+        }
+        
+        .selection-info {
+            text-align: center;
+            margin: 40px 0;
+            padding: 25px;
+            background: rgba(255, 215, 0, 0.1);
+            border-radius: 15px;
+            border: 2px dashed gold;
+        }
+        
+        .selected-count {
+            font-size: 2em;
+            color: gold;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .selection-message {
+            color: #ddd;
+            margin-bottom: 20px;
+        }
+        
+        .confirm-btn {
+            padding: 15px 40px;
+            background: gold;
             color: #1a2a3a;
             border: none;
-            border-radius: 50px;
+            border-radius: 10px;
             font-weight: bold;
-            font-size: 1.2em;
+            font-size: 1.1em;
             cursor: pointer;
-            transition: all 0.3s;
-            box-shadow: 0 5px 20px rgba(255, 215, 0, 0.3);
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
+            transition: transform 0.2s;
         }
         
-        .cta-button:hover {
+        .confirm-btn:hover {
             transform: scale(1.05);
-            box-shadow: 0 8px 25px rgba(255, 215, 0, 0.4);
         }
         
-        .cta-button:disabled {
+        .confirm-btn:disabled {
             background: #666;
             color: #999;
             cursor: not-allowed;
             transform: none;
-            box-shadow: none;
-        }
-        
-        /* Footer */
-        .footer {
-            text-align: center;
-            padding: 30px 0;
-            color: #888;
-            border-top: 2px solid rgba(255, 215, 0, 0.2);
-            margin-top: 40px;
-        }
-        
-        .notification {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            padding: 15px 25px;
-            border-radius: 10px;
-            font-weight: bold;
-            z-index: 10000;
-            animation: slideInRight 0.3s;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-        }
-        
-        .notification.success {
-            background: gold;
-            color: #1a2a3a;
-        }
-        
-        .notification.error {
-            background: #ff6b6b;
-            color: white;
-        }
-        
-        @keyframes slideInRight {
-            from { transform: translateX(100%); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
-        }
-        
-        @keyframes slideOutRight {
-            from { transform: translateX(0); opacity: 1; }
-            to { transform: translateX(100%); opacity: 0; }
         }
         
         .community-preview {
             background: rgba(0, 0, 0, 0.3);
             border-radius: 20px;
             padding: 30px;
-            margin-top: 30px;
+            margin-top: 40px;
             border: 2px solid rgba(255, 215, 0, 0.3);
             display: none;
-        }
-        
-        .community-preview.active {
-            display: block;
-            animation: fadeIn 0.5s;
         }
         
         .preview-title {
@@ -410,7 +255,7 @@
         
         .preview-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
             gap: 20px;
         }
         
@@ -424,26 +269,26 @@
         
         .preview-user:hover {
             background: rgba(255, 215, 0, 0.1);
-            transform: translateY(-3px);
+            transform: translateY(-5px);
         }
         
         .user-avatar {
-            width: 50px;
-            height: 50px;
+            width: 60px;
+            height: 60px;
             border-radius: 50%;
             background: linear-gradient(135deg, gold, #ffd700);
             margin: 0 auto 15px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.3em;
+            font-size: 1.5em;
             color: #1a2a3a;
         }
         
         .user-name {
             color: gold;
             font-weight: bold;
-            margin-bottom: 8px;
+            margin-bottom: 10px;
         }
         
         .user-match {
@@ -472,17 +317,44 @@
             color: #ccc;
         }
         
+        .rules-section {
+            background: rgba(255, 107, 107, 0.1);
+            border-radius: 15px;
+            padding: 25px;
+            margin-top: 40px;
+            border: 2px solid #ff6b6b;
+        }
+        
+        .rules-title {
+            color: #ff6b6b;
+            font-size: 1.3em;
+            margin-bottom: 15px;
+        }
+        
+        .rules-list {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .rules-list li {
+            padding: 8px 0;
+            color: #ddd;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .rules-list li::before {
+            content: "⚠️";
+        }
+        
         @media (max-width: 768px) {
-            .zones-grid {
+            .zones-container {
                 grid-template-columns: 1fr;
             }
             
             .preview-grid {
                 grid-template-columns: 1fr;
-            }
-            
-            .logo {
-                font-size: 2.5em;
             }
         }
     </style>
@@ -491,135 +363,166 @@
     <div class="container">
         <!-- Header -->
         <div class="header">
-            <div class="logo">Sefrekuensi</div>
-            <p class="tagline">Komunitas kecil dengan kesel yang sama. Bebas berkomentar!</p>
-            <div class="badge">PRIVATE GROUP • HASHMATCH</div>
+            <div class="logo">SEFREKUENSI ZONA</div>
+            <p class="tagline">Temukan orang-orang yang sefrekuensi dengan keselmu</p>
+            <div class="badge">ZONA NOPE • HASHMATCH SYSTEM</div>
         </div>
         
-        <!-- Main Content -->
-        <div class="main-content">
-            <!-- Hashtag Selection -->
-            <div class="hashtag-section" id="hashtagSection">
-                <h2 class="section-title">Pilih Zona Keselmu</h2>
-                <p class="section-subtitle">
-                    Pilih minimal 1 hashtag dari zona yang sesuai dengan keselmu. 
-                    Ini akan membantu menemukan orang yang benar-benar sefrekuensi.
-                </p>
-                
-                <div class="zones-grid">
-                    <!-- Zona 1: POP CULTURE -->
-                    <div class="zone-item" data-zone="1">
-                        <div class="zone-number">1️⃣</div>
-                        <div class="zone-name">POP CULTURE</div>
-                        <div class="zone-desc">Kesel sehari-hari yang relatable</div>
-                        <div class="zone-tags">
-                            <span class="zone-tag" data-tag="FilmEndingGaje">#FilmEndingGaje</span>
-                            <span class="zone-tag" data-tag="BeliTiketJualGinjal">#BeliTiketJualGinjal</span>
-                            <span class="zone-tag" data-tag="InfluencerNgehek">#InfluencerNgehek</span>
-                        </div>
-                    </div>
-                    
-                    <!-- Zona 2: PERSONAL PAIN -->
-                    <div class="zone-item" data-zone="2">
-                        <div class="zone-number">2️⃣</div>
-                        <div class="zone-name">PERSONAL PAIN</div>
-                        <div class="zone-desc">Luka personal yang dalam</div>
-                        <div class="zone-tags">
-                            <span class="zone-tag" data-tag="DighostingGebetan">#DighostingGebetan</span>
-                            <span class="zone-tag" data-tag="DiajakJalanTapiKempes">#DiajakJalanTapiKempes</span>
-                            <span class="zone-tag" data-tag="MagangDigajiSertifikat">#MagangDigajiSertifikat</span>
-                        </div>
-                    </div>
-                    
-                    <!-- Zona 3: SOCIAL SICKNESS -->
-                    <div class="zone-item" data-zone="3">
-                        <div class="zone-number">3️⃣</div>
-                        <div class="zone-name">SOCIAL SICKNESS</div>
-                        <div class="zone-desc">Pola toxic di sekitar</div>
-                        <div class="zone-tags">
-                            <span class="zone-tag" data-tag="RencanaPlinPlan">#RencanaPlinPlan</span>
-                            <span class="zone-tag" data-tag="DramaQueenAnjay">#DramaQueenAnjay</span>
-                            <span class="zone-tag" data-tag="BacotLambeTurah">#BacotLambeTurah</span>
-                        </div>
-                    </div>
-                    
-                    <!-- Zona 4: MOVEMENT -->
-                    <div class="zone-item" data-zone="4">
-                        <div class="zone-number">4️⃣</div>
-                        <div class="zone-name">MOVEMENT</div>
-                        <div class="zone-desc">Aksi nyata (6+ bulan)</div>
-                        <div class="zone-tags">
-                            <span class="zone-tag" data-tag="SayNOPEBukanPilihan">#SayNOPEBukanPilihan</span>
-                            <span class="zone-tag" data-tag="NOPEItuHakKita">#NOPEItuHakKita</span>
-                            <span class="zone-tag" data-tag="NOPEBersamaKitaKuat">#NOPEBersamaKitaKuat</span>
-                        </div>
+        <!-- Zona dan Hashtag -->
+        <div class="zones-container">
+            <!-- Zona 1: POP CULTURE -->
+            <div class="zone-card zone-1">
+                <div class="zone-number">1️⃣</div>
+                <div class="zone-header">
+                    <div class="zone-icon">🎬</div>
+                    <div>
+                        <h2 class="zone-title">POP CULTURE</h2>
+                        <div class="zone-subtitle">Gateway - Kesel sehari-hari</div>
                     </div>
                 </div>
-                
-                <div class="selected-hashtags" id="selectedHashtags">
-                    <div class="no-hashtags">Belum ada hashtag yang dipilih</div>
+                <div class="hashtags-container">
+                    <div class="hashtag-item" data-zone="1" data-tag="FilmEndingGaje">
+                        <div class="hashtag-checkbox"></div>
+                        <div class="hashtag-text">#FilmEndingGaje</div>
+                        <div class="hashtag-count">🔥 142</div>
+                    </div>
+                    <div class="hashtag-item" data-zone="1" data-tag="BeliTiketJualGinjal">
+                        <div class="hashtag-checkbox"></div>
+                        <div class="hashtag-text">#BeliTiketJualGinjal</div>
+                        <div class="hashtag-count">💸 89</div>
+                    </div>
+                    <div class="hashtag-item" data-zone="1" data-tag="InfluencerNgehek">
+                        <div class="hashtag-checkbox"></div>
+                        <div class="hashtag-text">#InfluencerNgehek</div>
+                        <div class="hashtag-count">😒 203</div>
+                    </div>
                 </div>
             </div>
             
-            <!-- Kesel Input -->
-            <div class="kesel-section" id="keselSection">
-                <h2 class="kesel-title">Ceritakan Keselmu</h2>
-                <p class="section-subtitle">
-                    Chat pertama ini akan langsung masuk ke <strong>Global Feed</strong> dan <strong>Feed Sefrequensi</strong>.
-                    Tulis dengan jujur, ini ruang amanmu.
-                </p>
-                
-                <div class="kesel-input-container">
-                    <textarea 
-                        class="kesel-input" 
-                        id="keselInput" 
-                        placeholder="Apa yang bikin kamu kesel hari ini? Ceritakan dengan jujur... (maksimal 280 karakter)"
-                        maxlength="280"
-                    ></textarea>
-                    <div class="char-counter" id="charCounter">0/280</div>
+            <!-- Zona 2: PERSONAL PAIN -->
+            <div class="zone-card zone-2">
+                <div class="zone-number">2️⃣</div>
+                <div class="zone-header">
+                    <div class="zone-icon">💔</div>
+                    <div>
+                        <h2 class="zone-title">PERSONAL PAIN</h2>
+                        <div class="zone-subtitle">Depth - Luka personal yang dalam</div>
+                    </div>
                 </div>
-                
-                <div class="selected-hashtags" id="selectedHashtagsDisplay">
-                    <!-- Hashtag akan muncul di sini -->
+                <div class="hashtags-container">
+                    <div class="hashtag-item" data-zone="2" data-tag="DighostingGebetan">
+                        <div class="hashtag-checkbox"></div>
+                        <div class="hashtag-text">#DighostingGebetan</div>
+                        <div class="hashtag-count">👻 312</div>
+                    </div>
+                    <div class="hashtag-item" data-zone="2" data-tag="DiajakJalanTapiKempes">
+                        <div class="hashtag-checkbox"></div>
+                        <div class="hashtag-text">#DiajakJalanTapiKempes</div>
+                        <div class="hashtag-count">😞 178</div>
+                    </div>
+                    <div class="hashtag-item" data-zone="2" data-tag="MagangDigajiSertifikat">
+                        <div class="hashtag-checkbox"></div>
+                        <div class="hashtag-text">#MagangDigajiSertifikat</div>
+                        <div class="hashtag-count">💼 245</div>
+                    </div>
                 </div>
             </div>
             
-            <!-- CTA Button -->
-            <div class="cta-section">
-                <h2 class="cta-title">🚀 Temukan Komunitasmu!</h2>
-                <p class="cta-description">
-                    Setelah memilih hashtag dan menulis keselmu, klik tombol di bawah untuk:
-                </p>
-                <ul style="color: #ddd; text-align: left; max-width: 500px; margin: 0 auto 25px; line-height: 1.8;">
-                    <li>📢 <strong>Posting keselmu ke Global Feed</strong></li>
-                    <li>🔗 <strong>Masuk ke Feed Sefrequensi</strong> berdasarkan hashtag pilihan</li>
-                    <li>👥 <strong>Temukan orang yang benar-benar sefrekuensi</strong></li>
-                    <li>💬 <strong>Mulai percakapan yang berarti</strong></li>
-                </ul>
-                <button class="cta-button" id="ctaButton" onclick="findCommunity()" disabled>
-                    🔍 TEMUKAN KOMUNITASKU
-                </button>
+            <!-- Zona 3: SOCIAL SICKNESS -->
+            <div class="zone-card zone-3">
+                <div class="zone-number">3️⃣</div>
+                <div class="zone-header">
+                    <div class="zone-icon">🤢</div>
+                    <div>
+                        <h2 class="zone-title">SOCIAL SICKNESS</h2>
+                        <div class="zone-subtitle">Patterns - Pola toxic sosial</div>
+                    </div>
+                </div>
+                <div class="hashtags-container">
+                    <div class="hashtag-item" data-zone="3" data-tag="RencanaPlinPlan">
+                        <div class="hashtag-checkbox"></div>
+                        <div class="hashtag-text">#RencanaPlinPlan</div>
+                        <div class="hashtag-count">🔄 267</div>
+                    </div>
+                    <div class="hashtag-item" data-zone="3" data-tag="DramaQueenAnjay">
+                        <div class="hashtag-checkbox"></div>
+                        <div class="hashtag-text">#DramaQueenAnjay</div>
+                        <div class="hashtag-count">🎭 189</div>
+                    </div>
+                    <div class="hashtag-item" data-zone="3" data-tag="BacotLambeTurah">
+                        <div class="hashtag-checkbox"></div>
+                        <div class="hashtag-text">#BacotLambeTurah</div>
+                        <div class="hashtag-count">🗣️ 321</div>
+                    </div>
+                </div>
             </div>
             
-            <!-- Community Preview -->
-            <div class="community-preview" id="communityPreview">
-                <h3 class="preview-title">👥 Komunitas Yang Satu Frekuensi</h3>
-                <div class="preview-grid" id="previewGrid">
-                    <!-- Preview akan muncul di sini -->
+            <!-- Zona 4: MOVEMENT -->
+            <div class="zone-card zone-4">
+                <div class="zone-number">4️⃣</div>
+                <div class="zone-header">
+                    <div class="zone-icon">🚀</div>
+                    <div>
+                        <h2 class="zone-title">MOVEMENT</h2>
+                        <div class="zone-subtitle">Action - Bulan 6+ (Advanced)</div>
+                    </div>
+                </div>
+                <div class="hashtags-container">
+                    <div class="hashtag-item" data-zone="4" data-tag="SayNOPEBukanPilihan">
+                        <div class="hashtag-checkbox"></div>
+                        <div class="hashtag-text">#SayNOPEBukanPilihan</div>
+                        <div class="hashtag-count">✊ 156</div>
+                    </div>
+                    <div class="hashtag-item" data-zone="4" data-tag="NOPEItuHakKita">
+                        <div class="hashtag-checkbox"></div>
+                        <div class="hashtag-text">#NOPEItuHakKita</div>
+                        <div class="hashtag-count">⚖️ 98</div>
+                    </div>
+                    <div class="hashtag-item" data-zone="4" data-tag="NOPEBersamaKitaKuat">
+                        <div class="hashtag-checkbox"></div>
+                        <div class="hashtag-text">#NOPEBersamaKitaKuat</div>
+                        <div class="hashtag-count">🤝 203</div>
+                    </div>
                 </div>
             </div>
         </div>
         
-        <!-- Footer -->
-        <div class="footer">
-            <p>Sefrekuensi &copy; 2024 • Ruang aman untuk berbagi kesel • #HashMatchSystem</p>
-            <p style="font-size: 0.9em; margin-top: 10px;">Chat pertama langsung ke Global Feed • Setiap kesel valid</p>
+        <!-- Selection Info -->
+        <div class="selection-info">
+            <div class="selected-count" id="selectedCount">0/12</div>
+            <div class="selection-message">
+                Pilih minimal 3 hashtag dari zona yang berbeda<br>
+                <small style="color: #aaa;">Semakin banyak pilihan, semakin akurat pencocokan frekuensimu</small>
+            </div>
+            <button class="confirm-btn" id="confirmBtn" onclick="confirmSelection()" disabled>
+                🔍 TEMUKAN KOMUNITASKU
+            </button>
+        </div>
+        
+        <!-- Community Preview -->
+        <div class="community-preview" id="communityPreview">
+            <h3 class="preview-title">👥 Komunitas Yang Satu Frekuensi Denganmu</h3>
+            <div class="preview-grid" id="previewGrid">
+                <!-- Preview akan muncul di sini -->
+            </div>
+        </div>
+        
+        <!-- Rules Section -->
+        <div class="rules-section">
+            <h3 class="rules-title">📜 ATURAN ZONA NOPE</h3>
+            <ul class="rules-list">
+                <li>Pilih hashtag yang benar-benar mewakili keselmu</li>
+                <li>Zona 1-3 untuk semua level, Zona 4 untuk member 6+ bulan</li>
+                <li>Hashtag tidak bisa diubah dalam 30 hari</li>
+                <li>Semua kesel valid, semua suara berarti</li>
+                <li>Privasi terjaga, identitas aman</li>
+            </ul>
         </div>
     </div>
     
     <!-- ==== NAVIGASI BAJAK LAUT ==== -->
     <div style="position: fixed; bottom: 20px; left: 20px; right: 20px; background: #1a2a3a; border: 3px solid gold; padding: 15px; border-radius: 10px; text-align: center; z-index: 1000;">
-        <a href="index.html" style="color: white; margin: 0 15px; text-decoration: none; background: rgba(255,215,0,0.3); padding: 5px 15px; border-radius: 5px;">🏠 Home</a>
+        <a href="index.html" style="color: white; margin: 0 15px; text-decoration: none;">🏠 Home</a>
         <a href="rage.html" style="color: white; margin: 0 15px; text-decoration: none;">😠 Rage</a>
         <a href="profile.html" style="color: white; margin: 0 15px; text-decoration: none;">🔄 Sefrek</a>
         <a href="wall.html" style="color: white; margin: 0 15px; text-decoration: none;">🧱 Wall</a>
@@ -629,227 +532,111 @@
     <script>
         // State
         let selectedHashtags = [];
-        let keselText = '';
+        const maxSelections = 12;
         
-        // Community sample data
+        // Sample community data
         const communityMembers = [
-            { name: "@GhostedGang", match: "95%", tags: ["#DighostingGebetan"], emoji: "👻" },
-            { name: "@FilmHater", match: "92%", tags: ["#FilmEndingGaje"], emoji: "🎬" },
-            { name: "@MagangMenderita", match: "89%", tags: ["#MagangDigajiSertifikat"], emoji: "💼" },
-            { name: "@DramaPolice", match: "87%", tags: ["#DramaQueenAnjay"], emoji: "🎭" },
-            { name: "@NOPE_Activist", match: "85%", tags: ["#SayNOPEBukanPilihan"], emoji: "✊" },
-            { name: "@TiketGone", match: "82%", tags: ["#BeliTiketJualGinjal"], emoji: "💸" },
-            { name: "@PlanBreaker", match: "79%", tags: ["#RencanaPlinPlan"], emoji: "🔄" },
-            { name: "@InfluencerHater", match: "76%", tags: ["#InfluencerNgehek"], emoji: "😒" },
-            { name: "@ChatFlaker", match: "73%", tags: ["#DiajakJalanTapiKempes"], emoji: "😞" },
-            { name: "@TalkTooMuch", match: "70%", tags: ["#BacotLambeTurah"], emoji: "🗣️" }
+            { name: "@GhostedGang", match: "95%", tags: ["#DighostingGebetan", "#DiajakJalanTapiKempes"], emoji: "👻" },
+            { name: "@FilmCriticAnon", match: "92%", tags: ["#FilmEndingGaje", "#InfluencerNgehek"], emoji: "🎬" },
+            { name: "@MagangMenderita", match: "89%", tags: ["#MagangDigajiSertifikat", "#RencanaPlinPlan"], emoji: "💼" },
+            { name: "@DramaWarden", match: "87%", tags: ["#DramaQueenAnjay", "#BacotLambeTurah"], emoji: "🎭" },
+            { name: "@NOPE_Warrior", match: "85%", tags: ["#SayNOPEBukanPilihan", "#NOPEItuHakKita"], emoji: "✊" },
+            { name: "@TiketHabis", match: "82%", tags: ["#BeliTiketJualGinjal", "#RencanaPlinPlan"], emoji: "💸" },
+            { name: "@PlanChanger", match: "79%", tags: ["#RencanaPlinPlan", "#DighostingGebetan"], emoji: "🔄" },
+            { name: "@InfluencerHater", match: "76%", tags: ["#InfluencerNgehek", "#BacotLambeTurah"], emoji: "😒" }
         ];
         
         // Initialize
         document.addEventListener('DOMContentLoaded', function() {
             // Load previously selected hashtags
-            const savedTags = localStorage.getItem('sefrekHashtags');
+            const savedTags = localStorage.getItem('nopeHashtags');
             if (savedTags) {
                 selectedHashtags = JSON.parse(savedTags);
-                updateHashtagDisplay();
+                updateSelectionUI();
                 
-                // If already has hashtags, show kesel section
-                if (selectedHashtags.length > 0) {
-                    document.getElementById('keselSection').classList.add('active');
+                // If already selected, show community preview
+                if (selectedHashtags.length >= 3) {
+                    showCommunityPreview();
                 }
             }
             
-            // Load kesel text if exists
-            const savedKesel = localStorage.getItem('sefrekKesel');
-            if (savedKesel) {
-                keselText = savedKesel;
-                document.getElementById('keselInput').value = keselText;
-                updateCharCounter();
-            }
-            
-            // Add click handlers to zone tags
-            document.querySelectorAll('.zone-tag').forEach(tag => {
-                tag.addEventListener('click', function() {
-                    const zone = this.closest('.zone-item').getAttribute('data-zone');
-                    const tagText = this.getAttribute('data-tag');
-                    const fullTag = `#${tagText}`;
-                    
-                    toggleHashtagSelection(zone, fullTag, this);
+            // Add click handlers to hashtag items
+            document.querySelectorAll('.hashtag-item').forEach(item => {
+                item.addEventListener('click', function() {
+                    const zone = this.getAttribute('data-zone');
+                    const tag = this.getAttribute('data-tag');
+                    toggleHashtagSelection(zone, tag, this);
                 });
             });
-            
-            // Character counter for kesel input
-            const keselInput = document.getElementById('keselInput');
-            keselInput.addEventListener('input', function() {
-                keselText = this.value;
-                localStorage.setItem('sefrekKesel', keselText);
-                updateCharCounter();
-                updateCTAButton();
-            });
-            
-            // Update CTA button initially
-            updateCTAButton();
         });
         
         // Toggle hashtag selection
         function toggleHashtagSelection(zone, tag, element) {
             const index = selectedHashtags.findIndex(item => item.tag === tag);
+            const checkbox = element.querySelector('.hashtag-checkbox');
             
             if (index === -1) {
+                // Check if max selections reached
+                if (selectedHashtags.length >= maxSelections) {
+                    showNotification(`Maksimal ${maxSelections} hashtag!`);
+                    return;
+                }
+                
                 // Add selection
                 selectedHashtags.push({ zone, tag });
                 element.classList.add('selected');
+                checkbox.classList.add('selected');
             } else {
                 // Remove selection
                 selectedHashtags.splice(index, 1);
                 element.classList.remove('selected');
+                checkbox.classList.remove('selected');
+            }
+            
+            updateSelectionUI();
+        }
+        
+        // Update selection UI
+        function updateSelectionUI() {
+            // Update count
+            document.getElementById('selectedCount').textContent = 
+                `${selectedHashtags.length}/${maxSelections}`;
+            
+            // Enable/disable confirm button
+            const confirmBtn = document.getElementById('confirmBtn');
+            if (selectedHashtags.length >= 3) {
+                confirmBtn.disabled = false;
+            } else {
+                confirmBtn.disabled = true;
+            }
+            
+            // Check zone distribution
+            const zones = new Set(selectedHashtags.map(item => item.zone));
+            if (zones.size >= 2 && selectedHashtags.length >= 3) {
+                confirmBtn.innerHTML = `🔍 TEMUKAN KOMUNITASKU (${zones.size}/4 Zona)`;
+            }
+        }
+        
+        // Confirm selection
+        function confirmSelection() {
+            if (selectedHashtags.length < 3) {
+                showNotification('Pilih minimal 3 hashtag!', 'error');
+                return;
             }
             
             // Save to localStorage
-            localStorage.setItem('sefrekHashtags', JSON.stringify(selectedHashtags));
-            
-            // Update UI
-            updateHashtagDisplay();
-            updateCTAButton();
-            
-            // Show/hide kesel section
-            const keselSection = document.getElementById('keselSection');
-            if (selectedHashtags.length > 0) {
-                keselSection.classList.add('active');
-            } else {
-                keselSection.classList.remove('active');
-            }
-        }
-        
-        // Update hashtag display
-        function updateHashtagDisplay() {
-            const container = document.getElementById('selectedHashtags');
-            const displayContainer = document.getElementById('selectedHashtagsDisplay');
-            
-            if (selectedHashtags.length === 0) {
-                container.innerHTML = '<div class="no-hashtags">Belum ada hashtag yang dipilih</div>';
-                displayContainer.innerHTML = '<div class="no-hashtags">Pilih hashtag dulu untuk melanjutkan</div>';
-                return;
-            }
-            
-            // Update main display
-            container.innerHTML = selectedHashtags.map(item => `
-                <div class="selected-hashtag">
-                    ${item.tag}
-                    <span class="remove" onclick="removeHashtag('${item.tag}', event)">×</span>
-                </div>
-            `).join('');
-            
-            // Update kesel section display
-            displayContainer.innerHTML = selectedHashtags.map(item => `
-                <div class="selected-hashtag">
-                    ${item.tag}
-                </div>
-            `).join('');
-        }
-        
-        // Remove hashtag
-        function removeHashtag(tag, event) {
-            event.stopPropagation();
-            
-            selectedHashtags = selectedHashtags.filter(item => item.tag !== tag);
-            localStorage.setItem('sefrekHashtags', JSON.stringify(selectedHashtags));
-            
-            // Remove visual selection
-            document.querySelectorAll('.zone-tag').forEach(el => {
-                if (el.getAttribute('data-tag') === tag.replace('#', '')) {
-                    el.classList.remove('selected');
-                }
-            });
-            
-            updateHashtagDisplay();
-            updateCTAButton();
-        }
-        
-        // Update character counter
-        function updateCharCounter() {
-            const counter = document.getElementById('charCounter');
-            const length = keselText.length;
-            
-            counter.textContent = `${length}/280`;
-            counter.classList.remove('warning', 'danger');
-            
-            if (length > 250) {
-                counter.classList.add('danger');
-            } else if (length > 200) {
-                counter.classList.add('warning');
-            }
-        }
-        
-        // Update CTA button state
-        function updateCTAButton() {
-            const button = document.getElementById('ctaButton');
-            
-            if (selectedHashtags.length > 0 && keselText.trim().length >= 10) {
-                button.disabled = false;
-            } else {
-                button.disabled = true;
-            }
-        }
-        
-        // Find community
-        function findCommunity() {
-            if (selectedHashtags.length === 0) {
-                showNotification('Pilih minimal 1 hashtag dulu!', 'error');
-                return;
-            }
-            
-            if (keselText.trim().length < 10) {
-                showNotification('Tulis keselmu minimal 10 karakter!', 'error');
-                return;
-            }
-            
-            // Post to global feed (simulated)
-            postToGlobalFeed();
+            localStorage.setItem('nopeHashtags', JSON.stringify(selectedHashtags));
             
             // Show community preview
             showCommunityPreview();
             
             // Show success message
-            showNotification('✅ Keselmu sudah diposting ke Global Feed! Mencari komunitas sefrekuensi...');
+            showNotification('✅ Hashtag berhasil disimpan! Mencari komunitas sefrekuensi...');
             
             // Scroll to preview
-            setTimeout(() => {
-                document.getElementById('communityPreview').scrollIntoView({ 
-                    behavior: 'smooth' 
-                });
-            }, 500);
-        }
-        
-        // Post to global feed (simulated)
-        function postToGlobalFeed() {
-            const post = {
-                id: Date.now(),
-                user: "@User_" + Math.floor(Math.random() * 1000),
-                text: keselText,
-                hashtags: selectedHashtags.map(item => item.tag),
-                timestamp: new Date().toLocaleString('id-ID'),
-                likes: 0,
-                comments: 0,
-                shares: 0
-            };
-            
-            // Save to localStorage for global feed
-            const globalFeed = JSON.parse(localStorage.getItem('globalFeed') || '[]');
-            globalFeed.unshift(post);
-            localStorage.setItem('globalFeed', JSON.stringify(globalFeed.slice(0, 50))); // Keep last 50 posts
-            
-            // Save to sefreq feed
-            const sefreqFeed = JSON.parse(localStorage.getItem('sefreqFeed') || '[]');
-            sefreqFeed.unshift(post);
-            localStorage.setItem('sefreqFeed', JSON.stringify(sefreqFeed.slice(0, 100)));
-            
-            // Clear kesel text after posting
-            keselText = '';
-            document.getElementById('keselInput').value = '';
-            localStorage.removeItem('sefrekKesel');
-            updateCharCounter();
-            updateCTAButton();
+            document.getElementById('communityPreview').scrollIntoView({ 
+                behavior: 'smooth' 
+            });
         }
         
         // Show community preview
@@ -860,20 +647,20 @@
             // Clear previous preview
             grid.innerHTML = '';
             
-            // Get selected tag names
-            const selectedTagNames = selectedHashtags.map(item => item.tag.replace('#', ''));
+            // Filter and sort community members by match score
+            const selectedTags = selectedHashtags.map(item => item.tag);
             
-            // Find matching community members
             const matchedMembers = communityMembers
                 .map(member => {
-                    // Calculate match based on shared hashtags
+                    // Calculate match score based on shared hashtags
                     const sharedTags = member.tags.filter(tag => 
-                        selectedTagNames.includes(tag.replace('#', ''))
+                        selectedTags.includes(tag)
                     ).length;
                     
-                    // Calculate match percentage
+                    // Calculate match percentage (base + shared tags bonus)
                     const baseMatch = parseInt(member.match);
-                    const finalMatch = Math.min(baseMatch + (sharedTags * 10), 99);
+                    const bonus = sharedTags * 15;
+                    const finalMatch = Math.min(baseMatch + bonus, 99);
                     
                     return {
                         ...member,
@@ -887,12 +674,9 @@
             
             if (matchedMembers.length === 0) {
                 grid.innerHTML = `
-                    <div style="grid-column: 1 / -1; text-align: center; padding: 40px; color: #888; font-style: italic;">
+                    <div style="text-align: center; padding: 40px; color: #888; font-style: italic;">
                         <div style="font-size: 3em; margin-bottom: 15px;">🤔</div>
                         <div>Belum ada yang sefrekuensi nih. Coba hashtag lain!</div>
-                        <button onclick="resetSelection()" style="margin-top: 20px; padding: 10px 20px; background: rgba(255,215,0,0.2); color: gold; border: 1px solid gold; border-radius: 10px; cursor: pointer;">
-                            Reset Pilihan
-                        </button>
                     </div>
                 `;
             } else {
@@ -906,61 +690,75 @@
                         <div class="user-tags">
                             ${member.tags.map(tag => `<span class="user-tag">${tag}</span>`).join('')}
                         </div>
-                        <button onclick="connectWith('${member.name}')" style="margin-top: 15px; padding: 8px 15px; background: rgba(255,215,0,0.2); color: gold; border: 1px solid gold; border-radius: 8px; cursor: pointer; font-size: 0.9em;">
-                            👋 Connect
-                        </button>
                     `;
                     grid.appendChild(memberCard);
                 });
             }
             
             // Show preview section
-            preview.classList.add('active');
-        }
-        
-        // Connect with user
-        function connectWith(username) {
-            showNotification(`👋 Permintaan koneksi dikirim ke ${username}`);
-        }
-        
-        // Reset selection
-        function resetSelection() {
-            if (confirm('Yakin mau reset semua pilihan?')) {
-                selectedHashtags = [];
-                keselText = '';
-                
-                localStorage.removeItem('sefrekHashtags');
-                localStorage.removeItem('sefrekKesel');
-                
-                // Reset UI
-                document.querySelectorAll('.zone-tag').forEach(el => {
-                    el.classList.remove('selected');
-                });
-                
-                document.getElementById('keselInput').value = '';
-                document.getElementById('keselSection').classList.remove('active');
-                document.getElementById('communityPreview').classList.remove('active');
-                
-                updateHashtagDisplay();
-                updateCharCounter();
-                updateCTAButton();
-                
-                showNotification('Pilihan telah direset');
-            }
+            preview.style.display = 'block';
         }
         
         // Show notification
         function showNotification(message, type = 'success') {
             const notification = document.createElement('div');
-            notification.className = `notification ${type}`;
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: ${type === 'error' ? '#ff6b6b' : 'gold'};
+                color: ${type === 'error' ? 'white' : '#1a2a3a'};
+                padding: 15px 25px;
+                border-radius: 10px;
+                z-index: 10000;
+                animation: slideIn 0.3s;
+                font-weight: bold;
+                box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            `;
             notification.textContent = message;
             document.body.appendChild(notification);
             
+            // Add animation styles if not already present
+            if (!document.querySelector('#notification-styles')) {
+                const style = document.createElement('style');
+                style.id = 'notification-styles';
+                style.textContent = `
+                    @keyframes slideIn {
+                        from { transform: translateX(100%); opacity: 0; }
+                        to { transform: translateX(0); opacity: 1; }
+                    }
+                    @keyframes slideOut {
+                        from { transform: translateX(0); opacity: 1; }
+                        to { transform: translateX(100%); opacity: 0; }
+                    }
+                `;
+                document.head.appendChild(style);
+            }
+            
             // Remove after 3 seconds
             setTimeout(() => {
-                notification.style.animation = 'slideOutRight 0.3s';
+                notification.style.animation = 'slideOut 0.3s';
                 setTimeout(() => notification.remove(), 300);
             }, 3000);
+        }
+        
+        // Reset selection
+        function resetSelection() {
+            if (confirm('Yakin mau reset pilihan hashtag?')) {
+                selectedHashtags = [];
+                localStorage.removeItem('nopeHashtags');
+                
+                // Reset UI
+                document.querySelectorAll('.hashtag-item').forEach(item => {
+                    item.classList.remove('selected');
+                    item.querySelector('.hashtag-checkbox').classList.remove('selected');
+                });
+                
+                updateSelectionUI();
+                document.getElementById('communityPreview').style.display = 'none';
+                
+                showNotification('Pilihan hashtag telah direset');
+            }
         }
     </script>
 </body>
