@@ -3,473 +3,261 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NOPE - Choose Your Rage</title>
+    <title>NOPE - Choose Hashtags</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
+        /* [SAMA DENGAN STYLE RAGE.HTML SEBELUMNYA, tapi rename class jika perlu] */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             background: #000000;
             color: #ffffff;
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            min-height: 100vh;
             padding: 20px;
         }
-        
-        /* Header */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
         .header {
             text-align: center;
             margin-bottom: 40px;
             padding-top: 20px;
         }
-        
         .header h1 {
-            font-size: 2.8rem;
-            font-weight: 900;
+            font-size: 2.5rem;
+            color: #ff3b30;
             margin-bottom: 10px;
-            color: #ff3b30;
         }
-        
         .header p {
-            color: rgba(255, 255, 255, 0.6);
-            font-size: 1rem;
-            max-width: 500px;
-            margin: 0 auto;
+            color: #888888;
         }
-        
-        /* User Info */
         .user-info {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            padding: 20px;
-            margin: 20px auto 30px;
+            background: #111111;
+            padding: 15px;
+            border-radius: 10px;
             text-align: center;
-            max-width: 500px;
+            margin-bottom: 30px;
+            border: 1px solid #333333;
         }
-        
-        .user-info strong {
-            color: #ff3b30;
-            font-size: 1.2rem;
-        }
-        
-        /* Counter */
-        .counter {
-            text-align: center;
-            margin: 30px auto;
-            padding: 25px;
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            max-width: 300px;
-        }
-        
-        .counter .number {
-            font-size: 3.5rem;
-            font-weight: 900;
-            color: #8e8e93;
-            line-height: 1;
-        }
-        
-        .counter .text {
-            color: rgba(255, 255, 255, 0.6);
-            font-size: 0.9rem;
-            margin-top: 10px;
-        }
-        
-        /* Hashtag Grid */
-        .hashtags {
+        .hashtag-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 20px;
-            margin-bottom: 40px;
+            gap: 15px;
+            margin-bottom: 30px;
         }
-        
         .hashtag {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            padding: 25px;
+            background: #111111;
+            padding: 20px;
+            border-radius: 10px;
             cursor: pointer;
-            transition: all 0.2s ease;
+            border: 1px solid #333333;
+            transition: 0.2s;
         }
-        
         .hashtag:hover {
-            background: rgba(255, 255, 255, 0.08);
-            border-color: rgba(255, 255, 255, 0.2);
-            transform: translateY(-2px);
+            background: #1a1a1a;
         }
-        
         .hashtag.selected {
-            background: rgba(255, 59, 48, 0.1);
+            background: #330000;
             border-color: #ff3b30;
         }
-        
         .hashtag .name {
-            font-size: 1.4rem;
-            font-weight: 700;
-            margin-bottom: 10px;
-            color: #ffffff;
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 8px;
         }
-        
         .hashtag .category {
             display: inline-block;
-            background: rgba(255, 255, 255, 0.1);
-            color: rgba(255, 255, 255, 0.7);
-            padding: 5px 12px;
+            background: #222222;
+            padding: 5px 10px;
             border-radius: 20px;
             font-size: 0.8rem;
-            font-weight: 500;
-            margin-bottom: 15px;
+            color: #888888;
+            margin-bottom: 10px;
         }
-        
-        .hashtag .count {
-            color: rgba(255, 255, 255, 0.5);
-            font-size: 0.9rem;
+        .counter {
+            text-align: center;
+            margin: 30px 0;
+            padding: 20px;
+            background: #111111;
+            border-radius: 10px;
+            border: 1px solid #333333;
         }
-        
-        /* Button */
-        .btn {
+        .counter .number {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #ff3b30;
+        }
+        .continue-btn {
             display: block;
             width: 100%;
             max-width: 300px;
-            margin: 40px auto;
-            padding: 18px;
+            margin: 0 auto;
+            padding: 16px;
             background: #ffffff;
             color: #000000;
             border: none;
-            border-radius: 12px;
-            font-size: 1.2rem;
-            font-weight: 700;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: bold;
             cursor: pointer;
-            text-align: center;
         }
-        
-        .btn:disabled {
+        .continue-btn:disabled {
             opacity: 0.3;
             cursor: not-allowed;
         }
-        
-        .btn:hover:not(:disabled) {
-            background: rgba(255, 255, 255, 0.9);
-        }
-        
-        /* Back Button */
         .back-btn {
             position: fixed;
             top: 20px;
             left: 20px;
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            color: #ffffff;
-            width: 45px;
-            height: 45px;
+            background: #111111;
+            color: white;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             text-decoration: none;
-            font-size: 1.2rem;
-        }
-        
-        /* Error Message */
-        .error {
-            color: #ff3b30;
-            text-align: center;
-            padding: 20px;
-            margin: 20px auto;
-            background: rgba(255, 59, 48, 0.1);
-            border-radius: 12px;
-            max-width: 500px;
-        }
-        
-        /* Loading */
-        .loading {
-            text-align: center;
-            padding: 40px;
-            color: rgba(255, 255, 255, 0.5);
+            border: 1px solid #333333;
         }
     </style>
 </head>
 <body>
-    <a href="login.html" class="back-btn" onclick="localStorage.clear()">←</a>
+    <a href="login.html" class="back-btn" onclick="localStorage.removeItem('nope_logged_in')">←</a>
     
-    <div class="header">
-        <h1>Choose Your Rage</h1>
-        <p>Select 3 hashtags that annoy you the most</p>
-    </div>
-    
-    <div id="app">
-        <div class="loading" id="loading">
+    <div class="container">
+        <div class="header">
+            <h1>Choose Your Rage</h1>
+            <p>Select 3 hashtags that annoy you the most</p>
+        </div>
+        
+        <div class="user-info" id="userInfo">
             Loading...
         </div>
+        
+        <div class="counter">
+            <div class="number" id="selectedCount">0</div>
+            <div>out of 3 selected</div>
+        </div>
+        
+        <div class="hashtag-grid" id="hashtagGrid">
+            <!-- Hashtags loaded by JS -->
+        </div>
+        
+        <button class="continue-btn" id="continueBtn" disabled>
+            CONTINUE
+        </button>
     </div>
 
     <script>
-        console.log('=== NOPE ONBOARDING START ===');
+        console.log('=== NOPE ONBOARDING LOADED ===');
         
         // Check login
-        function checkAuth() {
-            const loggedIn = localStorage.getItem('nope_logged_in') === 'true';
-            const username = localStorage.getItem('nope_anon_username');
-            
-            console.log('Auth check:', { loggedIn, username });
-            
-            if (!loggedIn || !username) {
-                console.log('Not authenticated, redirecting to login');
-                window.location.href = 'login.html';
-                return null;
-            }
-            
-            return username;
+        const username = localStorage.getItem('nope_anon_username');
+        const isLoggedIn = localStorage.getItem('nope_logged_in') === 'true';
+        
+        console.log('User:', username);
+        console.log('Logged in:', isLoggedIn);
+        
+        if (!isLoggedIn || !username) {
+            alert('Please login first');
+            window.location.href = 'login.html';
         }
         
+        // Display username
+        document.getElementById('userInfo').innerHTML = 
+            `Welcome, <strong style="color: #ff3b30">${username}</strong>`;
+        
         // Hashtag data
-        const HASHTAGS = [
+        const hashtags = [
             { id: 1, name: '#MagangDigajiSertifikat', category: 'Personal Pain', posts: 245 },
             { id: 2, name: '#DiajakJalanTapiKempes', category: 'Personal Pain', posts: 178 },
             { id: 3, name: '#DiphostingGebetan', category: 'Personal Pain', posts: 312 },
             { id: 4, name: '#DramaQueenAnjay', category: 'Social Sickness', posts: 189 },
             { id: 5, name: '#BacotLambeTurah', category: 'Social Sickness', posts: 321 },
-            { id: 6, name: '#RencanaPlinPlan', category: 'Social Sickness', posts: 267 },
-            { id: 7, name: '#BellTiketJualSinjal', category: 'Pop Culture', posts: 89 },
-            { id: 8, name: '#InfluencerNgchek', category: 'Pop Culture', posts: 203 },
-            { id: 9, name: '#FilmEndingGaje', category: 'Pop Culture', posts: 142 }
+            { id: 6, name: '#RencanaPlinPlan', category: 'Social Sickness', posts: 267 }
         ];
         
-        // Main onboarding app
-        class OnboardingApp {
-            constructor() {
-                this.selectedIds = [];
-                this.username = null;
-                this.maxSelection = 3;
-                this.init();
-            }
+        let selectedIds = [];
+        const container = document.getElementById('hashtagGrid');
+        const counter = document.getElementById('selectedCount');
+        const continueBtn = document.getElementById('continueBtn');
+        
+        // Render hashtags
+        function renderHashtags() {
+            container.innerHTML = '';
             
-            init() {
-                console.log('Initializing app...');
-                
-                // Check authentication
-                this.username = checkAuth();
-                if (!this.username) return;
-                
-                // Render the app
-                this.render();
-            }
-            
-            render() {
-                console.log('Rendering app for user:', this.username);
-                
-                const app = document.getElementById('app');
-                if (!app) {
-                    console.error('App container not found!');
-                    return;
-                }
-                
-                // Create main UI
-                app.innerHTML = `
-                    <div class="user-info">
-                        Welcome, <strong>${this.username}</strong>
+            hashtags.forEach(hashtag => {
+                const isSelected = selectedIds.includes(hashtag.id);
+                const div = document.createElement('div');
+                div.className = `hashtag ${isSelected ? 'selected' : ''}`;
+                div.innerHTML = `
+                    <div class="name">${hashtag.name}</div>
+                    <div class="category">${hashtag.category}</div>
+                    <div style="color: #888; font-size: 0.9rem; margin-top: 10px;">
+                        ${hashtag.posts} posts
+                        ${isSelected ? '<div style="color: #ff3b30; margin-top: 5px;">✓ SELECTED</div>' : ''}
                     </div>
-                    
-                    <div class="counter">
-                        <div class="number" id="counter">0</div>
-                        <div class="text">out of ${this.maxSelection} selected</div>
-                    </div>
-                    
-                    <div class="hashtags" id="hashtagsContainer">
-                        <!-- Hashtags will be inserted here -->
-                    </div>
-                    
-                    <button class="btn" id="continueBtn" disabled>
-                        CONTINUE
-                    </button>
                 `;
                 
-                // Render hashtags
-                this.renderHashtags();
-                
-                // Setup event listeners
-                this.setupEvents();
-                
-                // Update counter
-                this.updateCounter();
-            }
+                div.onclick = () => toggleHashtag(hashtag.id);
+                container.appendChild(div);
+            });
             
-            renderHashtags() {
-                const container = document.getElementById('hashtagsContainer');
-                if (!container) return;
-                
-                console.log('Rendering', HASHTAGS.length, 'hashtags');
-                
-                container.innerHTML = HASHTAGS.map(hashtag => {
-                    const isSelected = this.selectedIds.includes(hashtag.id);
-                    
-                    return `
-                        <div class="hashtag ${isSelected ? 'selected' : ''}" data-id="${hashtag.id}">
-                            <div class="name">${hashtag.name}</div>
-                            <div class="category">${hashtag.category}</div>
-                            <div class="count">${hashtag.posts} posts</div>
-                            ${isSelected ? '<div style="color: #ff3b30; margin-top: 10px; font-weight: bold;">✓ SELECTED</div>' : ''}
-                        </div>
-                    `;
-                }).join('');
-                
-                // Add click events to hashtags
-                document.querySelectorAll('.hashtag').forEach(el => {
-                    el.addEventListener('click', (e) => {
-                        const id = parseInt(e.currentTarget.dataset.id);
-                        this.toggleSelection(id);
-                    });
-                });
-            }
-            
-            toggleSelection(id) {
-                console.log('Toggling hashtag:', id);
-                
-                const index = this.selectedIds.indexOf(id);
-                
-                if (index === -1) {
-                    // Add if not at max
-                    if (this.selectedIds.length < this.maxSelection) {
-                        this.selectedIds.push(id);
-                    } else {
-                        this.showMessage(`Max ${this.maxSelection} hashtags allowed`);
-                        return;
-                    }
-                } else {
-                    // Remove if already selected
-                    this.selectedIds.splice(index, 1);
-                }
-                
-                // Re-render hashtags
-                this.renderHashtags();
-                this.updateCounter();
-                this.updateContinueButton();
-            }
-            
-            updateCounter() {
-                const counter = document.getElementById('counter');
-                if (counter) {
-                    counter.textContent = this.selectedIds.length;
-                    
-                    // Change color
-                    if (this.selectedIds.length === this.maxSelection) {
-                        counter.style.color = '#ff3b30';
-                    } else if (this.selectedIds.length > 0) {
-                        counter.style.color = '#ff9500';
-                    } else {
-                        counter.style.color = '#8e8e93';
-                    }
-                }
-            }
-            
-            updateContinueButton() {
-                const btn = document.getElementById('continueBtn');
-                if (btn) {
-                    btn.disabled = this.selectedIds.length !== this.maxSelection;
-                }
-            }
-            
-            setupEvents() {
-                const continueBtn = document.getElementById('continueBtn');
-                if (continueBtn) {
-                    continueBtn.addEventListener('click', () => this.continueToWall());
-                }
-            }
-            
-            continueToWall() {
-                if (this.selectedIds.length !== this.maxSelection) {
-                    this.showMessage(`Please select ${this.maxSelection} hashtags`);
-                    return;
-                }
-                
-                console.log('Continuing with hashtags:', this.selectedIds);
-                
-                // Get hashtag names
-                const hashtagNames = this.selectedIds.map(id => {
-                    const hashtag = HASHTAGS.find(h => h.id === id);
-                    return hashtag ? hashtag.name : '';
-                }).filter(name => name);
-                
-                // Save to localStorage
-                localStorage.setItem('nope_selected_hashtags', JSON.stringify(hashtagNames));
-                localStorage.setItem('nope_onboarding_complete', 'true');
-                
-                // Show loading
-                const btn = document.getElementById('continueBtn');
-                if (btn) {
-                    btn.innerHTML = 'LOADING...';
-                    btn.disabled = true;
-                }
-                
-                // Redirect to wall
-                setTimeout(() => {
-                    console.log('Redirecting to wall.html');
-                    window.location.href = 'wall.html';
-                }, 1000);
-            }
-            
-            showMessage(text) {
-                // Remove existing message
-                const existing = document.querySelector('.message');
-                if (existing) existing.remove();
-                
-                // Create new message
-                const message = document.createElement('div');
-                message.className = 'error message';
-                message.textContent = text;
-                message.style.cssText = `
-                    position: fixed;
-                    top: 20px;
-                    right: 20px;
-                    background: rgba(255, 59, 48, 0.9);
-                    color: white;
-                    padding: 15px 25px;
-                    border-radius: 10px;
-                    z-index: 9999;
-                    animation: fadeIn 0.3s ease;
-                `;
-                
-                document.body.appendChild(message);
-                
-                // Remove after 3 seconds
-                setTimeout(() => {
-                    message.remove();
-                }, 3000);
-                
-                // Add animation
-                const style = document.createElement('style');
-                style.textContent = `@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }`;
-                document.head.appendChild(style);
-            }
+            updateCounter();
         }
         
-        // Start the app when page loads
-        document.addEventListener('DOMContentLoaded', () => {
-            console.log('DOM ready, starting onboarding app...');
+        // Toggle selection
+        function toggleHashtag(id) {
+            const index = selectedIds.indexOf(id);
             
-            // Clear loading
-            const loading = document.getElementById('loading');
-            if (loading) loading.remove();
+            if (index === -1) {
+                if (selectedIds.length < 3) {
+                    selectedIds.push(id);
+                } else {
+                    alert('Maximum 3 hashtags');
+                    return;
+                }
+            } else {
+                selectedIds.splice(index, 1);
+            }
             
-            // Initialize app
-            window.app = new OnboardingApp();
-            
-            console.log('Onboarding app initialized');
-        });
+            renderHashtags();
+            continueBtn.disabled = selectedIds.length !== 3;
+        }
         
-        // Debug function
-        window.debug = () => {
-            console.log('=== DEBUG ===');
-            console.log('Selected IDs:', window.app?.selectedIds || []);
-            console.log('Username:', localStorage.getItem('nope_anon_username'));
-            console.log('Logged in:', localStorage.getItem('nope_logged_in'));
-            console.log('==============');
+        // Update counter
+        function updateCounter() {
+            counter.textContent = selectedIds.length;
+            counter.style.color = selectedIds.length === 3 ? '#ff3b30' : 
+                                 selectedIds.length > 0 ? '#ff9500' : '#888888';
+        }
+        
+        // Continue to wall
+        continueBtn.onclick = function() {
+            if (selectedIds.length !== 3) return;
+            
+            // Save selected hashtags
+            const selectedNames = selectedIds.map(id => {
+                const hashtag = hashtags.find(h => h.id === id);
+                return hashtag.name;
+            });
+            
+            localStorage.setItem('nope_selected_hashtags', JSON.stringify(selectedNames));
+            localStorage.setItem('nope_onboarding_complete', 'true');
+            
+            this.innerHTML = 'LOADING...';
+            this.disabled = true;
+            
+            // ⚠️ Redirect ke wall.html
+            setTimeout(() => {
+                window.location.href = 'wall.html';
+            }, 1000);
         };
+        
+        // Initial render
+        renderHashtags();
+        
+        console.log('Onboarding page ready');
     </script>
 </body>
 </html>
