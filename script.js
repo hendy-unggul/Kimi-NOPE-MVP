@@ -1,10 +1,5 @@
-// Definisi CONFIG
-var CONFIG = {
-    STORAGE_KEYS: {
-        ANON_USERNAME: 'anon_username_key',
-        LOGGED_IN: 'logged_in_key'
-    }
-};
+// script.js
+import CONFIG from './config.js';
 
 // Di dalam form submit handler, ganti dengan:
 setTimeout(() => {
