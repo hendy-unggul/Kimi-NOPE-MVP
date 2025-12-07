@@ -3,61 +3,171 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Feed - NOPE</title>
+    <title>NOPE Feed</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* Feed Container */
-        .feed-container {
+        /* Home Container */
+        .home-container {
             max-width: 600px;
             margin: 0 auto;
+            padding: 0;
+            background: #f8f9fa;
+            min-height: 100vh;
+        }
+        
+        /* Feed Tabs - 3 TABS */
+        .feed-tabs {
+            display: flex;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .feed-tab {
+            flex: 1;
+            padding: 20px 15px;
+            text-align: center;
+            border: none;
+            background: white;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.3s;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            color: #666;
+        }
+        
+        .feed-tab:hover {
+            background: #f8f9fa;
+        }
+        
+        .feed-tab.active {
+            color: white;
+        }
+        
+        .feed-tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+        }
+        
+        /* Tab 1: Sefrekuensi (Hitam) */
+        .feed-tab[data-tab="sefrekuensi"] {
+            border-bottom: 3px solid #333;
+        }
+        
+        .feed-tab[data-tab="sefrekuensi"].active {
+            background: #1a1a1a;
+            color: white;
+        }
+        
+        .feed-tab[data-tab="sefrekuensi"].active::after {
+            background: #333;
+        }
+        
+        /* Tab 2: Segelombang (Biru) */
+        .feed-tab[data-tab="segelombang1"] {
+            border-bottom: 3px solid #3b82f6;
+        }
+        
+        .feed-tab[data-tab="segelombang1"].active {
+            background: #1d4ed8;
+            color: white;
+        }
+        
+        .feed-tab[data-tab="segelombang1"].active::after {
+            background: #3b82f6;
+        }
+        
+        /* Tab 3: Segelombang (Hijau) */
+        .feed-tab[data-tab="segelombang2"] {
+            border-bottom: 3px solid #10b981;
+        }
+        
+        .feed-tab[data-tab="segelombang2"].active {
+            background: #047857;
+            color: white;
+        }
+        
+        .feed-tab[data-tab="segelombang2"].active::after {
+            background: #10b981;
+        }
+        
+        .tab-icon {
+            font-size: 18px;
+        }
+        
+        .tab-match {
+            font-size: 11px;
+            background: rgba(255,255,255,0.2);
+            padding: 2px 8px;
+            border-radius: 10px;
+        }
+        
+        /* Tab Content */
+        .tab-content {
+            display: none;
             padding: 20px;
         }
         
-        /* Feed Header */
-        .feed-header {
-            position: sticky;
-            top: 0;
-            background: white;
-            z-index: 100;
-            padding: 20px 0;
-            border-bottom: 1px solid #eee;
-            margin-bottom: 20px;
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.3s;
         }
         
-        .feed-title {
-            font-size: 28px;
-            color: #333;
-            margin-bottom: 5px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
         
-        .feed-subtitle {
-            color: #666;
-            font-size: 14px;
-        }
-        
-        /* New Rant Box */
+        /* New Rant Box - Different colors per tab */
         .new-rant-box {
             background: white;
             border-radius: 15px;
             padding: 20px;
             margin-bottom: 20px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
-            border: 1px solid #e0e0e0;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            border: 2px solid #e0e0e0;
+        }
+        
+        /* Sefrekuensi rant box */
+        .sefrekuensi .new-rant-box {
+            border-color: #333;
+            border-left: 5px solid #333;
+        }
+        
+        /* Segelombang 1 rant box */
+        .segelombang1 .new-rant-box {
+            border-color: #3b82f6;
+            border-left: 5px solid #3b82f6;
+        }
+        
+        /* Segelombang 2 rant box */
+        .segelombang2 .new-rant-box {
+            border-color: #10b981;
+            border-left: 5px solid #10b981;
         }
         
         .rant-textarea {
             width: 100%;
-            min-height: 100px;
+            min-height: 120px;
             border: none;
             resize: none;
             font-size: 16px;
             line-height: 1.5;
             margin-bottom: 15px;
             font-family: inherit;
+            background: transparent;
         }
         
         .rant-textarea:focus {
@@ -77,63 +187,131 @@
         
         .post-rant-btn {
             padding: 8px 20px;
-            background: #667eea;
-            color: white;
             border: none;
             border-radius: 20px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .sefrekuensi .post-rant-btn {
+            background: #1a1a1a;
+            color: white;
+        }
+        
+        .segelombang1 .post-rant-btn {
+            background: #1d4ed8;
+            color: white;
+        }
+        
+        .segelombang2 .post-rant-btn {
+            background: #047857;
+            color: white;
         }
         
         .post-rant-btn:hover {
-            background: #5a67d8;
             transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
         }
         
         .post-rant-btn:disabled {
-            background: #ccc;
+            background: #ccc !important;
             cursor: not-allowed;
             transform: none;
+            box-shadow: none;
         }
         
-        /* Rant Feed */
-        .rant-feed {
-            margin-top: 30px;
-        }
-        
+        /* Rant Cards */
         .rant-card {
             background: white;
             border-radius: 15px;
             padding: 20px;
             margin-bottom: 20px;
             box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-            border: 1px solid #f0f0f0;
             transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
         }
         
         .rant-card:hover {
-            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
-            transform: translateY(-2px);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        
+        /* Card border based on tab */
+        .sefrekuensi .rant-card {
+            border-left: 5px solid #1a1a1a;
+        }
+        
+        .segelombang1 .rant-card {
+            border-left: 5px solid #1d4ed8;
+        }
+        
+        .segelombang2 .rant-card {
+            border-left: 5px solid #047857;
+        }
+        
+        .match-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 11px;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .sefrekuensi .match-badge {
+            background: #1a1a1a;
+            color: white;
+        }
+        
+        .segelombang1 .match-badge {
+            background: #1d4ed8;
+            color: white;
+        }
+        
+        .segelombang2 .match-badge {
+            background: #047857;
+            color: white;
         }
         
         .rant-header {
             display: flex;
             align-items: center;
             margin-bottom: 15px;
+            padding-right: 80px; /* Space for badge */
         }
         
         .user-avatar {
-            width: 40px;
-            height: 40px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            width: 45px;
+            height: 45px;
             border-radius: 50%;
             margin-right: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: white;
             font-weight: bold;
+            color: white;
+            font-size: 18px;
+        }
+        
+        .sefrekuensi .user-avatar {
+            background: linear-gradient(135deg, #1a1a1a 0%, #333 100%);
+        }
+        
+        .segelombang1 .user-avatar {
+            background: linear-gradient(135deg, #1d4ed8 0%, #3b82f6 100%);
+        }
+        
+        .segelombang2 .user-avatar {
+            background: linear-gradient(135deg, #047857 0%, #10b981 100%);
         }
         
         .user-info {
@@ -144,11 +322,37 @@
             font-weight: 600;
             color: #333;
             margin-bottom: 3px;
+            font-size: 15px;
+        }
+        
+        .user-match {
+            font-size: 12px;
+            color: #666;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .match-highlight {
+            font-weight: bold;
+        }
+        
+        .sefrekuensi .match-highlight {
+            color: #1a1a1a;
+        }
+        
+        .segelombang1 .match-highlight {
+            color: #1d4ed8;
+        }
+        
+        .segelombang2 .match-highlight {
+            color: #047857;
         }
         
         .rant-time {
-            font-size: 12px;
+            font-size: 11px;
             color: #888;
+            margin-top: 3px;
         }
         
         .rant-content {
@@ -168,13 +372,151 @@
         
         .rant-tag {
             padding: 5px 12px;
-            background: #f0f7ff;
             border-radius: 15px;
             font-size: 12px;
-            color: #667eea;
             font-weight: 600;
         }
         
+        .sefrekuensi .rant-tag {
+            background: #f0f0f0;
+            color: #333;
+        }
+        
+        .segelombang1 .rant-tag {
+            background: #eff6ff;
+            color: #1d4ed8;
+        }
+        
+        .segelombang2 .rant-tag {
+            background: #f0fdf4;
+            color: #047857;
+        }
+        
+        .matched-tag {
+            position: relative;
+        }
+        
+        .matched-tag::after {
+            content: '✓';
+            margin-left: 5px;
+            font-weight: bold;
+        }
+        
+        /* Comment Section */
+        .comment-toggle {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #666;
+            font-size: 14px;
+            cursor: pointer;
+            margin-bottom: 15px;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            transition: all 0.3s;
+        }
+        
+        .comment-toggle:hover {
+            background: #e9ecef;
+        }
+        
+        .comment-section {
+            display: none;
+            margin-top: 20px;
+            border-top: 1px solid #eee;
+            padding-top: 20px;
+        }
+        
+        .comment-section.expanded {
+            display: block;
+            animation: slideDown 0.3s;
+        }
+        
+        @keyframes slideDown {
+            from { opacity: 0; max-height: 0; }
+            to { opacity: 1; max-height: 500px; }
+        }
+        
+        .new-comment {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .comment-input {
+            flex: 1;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            font-size: 14px;
+            resize: none;
+            min-height: 40px;
+            max-height: 100px;
+        }
+        
+        .comment-input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        .send-comment-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: none;
+            background: #667eea;
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+        
+        .send-comment-btn:hover {
+            background: #5a67d8;
+            transform: scale(1.1);
+        }
+        
+        .comments-list {
+            max-height: 300px;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+        
+        .comment-item {
+            padding: 12px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+        
+        .comment-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        
+        .comment-user {
+            font-weight: 600;
+            color: #333;
+            font-size: 13px;
+        }
+        
+        .comment-time {
+            font-size: 11px;
+            color: #888;
+        }
+        
+        .comment-text {
+            font-size: 14px;
+            color: #333;
+            line-height: 1.5;
+        }
+        
+        /* Rant Stats */
         .rant-stats {
             display: flex;
             gap: 20px;
@@ -193,14 +535,27 @@
         }
         
         .stat-item:hover {
-            color: #667eea;
+            transform: scale(1.1);
         }
         
         .stat-count {
             font-weight: 600;
+            min-width: 20px;
         }
         
-        .stat-item.active {
+        .sefrekuensi .stat-item:hover {
+            color: #1a1a1a;
+        }
+        
+        .segelombang1 .stat-item:hover {
+            color: #1d4ed8;
+        }
+        
+        .segelombang2 .stat-item:hover {
+            color: #047857;
+        }
+        
+        .stat-item.active .fa-heart {
             color: #ff6b6b;
         }
         
@@ -214,17 +569,54 @@
         .empty-icon {
             font-size: 64px;
             margin-bottom: 20px;
-            color: #ddd;
+            opacity: 0.5;
+        }
+        
+        /* Your NOPEs Display */
+        .your-nopes {
+            background: white;
+            border-radius: 15px;
+            padding: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: center;
+        }
+        
+        .your-nopes-label {
+            font-size: 13px;
+            color: #666;
+            font-weight: 600;
+        }
+        
+        .your-nope-tag {
+            padding: 6px 12px;
+            background: #667eea;
+            color: white;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: 600;
         }
         
         /* Responsive */
         @media (max-width: 768px) {
-            .feed-container {
-                padding: 15px;
+            .home-container {
+                padding: 0;
             }
             
-            .feed-title {
-                font-size: 24px;
+            .feed-tab {
+                padding: 15px 10px;
+                font-size: 13px;
+            }
+            
+            .tab-icon {
+                font-size: 16px;
+            }
+            
+            .tab-content {
+                padding: 15px;
             }
         }
     </style>
@@ -240,197 +632,432 @@
                 </a>
             </div>
             <nav class="nav">
-                <a href="home.html" class="active"><i class="fas fa-home"></i> Feed</a>
+                <a href="home.html" class="active"><i class="fas fa-comments"></i> Feed</a>
                 <a href="profile.html"><i class="fas fa-archive"></i> Artefak</a>
                 <a href="login.html" class="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a>
             </nav>
         </header>
 
-        <main class="feed-container">
-            <!-- Feed Header -->
-            <div class="feed-header">
-                <h1 class="feed-title">
-                    <i class="fas fa-times-circle" style="color: #667eea;"></i>
-                    NOPE Feed
-                </h1>
-                <p class="feed-subtitle">
-                    What everyone is saying NOPE to today
-                </p>
+        <main class="home-container">
+            <!-- Your Current NOPEs -->
+            <div class="your-nopes">
+                <div class="your-nopes-label">Your NOPEs:</div>
+                <div class="your-nope-tag" id="your-nope-1">#FilmEndingGaje</div>
+                <div class="your-nope-tag" id="your-nope-2">#DighostingGebetan</div>
+                <div class="your-nope-tag" id="your-nope-3">#RencanaPlinPlan</div>
             </div>
 
-            <!-- New Rant Box -->
-            <div class="new-rant-box">
-                <textarea 
-                    class="rant-textarea" 
-                    id="new-rant-text" 
-                    placeholder="What's bothering you today? (280 chars max)"
-                    maxlength="280"
-                    oninput="updateRantCount()"
-                ></textarea>
+            <!-- Feed Tabs -->
+            <div class="feed-tabs">
+                <!-- Tab 1: Sefrekuensi (3# sama) -->
+                <button class="feed-tab active" data-tab="sefrekuensi" onclick="switchTab('sefrekuensi')">
+                    <div class="tab-icon">🖤</div>
+                    <div>Sefrekuensi</div>
+                    <div class="tab-match">3# match</div>
+                </button>
                 
-                <div class="rant-actions">
-                    <div class="char-count" id="rant-char-count">0/280</div>
-                    <button class="post-rant-btn" id="post-rant-btn" onclick="postRant()" disabled>
-                        <i class="fas fa-paper-plane"></i> Post Rant
+                <!-- Tab 2: Segelombang (2# sama - Biru) -->
+                <button class="feed-tab" data-tab="segelombang1" onclick="switchTab('segelombang1')">
+                    <div class="tab-icon">🌊</div>
+                    <div>Segelombang</div>
+                    <div class="tab-match">2# match</div>
+                </button>
+                
+                <!-- Tab 3: Segelombang (2# sama - Hijau) -->
+                <button class="feed-tab" data-tab="segelombang2" onclick="switchTab('segelombang2')">
+                    <div class="tab-icon">🌊</div>
+                    <div>Segelombang</div>
+                    <div class="tab-match">2# match</div>
+                </button>
+            </div>
+
+            <!-- Tab 1: Sefrekuensi -->
+            <div class="tab-content active sefrekuensi" id="tab-sefrekuensi">
+                <!-- New Rant Box -->
+                <div class="new-rant-box">
+                    <textarea 
+                        class="rant-textarea" 
+                        id="rant-sefrekuensi" 
+                        placeholder="Share your rant with people who feel exactly the same 3 things..."
+                        maxlength="280"
+                        oninput="updateCharCount('sefrekuensi')"
+                    ></textarea>
+                    
+                    <div class="rant-actions">
+                        <div class="char-count" id="char-count-sefrekuensi">0/280</div>
+                        <button class="post-rant-btn" id="post-sefrekuensi" onclick="postRant('sefrekuensi')" disabled>
+                            <i class="fas fa-paper-plane"></i> Post to Sefrekuensi
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Rant Feed -->
+                <div class="rant-feed" id="feed-sefrekuensi">
+                    <!-- Rant 1 -->
+                    <div class="rant-card">
+                        <div class="match-badge">
+                            <i class="fas fa-heart"></i> 3# Match
+                        </div>
+                        
+                        <div class="rant-header">
+                            <div class="user-avatar">SD</div>
+                            <div class="user-info">
+                                <div class="user-name">SameDragon_7X9B</div>
+                                <div class="user-match">
+                                    Matches your: 
+                                    <span class="match-highlight">#FilmEndingGaje</span>, 
+                                    <span class="match-highlight">#DighostingGebetan</span>, 
+                                    <span class="match-highlight">#RencanaPlinPlan</span>
+                                </div>
+                                <div class="rant-time">2 hours ago</div>
+                            </div>
+                        </div>
+                        
+                        <div class="rant-content">
+                            Bayangin: Film bagus 2 jam, endingnya bikin kecewa. Mirip kayak chat sama gebetan 2 minggu, tiba-tiba ghosting. Sama kayak temen yang janji nongkrong, batal last minute. Pattern yang sama!
+                        </div>
+                        
+                        <div class="rant-tags">
+                            <div class="rant-tag matched-tag">#FilmEndingGaje</div>
+                            <div class="rant-tag matched-tag">#DighostingGebetan</div>
+                            <div class="rant-tag matched-tag">#RencanaPlinPlan</div>
+                        </div>
+                        
+                        <!-- Comment Toggle -->
+                        <div class="comment-toggle" onclick="toggleComments(this)">
+                            <i class="far fa-comment"></i>
+                            <span>12 comments</span>
+                            <i class="fas fa-chevron-down" style="margin-left: auto;"></i>
+                        </div>
+                        
+                        <!-- Comment Section -->
+                        <div class="comment-section">
+                            <div class="new-comment">
+                                <textarea class="comment-input" placeholder="Add a comment..." rows="1"></textarea>
+                                <button class="send-comment-btn" onclick="sendComment(this)">
+                                    <i class="fas fa-paper-plane"></i>
+                                </button>
+                            </div>
+                            
+                            <div class="comments-list">
+                                <div class="comment-item">
+                                    <div class="comment-header">
+                                        <div class="comment-user">GhostWriter_42C3</div>
+                                        <div class="comment-time">1 hour ago</div>
+                                    </div>
+                                    <div class="comment-text">LITERALLY SAME. Kayak hidup ini series Netflix yang endingnya disappointing.</div>
+                                </div>
+                                <div class="comment-item">
+                                    <div class="comment-header">
+                                        <div class="comment-user">EchoChamber_8F2A</div>
+                                        <div class="comment-time">45 min ago</div>
+                                    </div>
+                                    <div class="comment-text">3 for 3 match! Kita hidup di timeline yang sama kayaknya.</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="rant-stats">
+                            <div class="stat-item" onclick="toggleLike(this)">
+                                <i class="far fa-heart"></i>
+                                <span class="stat-count">42</span>
+                            </div>
+                            <div class="stat-item" onclick="toggleCommentSection(this)">
+                                <i class="far fa-comment"></i>
+                                <span class="stat-count">12</span>
+                            </div>
+                            <div class="stat-item">
+                                <i class="fas fa-retweet"></i>
+                                <span class="stat-count">5</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Load More -->
+                <div style="text-align: center; margin: 30px 0;">
+                    <button class="btn-secondary" onclick="loadMore('sefrekuensi')" style="background: #1a1a1a; color: white;">
+                        <i class="fas fa-sync-alt"></i> Load More Sefrekuensi
                     </button>
                 </div>
             </div>
 
-            <!-- Rant Feed -->
-            <div class="rant-feed" id="rant-feed">
-                <!-- Rants will be loaded here -->
-                
-                <!-- Example Rant 1 -->
-                <div class="rant-card">
-                    <div class="rant-header">
-                        <div class="user-avatar">AN</div>
-                        <div class="user-info">
-                            <div class="user-name">AnonymousUser_7X9B</div>
-                            <div class="rant-time">2 hours ago</div>
+            <!-- Tab 2: Segelombang (Biru) -->
+            <div class="tab-content segelombang1" id="tab-segelombang1">
+                <!-- New Rant Box -->
+                <div class="new-rant-box">
+                    <textarea 
+                        class="rant-textarea" 
+                        id="rant-segelombang1" 
+                        placeholder="Share with people who match 2 of your frustrations..."
+                        maxlength="280"
+                        oninput="updateCharCount('segelombang1')"
+                    ></textarea>
+                    
+                    <div class="rant-actions">
+                        <div class="char-count" id="char-count-segelombang1">0/280</div>
+                        <button class="post-rant-btn" id="post-segelombang1" onclick="postRant('segelombang1')" disabled>
+                            <i class="fas fa-paper-plane"></i> Post to Segelombang
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Rant Feed -->
+                <div class="rant-feed" id="feed-segelombang1">
+                    <!-- Rant 1 -->
+                    <div class="rant-card">
+                        <div class="match-badge">
+                            <i class="fas fa-wave-square"></i> 2# Match
                         </div>
-                    </div>
-                    
-                    <div class="rant-content">
-                        Baru aja dighosting sama gebetan setelah ngobrol 2 minggu. Chat udah dibaca, tapi ga dibales sampe sekarang. Rasanya kayak di-ghosting sama masa depan sendiri.
-                    </div>
-                    
-                    <div class="rant-tags">
-                        <div class="rant-tag">#DighostingGebetan</div>
-                        <div class="rant-tag">#FilmEndingGaje</div>
-                        <div class="rant-tag">#RencanaPlinPlan</div>
-                    </div>
-                    
-                    <div class="rant-stats">
-                        <div class="stat-item">
-                            <i class="far fa-heart"></i>
-                            <span class="stat-count">24</span>
+                        
+                        <div class="rant-header">
+                            <div class="user-avatar">BW</div>
+                            <div class="user-info">
+                                <div class="user-name">BlueWave_5D6E</div>
+                                <div class="user-match">
+                                    Matches your: 
+                                    <span class="match-highlight">#FilmEndingGaje</span> & 
+                                    <span class="match-highlight">#DighostingGebetan</span>
+                                </div>
+                                <div class="rant-time">3 hours ago</div>
+                            </div>
                         </div>
-                        <div class="stat-item">
+                        
+                        <div class="rant-content">
+                            Ghosting sama kayak film dengan ending buruk: sama-sama ninggalin rasa penasaran dan kecewa. Tapi bedanya, film cuma 2 jam, ghosting bisa berbulan-bulan stuck di kepala.
+                        </div>
+                        
+                        <div class="rant-tags">
+                            <div class="rant-tag matched-tag">#FilmEndingGaje</div>
+                            <div class="rant-tag matched-tag">#DighostingGebetan</div>
+                            <div class="rant-tag">#InfluencerNgehek</div>
+                        </div>
+                        
+                        <!-- Comment Toggle -->
+                        <div class="comment-toggle" onclick="toggleComments(this)">
                             <i class="far fa-comment"></i>
-                            <span class="stat-count">8</span>
+                            <span>8 comments</span>
+                            <i class="fas fa-chevron-down" style="margin-left: auto;"></i>
                         </div>
-                        <div class="stat-item">
-                            <i class="fas fa-retweet"></i>
-                            <span class="stat-count">3</span>
+                        
+                        <!-- Comment Section -->
+                        <div class="comment-section">
+                            <div class="new-comment">
+                                <textarea class="comment-input" placeholder="Add a comment..." rows="1"></textarea>
+                                <button class="send-comment-btn" onclick="sendComment(this)">
+                                    <i class="fas fa-paper-plane"></i>
+                                </button>
+                            </div>
+                            
+                            <div class="comments-list">
+                                <div class="comment-item">
+                                    <div class="comment-header">
+                                        <div class="comment-user">WaveRider_42C3</div>
+                                        <div class="comment-time">2 hours ago</div>
+                                    </div>
+                                    <div class="comment-text">Setuju banget! Ghosting itu ending season cliffhanger yang ga pernah ada season 2-nya.</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="rant-stats">
+                            <div class="stat-item active" onclick="toggleLike(this)">
+                                <i class="fas fa-heart" style="color: #ff6b6b;"></i>
+                                <span class="stat-count">28</span>
+                            </div>
+                            <div class="stat-item" onclick="toggleCommentSection(this)">
+                                <i class="far fa-comment"></i>
+                                <span class="stat-count">8</span>
+                            </div>
+                            <div class="stat-item">
+                                <i class="fas fa-retweet"></i>
+                                <span class="stat-count">3</span>
+                            </div>
                         </div>
                     </div>
                 </div>
                 
-                <!-- Example Rant 2 -->
-                <div class="rant-card">
-                    <div class="rant-header">
-                        <div class="user-avatar">GH</div>
-                        <div class="user-info">
-                            <div class="user-name">GhostProtocol_42C3</div>
-                            <div class="rant-time">5 hours ago</div>
-                        </div>
-                    </div>
-                    
-                    <div class="rant-content">
-                        Influencer promosi skincare harga 2 juta, bilangnya "affordable banget". Affordable buat siapa? Buat yang punya ginjal extra buat dijual?
-                    </div>
-                    
-                    <div class="rant-tags">
-                        <div class="rant-tag">#InfluencerNgehek</div>
-                        <div class="rant-tag">#BeliTiketJualGinjal</div>
-                        <div class="rant-tag">#BacotLambeTurah</div>
-                    </div>
-                    
-                    <div class="rant-stats">
-                        <div class="stat-item active">
-                            <i class="fas fa-heart" style="color: #ff6b6b;"></i>
-                            <span class="stat-count">42</span>
-                        </div>
-                        <div class="stat-item">
-                            <i class="far fa-comment"></i>
-                            <span class="stat-count">15</span>
-                        </div>
-                        <div class="stat-item">
-                            <i class="fas fa-retweet"></i>
-                            <span class="stat-count">12</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Example Rant 3 -->
-                <div class="rant-card">
-                    <div class="rant-header">
-                        <div class="user-avatar">SP</div>
-                        <div class="user-info">
-                            <div class="user-name">SilentPain_8F2A</div>
-                            <div class="rant-time">1 day ago</div>
-                        </div>
-                    </div>
-                    
-                    <div class="rant-content">
-                        Magang 3 bulan full-time, dapatnya cuma sertifikat dan "pengalaman berharga". Pengalaman berharga ga bisa bayar sewa kosan, Pak.
-                    </div>
-                    
-                    <div class="rant-tags">
-                        <div class="rant-tag">#MagangDigajiSertifikat</div>
-                        <div class="rant-tag">#DramaQueenAnjay</div>
-                        <div class="rant-tag">#DiajakJalanTapiKempes</div>
-                    </div>
-                    
-                    <div class="rant-stats">
-                        <div class="stat-item">
-                            <i class="far fa-heart"></i>
-                            <span class="stat-count">37</span>
-                        </div>
-                        <div class="stat-item">
-                            <i class="far fa-comment"></i>
-                            <span class="stat-count">22</span>
-                        </div>
-                        <div class="stat-item">
-                            <i class="fas fa-retweet"></i>
-                            <span class="stat-count">7</span>
-                        </div>
-                    </div>
+                <!-- Load More -->
+                <div style="text-align: center; margin: 30px 0;">
+                    <button class="btn-secondary" onclick="loadMore('segelombang1')" style="background: #1d4ed8; color: white;">
+                        <i class="fas fa-sync-alt"></i> Load More Segelombang
+                    </button>
                 </div>
             </div>
-            
-            <!-- Load More -->
-            <div style="text-align: center; margin: 30px 0;">
-                <button class="btn-secondary" onclick="loadMoreRants()">
-                    <i class="fas fa-sync-alt"></i> Load More Rants
-                </button>
+
+            <!-- Tab 3: Segelombang (Hijau) -->
+            <div class="tab-content segelombang2" id="tab-segelombang2">
+                <!-- New Rant Box -->
+                <div class="new-rant-box">
+                    <textarea 
+                        class="rant-textarea" 
+                        id="rant-segelombang2" 
+                        placeholder="Share with people on a similar wavelength..."
+                        maxlength="280"
+                        oninput="updateCharCount('segelombang2')"
+                    ></textarea>
+                    
+                    <div class="rant-actions">
+                        <div class="char-count" id="char-count-segelombang2">0/280</div>
+                        <button class="post-rant-btn" id="post-segelombang2" onclick="postRant('segelombang2')" disabled>
+                            <i class="fas fa-paper-plane"></i> Post to Segelombang
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Rant Feed -->
+                <div class="rant-feed" id="feed-segelombang2">
+                    <!-- Rant 1 -->
+                    <div class="rant-card">
+                        <div class="match-badge">
+                            <i class="fas fa-wave-square"></i> 2# Match
+                        </div>
+                        
+                        <div class="rant-header">
+                            <div class="user-avatar">GW</div>
+                            <div class="user-info">
+                                <div class="user-name">GreenWave_1G7H</div>
+                                <div class="user-match">
+                                    Matches your: 
+                                    <span class="match-highlight">#FilmEndingGaje</span> & 
+                                    <span class="match-highlight">#RencanaPlinPlan</span>
+                                </div>
+                                <div class="rant-time">5 hours ago</div>
+                            </div>
+                        </div>
+                        
+                        <div class="rant-content">
+                            Film dengan ending buruk itu seperti temen yang plin-plan: sama-sama bikin investasi waktu dan emosi jadi sia-sia. Kita anticipate sesuatu yang bagus, ternyata disappointment.
+                        </div>
+                        
+                        <div class="rant-tags">
+                            <div class="rant-tag matched-tag">#FilmEndingGaje</div>
+                            <div class="rant-tag">#DiajakJalanTapiKempes</div>
+                            <div class="rant-tag matched-tag">#RencanaPlinPlan</div>
+                        </div>
+                        
+                        <!-- Comment Toggle -->
+                        <div class="comment-toggle" onclick="toggleComments(this)">
+                            <i class="far fa-comment"></i>
+                            <span>5 comments</span>
+                            <i class="fas fa-chevron-down" style="margin-left: auto;"></i>
+                        </div>
+                        
+                        <!-- Comment Section -->
+                        <div class="comment-section">
+                            <div class="new-comment">
+                                <textarea class="comment-input" placeholder="Add a comment..." rows="1"></textarea>
+                                <button class="send-comment-btn" onclick="sendComment(this)">
+                                    <i class="fas fa-paper-plane"></i>
+                                </button>
+                            </div>
+                            
+                            <div class="comments-list">
+                                <div class="comment-item">
+                                    <div class="comment-header">
+                                        <div class="comment-user">OceanMind_3K9M</div>
+                                        <div class="comment-time">3 hours ago</div>
+                                    </div>
+                                    <div class="comment-text">Investasi emosi yang ROI-nya minus. Capek banget.</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="rant-stats">
+                            <div class="stat-item" onclick="toggleLike(this)">
+                                <i class="far fa-heart"></i>
+                                <span class="stat-count">19</span>
+                            </div>
+                            <div class="stat-item" onclick="toggleCommentSection(this)">
+                                <i class="far fa-comment"></i>
+                                <span class="stat-count">5</span>
+                            </div>
+                            <div class="stat-item">
+                                <i class="fas fa-retweet"></i>
+                                <span class="stat-count">2</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Load More -->
+                <div style="text-align: center; margin: 30px 0;">
+                    <button class="btn-secondary" onclick="loadMore('segelombang2')" style="background: #047857; color: white;">
+                        <i class="fas fa-sync-alt"></i> Load More Segelombang
+                    </button>
+                </div>
             </div>
         </main>
 
         <!-- Footer -->
         <footer class="footer">
-            <p>&copy; 2024 NOPE. Say it loud, say it proud.</p>
+            <p>&copy; 2024 NOPE. Find your frequency.</p>
             <div class="footer-links">
-                <a href="#" style="color: #666;">Community Guidelines</a>
-                <a href="#" style="color: #666;">Your NOPEs</a>
-                <a href="#" style="color: #666;">Artefak Cycle</a>
+                <a href="#" style="color: #666;">Algorithm</a>
+                <a href="#" style="color: #666;">Your Matches</a>
+                <a href="#" style="color: #666;">Community</a>
             </div>
         </footer>
     </div>
 
     <script>
-        // User data from onboarding
-        let userData = JSON.parse(localStorage.getItem('nopeUserData') || '{}');
-        let userNOPEs = userData.selectedNOPEs || [];
+        // User data
+        let userNOPEs = [
+            { tag: '#FilmEndingGaje', zone: 'popculture' },
+            { tag: '#DighostingGebetan', zone: 'personalpain' },
+            { tag: '#RencanaPlinPlan', zone: 'socialsickness' }
+        ];
+        
+        let currentTab = 'sefrekuensi';
         
         // Initialize
         document.addEventListener('DOMContentLoaded', function() {
-            // Check if onboarding is complete
-            if (!localStorage.getItem('nopeOnboardingComplete')) {
-                // Redirect to onboarding
-                window.location.href = 'onboarding.html';
-                return;
+            // Load user NOPEs from localStorage
+            const savedData = localStorage.getItem('nopeUserData');
+            if (savedData) {
+                const data = JSON.parse(savedData);
+                userNOPEs = data.selectedNOPEs || userNOPEs;
+                
+                // Update displayed NOPEs
+                userNOPEs.forEach((nope, index) => {
+                    const element = document.getElementById(`your-nope-${index + 1}`);
+                    if (element) element.textContent = nope.tag;
+                });
             }
             
-            // Display user's current NOPEs in header or somewhere
-            console.log('User NOPEs:', userNOPEs);
+            // Initialize first tab
+            switchTab('sefrekuensi');
         });
         
-        // Update character count for new rant
-        function updateRantCount() {
-            const textarea = document.getElementById('new-rant-text');
-            const charCount = document.getElementById('rant-char-count');
-            const postBtn = document.getElementById('post-rant-btn');
+        // Switch between tabs
+        function switchTab(tabName) {
+            currentTab = tabName;
+            
+            // Update tab buttons
+            document.querySelectorAll('.feed-tab').forEach(tab => {
+                tab.classList.remove('active');
+                if (tab.dataset.tab === tabName) {
+                    tab.classList.add('active');
+                }
+            });
+            
+            // Update tab content
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+                if (content.id === `tab-${tabName}`) {
+                    content.classList.add('active');
+                }
+            });
+            
+            // Update body class for tab-specific styling
+            document.body.className = tabName;
+        }
+        
+        // Update character count
+        function updateCharCount(tab) {
+            const textarea = document.getElementById(`rant-${tab}`);
+            const charCount = document.getElementById(`char-count-${tab}`);
+            const postBtn = document.getElementById(`post-${tab}`);
             
             const count = textarea.value.length;
             charCount.textContent = `${count}/280`;
@@ -445,9 +1072,10 @@
         }
         
         // Post new rant
-        function postRant() {
-            const textarea = document.getElementById('new-rant-text');
+        function postRant(tab) {
+            const textarea = document.getElementById(`rant-${tab}`);
             const rantText = textarea.value.trim();
+            const feed = document.getElementById(`feed-${tab}`);
             
             if (rantText.length === 0) {
                 alert('Please write something before posting');
@@ -459,15 +1087,55 @@
                 return;
             }
             
+            // Generate random user data
+            const userNames = [
+                'FrequencyMatch_7X9B', 'WaveSync_42C3', 'SameVibe_8F2A', 
+                'Resonance_5D6E', 'Harmony_1G7H', 'EchoMatch_3K9M'
+            ];
+            const userInitials = ['FM', 'WS', 'SV', 'RE', 'HA', 'EM'];
+            const randomIndex = Math.floor(Math.random() * userNames.length);
+            
+            // Determine match info based on tab
+            let matchInfo = '';
+            let matchedTags = [];
+            
+            if (tab === 'sefrekuensi') {
+                // 3# match
+                matchInfo = `Matches your: <span class="match-highlight">${userNOPEs[0].tag}</span>, <span class="match-highlight">${userNOPEs[1].tag}</span>, <span class="match-highlight">${userNOPEs[2].tag}</span>`;
+                matchedTags = userNOPEs.map(n => n.tag);
+            } else {
+                // 2# match - different combinations for different tabs
+                if (tab === 'segelombang1') {
+                    // Match first two
+                    matchInfo = `Matches your: <span class="match-highlight">${userNOPEs[0].tag}</span> & <span class="match-highlight">${userNOPEs[1].tag}</span>`;
+                    matchedTags = [userNOPEs[0].tag, userNOPEs[1].tag];
+                } else {
+                    // Match first and third
+                    matchInfo = `Matches your: <span class="match-highlight">${userNOPEs[0].tag}</span> & <span class="match-highlight">${userNOPEs[2].tag}</span>`;
+                    matchedTags = [userNOPEs[0].tag, userNOPEs[2].tag];
+                }
+                
+                // Add one non-matching tag
+                const nonMatchTags = ['#InfluencerNgehek', '#DiajakJalanTapiKempes', '#MagangDigajiSertifikat', 
+                                      '#DramaQueenAnjay', '#BacotLambeTurah', '#BeliTiketJualGinjal'];
+                const nonMatch = nonMatchTags[Math.floor(Math.random() * nonMatchTags.length)];
+                matchedTags.push(nonMatch);
+            }
+            
             // Create new rant element
-            const rantFeed = document.getElementById('rant-feed');
             const newRant = document.createElement('div');
             newRant.className = 'rant-card';
             newRant.innerHTML = `
+                <div class="match-badge">
+                    <i class="fas fa-${tab === 'sefrekuensi' ? 'heart' : 'wave-square'}"></i>
+                    ${tab === 'sefrekuensi' ? '3#' : '2#'} Match
+                </div>
+                
                 <div class="rant-header">
-                    <div class="user-avatar">${getUserInitials()}</div>
+                    <div class="user-avatar">${userInitials[randomIndex]}</div>
                     <div class="user-info">
-                        <div class="user-name">${getAnonymousUsername()}</div>
+                        <div class="user-name">${userNames[randomIndex]}</div>
+                        <div class="user-match">${matchInfo}</div>
                         <div class="rant-time">Just now</div>
                     </div>
                 </div>
@@ -475,17 +1143,34 @@
                 <div class="rant-content">${rantText}</div>
                 
                 <div class="rant-tags">
-                    ${userNOPEs.map(nope => `
-                        <div class="rant-tag">${nope.tag}</div>
+                    ${matchedTags.map(tag => `
+                        <div class="rant-tag ${userNOPEs.some(n => n.tag === tag) ? 'matched-tag' : ''}">${tag}</div>
                     `).join('')}
                 </div>
                 
+                <div class="comment-toggle" onclick="toggleComments(this)">
+                    <i class="far fa-comment"></i>
+                    <span>0 comments</span>
+                    <i class="fas fa-chevron-down" style="margin-left: auto;"></i>
+                </div>
+                
+                <div class="comment-section">
+                    <div class="new-comment">
+                        <textarea class="comment-input" placeholder="Add a comment..." rows="1"></textarea>
+                        <button class="send-comment-btn" onclick="sendComment(this)">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="comments-list"></div>
+                </div>
+                
                 <div class="rant-stats">
-                    <div class="stat-item">
+                    <div class="stat-item" onclick="toggleLike(this)">
                         <i class="far fa-heart"></i>
                         <span class="stat-count">0</span>
                     </div>
-                    <div class="stat-item">
+                    <div class="stat-item" onclick="toggleCommentSection(this)">
                         <i class="far fa-comment"></i>
                         <span class="stat-count">0</span>
                     </div>
@@ -497,53 +1182,144 @@
             `;
             
             // Add to top of feed
-            rantFeed.insertBefore(newRant, rantFeed.firstChild);
+            feed.insertBefore(newRant, feed.firstChild);
             
             // Clear textarea
             textarea.value = '';
-            updateRantCount();
+            updateCharCount(tab);
             
             // Show success message
+            showSuccessMessage(`Rant posted to ${tab === 'sefrekuensi' ? 'Sefrekuensi' : 'Segelombang'}!`);
+        }
+        
+        // Toggle like
+        function toggleLike(button) {
+            const icon = button.querySelector('i');
+            const countSpan = button.querySelector('.stat-count');
+            let count = parseInt(countSpan.textContent);
+            
+            if (icon.classList.contains('far')) {
+                // Like
+                icon.classList.remove('far');
+                icon.classList.add('fas');
+                icon.style.color = '#ff6b6b';
+                count++;
+                button.classList.add('active');
+            } else {
+                // Unlike
+                icon.classList.remove('fas');
+                icon.classList.add('far');
+                icon.style.color = '';
+                count--;
+                button.classList.remove('active');
+            }
+            
+            countSpan.textContent = count;
+        }
+        
+        // Toggle comment section
+        function toggleCommentSection(button) {
+            const rantCard = button.closest('.rant-card');
+            const commentToggle = rantCard.querySelector('.comment-toggle');
+            toggleComments(commentToggle);
+        }
+        
+        // Toggle comments visibility
+        function toggleComments(toggleButton) {
+            const rantCard = toggleButton.closest('.rant-card');
+            const commentSection = rantCard.querySelector('.comment-section');
+            const chevron = toggleButton.querySelector('.fa-chevron-down');
+            
+            commentSection.classList.toggle('expanded');
+            chevron.classList.toggle('fa-chevron-down');
+            chevron.classList.toggle('fa-chevron-up');
+        }
+        
+        // Send comment
+        function sendComment(button) {
+            const rantCard = button.closest('.rant-card');
+            const commentInput = rantCard.querySelector('.comment-input');
+            const commentText = commentInput.value.trim();
+            const commentsList = rantCard.querySelector('.comments-list');
+            const commentCount = rantCard.querySelector('.comment-toggle span');
+            
+            if (commentText.length === 0) {
+                alert('Please write a comment');
+                return;
+            }
+            
+            // Generate random commenter
+            const commenters = [
+                { name: 'GhostWriter_42C3', initials: 'GW' },
+                { name: 'EchoChamber_8F2A', initials: 'EC' },
+                { name: 'WaveRider_5D6E', initials: 'WR' },
+                { name: 'OceanMind_1G7H', initials: 'OM' },
+                { name: 'Frequency_3K9M', initials: 'FR' }
+            ];
+            const randomCommenter = commenters[Math.floor(Math.random() * commenters.length)];
+            
+            // Create comment item
+            const commentItem = document.createElement('div');
+            commentItem.className = 'comment-item';
+            commentItem.innerHTML = `
+                <div class="comment-header">
+                    <div class="comment-user">${randomCommenter.name}</div>
+                    <div class="comment-time">Just now</div>
+                </div>
+                <div class="comment-text">${commentText}</div>
+            `;
+            
+            // Add to comments list
+            commentsList.appendChild(commentItem);
+            
+            // Update comment count
+            const currentCount = parseInt(commentCount.textContent.split(' ')[0]);
+            commentCount.textContent = `${currentCount + 1} comments`;
+            
+            // Update rant stats comment count
+            const rantStatsCount = rantCard.querySelector('.rant-stats .stat-item:nth-child(2) .stat-count');
+            rantStatsCount.textContent = currentCount + 1;
+            
+            // Clear input
+            commentInput.value = '';
+            
+            // Auto-expand comments if not already
+            const commentSection = rantCard.querySelector('.comment-section');
+            if (!commentSection.classList.contains('expanded')) {
+                toggleComments(rantCard.querySelector('.comment-toggle'));
+            }
+            
+            // Scroll to new comment
+            commentItem.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+        
+        // Load more rants
+        function loadMore(tab) {
+            // In real app, would load from API
+            showSuccessMessage(`Loading more ${tab === 'sefrekuensi' ? 'Sefrekuensi' : 'Segelombang'} rants...`);
+        }
+        
+        // Show success message
+        function showSuccessMessage(message) {
             const successMsg = document.createElement('div');
             successMsg.style.cssText = `
                 position: fixed;
                 bottom: 20px;
                 left: 50%;
                 transform: translateX(-50%);
-                background: #4ecdc4;
+                background: ${currentTab === 'sefrekuensi' ? '#1a1a1a' : 
+                           currentTab === 'segelombang1' ? '#1d4ed8' : '#047857'};
                 color: white;
                 padding: 12px 25px;
                 border-radius: 25px;
                 z-index: 1000;
                 animation: slideUp 0.3s, fadeOut 2s 1s forwards;
+                font-weight: 600;
             `;
-            successMsg.innerHTML = '<i class="fas fa-check"></i> Rant posted!';
+            successMsg.innerHTML = `<i class="fas fa-check"></i> ${message}`;
             document.body.appendChild(successMsg);
             
             setTimeout(() => successMsg.remove(), 3000);
-        }
-        
-        function getUserInitials() {
-            // Generate random initials
-            const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-            return letters[Math.floor(Math.random() * 26)] + letters[Math.floor(Math.random() * 26)];
-        }
-        
-        function getAnonymousUsername() {
-            const prefixes = ['Ghost', 'Silent', 'Hidden', 'Anonymous', 'Echo', 'Shadow'];
-            const suffixes = ['Protocol', 'Pain', 'Voice', 'Fragment', 'Trace', 'Memory'];
-            const codes = ['7X9B', '42C3', '8F2A', '5D6E', '1G7H'];
-            
-            const prefix = prefixes[Math.floor(Math.random() * prefixes.length)];
-            const suffix = suffixes[Math.floor(Math.random() * suffixes.length)];
-            const code = codes[Math.floor(Math.random() * codes.length)];
-            
-            return `${prefix}${suffix}_${code}`;
-        }
-        
-        function loadMoreRants() {
-            // In real app, would load more from API
-            alert('Loading more rants...');
         }
         
         // Add CSS animations
