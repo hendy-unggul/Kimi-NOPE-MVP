@@ -3,91 +3,100 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NOPE - Anonymous Rage</title>
+    <title>NOPE — Anonymous Rage</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* Temporary inline styles until rebuild */
-        body { margin: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        
+        /* Hide scrollbar but keep functionality */
+        body::-webkit-scrollbar {
+            width: 0px;
+            background: transparent;
+        }
     </style>
 </head>
 <body>
     <div class="login-container">
         <div class="login-card">
+            <!-- Brand Logo -->
             <div class="brand-logo">
                 <h1>NOPE</h1>
                 <div class="tagline">Anonymous Rage Platform</div>
             </div>
             
-            <div class="telegram-widget">
-                <h3>
-                    <i class="fab fa-telegram"></i>
-                    Telegram Mini App Detected
-                </h3>
-                <p style="color: #aaa; font-size: 0.9rem; margin: 10px 0;">
-                    Login otomatis via Telegram tersedia. Gunakan username Telegram Anda.
-                </p>
+            <!-- Stats Bar -->
+            <div class="stats-bar">
+                <div class="stat-item">
+                    <span class="stat-number">10K+</span>
+                    <span class="stat-label">Rages</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">100%</span>
+                    <span class="stat-label">Anonymous</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">0</span>
+                    <span class="stat-label">Data Stored</span>
+                </div>
             </div>
             
+            <!-- Login Form -->
             <form id="loginForm" class="login-form">
                 <div class="input-group">
                     <label for="telegramUsername">
                         <i class="fas fa-at"></i>
-                        @telegram_username
+                        Telegram Account
                     </label>
                     <input 
                         type="text" 
                         id="telegramUsername" 
-                        placeholder="misal: jokowi" 
-                        autocomplete="off"
-                        required
+                        value="@telegram_user"
+                        readonly
                     >
                 </div>
                 
                 <div class="input-group">
                     <label for="anonUsername">
                         <i class="fas fa-user-secret"></i>
-                        Buat Username Anonim*
+                        Create Anonymous Identity
                     </label>
                     <input 
                         type="text" 
                         id="anonUsername" 
-                        placeholder="pilih nama samaran unik" 
+                        placeholder="e.g., silent_rage88" 
                         autocomplete="off"
                         required
+                        maxlength="20"
                     >
-                    <div style="color: #666; font-size: 0.8rem; margin-top: 5px;">
-                        *Hanya ini identitasmu di NOPE. Tidak bisa diganti.
-                    </div>
+                    <!-- Feedback akan muncul di sini via JS -->
                 </div>
                 
-                <button type="submit" class="btn-telegram">
+                <button type="submit" class="btn-telegram" id="submitBtn">
                     <i class="fab fa-telegram"></i>
-                    LOGIN WITH TELEGRAM
+                    ENTER ANONYMOUSLY
                 </button>
             </form>
             
+            <!-- Clean Note -->
             <div class="login-note">
-                <strong>FULLY ANONYMOUS:</strong><br>
-                • Tidak ada email/phone<br>
-                • Tidak ada password<br>
-                • Tidak ada data pribadi<br>
-                • Hanya username anonim satu-satunya
+                <strong>100% PRIVATE • NO TRACKING • NO REGISTRATION</strong><br>
+                Your Telegram account is only used for access. 
+                All content is posted under your anonymous identity.
             </div>
         </div>
     </div>
     
     <script src="script.js"></script>
-    <script>
-        // Simulate Telegram Mini App initialization
-        console.log('NOPE - Telegram Mini App Ready');
-        
-        // Auto-fill Telegram username from WebApp.initData
-        setTimeout(() => {
-            const urlParams = new URLSearchParams(window.location.search);
-            const tgUsername = urlParams.get('username') || 'tg_user_' + Math.floor(Math.random() * 1000);
-            document.getElementById('telegramUsername').value = tgUsername;
-        }, 500);
-    </script>
 </body>
 </html>
