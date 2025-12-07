@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tray 12 Bulan - Hidup Gue Bukan Buat Dibacotin!</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #0a1929 0%, #1a2a3a 100%);
+            color: white;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            text-align: center;
+            padding: 40px 20px;
+            margin-bottom: 40px;
+            border-bottom: 3px solid rgba(255, 215, 0, 0.3);
+        }
+        
+        .main-title {
+            font-size: 3em;
+            color: gold;
+            margin-bottom: 15px;
+            text-shadow: 0 2px 10px rgba(255, 215, 0, 0.3);
+        }
+        
+        .tagline {
+            font-size: 1.5em;
+            color: #ff6b6b;
+            font-style: italic;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        
+        .subtitle {
+            color: #aaa;
+            font-size: 1.1em;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+        
+        .year-selector {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+        
+        .year-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            color: #ddd;
+            padding: 10px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: bold;
+        }
+        
+        .year-btn:hover {
+            background: rgba(255, 215, 0, 0.2);
+            transform: translateY(-2px);
+        }
+        
+        .year-btn.active {
+            background: gold;
+            color: #1a2a3a;
+            border-color: gold;
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.4);
+        }
+        
+        .months-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .month-card {
+            background: linear-gradient(145deg, rgba(255,255,255,0.05), rgba(0,0,0,0.2));
+            border-radius: 20px;
+            padding: 25px;
+            border: 2px solid rgba(255, 215, 0, 0.2);
+            transition: all 0.3s;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .month-card:hover {
+            border-color: gold;
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(255, 215, 0, 0.1);
+        }
+        
+        .month-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid rgba(255, 215, 0, 0.2);
+        }
+        
+        .month-name {
+            font-size: 1.8em;
+            color: gold;
+            font-weight: bold;
+        }
+        
+        .month-number {
+            background: gold;
+            color: #1a2a3a;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+        
+        .photo-container {
+            width: 100%;
+            height: 250px;
+            border-radius: 15px;
+            overflow: hidden;
+            margin-bottom: 20px;
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            position: relative;
+        }
+        
+        .month-photo {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .month-photo:hover {
+            transform: scale(1.05);
+        }
+        
+        .no-photo {
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.05);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #888;
+            font-style: italic;
+        }
+        
+        .no-photo-icon {
+            font-size: 3em;
+            margin-bottom: 15px;
+            opacity: 0.5;
+        }
+        
+        .upload-btn {
+            background: rgba(255, 215, 0, 0.2);
+            color: gold;
+            border: 2px dashed gold;
+            border-radius: 10px;
+            padding: 15px;
+            width: 100%;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: all 0.3s;
+            font-weight: bold;
+        }
+        
+        .upload-btn:hover {
+            background: rgba(255, 215, 0, 0.3);
+        }
+        
+        .emoji-reactions {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .emoji-reaction {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 215, 0, 0.2);
+            border-radius: 15px;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .emoji-reaction:hover {
+            background: rgba(255, 215, 0, 0.1);
+            border-color: gold;
+            transform: scale(1.05);
+        }
+        
+        .emoji-reaction.active {
+            background: rgba(255, 215, 0, 0.2);
+            border-color: gold;
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.2);
+        }
+        
+        .emoji-icon {
+            font-size: 2.5em;
+            margin-bottom: 8px;
+        }
+        
+        .emoji-name {
+            font-size: 0.9em;
+            color: #ddd;
+            margin-bottom: 5px;
+            text-align: center;
+        }
+        
+        .emoji-count {
+            background: rgba(255, 215, 0, 0.2);
+            color: gold;
+            padding: 3px 10px;
+            border-radius: 15px;
+            font-weight: bold;
+            font-size: 0.9em;
+        }
+        
+        .no-comments-note {
+            text-align: center;
+            color: #ff6b6b;
+            font-weight: bold;
+            margin-top: 15px;
+            padding: 10px;
+            background: rgba(255, 107, 107, 0.1);
+            border-radius: 10px;
+            border: 1px solid rgba(255, 107, 107, 0.3);
+            font-size: 0.9em;
+        }
+        
+        .legend {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 25px;
+            margin-top: 40px;
+            border: 2px solid rgba(255, 215, 0, 0.2);
+        }
+        
+        .legend-title {
+            color: gold;
+            font-size: 1.3em;
+            margin-bottom: 15px;
+        }
+        
+        .legend-items {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .legend-emoji {
+            font-size: 1.5em;
+        }
+        
+        .legend-text {
+            color: #ddd;
+            font-size: 0.9em;
+        }
+        
+        .upload-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 10000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-content {
+            background: linear-gradient(145deg, #1a2a3a, #0a1929);
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 500px;
+            width: 90%;
+            border: 3px solid gold;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+        
+        .modal-title {
+            color: gold;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 2em;
+            cursor: pointer;
+        }
+        
+        .stats-bar {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 2em;
+            color: gold;
+            font-weight: bold;
+        }
+        
+        .stat-label {
+            color: #aaa;
+            font-size: 0.9em;
+        }
+        
+        @media (max-width: 768px) {
+            .months-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .main-title {
+                font-size: 2.2em;
+            }
+            
+            .tagline {
+                font-size: 1.2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1 class="main-title">TRAY 12 BULAN</h1>
+            <div class="tagline">"HIDUP GUE BUKAN BUAT DIBACOTIN!"</div>
+            <p class="subtitle">
+                Upload 1 foto spesial setiap bulan. Hanya emoji yang berbicara. Tidak ada ruang untuk komentar.
+                Setiap reaksi dihitung, setiap emoji berarti.
+            </p>
+        </div>
+        
+        <!-- Year Selector -->
+        <div class="year-selector">
+            <button class="year-btn active" onclick="selectYear(2024)">2024</button>
+            <button class="year-btn" onclick="selectYear(2023)">2023</button>
+            <button class="year-btn" onclick="selectYear(2022)">2022</button>
+            <button class="year-btn" onclick="selectYear(2021)">2021</button>
+        </div>
+        
+        <!-- Stats Bar -->
+        <div class="stats-bar">
+            <div class="stat-item">
+                <div class="stat-value" id="totalPhotos">0/12</div>
+                <div class="stat-label">Foto Terupload</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value" id="totalReactions">0</div>
+                <div class="stat-label">Total Reaksi</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value" id="topEmoji">🔥</div>
+                <div class="stat-label">Emoji Terpopuler</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value" id="completion">0%</div>
+                <div class="stat-label">Progress Tahun</div>
+            </div>
+        </div>
+        
+        <!-- Months Grid -->
+        <div class="months-grid" id="monthsGrid">
+            <!-- Months will be dynamically generated -->
+        </div>
+        
+        <!-- Legend -->
+        <div class="legend">
+            <h3 class="legend-title">📊 LEGENDA EMOJI RESPON</h3>
+            <div class="legend-items">
+                <div class="legend-item">
+                    <span class="legend-emoji">🔥</span>
+                    <span class="legend-text">FIRE - Keren abis!</span>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-emoji">👑</span>
+                    <span class="legend-text">KING - Lu royalty!</span>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-emoji">💎</span>
+                    <span class="legend-text">DIAMOND - Berharga banget</span>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-emoji">🚀</span>
+                    <span class="legend-text">ROCKET - Meluncur ke atas!</span>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-emoji">🧠</span>
+                    <span class="legend-text">BRAIN - Pikiran yang dalem</span>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-emoji">⚡</span>
+                    <span class="legend-text">ZAP - Energinya ngalir!</span>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-emoji">🎯</span>
+                    <span class="legend-text">BULLSEYE - Tepat sasaran</span>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-emoji">🦁</span>
+                    <span class="legend-text">LION - Jiwa pejuang</span>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-emoji">🌊</span>
+                    <span class="legend-text">WAVE - Flow yang mantap</span>
+                </div>
+            </div>
+            <p style="color: #ff6b6b; text-align: center; margin-top: 15px; font-weight: bold;">
+                ⚠️ TIDAK ADA KOMENTAR! Hanya emoji yang berbicara. Hidup gue bukan buat dibacotin!
+            </p>
+        </div>
+    </div>
+    
+    <!-- Upload Modal -->
+    <div class="upload-modal" id="uploadModal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closeModal()">×</button>
+            <h2 class="modal-title" id="modalMonth">Upload Foto Bulanan</h2>
+            
+            <div style="text-align: center; margin-bottom: 30px;">
+                <div id="uploadPreview" style="width: 100%; height: 200px; background: rgba(255,255,255,0.05); border-radius: 10px; margin-bottom: 20px; display: flex; align-items: center; justify-content: center; color: #888; font-style: italic;">
+                    Preview akan muncul di sini
+                </div>
+                
+                <input type="file" id="photoUpload" accept="image/*" style="display: none;" onchange="previewImage(this)">
+                
+                <button onclick="document.getElementById('photoUpload').click()" style="padding: 15px 30px; background: rgba(255,215,0,0.2); color: gold; border: 2px dashed gold; border-radius: 10px; cursor: pointer; font-weight: bold; margin-bottom: 20px; width: 100%;">
+                    📷 PILIH FOTO
+                </button>
+                
+                <p style="color: #aaa; font-size: 0.9em; margin-bottom: 25px;">
+                    Pilih foto yang merepresentasikan bulan ini.<br>
+                    <strong style="color: gold;">Bukan wajah atau bagian tubuh!</strong>
+                </p>
+                
+                <button onclick="confirmUpload()" style="padding: 15px 40px; background: gold; color: #1a2a3a; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; font-size: 1.1em; width: 100%;">
+                    💾 SIMPAN FOTO BULAN INI
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- ==== NAVIGASI BAJAK LAUT ==== -->
+    <div style="position: fixed; bottom: 20px; left: 20px; right: 20px; background: #1a2a3a; border: 3px solid gold; padding: 15px; border-radius: 10px; text-align: center; z-index: 1000;">
+        <a href="index.html" style="color: white; margin: 0 15px; text-decoration: none;">🏠 Home</a>
+        <a href="rage.html" style="color: white; margin: 0 15px; text-decoration: none;">😠 Rage</a>
+        <a href="profile.html" style="color: white; margin: 0 15px; text-decoration: none;">🔄 Sefrek</a>
+        <a href="wall.html" style="color: white; margin: 0 15px; text-decoration: none;">🧱 Wall</a>
+        <a href="tray.html" style="color: white; margin: 0 15px; text-decoration: none; background: rgba(255,215,0,0.3); padding: 5px 15px; border-radius: 5px;">📸 Tray 12</a>
+    </div>
+
+    <script>
+        // Data struktur untuk tray 12 bulan
+        const monthsData = {
+            "2024": {},
+            "2023": {},
+            "2022": {},
+            "2021": {}
+        };
+        
+        // Emoji reactions dengan nama keren
+        const emojiReactions = [
+            { emoji: "🔥", name: "FIRE", color: "#FF6B35" },
+            { emoji: "👑", name: "KING", color: "#FFD700" },
+            { emoji: "💎", name: "DIAMOND", color: "#00D4FF" },
+            { emoji: "🚀", name: "ROCKET", color: "#FF4081" },
+            { emoji: "🧠", name: "BRAIN", color: "#9C27B0" },
+            { emoji: "⚡", name: "ZAP", color: "#FFEB3B" },
+            { emoji: "🎯", name: "BULLSEYE", color: "#4CAF50" },
+            { emoji: "🦁", name: "LION", color: "#FF9800" },
+            { emoji: "🌊", name: "WAVE", color: "#2196F3" }
+        ];
+        
+        // Daftar bulan
+        const months = [
+            { id: 1, name: "JANUARI", color: "#FF6B6B" },
+            { id: 2, name: "FEBRUARI", color: "#FF8E6B" },
+            { id: 3, name: "MARET", color: "#4ECDC4" },
+            { id: 4, name: "APRIL", color: "#FFD166" },
+            { id: 5, name: "MEI", color: "#06D6A0" },
+            { id: 6, name: "JUNI", color: "#118AB2" },
+            { id: 7, name: "JULI", color: "#EF476F" },
+            { id: 8, name: "AGUSTUS", color: "#073B4C" },
+            { id: 9, name: "SEPTEMBER", color: "#7209B7" },
+            { id: 10, name: "OKTOBER", color: "#F15BB5" },
+            { id: 11, name: "NOVEMBER", color: "#00BBF9" },
+            { id: 12, name: "DESEMBER", color: "#00F5D4" }
+        ];
+        
+        // State
+        let currentYear = 2024;
+        let currentMonthForUpload = null;
+        let uploadedImages = {};
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            loadFromLocalStorage();
+            renderMonths(currentYear);
+            updateStats();
+            
+            // Set current month as default for upload
+            const now = new Date();
+            const currentMonth = now.getMonth() + 1; // 1-12
+            highlightCurrentMonth(currentMonth);
+        });
+        
+        // Load data from localStorage
+        function loadFromLocalStorage() {
+            const savedData = localStorage.getItem('tray12Data');
+            if (savedData) {
+                const parsed = JSON.parse(savedData);
+                Object.assign(monthsData, parsed);
+                
+                // Load uploaded images
+                const savedImages = localStorage.getItem('tray12Images');
+                if (savedImages) {
+                    uploadedImages = JSON.parse(savedImages);
+                }
+            }
+        }
+        
+        // Save data to localStorage
+        function saveToLocalStorage() {
+            localStorage.setItem('tray12Data', JSON.stringify(monthsData));
+            localStorage.setItem('tray12Images', JSON.stringify(uploadedImages));
+        }
+        
+        // Render months grid
+        function renderMonths(year) {
+            const grid = document.getElementById('monthsGrid');
+            grid.innerHTML = '';
+            
+            months.forEach(month => {
+                const monthData = monthsData[year]?.[month.id] || {
+                    photo: null,
+                    reactions: {}
+                };
+                
+                // Initialize reactions if not exists
+                emojiReactions.forEach(emoji => {
+                    if (!monthData.reactions[emoji.name]) {
+                        monthData.reactions[emoji.name] = 0;
+                    }
+                });
+                
+                const hasPhoto = uploadedImages[`${year}-${month.id}`] || monthData.photo;
+                const photoUrl = hasPhoto || null;
+                
+                const card = document.createElement('div');
+                card.className = 'month-card';
+                card.innerHTML = `
+                    <div class="month-header">
+                        <div class="month-name" style="color: ${month.color}">${month.name}</div>
+                        <div class="month-number">${month.id}</div>
+                    </div>
+                    
+                    <div class="photo-container">
+                        ${photoUrl ? 
+                            `<img src="${photoUrl}" class="month-photo" alt="Foto ${month.name} ${year}">` :
+                            `<div class="no-photo">
+                                <div class="no-photo-icon">📸</div>
+                                <div>Belum ada foto</div>
+                                <div style="font-size: 0.8em; margin-top: 5px;">${year}</div>
+                            </div>`
+                        }
+                    </div>
+                    
+                    ${hasPhoto ? `
+                        <button class="upload-btn" onclick="changePhoto(${month.id})">
+                            🔄 Ganti Foto
+                        </button>
+                    ` : `
+                        <button class="upload-btn" onclick="uploadPhoto(${month.id})">
+                            ⬆️ UPLOAD FOTO BULAN INI
+                        </button>
+                    `}
+                    
+                    ${hasPhoto ? `
+                        <div class="emoji-reactions">
+                            ${emojiReactions.map(emoji => `
+                                <div class="emoji-reaction ${monthData.userReaction === emoji.name ? 'active' : ''}" 
+                                     onclick="addReaction(${month.id}, '${emoji.name}')"
+                                     style="border-color: ${emoji.color}">
+                                    <div class="emoji-icon">${emoji.emoji}</div>
+                                    <div class="emoji-name">${emoji.name}</div>
+                                    <div class="emoji-count">${monthData.reactions[emoji.name] || 0}</div>
+                                </div>
+                            `).join('')}
+                        </div>
+                        
+                        <div class="no-comments-note">
+                            🚫 NO COMMENTS ZONE 🚫
+                        </div>
+                    ` : ''}
+                `;
+                
+                grid.appendChild(card);
+            });
+        }
+        
+        // Select year
+        function selectYear(year) {
+            currentYear = year;
+            
+            // Update active button
+            document.querySelectorAll('.year-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Render months for selected year
+            renderMonths(year);
+            updateStats();
+        }
+        
+        // Highlight current month
+        function highlightCurrentMonth(monthId) {
+            // Implementation for visual highlighting if needed
+        }
+        
+        // Upload photo
+        function uploadPhoto(monthId) {
+            currentMonthForUpload = monthId;
+            document.getElementById('modalMonth').textContent = `Upload Foto - ${months.find(m => m.id === monthId).name} ${currentYear}`;
+            document.getElementById('uploadModal').style.display = 'flex';
+        }
+        
+        // Change photo
+        function changePhoto(monthId) {
+            if (confirm(`Yakin mau ganti foto ${months.find(m => m.id === monthId).name}?`)) {
+                uploadPhoto(monthId);
+            }
+        }
+        
+        // Preview image
+        function previewImage(input) {
+            const preview = document.getElementById('uploadPreview');
+            
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                
+                reader.onload = function(e) {
+                    preview.innerHTML = `<img src="${e.target.result}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 10px;">`;
+                };
+                
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+        
+        // Close modal
+        function closeModal() {
+            document.getElementById('uploadModal').style.display = 'none';
+            document.getElementById('uploadPreview').innerHTML = 'Preview akan muncul di sini';
+            document.getElementById('photoUpload').value = '';
+        }
+        
+        // Confirm upload
+        function confirmUpload() {
+            const input = document.getElementById('photoUpload');
+            const monthId = currentMonthForUpload;
+            
+            if (!input.files || !input.files[0]) {
+                alert('Pilih foto dulu ya!');
+                return;
+            }
+            
+            const reader = new FileReader();
+            
+            reader.onload = function(e) {
+                // Save to uploadedImages
+                const key = `${currentYear}-${monthId}`;
+                uploadedImages[key] = e.target.result;
+                
+                // Initialize month data if not exists
+                if (!monthsData[currentYear]) {
+                    monthsData[currentYear] = {};
+                }
+                if (!monthsData[currentYear][monthId]) {
+                    monthsData[currentYear][monthId] = {
+                        reactions: {}
+                    };
+                }
+                
+                monthsData[currentYear][monthId].photo = true;
+                
+                // Save to localStorage
+                saveToLocalStorage();
+                
+                // Close modal and refresh
+                closeModal();
+                renderMonths(currentYear);
+                updateStats();
+                
+                // Show notification
+                showNotification(`✅ Foto ${months.find(m => m.id === monthId).name} berhasil diupload!`);
+            };
+            
+            reader.readAsDataURL(input.files[0]);
+        }
+        
+        // Add emoji reaction
+        function addReaction(monthId, emojiName) {
+            if (!monthsData[currentYear] || !monthsData[currentYear][monthId]) {
+                monthsData[currentYear][monthId] = {
+                    reactions: {}
+                };
+            }
+            
+            const monthData = monthsData[currentYear][monthId];
+            
+            // Toggle reaction
+            if (monthData.userReaction === emojiName) {
+                // Remove reaction
+                monthData.reactions[emojiName] = Math.max(0, (monthData.reactions[emojiName] || 0) - 1);
+                monthData.userReaction = null;
+            } else {
+                // Remove previous reaction if exists
+                if (monthData.userReaction) {
+                    monthData.reactions[monthData.userReaction] = Math.max(0, (monthData.reactions[monthData.userReaction] || 0) - 1);
+                }
+                
+                // Add new reaction
+                monthData.reactions[emojiName] = (monthData.reactions[emojiName] || 0) + 1;
+                monthData.userReaction = emojiName;
+            }
+            
+            // Save and update
+            saveToLocalStorage();
+            renderMonths(currentYear);
+            updateStats();
+            
+            // Show notification with emoji
+            const emoji = emojiReactions.find(e => e.name === emojiName)?.emoji || "👍";
+            showNotification(`${emoji} Reaksi terkirim!`);
+        }
+        
+        // Update statistics
+        function updateStats() {
+            const yearData = monthsData[currentYear] || {};
+            
+            // Count uploaded photos
+            let uploadedCount = 0;
+            for (let i = 1; i <= 12; i++) {
+                const key = `${currentYear}-${i}`;
+                if (uploadedImages[key] || (yearData[i] && yearData[i].photo)) {
+                    uploadedCount++;
+                }
+            }
+            
+            // Count total reactions
+            let totalReactions = 0;
+            let topEmoji = { name: "🔥", count: 0 };
+            
+            Object.values(yearData).forEach(month => {
+                if (month.reactions) {
+                    Object.entries(month.reactions).forEach(([emojiName, count]) => {
+                        totalReactions += count;
+                        if (count > topEmoji.count) {
+                            topEmoji = { name: emojiName, count };
+                        }
+                    });
+                }
+            });
+            
+            // Calculate completion percentage (based on current month)
+            const now = new Date();
+            const currentMonth = now.getMonth() + 1;
+            const completion = Math.min(100, Math.round((uploadedCount / currentMonth) * 100));
+            
+            // Update DOM
+            document.getElementById('totalPhotos').textContent = `${uploadedCount}/12`;
+            document.getElementById('totalReactions').textContent = totalReactions;
+            
+            const emoji = emojiReactions.find(e => e.name === topEmoji.name);
+            document.getElementById('topEmoji').textContent = emoji ? emoji.emoji : "🔥";
+            
+            document.getElementById('completion').textContent = `${completion}%`;
+        }
+        
+        // Show notification
+        function showNotification(message) {
+            // Create notification element
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: gold;
+                color: #1a2a3a;
+                padding: 15px 25px;
+                border-radius: 10px;
+                z-index: 10000;
+                animation: slideIn 0.3s;
+                font-weight: bold;
+                box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            `;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            
+            // Add animation styles if not already present
+            if (!document.querySelector('#notification-styles')) {
+                const style = document.createElement('style');
+                style.id = 'notification-styles';
+                style.textContent = `
+                    @keyframes slideIn {
+                        from { transform: translateX(100%); opacity: 0; }
+                        to { transform: translateX(0); opacity: 1; }
+                    }
+                    @keyframes slideOut {
+                        from { transform: translateX(0); opacity: 1; }
+                        to { transform: translateX(100%); opacity: 0; }
+                    }
+                `;
+                document.head.appendChild(style);
+            }
+            
+            // Remove after 3 seconds
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.3s';
+                setTimeout(() => notification.remove(), 300);
+            }, 3000);
+        }
+        
+        // Sample data for demo
+        function loadSampleData() {
+            // Add some sample data for 2024
+            if (!monthsData["2024"]) {
+                monthsData["2024"] = {};
+            }
+            
+            // Add sample photos for some months
+            const samplePhotos = [
+                { month: 1, url: "https://images.unsplash.com/photo-1705523612816-b34558b328e8?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" },
+                { month: 2, url: "https://images.unsplash.com/photo-1707923635145-00d7ff3b8a44?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" },
+                { month: 3, url: "https://images.unsplash.com/photo-1710839512031-16d1a3357c73?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" },
+                { month: 4, url: "https://images.unsplash.com/photo-1712124336630-2a4d5baa8ff0?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" }
+            ];
+            
+            samplePhotos.forEach(photo => {
+                uploadedImages[`2024-${photo.month}`] = photo.url;
+                if (!monthsData["2024"][photo.month]) {
+                    monthsData["2024"][photo.month] = {
+                        photo: true,
+                        reactions: {}
+                    };
+                }
+                
+                // Add some sample reactions
+                emojiReactions.forEach((emoji, index) => {
+                    if (index < 4) { // Add 4 random reactions
+                        monthsData["2024"][photo.month].reactions[emoji.name] = Math.floor(Math.random() * 20) + 5;
+                    }
+                });
+            });
+            
+            saveToLocalStorage();
+            renderMonths(currentYear);
+            updateStats();
+        }
+        
+        // Uncomment to load sample data on first visit
+        // loadSampleData();
+    </script>
+</body>
+</html>
