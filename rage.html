@@ -1,162 +1,425 @@
-<script>
-// DEBUG MODE
-console.log('=== DEBUG RAGE.HTML ===');
-console.log('Current URL:', window.location.href);
-console.log('LocalStorage selectedHashtags:', localStorage.getItem('selectedHashtags'));
-console.log('Navigasi tersedia:', {
-    index: window.location.origin + '/index.html',
-    wall: window.location.origin + '/wall.html'
-});
-
-// Test link
-const testLink = document.createElement('a');
-testLink.href = 'index.html';
-testLink.textContent = 'TEST LINK';
-testLink.style.cssText = 'display:block; padding:20px; background:green; color:white; text-align:center; margin:20px;';
-testLink.onclick = function(e) {
-    console.log('Test link clicked');
-    e.preventDefault();
-    window.location.href = 'index.html';
-};
-document.body.prepend(testLink);
-</script><!DOCTYPE html>
-<html>
+<!DOCTYPE html>
+<html lang="id">
 <head>
-    <title>Rage - Lampisakan Kekesalanmu</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blitz - Onboarding</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body {
-            font-family: sans-serif;
-            background: #1a1a2e;
-            color: white;
+        * {
             margin: 0;
-            padding: 20px;
-            max-width: 600px;
-            margin: auto;
+            padding: 0;
+            box-sizing: border-box;
         }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+            color: white;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .onboarding-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 30px;
+        }
+
         .header {
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 50px;
         }
-        .selected-tags {
+
+        .logo {
+            font-size: 4rem;
+            background: linear-gradient(90deg, #ff6b6b, #ffd166, #06d6a0);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 10px;
+        }
+
+        .title {
+            font-size: 2.8rem;
+            margin-bottom: 15px;
+        }
+
+        .subtitle {
+            color: #b0b0d0;
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .onboarding-steps {
+            display: flex;
+            justify-content: space-between;
+            margin: 60px 0;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .step {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            flex: 1;
+            min-width: 250px;
+            transition: all 0.3s;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .step:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .step-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            height: 80px;
+            width: 80px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 25px;
+        }
+
+        .step-1 .step-icon {
+            color: #ff6b6b;
             background: rgba(255, 107, 107, 0.1);
-            border-radius: 10px;
-            padding: 15px;
-            margin: 20px 0;
-            border-left: 4px solid #ff6b6b;
         }
-        textarea {
-            width: 100%;
-            height: 150px;
-            background: #162447;
-            border: 2px solid #ff6b6b;
-            border-radius: 12px;
+
+        .step-2 .step-icon {
+            color: #ffd166;
+            background: rgba(255, 209, 102, 0.1);
+        }
+
+        .step-3 .step-icon {
+            color: #06d6a0;
+            background: rgba(6, 214, 160, 0.1);
+        }
+
+        .step-title {
+            font-size: 1.6rem;
+            margin-bottom: 15px;
             color: white;
-            font-size: 16px;
-            padding: 15px;
-            margin: 20px 0 10px;
-            resize: vertical;
         }
-        .char-count {
-            text-align: right;
+
+        .step-desc {
             color: #aaa;
-            font-size: 14px;
+            line-height: 1.6;
             margin-bottom: 20px;
         }
-        button {
-            width: 100%;
-            padding: 18px;
-            background: #ff6b6b;
+
+        .onboarding-content {
+            background: rgba(30, 30, 60, 0.7);
+            border-radius: 20px;
+            padding: 40px;
+            margin: 40px 0;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .content-title {
+            font-size: 2rem;
+            margin-bottom: 25px;
+            color: #ffd166;
+            text-align: center;
+        }
+
+        .hashtag-selection {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        @media (max-width: 768px) {
+            .hashtag-selection {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .hashtag-option {
+            background: rgba(255, 255, 255, 0.07);
+            border-radius: 15px;
+            padding: 25px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+            text-align: center;
+        }
+
+        .hashtag-option:hover {
+            background: rgba(255, 255, 255, 0.12);
+            transform: translateY(-5px);
+        }
+
+        .hashtag-option.selected {
+            border-color: #06d6a0;
+            background: rgba(6, 214, 160, 0.1);
+        }
+
+        .hashtag-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: white;
+        }
+
+        .hashtag-category {
+            color: #aaa;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+
+        .selection-counter {
+            text-align: center;
+            margin: 30px 0;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+        }
+
+        .counter-text {
+            font-size: 1.3rem;
+            color: #ffd166;
+        }
+
+        .counter-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #06d6a0;
+            margin: 0 10px;
+        }
+
+        .btn-container {
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .btn-start {
+            background: linear-gradient(90deg, #ff6b6b, #ff8e53);
             color: white;
             border: none;
-            border-radius: 12px;
-            font-size: 18px;
-            font-weight: bold;
+            padding: 20px 60px;
+            font-size: 1.5rem;
+            font-weight: 700;
+            border-radius: 50px;
             cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 8px 25px rgba(255, 107, 107, 0.4);
+            letter-spacing: 1px;
         }
-        button:hover {
-            background: #ff4757;
+
+        .btn-start:hover:not(:disabled) {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 35px rgba(255, 107, 107, 0.6);
+        }
+
+        .btn-start:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .user-info {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #06d6a0;
+            font-size: 1.1rem;
         }
     </style>
 </head>
 <body>
-    <div class="header">
-        <h1>💢 WINDOWS RAGE 💢</h1>
-        <p>Lampisakan kekesalanmu dalam 280 huruf</p>
-    </div>
-    
-    <div class="selected-tags">
-        <strong>Identitas Kesel Kamu:</strong><br>
-        <span id="displayTags"></span>
-    </div>
-    
-    <textarea 
-        id="rageText" 
-        placeholder="Tulis kekesalanmu di sini..."
-        maxlength="280"
-    ></textarea>
-    
-    <div id="charCount" class="char-count">0/280</div>
-    
-    <button id="submitBtn">💥 POST KE DINDING KESEL 💥</button>
-    
-    <script>
-        // Ambil hashtag dari localStorage
-        const selected = JSON.parse(localStorage.getItem('selectedHashtags')) || [];
-        document.getElementById('displayTags').textContent = selected.join(', ') || 'Tidak ada pilihan';
-        
-        // Character counter
-        const rageText = document.getElementById('rageText');
-        const charCount = document.getElementById('charCount');
-        
-        rageText.addEventListener('input', () => {
-            const length = rageText.value.length;
-            charCount.textContent = `${length}/280`;
-            charCount.style.color = length > 250 ? '#ff6b6b' : length > 200 ? '#ffd166' : '#aaa';
-        });
-        <div style="margin: 20px 0; padding: 15px; background: rgba(52, 152, 219, 0.1); border-radius: 10px;">
-    <p><strong>📍 Post ke:</strong></p>
-    <label style="display:block; margin:10px 0;">
-        <input type="radio" name="postTo" value="global" checked> 
-        💢 <strong>Dinding Kekesalan</strong> (semua orang bisa lihat)
-    </label>
-    <label style="display:block; margin:10px 0;">
-        <input type="radio" name="postTo" value="sefrek"> 
-        🤝 <strong>SeFrekuensi</strong> (hanya yang punya hashtag sama)
-    </label>
-</div>
-        // Submit
-        document.getElementById('submitBtn').addEventListener('click', () => {
-            const text = rageText.value.trim();
+    <div class="onboarding-container">
+        <div class="header">
+            <div class="logo">
+                <i class="fas fa-bolt"></i>
+            </div>
+            <h1 class="title">Selamat Datang di Blitz!</h1>
+            <p class="subtitle" id="userWelcome">Pilih 3 hashtag yang paling mewakili kekesalanmu untuk personalisasi pengalaman</p>
+        </div>
+
+        <!-- Informasi User -->
+        <div class="user-info">
+            <i class="fas fa-user-circle"></i> 
+            <span id="usernameDisplay">Loading...</span>
+        </div>
+
+        <!-- Langkah-langkah -->
+        <div class="onboarding-steps">
+            <div class="step step-1">
+                <div class="step-icon">1</div>
+                <h3 class="step-title">Pilih Kekesalanmu</h3>
+                <p class="step-desc">Pilih 3 hashtag dari 12 pilihan yang paling mewakili kekesalanmu saat ini</p>
+            </div>
             
-            if (text.length < 10) {
-                alert('Minimal 10 karakter untuk kesel yang berarti!');
-                return;
+            <div class="step step-2">
+                <div class="step-icon">2</div>
+                <h3 class="step-title">Temukan Komunitas</h3>
+                <p class="step-desc">Kamu akan dihubungkan dengan orang-orang yang memiliki kekesalan serupa</p>
+            </div>
+            
+            <div class="step step-3">
+                <div class="step-icon">3</div>
+                <h3 class="step-title">Lampiaskan & Bersinergi</h3>
+                <p class="step-desc">Bagikan kekesalanmu dan dapatkan dukungan dari komunitas yang memahami</p>
+            </div>
+        </div>
+
+        <!-- Pemilihan Hashtag -->
+        <div class="onboarding-content">
+            <h2 class="content-title">PILIH 3 HASHTAG KEKESALANMU</h2>
+            <p style="text-align: center; color: #aaa; margin-bottom: 30px;">
+                Pilih 3 hashtag yang paling membuatmu kesal. Pilihan ini akan menentukan dinding kekesalanmu.
+            </p>
+            
+            <div class="hashtag-selection" id="hashtagSelection">
+                <!-- Hashtag akan diisi oleh JavaScript -->
+            </div>
+            
+            <div class="selection-counter">
+                <div class="counter-text">
+                    Kamu telah memilih <span class="counter-number" id="selectedCount">0</span> dari 3 hashtag
+                </div>
+                <div style="color: #aaa; margin-top: 10px; font-size: 0.9rem;">
+                    Pilih 3 hashtag untuk melanjutkan ke Dinding Kekesalan
+                </div>
+            </div>
+            
+            <div class="btn-container">
+                <button class="btn-start" id="btnStart" disabled>
+                    <i class="fas fa-rocket"></i> MASUK KE DINDING KEKESALAN
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Data 12 hashtag default
+        const hashtags = [
+            { id: 1, name: '#MagangDigajiSertifikat', category: 'Personal Pain', posts: 245 },
+            { id: 2, name: '#DiajakJalanTapiKempes', category: 'Personal Pain', posts: 178 },
+            { id: 3, name: '#DiphostingGebetan', category: 'Personal Pain', posts: 312 },
+            { id: 4, name: '#DramaQueenAnjay', category: 'Social Sickness', posts: 189 },
+            { id: 5, name: '#BacotLambeTurah', category: 'Social Sickness', posts: 321 },
+            { id: 6, name: '#RencanaPlinPlan', category: 'Social Sickness', posts: 267 },
+            { id: 7, name: '#BellTiketJualSinjal', category: 'Pop Culture', posts: 89 },
+            { id: 8, name: '#InfluencerNgchek', category: 'Pop Culture', posts: 203 },
+            { id: 9, name: '#FilmEndingGaje', category: 'Pop Culture', posts: 142 }
+        ];
+
+        // Variabel
+        let selectedHashtags = [];
+        const maxSelections = 3;
+
+        // Elemen DOM
+        const hashtagSelection = document.getElementById('hashtagSelection');
+        const selectedCount = document.getElementById('selectedCount');
+        const btnStart = document.getElementById('btnStart');
+        const usernameDisplay = document.getElementById('usernameDisplay');
+        const userWelcome = document.getElementById('userWelcome');
+
+        // Cek login
+        window.addEventListener('load', function() {
+            const username = localStorage.getItem('blitz_username') || 'Pengguna';
+            usernameDisplay.textContent = username;
+            userWelcome.textContent = `Halo ${username}! Pilih 3 hashtag yang paling mewakili kekesalanmu untuk personalisasi pengalaman`;
+        });
+
+        // Render hashtag options
+        function renderHashtags() {
+            hashtagSelection.innerHTML = '';
+            
+            hashtags.forEach(hashtag => {
+                const isSelected = selectedHashtags.includes(hashtag.id);
+                
+                const hashtagElement = document.createElement('div');
+                hashtagElement.className = `hashtag-option ${isSelected ? 'selected' : ''}`;
+                hashtagElement.dataset.id = hashtag.id;
+                
+                hashtagElement.innerHTML = `
+                    <div class="hashtag-name">${hashtag.name}</div>
+                    <div class="hashtag-category">${hashtag.category}</div>
+                    <div style="color: #06d6a0; font-weight: 600;">
+                        ${hashtag.posts} posts
+                    </div>
+                    <div style="margin-top: 15px; color: #aaa; font-size: 0.9rem;">
+                        ${isSelected ? '✓ Terpilih' : 'Klik untuk memilih'}
+                    </div>
+                `;
+                
+                hashtagElement.addEventListener('click', () => toggleHashtag(hashtag.id));
+                hashtagSelection.appendChild(hashtagElement);
+            });
+        }
+
+        // Toggle pilihan hashtag
+        function toggleHashtag(id) {
+            const index = selectedHashtags.indexOf(id);
+            
+            if (index === -1) {
+                // Tambahkan jika belum mencapai batas
+                if (selectedHashtags.length < maxSelections) {
+                    selectedHashtags.push(id);
+                } else {
+                    alert(`Maksimal ${maxSelections} hashtag yang bisa dipilih`);
+                    return;
+                }
+            } else {
+                // Hapus jika sudah dipilih
+                selectedHashtags.splice(index, 1);
             }
             
-            alert(`✅ KESELANMU TERKIRIM!\n\n"${text}"\n\nAkan muncul di Dinding Kekesalan.`);
-            rageText.value = '';
-            charCount.textContent = '0/280';
+            updateSelection();
+        }
+
+        // Update selection UI
+        function updateSelection() {
+            // Update counter
+            selectedCount.textContent = selectedHashtags.length;
+            
+            // Update warna counter
+            if (selectedHashtags.length === maxSelections) {
+                selectedCount.style.color = '#ff6b6b';
+            } else if (selectedHashtags.length > 0) {
+                selectedCount.style.color = '#ffd166';
+            } else {
+                selectedCount.style.color = '#06d6a0';
+            }
+            
+            // Update button state
+            btnStart.disabled = selectedHashtags.length !== maxSelections;
+            
+            // Re-render hashtag dengan status terpilih
+            renderHashtags();
+        }
+
+        // Simpan pilihan dan lanjut ke Home
+        btnStart.addEventListener('click', function() {
+            // Simpan pilihan ke localStorage
+            const selectedHashtagNames = selectedHashtags.map(id => {
+                const hashtag = hashtags.find(h => h.id === id);
+                return hashtag.name;
+            });
+            
+            localStorage.setItem('blitz_selected_hashtags', JSON.stringify(selectedHashtagNames));
+            localStorage.setItem('blitz_onboarding_complete', 'true');
+            
+            // Redirect ke Home
+            window.location.href = 'home.html';
+        });
+
+        // Inisialisasi
+        document.addEventListener('DOMContentLoaded', function() {
+            renderHashtags();
+            updateSelection();
         });
     </script>
-    <!-- Jika ada tombol dengan id -->
-<button id="backButton">Kembali</button>
-<button id="wallButton">Lihat Dinding</button>
-
-<script>
-// Tambah di script yang sudah ada
-document.getElementById('backButton').addEventListener('click', function() {
-    window.location.href = 'index.html';
-});
-
-document.getElementById('wallButton').addEventListener('click', function() {
-    window.location.href = 'wall.html';
-});
-</script>
-<!-- ==== NAVIGASI BAJAK LAUT ==== -->
-<div style="position: fixed; bottom: 20px; left: 20px; right: 20px; background: #1a2a3a; border: 3px solid gold; padding: 15px; border-radius: 10px; text-align: center;">
-    <a href="index.html" style="color: white; margin: 0 15px; text-decoration: none;">🏠 Home</a>
-    <a href="rage.html" style="color: white; margin: 0 15px; text-decoration: none;">😠 Rage</a>
-    <a href="sefrek.html" style="color: white; margin: 0 15px; text-decoration: none;">🔄 Sefrek</a>
-    <a href="wall.html" style="color: white; margin: 0 15px; text-decoration: none;">🧱 Wall</a>
-</div></body>
+</body>
 </html>
