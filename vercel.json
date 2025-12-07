@@ -9,20 +9,12 @@
       "destination": "/login.html"
     },
     {
-      "source": "/rage",
-      "destination": "/rage.html"
+      "source": "/onboarding",
+      "destination": "/onboarding.html"
     },
     {
       "source": "/wall",
       "destination": "/wall.html"
-    },
-    {
-      "source": "/profile",
-      "destination": "/profile.html"
-    },
-    {
-      "source": "/(.*\\.html)",
-      "destination": "/$1"
     },
     {
       "source": "/(.*)",
@@ -30,16 +22,5 @@
     }
   ],
   "cleanUrls": false,
-  "trailingSlash": false,
-  "headers": [
-    {
-      "source": "/(.*)",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "no-cache, no-store, must-revalidate"
-        }
-      ]
-    }
-  ]
+  "trailingSlash": false
 }
