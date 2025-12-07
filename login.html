@@ -4,77 +4,160 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NOPE</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
+        /* [STYLES SAMA SEPERTI SEBELUMNYA] */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             background: #000000;
             color: #ffffff;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            -webkit-font-smoothing: antialiased;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
-        
-        body::-webkit-scrollbar {
-            display: none;
+        .login-box {
+            background: #111111;
+            padding: 40px;
+            border-radius: 20px;
+            width: 100%;
+            max-width: 400px;
+            border: 1px solid #333333;
+        }
+        .logo {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .logo h1 {
+            font-size: 4rem;
+            color: #ff3b30;
+            font-weight: 900;
+        }
+        .logo p {
+            color: #666666;
+            font-size: 0.9rem;
+            margin-top: 5px;
+        }
+        .telegram-badge {
+            background: #1a1a1a;
+            padding: 12px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+            color: #888888;
+            border: 1px solid #333333;
+        }
+        .telegram-badge i {
+            color: #0088cc;
+            margin-right: 8px;
+        }
+        input {
+            width: 100%;
+            padding: 15px;
+            background: #1a1a1a;
+            border: 1px solid #333333;
+            border-radius: 10px;
+            color: white;
+            font-size: 1rem;
+            margin-bottom: 20px;
+        }
+        input:focus {
+            outline: none;
+            border-color: #ff3b30;
+        }
+        button {
+            width: 100%;
+            padding: 16px;
+            background: #ffffff;
+            color: #000000;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        button:hover {
+            background: #eeeeee;
+        }
+        button:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+        .note {
+            text-align: center;
+            margin-top: 20px;
+            color: #666666;
+            font-size: 0.85rem;
+            line-height: 1.5;
         }
     </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <div class="login-container">
-        <div class="login-card">
-            <!-- Brand Logo -->
-            <div class="brand-logo">
-                <h1>NOPE</h1>
-                <div class="tagline">via Telegram</div>
-            </div>
-            
-            <!-- Login Form - Clean dengan Telegram -->
-            <form id="loginForm" class="login-form">
-                <!-- Telegram Username (auto-filled, read-only) -->
-                <div class="input-group" style="margin-bottom: 15px;">
-                    <label>TELEGRAM ACCOUNT</label>
-                    <div class="telegram-account-display">
-                        <i class="fab fa-telegram"></i>
-                        <span id="telegramUsernameDisplay">@username</span>
-                    </div>
-                </div>
-                
-                <!-- Anonymous Username Input -->
-                <div class="input-group">
-                    <label for="anonUsername">
-                        ANONYMOUS IDENTITY
-                    </label>
-                    <input 
-                        type="text" 
-                        id="anonUsername" 
-                        placeholder="create username" 
-                        autocomplete="off"
-                        required
-                        maxlength="20"
-                        autofocus
-                    >
-                    <div id="usernameFeedback"></div>
-                </div>
-                
-                <button type="submit" class="btn-go" id="submitBtn">
-                    GO
-                </button>
-            </form>
-            
-            <!-- Clean Note -->
-            <div class="login-note">
-                Your Telegram account is only used for access.<br>
-                All content is posted anonymously.
-            </div>
+    <div class="login-box">
+        <div class="logo">
+            <h1>NOPE</h1>
+            <p>via Telegram</p>
+        </div>
+        
+        <div class="telegram-badge">
+            <i class="fab fa-telegram"></i>
+            <span id="tgUsername">@telegram_user</span>
+        </div>
+        
+        <form id="loginForm">
+            <input 
+                type="text" 
+                id="anonUsername" 
+                placeholder="create username" 
+                autocomplete="off"
+                required
+                autofocus
+            >
+            <button type="submit" id="submitBtn">
+                GO
+            </button>
+        </form>
+        
+        <div class="note">
+            100% anonymous • No registration<br>
+            Your Telegram account is only used for access
         </div>
     </div>
-    
-    <script src="script.js"></script>
+
+    <script>
+        console.log('=== NOPE LOGIN LOADED ===');
+        
+        // Simple form handling
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            console.log('Form submitted!');
+            
+            const username = document.getElementById('anonUsername').value.trim();
+            
+            if (username.length < 3) {
+                alert('Username minimal 3 karakter');
+                return;
+            }
+            
+            // Save to localStorage
+            localStorage.setItem('nope_anon_username', username);
+            localStorage.setItem('nope_logged_in', 'true');
+            
+            console.log('Saved:', username);
+            
+            // ⚠️ PERBAIKAN DI SINI: Redirect ke onboarding.html BUKAN rage.html
+            window.location.href = 'onboarding.html';
+        });
+        
+        // Enable button when typing
+        document.getElementById('anonUsername').addEventListener('input', function() {
+            const isValid = this.value.trim().length >= 3;
+            document.getElementById('submitBtn').disabled = !isValid;
+        });
+        
+        console.log('Login page ready');
+    </script>
 </body>
 </html>
