@@ -3,737 +3,560 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blitz - Dinding Kekesalan</title>
+    <title>Feed - NOPE</title>
+    <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        /* Feed Container */
+        .feed-container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
         }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
-            color: white;
-            min-height: 100vh;
+        
+        /* Feed Header */
+        .feed-header {
+            position: sticky;
+            top: 0;
+            background: white;
+            z-index: 100;
+            padding: 20px 0;
+            border-bottom: 1px solid #eee;
+            margin-bottom: 20px;
         }
-
-        /* HEADER */
-        .header {
-            background: rgba(30, 30, 60, 0.9);
-            padding: 20px 40px;
+        
+        .feed-title {
+            font-size: 28px;
+            color: #333;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .feed-subtitle {
+            color: #666;
+            font-size: 14px;
+        }
+        
+        /* New Rant Box */
+        .new-rant-box {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            border: 1px solid #e0e0e0;
+        }
+        
+        .rant-textarea {
+            width: 100%;
+            min-height: 100px;
+            border: none;
+            resize: none;
+            font-size: 16px;
+            line-height: 1.5;
+            margin-bottom: 15px;
+            font-family: inherit;
+        }
+        
+        .rant-textarea:focus {
+            outline: none;
+        }
+        
+        .rant-actions {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            position: sticky;
-            top: 0;
-            z-index: 100;
         }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 15px;
+        
+        .char-count {
+            font-size: 14px;
+            color: #888;
         }
-
-        .logo-icon {
-            font-size: 2.5rem;
-            background: linear-gradient(90deg, #ff6b6b, #ffd166, #06d6a0);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-
-        .logo-text {
-            font-size: 1.8rem;
-            font-weight: 700;
+        
+        .post-rant-btn {
+            padding: 8px 20px;
+            background: #667eea;
             color: white;
+            border: none;
+            border-radius: 20px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
         }
-
-        .user-info {
+        
+        .post-rant-btn:hover {
+            background: #5a67d8;
+            transform: translateY(-2px);
+        }
+        
+        .post-rant-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        /* Rant Feed */
+        .rant-feed {
+            margin-top: 30px;
+        }
+        
+        .rant-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            border: 1px solid #f0f0f0;
+            transition: all 0.3s;
+        }
+        
+        .rant-card:hover {
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            transform: translateY(-2px);
+        }
+        
+        .rant-header {
             display: flex;
             align-items: center;
-            gap: 15px;
+            margin-bottom: 15px;
         }
-
+        
         .user-avatar {
-            width: 45px;
-            height: 45px;
-            background: linear-gradient(135deg, #ff6b6b, #ffd166);
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             border-radius: 50%;
+            margin-right: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: 700;
+            color: white;
+            font-weight: bold;
         }
-
+        
+        .user-info {
+            flex: 1;
+        }
+        
         .user-name {
             font-weight: 600;
-            color: #ffd166;
+            color: #333;
+            margin-bottom: 3px;
         }
-
-        .logout-btn {
-            background: rgba(255, 107, 107, 0.2);
-            color: #ff6b6b;
-            border: 1px solid rgba(255, 107, 107, 0.5);
-            padding: 8px 20px;
-            border-radius: 20px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s;
-        }
-
-        .logout-btn:hover {
-            background: rgba(255, 107, 107, 0.3);
-        }
-
-        /* MAIN CONTENT */
-        .main-content {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 40px 20px;
-        }
-
-        .section-title {
-            font-size: 2rem;
-            margin-bottom: 30px;
-            padding-bottom: 15px;
-            border-bottom: 2px solid;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .section-title i {
-            font-size: 1.8rem;
-        }
-
-        /* DINDING GRID */
-        .dinding-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 30px;
-            margin-bottom: 60px;
-        }
-
-        @media (max-width: 1200px) {
-            .dinding-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
-        @media (max-width: 768px) {
-            .dinding-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        /* DINDING CARD */
-        .dinding-card {
-            background: rgba(30, 30, 60, 0.7);
-            border-radius: 20px;
-            padding: 30px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: all 0.3s;
-            height: 100%;
-        }
-
-        .dinding-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
-        }
-
-        /* Warna berbeda untuk setiap dinding */
-        .dinding-sefrekuensi {
-            border-top: 5px solid #06d6a0;
-        }
-
-        .dinding-sefrekuensi .section-title {
-            color: #06d6a0;
-            border-color: #06d6a0;
-        }
-
-        .dinding-biru {
-            border-top: 5px solid #4d8af0;
-        }
-
-        .dinding-biru .section-title {
-            color: #4d8af0;
-            border-color: #4d8af0;
-        }
-
-        .dinding-merah {
-            border-top: 5px solid #ff6b6b;
-        }
-
-        .dinding-merah .section-title {
-            color: #ff6b6b;
-            border-color: #ff6b6b;
-        }
-
-        /* HASHTAG LIST */
-        .hashtag-list {
-            margin-bottom: 30px;
-        }
-
-        .hashtag-item {
-            background: rgba(255, 255, 255, 0.07);
-            border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 15px;
-            transition: all 0.3s;
-            cursor: pointer;
-            border-left: 4px solid transparent;
-        }
-
-        .hashtag-item:hover {
-            background: rgba(255, 255, 255, 0.12);
-            transform: translateX(5px);
-        }
-
-        .dinding-sefrekuensi .hashtag-item:hover {
-            border-left-color: #06d6a0;
-        }
-
-        .dinding-biru .hashtag-item:hover {
-            border-left-color: #4d8af0;
-        }
-
-        .dinding-merah .hashtag-item:hover {
-            border-left-color: #ff6b6b;
-        }
-
-        .hashtag-name {
-            font-size: 1.4rem;
-            font-weight: 700;
-            margin-bottom: 8px;
-            color: #fff;
-        }
-
-        .hashtag-meta {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 0.9rem;
-        }
-
-        .hashtag-category {
-            color: #aaa;
-            font-weight: 600;
-        }
-
-        .hashtag-count {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 4px 12px;
-            border-radius: 15px;
-            font-weight: 600;
-            color: #fff;
-        }
-
-        /* WINDOW KEKESALAN */
-        .window-kekesalan {
-            background: linear-gradient(135deg, rgba(255, 107, 107, 0.1), rgba(255, 209, 102, 0.1));
-            border-radius: 20px;
-            padding: 40px;
-            margin-top: 60px;
-            text-align: center;
-            border: 2px solid rgba(255, 107, 107, 0.3);
-            box-shadow: 0 10px 30px rgba(255, 107, 107, 0.2);
-        }
-
-        .window-title {
-            font-size: 2rem;
-            color: #ff6b6b;
-            margin-bottom: 15px;
-            font-weight: 800;
-        }
-
-        .window-subtitle {
-            font-size: 1.2rem;
-            color: #ffd166;
-            margin-bottom: 25px;
-            line-height: 1.6;
-        }
-
-        .textarea-kekesalan {
-            width: 100%;
-            height: 150px;
-            background: rgba(0, 0, 0, 0.4);
-            border: 2px solid rgba(255, 107, 107, 0.5);
-            border-radius: 15px;
-            color: white;
-            font-size: 1.1rem;
-            padding: 20px;
-            margin-bottom: 20px;
-            resize: vertical;
-            font-family: inherit;
-            transition: all 0.3s;
-        }
-
-        .textarea-kekesalan:focus {
-            outline: none;
-            border-color: #ff6b6b;
-            box-shadow: 0 0 20px rgba(255, 107, 107, 0.4);
-        }
-
-        .char-counter {
-            text-align: right;
-            color: #aaa;
-            font-size: 0.9rem;
-            margin-bottom: 25px;
-        }
-
-        .char-counter.warning {
-            color: #ffd166;
-        }
-
-        .char-counter.danger {
-            color: #ff6b6b;
-        }
-
-        .btn-lampiaskan {
-            background: linear-gradient(90deg, #ff6b6b, #ff8e53);
-            color: white;
-            border: none;
-            padding: 18px 50px;
-            font-size: 1.3rem;
-            font-weight: 700;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: all 0.3s;
-            box-shadow: 0 5px 20px rgba(255, 107, 107, 0.4);
-            letter-spacing: 1px;
-        }
-
-        .btn-lampiaskan:hover:not(:disabled) {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(255, 107, 107, 0.6);
-        }
-
-        .btn-lampiaskan:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-        /* FOOTER */
-        .footer {
-            text-align: center;
-            padding: 30px;
+        
+        .rant-time {
+            font-size: 12px;
             color: #888;
-            font-size: 0.9rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            margin-top: 60px;
+        }
+        
+        .rant-content {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #333;
+            margin-bottom: 15px;
+            white-space: pre-wrap;
+        }
+        
+        .rant-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+        
+        .rant-tag {
+            padding: 5px 12px;
+            background: #f0f7ff;
+            border-radius: 15px;
+            font-size: 12px;
+            color: #667eea;
+            font-weight: 600;
+        }
+        
+        .rant-stats {
+            display: flex;
+            gap: 20px;
+            border-top: 1px solid #eee;
+            padding-top: 15px;
+        }
+        
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #666;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .stat-item:hover {
+            color: #667eea;
+        }
+        
+        .stat-count {
+            font-weight: 600;
+        }
+        
+        .stat-item.active {
+            color: #ff6b6b;
+        }
+        
+        /* Empty State */
+        .empty-feed {
+            text-align: center;
+            padding: 60px 20px;
+            color: #888;
+        }
+        
+        .empty-icon {
+            font-size: 64px;
+            margin-bottom: 20px;
+            color: #ddd;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .feed-container {
+                padding: 15px;
+            }
+            
+            .feed-title {
+                font-size: 24px;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- HEADER -->
-    <div class="header">
-        <div class="logo">
-            <div class="logo-icon">
-                <i class="fas fa-bolt"></i>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <a href="home.html">
+                    <i class="fas fa-times-circle"></i>
+                    <span>NOPE</span>
+                </a>
             </div>
-            <div class="logo-text">BLITZ</div>
-        </div>
-        
-        <div class="user-info">
-            <div class="user-avatar" id="userAvatar">U</div>
-            <div class="user-name" id="userName">Loading...</div>
-            <button class="logout-btn" id="logoutBtn">
-                <i class="fas fa-sign-out-alt"></i> Logout
-            </button>
-        </div>
-    </div>
+            <nav class="nav">
+                <a href="home.html" class="active"><i class="fas fa-home"></i> Feed</a>
+                <a href="profile.html"><i class="fas fa-archive"></i> Artefak</a>
+                <a href="login.html" class="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            </nav>
+        </header>
 
-    <!-- MAIN CONTENT -->
-    <div class="main-content">
-        <h1 style="text-align: center; font-size: 2.5rem; margin-bottom: 50px; color: #ffd166;">
-            <i class="fas fa-wall"></i> DINDING KEKESALAN
-        </h1>
-
-        <!-- 3 DINDING -->
-        <div class="dinding-grid">
-            <!-- DINDING SEFREKUENSI (3#) -->
-            <div class="dinding-card dinding-sefrekuensi">
-                <h2 class="section-title">
-                    <i class="fas fa-users"></i> SEFREKUENSI
-                </h2>
-                <p style="color: #aaa; margin-bottom: 25px; line-height: 1.6;">
-                    3 hashtag yang sama dengan pilihanmu. Komunitas dengan frekuensi kekesalan yang serupa.
+        <main class="feed-container">
+            <!-- Feed Header -->
+            <div class="feed-header">
+                <h1 class="feed-title">
+                    <i class="fas fa-times-circle" style="color: #667eea;"></i>
+                    NOPE Feed
+                </h1>
+                <p class="feed-subtitle">
+                    What everyone is saying NOPE to today
                 </p>
-                
-                <div class="hashtag-list" id="sefrekuensiList">
-                    <!-- Diisi oleh JavaScript -->
-                </div>
-                
-                <div style="text-align: center; margin-top: 30px;">
-                    <div style="background: rgba(6, 214, 160, 0.1); padding: 15px; border-radius: 10px;">
-                        <div style="color: #06d6a0; font-weight: 600; margin-bottom: 10px;">
-                            <i class="fas fa-user-friends"></i> 245 orang sefrekuensi
-                        </div>
-                        <div style="color: #aaa; font-size: 0.9rem;">
-                            Mereka memiliki kekesalan yang sama denganmu
-                        </div>
-                    </div>
-                </div>
             </div>
 
-            <!-- DINDING SEGELOMBANG BIRU (2#) -->
-            <div class="dinding-card dinding-biru">
-                <h2 class="section-title">
-                    <i class="fas fa-water"></i> SEGELOMBANG BIRU
-                </h2>
-                <p style="color: #aaa; margin-bottom: 25px; line-height: 1.6;">
-                    2 hashtag yang sama dengan pilihanmu. Gelombang kekesalan sedang yang bisa kamu ikuti.
-                </p>
-                
-                <div class="hashtag-list" id="biruList">
-                    <!-- Diisi oleh JavaScript -->
-                </div>
-                
-                <div style="text-align: center; margin-top: 30px;">
-                    <div style="background: rgba(77, 138, 240, 0.1); padding: 15px; border-radius: 10px;">
-                        <div style="color: #4d8af0; font-weight: 600; margin-bottom: 10px;">
-                            <i class="fas fa-wave-square"></i> 189 orang segelombang
-                        </div>
-                        <div style="color: #aaa; font-size: 0.9rem;">
-                            Gelombang kekesalan sedang menguat
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- DINDING SEGELOMBANG MERAH (2#) -->
-            <div class="dinding-card dinding-merah">
-                <h2 class="section-title">
-                    <i class="fas fa-fire"></i> SEGELOMBANG MERAH
-                </h2>
-                <p style="color: #aaa; margin-bottom: 25px; line-height: 1.6;">
-                    2 hashtag yang sama dengan pilihanmu. Gelombang kekesalan tinggi yang sedang viral.
-                </p>
-                
-                <div class="hashtag-list" id="merahList">
-                    <!-- Diisi oleh JavaScript -->
-                </div>
-                
-                <div style="text-align: center; margin-top: 30px;">
-                    <div style="background: rgba(255, 107, 107, 0.1); padding: 15px; border-radius: 10px;">
-                        <div style="color: #ff6b6b; font-weight: 600; margin-bottom: 10px;">
-                            <i class="fas fa-fire"></i> 321 orang dalam gelombang merah
-                        </div>
-                        <div style="color: #aaa; font-size: 0.9rem;">
-                            Kekesalan sedang memuncak di sini
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- WINDOW KEKESALAN -->
-        <div class="window-kekesalan">
-            <h2 class="window-title">💥 WINDOW KEKESALAN 💥</h2>
-            
-            <p class="window-subtitle">
-                "Pilih hashtag dari dinding di atas, lalu tuliskan kekesalanmu secara detail (maksimal 280 karakter)."
-            </p>
-            
-            <div style="margin-bottom: 30px;">
-                <div style="color: #aaa; margin-bottom: 10px; text-align: left; max-width: 800px; margin: 0 auto 20px;">
-                    <i class="fas fa-info-circle"></i> 
-                    Pilih hashtag terlebih dahulu dari salah satu dinding di atas
-                </div>
-                
-                <div id="selectedHashtagInfo" style="
-                    background: rgba(0,0,0,0.3); 
-                    padding: 15px; 
-                    border-radius: 10px; 
-                    margin-bottom: 20px;
-                    display: none;
-                ">
-                    <div style="color: #ffd166; font-weight: 600;">
-                        <i class="fas fa-hashtag"></i> 
-                        <span id="selectedHashtagName">Belum ada hashtag dipilih</span>
-                    </div>
-                </div>
-                
+            <!-- New Rant Box -->
+            <div class="new-rant-box">
                 <textarea 
-                    class="textarea-kekesalan" 
-                    placeholder="Ketik kekesalanmu di sini... (Pilih hashtag terlebih dahulu)"
+                    class="rant-textarea" 
+                    id="new-rant-text" 
+                    placeholder="What's bothering you today? (280 chars max)"
                     maxlength="280"
-                    id="kekesalanTextarea"
-                    disabled
+                    oninput="updateRantCount()"
                 ></textarea>
                 
-                <div class="char-counter" id="charCounter">
-                    <span id="charCount">0</span> / 280 karakter
+                <div class="rant-actions">
+                    <div class="char-count" id="rant-char-count">0/280</div>
+                    <button class="post-rant-btn" id="post-rant-btn" onclick="postRant()" disabled>
+                        <i class="fas fa-paper-plane"></i> Post Rant
+                    </button>
+                </div>
+            </div>
+
+            <!-- Rant Feed -->
+            <div class="rant-feed" id="rant-feed">
+                <!-- Rants will be loaded here -->
+                
+                <!-- Example Rant 1 -->
+                <div class="rant-card">
+                    <div class="rant-header">
+                        <div class="user-avatar">AN</div>
+                        <div class="user-info">
+                            <div class="user-name">AnonymousUser_7X9B</div>
+                            <div class="rant-time">2 hours ago</div>
+                        </div>
+                    </div>
+                    
+                    <div class="rant-content">
+                        Baru aja dighosting sama gebetan setelah ngobrol 2 minggu. Chat udah dibaca, tapi ga dibales sampe sekarang. Rasanya kayak di-ghosting sama masa depan sendiri.
+                    </div>
+                    
+                    <div class="rant-tags">
+                        <div class="rant-tag">#DighostingGebetan</div>
+                        <div class="rant-tag">#FilmEndingGaje</div>
+                        <div class="rant-tag">#RencanaPlinPlan</div>
+                    </div>
+                    
+                    <div class="rant-stats">
+                        <div class="stat-item">
+                            <i class="far fa-heart"></i>
+                            <span class="stat-count">24</span>
+                        </div>
+                        <div class="stat-item">
+                            <i class="far fa-comment"></i>
+                            <span class="stat-count">8</span>
+                        </div>
+                        <div class="stat-item">
+                            <i class="fas fa-retweet"></i>
+                            <span class="stat-count">3</span>
+                        </div>
+                    </div>
                 </div>
                 
-                <button class="btn-lampiaskan" id="btnLampiaskan" disabled>
-                    <i class="fas fa-fire"></i> POSTING KE DINDING
-                </button>
-            </div>
-            
-            <div style="margin-top: 40px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1);">
-                <div style="color: #aaa; font-size: 0.9rem;">
-                    <i class="fas fa-shield-alt"></i> 100% Anonim • <i class="fas fa-heart"></i> Dinding aman untuk berbagi
+                <!-- Example Rant 2 -->
+                <div class="rant-card">
+                    <div class="rant-header">
+                        <div class="user-avatar">GH</div>
+                        <div class="user-info">
+                            <div class="user-name">GhostProtocol_42C3</div>
+                            <div class="rant-time">5 hours ago</div>
+                        </div>
+                    </div>
+                    
+                    <div class="rant-content">
+                        Influencer promosi skincare harga 2 juta, bilangnya "affordable banget". Affordable buat siapa? Buat yang punya ginjal extra buat dijual?
+                    </div>
+                    
+                    <div class="rant-tags">
+                        <div class="rant-tag">#InfluencerNgehek</div>
+                        <div class="rant-tag">#BeliTiketJualGinjal</div>
+                        <div class="rant-tag">#BacotLambeTurah</div>
+                    </div>
+                    
+                    <div class="rant-stats">
+                        <div class="stat-item active">
+                            <i class="fas fa-heart" style="color: #ff6b6b;"></i>
+                            <span class="stat-count">42</span>
+                        </div>
+                        <div class="stat-item">
+                            <i class="far fa-comment"></i>
+                            <span class="stat-count">15</span>
+                        </div>
+                        <div class="stat-item">
+                            <i class="fas fa-retweet"></i>
+                            <span class="stat-count">12</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Example Rant 3 -->
+                <div class="rant-card">
+                    <div class="rant-header">
+                        <div class="user-avatar">SP</div>
+                        <div class="user-info">
+                            <div class="user-name">SilentPain_8F2A</div>
+                            <div class="rant-time">1 day ago</div>
+                        </div>
+                    </div>
+                    
+                    <div class="rant-content">
+                        Magang 3 bulan full-time, dapatnya cuma sertifikat dan "pengalaman berharga". Pengalaman berharga ga bisa bayar sewa kosan, Pak.
+                    </div>
+                    
+                    <div class="rant-tags">
+                        <div class="rant-tag">#MagangDigajiSertifikat</div>
+                        <div class="rant-tag">#DramaQueenAnjay</div>
+                        <div class="rant-tag">#DiajakJalanTapiKempes</div>
+                    </div>
+                    
+                    <div class="rant-stats">
+                        <div class="stat-item">
+                            <i class="far fa-heart"></i>
+                            <span class="stat-count">37</span>
+                        </div>
+                        <div class="stat-item">
+                            <i class="far fa-comment"></i>
+                            <span class="stat-count">22</span>
+                        </div>
+                        <div class="stat-item">
+                            <i class="fas fa-retweet"></i>
+                            <span class="stat-count">7</span>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
+            
+            <!-- Load More -->
+            <div style="text-align: center; margin: 30px 0;">
+                <button class="btn-secondary" onclick="loadMoreRants()">
+                    <i class="fas fa-sync-alt"></i> Load More Rants
+                </button>
+            </div>
+        </main>
 
-    <!-- FOOTER -->
-    <div class="footer">
-        <p>Blitz Platform • Dinding Kekesalan Terpersonalisasi</p>
-        <p style="margin-top: 10px; color: #666; font-size: 0.8rem;">
-            Sefrekuensi 3# • Segelombang Biru 2# • Segelombang Merah 2#
-        </p>
+        <!-- Footer -->
+        <footer class="footer">
+            <p>&copy; 2024 NOPE. Say it loud, say it proud.</p>
+            <div class="footer-links">
+                <a href="#" style="color: #666;">Community Guidelines</a>
+                <a href="#" style="color: #666;">Your NOPEs</a>
+                <a href="#" style="color: #666;">Artefak Cycle</a>
+            </div>
+        </footer>
     </div>
 
     <script>
-        // Data hashtag
-        const allHashtags = [
-            { id: 1, name: '#MagangDigajiSertifikat', category: 'Personal Pain', posts: 245, color: '#06d6a0' },
-            { id: 2, name: '#DiajakJalanTapiKempes', category: 'Personal Pain', posts: 178, color: '#06d6a0' },
-            { id: 3, name: '#DiphostingGebetan', category: 'Personal Pain', posts: 312, color: '#06d6a0' },
-            { id: 4, name: '#DramaQueenAnjay', category: 'Social Sickness', posts: 189, color: '#4d8af0' },
-            { id: 5, name: '#BacotLambeTurah', category: 'Social Sickness', posts: 321, color: '#ff6b6b' },
-            { id: 6, name: '#RencanaPlinPlan', category: 'Social Sickness', posts: 267, color: '#4d8af0' },
-            { id: 7, name: '#BellTiketJualSinjal', category: 'Pop Culture', posts: 89, color: '#ff6b6b' },
-            { id: 8, name: '#InfluencerNgchek', category: 'Pop Culture', posts: 203, color: '#06d6a0' },
-            { id: 9, name: '#FilmEndingGaje', category: 'Pop Culture', posts: 142, color: '#4d8af0' }
-        ];
-
-        // Variabel
-        let selectedHashtag = null;
-        let userSelectedHashtags = [];
-
-        // Elemen DOM
-        const sefrekuensiList = document.getElementById('sefrekuensiList');
-        const biruList = document.getElementById('biruList');
-        const merahList = document.getElementById('merahList');
-        const userName = document.getElementById('userName');
-        const userAvatar = document.getElementById('userAvatar');
-        const selectedHashtagInfo = document.getElementById('selectedHashtagInfo');
-        const selectedHashtagName = document.getElementById('selectedHashtagName');
-        const kekesalanTextarea = document.getElementById('kekesalanTextarea');
-        const charCounter = document.getElementById('charCounter');
-        const charCount = document.getElementById('charCount');
-        const btnLampiaskan = document.getElementById('btnLampiaskan');
-        const logoutBtn = document.getElementById('logoutBtn');
-
-        // Cek login & onboarding
-        window.addEventListener('load', function() {
-            const isLoggedIn = localStorage.getItem('blitz_logged_in');
-            const onboardingComplete = localStorage.getItem('blitz_onboarding_complete');
-            const username = localStorage.getItem('blitz_username');
-            const selectedHashtags = localStorage.getItem('blitz_selected_hashtags');
-            
-            // Redirect jika belum login atau onboarding
-            if (!isLoggedIn || !onboardingComplete) {
-                window.location.href = 'index.html';
+        // User data from onboarding
+        let userData = JSON.parse(localStorage.getItem('nopeUserData') || '{}');
+        let userNOPEs = userData.selectedNOPEs || [];
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if onboarding is complete
+            if (!localStorage.getItem('nopeOnboardingComplete')) {
+                // Redirect to onboarding
+                window.location.href = 'onboarding.html';
                 return;
             }
             
-            // Tampilkan user info
-            if (username) {
-                userName.textContent = username;
-                userAvatar.textContent = username.charAt(0).toUpperCase();
-            }
-            
-            // Parse selected hashtags
-            if (selectedHashtags) {
-                userSelectedHashtags = JSON.parse(selectedHashtags);
-                distributeHashtagsToDinding();
-            }
+            // Display user's current NOPEs in header or somewhere
+            console.log('User NOPEs:', userNOPEs);
         });
-
-        // Distribusi hashtag ke 3 dinding
-        function distributeHashtagsToDinding() {
-            // Dinding Sefrekuensi: 3# yang sama (ambil 3 pertama dari pilihan user)
-            const sefrekuensiHashtags = userSelectedHashtags.slice(0, 3);
+        
+        // Update character count for new rant
+        function updateRantCount() {
+            const textarea = document.getElementById('new-rant-text');
+            const charCount = document.getElementById('rant-char-count');
+            const postBtn = document.getElementById('post-rant-btn');
             
-            // Dinding Biru: 2# yang sama (ambil 2 berikutnya)
-            const biruHashtags = userSelectedHashtags.slice(3, 5);
+            const count = textarea.value.length;
+            charCount.textContent = `${count}/280`;
             
-            // Dinding Merah: 2# yang sama (ambil 2 terakhir atau random jika kurang)
-            let merahHashtags = userSelectedHashtags.slice(5, 7);
-            
-            // Jika kurang dari 7 hashtag, tambahkan dari allHashtags
-            if (merahHashtags.length < 2) {
-                const remainingHashtags = allHashtags
-                    .filter(h => !userSelectedHashtags.includes(h.name))
-                    .slice(0, 2 - merahHashtags.length)
-                    .map(h => h.name);
-                
-                merahHashtags = [...merahHashtags, ...remainingHashtags];
+            if (count > 250) {
+                charCount.style.color = '#ff6b6b';
+            } else {
+                charCount.style.color = '#888';
             }
             
-            // Render setiap dinding
-            renderDinding(sefrekuensiList, sefrekuensiHashtags, 'sefrekuensi');
-            renderDinding(biruList, biruHashtags, 'biru');
-            renderDinding(merahList, merahHashtags, 'merah');
+            postBtn.disabled = count === 0;
         }
-
-        // Render dinding
-        function renderDinding(container, hashtagNames, type) {
-            container.innerHTML = '';
+        
+        // Post new rant
+        function postRant() {
+            const textarea = document.getElementById('new-rant-text');
+            const rantText = textarea.value.trim();
             
-            hashtagNames.forEach(hashtagName => {
-                const hashtagData = allHashtags.find(h => h.name === hashtagName) || 
-                                   { name: hashtagName, category: 'General', posts: Math.floor(Math.random() * 200) + 50 };
-                
-                const hashtagItem = document.createElement('div');
-                hashtagItem.className = 'hashtag-item';
-                hashtagItem.dataset.name = hashtagData.name;
-                hashtagItem.dataset.type = type;
-                
-                hashtagItem.innerHTML = `
-                    <div class="hashtag-name">${hashtagData.name}</div>
-                    <div class="hashtag-meta">
-                        <div class="hashtag-category">${hashtagData.category}</div>
-                        <div class="hashtag-count">${hashtagData.posts} posts</div>
+            if (rantText.length === 0) {
+                alert('Please write something before posting');
+                return;
+            }
+            
+            if (rantText.length > 280) {
+                alert('Rant must be 280 characters or less');
+                return;
+            }
+            
+            // Create new rant element
+            const rantFeed = document.getElementById('rant-feed');
+            const newRant = document.createElement('div');
+            newRant.className = 'rant-card';
+            newRant.innerHTML = `
+                <div class="rant-header">
+                    <div class="user-avatar">${getUserInitials()}</div>
+                    <div class="user-info">
+                        <div class="user-name">${getAnonymousUsername()}</div>
+                        <div class="rant-time">Just now</div>
                     </div>
-                `;
+                </div>
                 
-                // Event listener untuk memilih hashtag
-                hashtagItem.addEventListener('click', function() {
-                    selectHashtag(hashtagData.name, type);
-                });
+                <div class="rant-content">${rantText}</div>
                 
-                container.appendChild(hashtagItem);
-            });
-        }
-
-        // Pilih hashtag
-        function selectHashtag(name, type) {
-            selectedHashtag = { name, type };
-            
-            // Update UI
-            selectedHashtagName.textContent = name;
-            selectedHashtagInfo.style.display = 'block';
-            
-            // Enable textarea
-            kekesalanTextarea.disabled = false;
-            kekesalanTextarea.placeholder = `Tulis kekesalanmu tentang ${name}...`;
-            kekesalanTextarea.focus();
-            
-            // Update semua hashtag items untuk menunjukkan yang terpilih
-            document.querySelectorAll('.hashtag-item').forEach(item => {
-                item.style.borderLeft = '4px solid transparent';
-                if (item.dataset.name === name) {
-                    const color = type === 'sefrekuensi' ? '#06d6a0' : 
-                                 type === 'biru' ? '#4d8af0' : '#ff6b6b';
-                    item.style.borderLeft = `4px solid ${color}`;
-                }
-            });
-            
-            // Notifikasi
-            showNotification(`✓ ${name} dipilih`, 
-                type === 'sefrekuensi' ? '#06d6a0' : 
-                type === 'biru' ? '#4d8af0' : '#ff6b6b');
-        }
-
-        // Update character counter
-        kekesalanTextarea.addEventListener('input', function() {
-            const count = this.value.length;
-            charCount.textContent = count;
-            
-            charCounter.className = 'char-counter';
-            if (count > 200) charCounter.classList.add('warning');
-            if (count >= 270) charCounter.classList.add('danger');
-            
-            // Update button state
-            btnLampiaskan.disabled = count < 10 || !selectedHashtag;
-        });
-
-        // Posting kekesalan
-        btnLampiaskan.addEventListener('click', function() {
-            const kekesalan = kekesalanTextarea.value.trim();
-            
-            if (!selectedHashtag) {
-                alert('Pilih hashtag terlebih dahulu!');
-                return;
-            }
-            
-            if (kekesalan.length < 10) {
-                alert('Minimal 10 karakter!');
-                return;
-            }
-            
-            // Simulasi posting
-            btnLampiaskan.innerHTML = '<i class="fas fa-spinner fa-spin"></i> MENGIRIM...';
-            btnLampiaskan.disabled = true;
-            
-            setTimeout(() => {
-                alert(`🎉 Kekesalanmu telah diposting ke dinding ${selectedHashtag.type.toUpperCase()}!\n\nHashtag: ${selectedHashtag.name}\n\n"${kekesalan.substring(0, 80)}..."`);
+                <div class="rant-tags">
+                    ${userNOPEs.map(nope => `
+                        <div class="rant-tag">${nope.tag}</div>
+                    `).join('')}
+                </div>
                 
-                // Reset form
-                kekesalanTextarea.value = '';
-                charCount.textContent = '0';
-                charCounter.className = 'char-counter';
-                selectedHashtagInfo.style.display = 'none';
-                selectedHashtag = null;
-                
-                // Reset button
-                btnLampiaskan.innerHTML = '<i class="fas fa-fire"></i> POSTING KE DINDING';
-                btnLampiaskan.disabled = true;
-                
-                // Reset hashtag border
-                document.querySelectorAll('.hashtag-item').forEach(item => {
-                    item.style.borderLeft = '4px solid transparent';
-                });
-                
-            }, 1500);
-        });
-
-        // Logout
-        logoutBtn.addEventListener('click', function() {
-            if (confirm('Yakin ingin logout?')) {
-                localStorage.clear();
-                window.location.href = 'index.html';
-            }
-        });
-
-        // Helper function
-        function showNotification(message, color) {
-            const notification = document.createElement('div');
-            notification.style.cssText = `
-                position: fixed;
-                bottom: 20px;
-                right: 20px;
-                background: ${color};
-                color: white;
-                padding: 15px 25px;
-                border-radius: 10px;
-                box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-                z-index: 1000;
-                animation: slideInRight 0.3s ease;
-                font-weight: 600;
-                max-width: 300px;
+                <div class="rant-stats">
+                    <div class="stat-item">
+                        <i class="far fa-heart"></i>
+                        <span class="stat-count">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <i class="far fa-comment"></i>
+                        <span class="stat-count">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <i class="fas fa-retweet"></i>
+                        <span class="stat-count">0</span>
+                    </div>
+                </div>
             `;
             
-            notification.textContent = message;
-            document.body.appendChild(notification);
+            // Add to top of feed
+            rantFeed.insertBefore(newRant, rantFeed.firstChild);
             
-            setTimeout(() => {
-                notification.style.animation = 'slideOutRight 0.3s ease';
-                setTimeout(() => notification.remove(), 300);
-            }, 2000);
+            // Clear textarea
+            textarea.value = '';
+            updateRantCount();
+            
+            // Show success message
+            const successMsg = document.createElement('div');
+            successMsg.style.cssText = `
+                position: fixed;
+                bottom: 20px;
+                left: 50%;
+                transform: translateX(-50%);
+                background: #4ecdc4;
+                color: white;
+                padding: 12px 25px;
+                border-radius: 25px;
+                z-index: 1000;
+                animation: slideUp 0.3s, fadeOut 2s 1s forwards;
+            `;
+            successMsg.innerHTML = '<i class="fas fa-check"></i> Rant posted!';
+            document.body.appendChild(successMsg);
+            
+            setTimeout(() => successMsg.remove(), 3000);
         }
-
-        // Tambahkan style untuk animasi
+        
+        function getUserInitials() {
+            // Generate random initials
+            const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            return letters[Math.floor(Math.random() * 26)] + letters[Math.floor(Math.random() * 26)];
+        }
+        
+        function getAnonymousUsername() {
+            const prefixes = ['Ghost', 'Silent', 'Hidden', 'Anonymous', 'Echo', 'Shadow'];
+            const suffixes = ['Protocol', 'Pain', 'Voice', 'Fragment', 'Trace', 'Memory'];
+            const codes = ['7X9B', '42C3', '8F2A', '5D6E', '1G7H'];
+            
+            const prefix = prefixes[Math.floor(Math.random() * prefixes.length)];
+            const suffix = suffixes[Math.floor(Math.random() * suffixes.length)];
+            const code = codes[Math.floor(Math.random() * codes.length)];
+            
+            return `${prefix}${suffix}_${code}`;
+        }
+        
+        function loadMoreRants() {
+            // In real app, would load more from API
+            alert('Loading more rants...');
+        }
+        
+        // Add CSS animations
         const style = document.createElement('style');
         style.textContent = `
-            @keyframes slideInRight {
-                from { transform: translateX(100%); opacity: 0; }
-                to { transform: translateX(0); opacity: 1; }
+            @keyframes slideUp {
+                from { transform: translate(-50%, 100%); opacity: 0; }
+                to { transform: translate(-50%, 0); opacity: 1; }
             }
-            @keyframes slideOutRight {
-                from { transform: translateX(0); opacity: 1; }
-                to { transform: translateX(100%); opacity: 0; }
+            
+            @keyframes fadeOut {
+                from { opacity: 1; }
+                to { opacity: 0; }
             }
         `;
         document.head.appendChild(style);
