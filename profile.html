@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profil Pengguna - Kimi NOPE</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .profile-container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 30px;
+            background: linear-gradient(135deg, #1a2a3a 0%, #2c3e50 100%);
+            border-radius: 20px;
+            border: 3px solid gold;
+            color: white;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        
+        .user-header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid rgba(255,215,0,0.3);
+        }
+        
+        .username {
+            font-size: 2.5em;
+            color: gold;
+            margin-bottom: 10px;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .join-date {
+            color: #aaa;
+            font-style: italic;
+        }
+        
+        .monthly-artifact {
+            background: rgba(255,255,255,0.1);
+            padding: 25px;
+            border-radius: 15px;
+            margin: 25px 0;
+            border-left: 5px solid gold;
+        }
+        
+        .artifact-title {
+            color: gold;
+            font-size: 1.3em;
+            margin-bottom: 10px;
+        }
+        
+        .artifact-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            border: 2px solid rgba(255,215,0,0.5);
+            margin: 15px 0;
+        }
+        
+        .tagline {
+            font-style: italic;
+            color: #ddd;
+            padding: 10px;
+            background: rgba(0,0,0,0.2);
+            border-radius: 5px;
+        }
+        
+        .chat-section {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 2px solid rgba(255,215,0,0.3);
+        }
+        
+        .chat-messages {
+            height: 300px;
+            overflow-y: auto;
+            background: rgba(0,0,0,0.3);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .message {
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 10px;
+            max-width: 80%;
+        }
+        
+        .message.user {
+            background: rgba(255,215,0,0.2);
+            margin-left: auto;
+            text-align: right;
+        }
+        
+        .message.other {
+            background: rgba(255,255,255,0.1);
+        }
+        
+        .chat-input {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .chat-input input {
+            flex-grow: 1;
+            padding: 12px;
+            border-radius: 8px;
+            border: 2px solid gold;
+            background: rgba(255,255,255,0.1);
+            color: white;
+        }
+        
+        .chat-input button {
+            padding: 12px 25px;
+            background: gold;
+            color: #1a2a3a;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        
+        .chat-input button:hover {
+            transform: scale(1.05);
+        }
+        
+        .artifact-history {
+            margin-top: 40px;
+        }
+        
+        .artifact-item {
+            background: rgba(255,255,255,0.05);
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 10px;
+            border-left: 3px solid rgba(255,215,0,0.5);
+        }
+        
+        .artifact-date {
+            color: #aaa;
+            font-size: 0.9em;
+        }
+        
+        .locked {
+            color: #ff6b6b;
+            font-size: 0.9em;
+            margin-top: 5px;
+        }
+        
+        .upload-section {
+            background: rgba(0,0,0,0.2);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="profile-container">
+        <!-- Header Profil -->
+        <div class="user-header">
+            <h1 class="username">@Captain_Ahab</h1>
+            <p class="join-date">Bergabung sejak: 15 Januari 2023</p>
+        </div>
+        
+        <!-- Artefak Bulan Ini -->
+        <div class="monthly-artifact">
+            <h2 class="artifact-title">🗿 Artefak Emosi Bulan Ini</h2>
+            <p class="tagline">"Jejak emosi hidupku: Cangkir kopi retak di pagi hari yang sunyi"</p>
+            
+            <img src="https://images.unsplash.com/photo-1514228742587-6b1558fcf93a?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" 
+                 alt="Artefak Emosi" class="artifact-image">
+            
+            <div class="locked">🔒 Artefak ini tidak dapat dihapus - bagian dari sejarah emosimu</div>
+        </div>
+        
+        <!-- Riwayat Artefak -->
+        <div class="artifact-history">
+            <h3 style="color: gold;">📜 Riwayat Artefak Emosi</h3>
+            
+            <div class="artifact-item">
+                <strong>Bulan Lalu:</strong> Foto peta perjalanan yang sobek
+                <div class="tagline">"Peta hidup yang tak lagi jelas arah"</div>
+                <div class="artifact-date">28 Februari 2024</div>
+            </div>
+            
+            <div class="artifact-item">
+                <strong>2 Bulan Lalu:</strong> Gambar kunci karatan
+                <div class="tagline">"Kunci yang tak lagi membuka apa pun"</div>
+                <div class="artifact-date">15 Januari 2024</div>
+            </div>
+            
+            <div class="artifact-item">
+                <strong>3 Bulan Lalu:</strong> Foto jam tangan berhenti
+                <div class="tagline">"Detik yang memutuskan untuk diam"</div>
+                <div class="artifact-date">5 Desember 2023</div>
+            </div>
+        </div>
+        
+        <!-- Upload Artefak Baru (1x per bulan) -->
+        <div class="upload-section">
+            <h3 style="color: gold;">📤 Upload Artefak Baru</h3>
+            <p><em>Ingat: Hanya 1x per bulan. Bukan foto wajah atau bagian tubuh.</em></p>
+            <p><strong>Pilih benda yang paling mengesankan dalam hidupmu bulan ini:</strong></p>
+            
+            <div style="margin: 15px 0;">
+                <input type="file" accept="image/*" id="artifactUpload" style="color: white;">
+            </div>
+            
+            <
