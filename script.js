@@ -1,260 +1,219 @@
-// ============================================
-// NOPE - GLOBAL SCRIPT
-// ============================================
-
-// CONFIGURASI
+// NOPE - Telegram Mini App Login
 const CONFIG = {
     APP_NAME: 'NOPE',
-    VERSION: '1.0.0',
-    MAX_HASHTAG_SELECTION: 3,
-    MAX_CHARACTERS: 280,
     STORAGE_KEYS: {
         ANON_USERNAME: 'nope_anon_username',
-        TELEGRAM_USERNAME: 'nope_telegram_username',
-        LOGGED_IN: 'nope_logged_in',
-        ONBOARDING_COMPLETE: 'nope_onboarding_complete',
-        SELECTED_HASHTAGS: 'nope_selected_hashtags'
+        TELEGRAM_USERNAME: 'nope_tg_username',
+        LOGGED_IN: 'nope_logged_in'
     }
 };
 
-// DATA HASHTAG NOPE
-const HASHTAGS = [
-    { id: 1, name: '#MagangDigajiSertifikat', category: 'Personal Pain', posts: 245 },
-    { id: 2, name: '#DiajakJalanTapiKempes', category: 'Personal Pain', posts: 178 },
-    { id: 3, name: '#DiphostingGebetan', category: 'Personal Pain', posts: 312 },
-    { id: 4, name: '#DramaQueenAnjay', category: 'Social Sickness', posts: 189 },
-    { id: 5, name: '#BacotLambeTurah', category: 'Social Sickness', posts: 321 },
-    { id: 6, name: '#RencanaPlinPlan', category: 'Social Sickness', posts: 267 },
-    { id: 7, name: '#BellTiketJualSinjal', category: 'Pop Culture', posts: 89 },
-    { id: 8, name: '#InfluencerNgchek', category: 'Pop Culture', posts: 203 },
-    { id: 9, name: '#FilmEndingGaje', category: 'Pop Culture', posts: 142 }
-];
-
-// ============================================
-// TELEGRAM MINI APP INTEGRATION
-// ============================================
-
 // Clear any service worker issues
 if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.getRegistrations().then(function(registrations) {
-        for(let registration of registrations) {
-            registration.unregister();
-        }
+    navigator.serviceWorker.getRegistrations().then(registrations => {
+        registrations.forEach(reg => reg.unregister());
     });
 }
 
-// Clear caches
-if ('caches' in window) {
-    caches.keys().then(function(cacheNames) {
-        cacheNames.forEach(function(cacheName) {
-            caches.delete(cacheName);
-        });
-    });
+// Simulate Telegram WebApp data
+function getTelegramUserData() {
+    // In real app: return window.Telegram.WebApp.initDataUnsafe.user
+    return {
+        username: 'telegram_user_' + Math.floor(Math.random() * 10000),
+        first_name: 'Telegram',
+        last_name: 'User'
+    };
 }
 
-// ============================================
-// UTILITY FUNCTIONS
-// ============================================
-
-/**
- * Check if user is logged in
- */
-function isLoggedIn() {
-    return localStorage.getItem(CONFIG.STORAGE_KEYS.LOGGED_IN) === 'true';
-}
-
-/**
- * Get current anon username
- */
-function getAnonUsername() {
-    return localStorage.getItem(CONFIG.STORAGE_KEYS.ANON_USERNAME) || 'AnonUser';
-}
-
-/**
- * Get Telegram username
- */
-function getTelegramUsername() {
-    return localStorage.getItem(CONFIG.STORAGE_KEYS.TELEGRAM_USERNAME) || '@user';
-}
-
-/**
- * Check if username is unique (simulated)
- */
+// Check username uniqueness
 function isUsernameUnique(username) {
-    // In real app, this would check with backend
-    const existingUsers = JSON.parse(localStorage.getItem('nope_all_users') || '[]');
-    return !existingUsers.includes(username.toLowerCase());
+    const existing = JSON.parse(localStorage.getItem('nope_usernames') || '[]');
+    return !existing.includes(username.toLowerCase());
 }
 
-/**
- * Register new anon username
- */
-function registerAnonUsername(username) {
-    if (!isUsernameUnique(username)) {
-        return { success: false, message: 'Username sudah dipakai' };
-    }
-    
-    // Save to "database"
-    const existingUsers = JSON.parse(localStorage.getItem('nope_all_users') || '[]');
-    existingUsers.push(username.toLowerCase());
-    localStorage.setItem('nope_all_users', JSON.stringify(existingUsers));
-    
-    return { success: true };
+// Register new username
+function registerUsername(username) {
+    const existing = JSON.parse(localStorage.getItem('nope_usernames') || '[]');
+    existing.push(username.toLowerCase());
+    localStorage.setItem('nope_usernames', JSON.stringify(existing));
+    return true;
 }
 
-// ============================================
-// LOGIN PAGE INITIALIZATION
-// ============================================
+// Show notification
+function showNotification(message, type = 'info') {
+    const notification = document.createElement('div');
+    notification.className = 'nope-notification';
+    notification.innerHTML = `
+        <div style="display: flex; align-items: center; gap: 10px;">
+            <i class="fas fa-${type === 'error' ? 'exclamation-circle' : 'check-circle'}"></i>
+            <span>${message}</span>
+        </div>
+    `;
+    
+    notification.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: ${type === 'error' ? '#ff3b30' : '#34c759'};
+        color: white;
+        padding: 16px 24px;
+        border-radius: 14px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        z-index: 9999;
+        animation: slideIn 0.3s ease;
+        font-weight: 600;
+        max-width: 300px;
+        backdrop-filter: blur(20px);
+    `;
+    
+    document.body.appendChild(notification);
+    
+    setTimeout(() => {
+        notification.style.animation = 'slideOut 0.3s ease';
+        setTimeout(() => notification.remove(), 300);
+    }, 3000);
+}
 
+// Initialize login page
 function initLoginPage() {
-    const loginForm = document.getElementById('loginForm');
-    if (!loginForm) return;
+    const form = document.getElementById('loginForm');
+    const anonInput = document.getElementById('anonUsername');
+    const submitBtn = document.getElementById('submitBtn');
     
-    // Auto-fill Telegram username from URL or mock
-    const urlParams = new URLSearchParams(window.location.search);
-    const tgUser = urlParams.get('tg_user') || urlParams.get('username') || 'telegram_user';
+    if (!form || !anonInput || !submitBtn) return;
     
+    // Get Telegram user data
+    const tgUser = getTelegramUserData();
+    const tgUsername = tgUser.username || 'telegram_user';
+    
+    // Set Telegram username (readonly)
     const tgInput = document.getElementById('telegramUsername');
     if (tgInput) {
-        tgInput.value = tgUser;
-        tgInput.readOnly = true;
-        tgInput.style.opacity = '0.7';
+        tgInput.value = `@${tgUsername}`;
     }
     
-    // Focus on anon username input
-    const anonInput = document.getElementById('anonUsername');
-    if (anonInput) {
-        anonInput.focus();
+    // Username validation
+    anonInput.addEventListener('input', function() {
+        const username = this.value.trim();
+        const feedback = document.getElementById('usernameFeedback') || 
+                        document.createElement('div');
         
-        // Real-time validation
-        anonInput.addEventListener('input', function() {
-            const username = this.value.trim();
-            const feedback = document.getElementById('usernameFeedback') || 
-                            document.createElement('div');
-            
-            if (!feedback.id) {
-                feedback.id = 'usernameFeedback';
-                feedback.style.marginTop = '5px';
-                feedback.style.fontSize = '0.8rem';
-                this.parentNode.appendChild(feedback);
-            }
-            
-            if (username.length < 3) {
-                feedback.textContent = 'Minimal 3 karakter';
-                feedback.style.color = '#ff6b6b';
-            } else if (username.length > 20) {
-                feedback.textContent = 'Maksimal 20 karakter';
-                feedback.style.color = '#ff6b6b';
-            } else if (!/^[a-zA-Z0-9_]+$/.test(username)) {
-                feedback.textContent = 'Hanya huruf, angka, underscore';
-                feedback.style.color = '#ff6b6b';
-            } else if (!isUsernameUnique(username)) {
-                feedback.textContent = 'Username sudah terpakai';
-                feedback.style.color = '#ff6b6b';
-            } else {
-                feedback.textContent = '✓ Username tersedia';
-                feedback.style.color = '#06d6a0';
-            }
-        });
-    }
-    
-    // Form submission
-    loginForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-        
-        const telegramUsername = tgInput ? tgInput.value.trim() : '';
-        const anonUsername = anonInput ? anonUsernameInput.value.trim() : '';
-        
-        // Validations
-        if (!anonUsername || anonUsername.length < 3) {
-            showNotification('Username anonim minimal 3 karakter', 'error');
-            return;
+        if (!feedback.id) {
+            feedback.id = 'usernameFeedback';
+            feedback.style.marginTop = '8px';
+            feedback.style.fontSize = '0.85rem';
+            feedback.style.fontWeight = '500';
+            feedback.style.padding = '8px 12px';
+            feedback.style.borderRadius = '10px';
+            this.parentNode.appendChild(feedback);
         }
         
-        if (anonUsername.length > 20) {
-            showNotification('Username anonim maksimal 20 karakter', 'error');
+        // Validation rules
+        if (username.length < 3) {
+            feedback.textContent = 'Minimum 3 characters';
+            feedback.style.background = 'rgba(255, 59, 48, 0.1)';
+            feedback.style.color = '#ff3b30';
+            feedback.style.border = '1px solid rgba(255, 59, 48, 0.2)';
+            submitBtn.disabled = true;
+        } else if (username.length > 20) {
+            feedback.textContent = 'Maximum 20 characters';
+            feedback.style.background = 'rgba(255, 59, 48, 0.1)';
+            feedback.style.color = '#ff3b30';
+            feedback.style.border = '1px solid rgba(255, 59, 48, 0.2)';
+            submitBtn.disabled = true;
+        } else if (!/^[a-zA-Z0-9_]+$/.test(username)) {
+            feedback.textContent = 'Only letters, numbers, underscore';
+            feedback.style.background = 'rgba(255, 59, 48, 0.1)';
+            feedback.style.color = '#ff3b30';
+            feedback.style.border = '1px solid rgba(255, 59, 48, 0.2)';
+            submitBtn.disabled = true;
+        } else if (!isUsernameUnique(username)) {
+            feedback.textContent = 'Username already taken';
+            feedback.style.background = 'rgba(255, 59, 48, 0.1)';
+            feedback.style.color = '#ff3b30';
+            feedback.style.border = '1px solid rgba(255, 59, 48, 0.2)';
+            submitBtn.disabled = true;
+        } else {
+            feedback.textContent = '✓ Available';
+            feedback.style.background = 'rgba(52, 199, 89, 0.1)';
+            feedback.style.color = '#34c759';
+            feedback.style.border = '1px solid rgba(52, 199, 89, 0.2)';
+            submitBtn.disabled = false;
+        }
+    });
+    
+    // Form submission
+    form.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        const anonUsername = anonInput.value.trim();
+        
+        // Final validation
+        if (anonUsername.length < 3 || anonUsername.length > 20) {
+            showNotification('Username must be 3-20 characters', 'error');
             return;
         }
         
         if (!/^[a-zA-Z0-9_]+$/.test(anonUsername)) {
-            showNotification('Username hanya boleh huruf, angka, underscore', 'error');
+            showNotification('Invalid characters in username', 'error');
             return;
         }
         
-        // Check uniqueness
-        const uniqueCheck = registerAnonUsername(anonUsername);
-        if (!uniqueCheck.success) {
-            showNotification(uniqueCheck.message, 'error');
+        if (!isUsernameUnique(anonUsername)) {
+            showNotification('Username is already taken', 'error');
             return;
         }
         
-        // Save user data
-        localStorage.setItem(CONFIG.STORAGE_KEYS.TELEGRAM_USERNAME, telegramUsername);
-        localStorage.setItem(CONFIG.STORAGE_KEYS.ANON_USERNAME, anonUsername);
-        localStorage.setItem(CONFIG.STORAGE_KEYS.LOGGED_IN, 'true');
+        // Show loading state
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> CREATING IDENTITY...';
+        submitBtn.disabled = true;
         
-        showNotification(`Selamat datang, ${anonUsername}!`, 'info');
-        
-        // Redirect to onboarding
+        // Simulate API call
         setTimeout(() => {
-            window.location.href = 'rage.html';
-        }, 1500);
+            // Register username
+            registerUsername(anonUsername);
+            
+            // Save to localStorage
+            localStorage.setItem(CONFIG.STORAGE_KEYS.TELEGRAM_USERNAME, tgUsername);
+            localStorage.setItem(CONFIG.STORAGE_KEYS.ANON_USERNAME, anonUsername);
+            localStorage.setItem(CONFIG.STORAGE_KEYS.LOGGED_IN, 'true');
+            
+            showNotification(`Welcome, ${anonUsername}!`, 'success');
+            
+            // Redirect to onboarding
+            setTimeout(() => {
+                window.location.href = 'rage.html';
+            }, 1500);
+        }, 1000);
     });
+    
+    // Focus on input
+    anonInput.focus();
 }
 
-// ============================================
-// AUTO-INITIALIZATION
-// ============================================
-
+// Initialize when page loads
 document.addEventListener('DOMContentLoaded', function() {
-    console.log(`${CONFIG.APP_NAME} v${CONFIG.VERSION} initialized`);
+    console.log('NOPE — Anonymous Rage Platform');
     
-    // Add global styles
+    // Add animations
     const style = document.createElement('style');
     style.textContent = `
-        @keyframes slideInRight {
+        @keyframes slideIn {
             from { transform: translateX(100%); opacity: 0; }
             to { transform: translateX(0); opacity: 1; }
         }
-        @keyframes slideOutRight {
+        @keyframes slideOut {
             from { transform: translateX(0); opacity: 1; }
             to { transform: translateX(100%); opacity: 0; }
         }
         
-        .blitz-notification {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: #06d6a0;
-            color: white;
-            padding: 15px 25px;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-            z-index: 9999;
-            animation: slideInRight 0.3s ease;
-            font-weight: 600;
-            max-width: 300px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
+        /* Smooth focus animation */
+        input:focus {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
     `;
     document.head.appendChild(style);
     
-    // Initialize based on current page
-    const currentPage = window.location.pathname.split('/').pop();
-    
-    switch(currentPage) {
-        case 'login.html':
-        case 'index.html':
-        case '':
-            initLoginPage();
-            break;
-        case 'rage.html':
-            // Will be initialized later
-            break;
-    }
+    // Initialize login page
+    initLoginPage();
 });
-
-// Keep existing functions for other pages (hashtag, wall, etc.)
-// ... (functions from previous script remain the same, just update CONFIG references)
