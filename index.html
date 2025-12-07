@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hashtag Blitz Dashboard - Data Asli</title>
+    <title>Hashtag Blitz - Window Kekesalan</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         /* RESET & GLOBAL */
@@ -85,79 +85,12 @@
             transform: translateY(-5px);
         }
 
-        /* COLUMN HEADERS */
-        .column-header {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding-bottom: 15px;
-            margin-bottom: 20px;
-            border-bottom: 2px solid;
-        }
-
-        .personal-pain .column-header {
-            border-color: #ff6b6b;
-        }
-
-        .social-sickness .column-header {
-            border-color: #ffd166;
-        }
-
-        .pop-culture .column-header {
-            border-color: #06d6a0;
-        }
-
-        .locked .column-header {
-            border-color: #9d4edd;
-        }
-
-        .column-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-        }
-
-        .personal-pain .column-icon {
-            background: rgba(255, 107, 107, 0.2);
-            color: #ff6b6b;
-        }
-
-        .social-sickness .column-icon {
-            background: rgba(255, 209, 102, 0.2);
-            color: #ffd166;
-        }
-
-        .pop-culture .column-icon {
-            background: rgba(6, 214, 160, 0.2);
-            color: #06d6a0;
-        }
-
-        .locked .column-icon {
-            background: rgba(157, 78, 221, 0.2);
-            color: #9d4edd;
-        }
-
-        .column-title {
-            font-size: 1.4rem;
-            font-weight: 700;
-        }
-
-        /* HASHTAG LIST */
-        .hashtag-list {
-            display: flex;
-            flex-direction: column;
-            gap: 18px;
-        }
-
         /* HASHTAG ITEMS */
         .hashtag-item {
             background: rgba(255, 255, 255, 0.07);
             border-radius: 12px;
             padding: 18px;
+            margin-bottom: 15px;
             transition: all 0.3s;
             cursor: pointer;
         }
@@ -180,56 +113,105 @@
             font-size: 0.9rem;
         }
 
-        .hashtag-category {
-            color: #aaa;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .hashtag-count {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 4px 12px;
-            border-radius: 15px;
-            font-weight: 600;
-            color: #fff;
-        }
-
-        /* LOCKED COLUMN */
-        .locked-content {
+        /* WINDOW KEKESALAN */
+        .window-kekesalan {
+            background: linear-gradient(135deg, rgba(255, 107, 107, 0.1), rgba(255, 209, 102, 0.1));
+            border-radius: 20px;
+            padding: 40px;
+            margin-top: 60px;
+            margin-bottom: 40px;
             text-align: center;
-            padding: 30px 20px;
-            color: #9d4edd;
+            border: 2px solid rgba(255, 107, 107, 0.3);
+            box-shadow: 0 10px 30px rgba(255, 107, 107, 0.2);
         }
 
-        .lock-icon {
-            font-size: 3rem;
+        .window-title {
+            font-size: 2.2rem;
+            color: #ff6b6b;
             margin-bottom: 20px;
+            font-weight: 800;
         }
 
-        .locked-title {
-            font-size: 1.6rem;
-            margin-bottom: 15px;
-            font-weight: 700;
-        }
-
-        .locked-desc {
-            color: #b0b0d0;
+        .window-subtitle {
+            font-size: 1.3rem;
+            color: #ffd166;
+            margin-bottom: 30px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
             line-height: 1.6;
-            margin-bottom: 20px;
         }
 
-        .movement-list {
-            background: rgba(157, 78, 221, 0.1);
-            padding: 15px;
-            border-radius: 10px;
+        /* TEXTAREA KEKESALAN */
+        .textarea-kekesalan {
+            width: 100%;
+            max-width: 800px;
+            height: 150px;
+            background: rgba(0, 0, 0, 0.4);
+            border: 2px solid rgba(255, 107, 107, 0.5);
+            border-radius: 15px;
+            color: white;
+            font-size: 1.1rem;
+            padding: 20px;
+            margin-bottom: 25px;
+            resize: vertical;
+            font-family: inherit;
+            transition: all 0.3s;
+        }
+
+        .textarea-kekesalan:focus {
+            outline: none;
+            border-color: #ff6b6b;
+            box-shadow: 0 0 20px rgba(255, 107, 107, 0.4);
+            background: rgba(0, 0, 0, 0.6);
+        }
+
+        .char-counter {
+            text-align: right;
+            color: #aaa;
+            font-size: 0.9rem;
+            margin-bottom: 25px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .char-counter.warning {
+            color: #ffd166;
+        }
+
+        .char-counter.danger {
+            color: #ff6b6b;
+        }
+
+        /* BUTTON */
+        .btn-lampiaskan {
+            background: linear-gradient(90deg, #ff6b6b, #ff8e53);
+            color: white;
+            border: none;
+            padding: 18px 50px;
+            font-size: 1.3rem;
+            font-weight: 700;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 5px 20px rgba(255, 107, 107, 0.4);
+            letter-spacing: 1px;
             margin-top: 20px;
         }
 
-        .movement-item {
-            padding: 8px 0;
-            color: #d0b0ff;
-            text-align: center;
+        .btn-lampiaskan:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(255, 107, 107, 0.6);
+            background: linear-gradient(90deg, #ff5252, #ff7a3d);
+        }
+
+        .btn-lampiaskan:active {
+            transform: translateY(-2px);
+        }
+
+        .btn-lampiaskan i {
+            margin-right: 10px;
         }
 
         /* FOOTER */
@@ -239,6 +221,14 @@
             color: #888;
             font-size: 0.9rem;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 40px;
+        }
+
+        .cta-note {
+            color: #ffd166;
+            font-style: italic;
+            margin-top: 10px;
+            font-size: 0.95rem;
         }
     </style>
 </head>
@@ -247,215 +237,239 @@
         <!-- HEADER -->
         <header class="header">
             <h1 class="title">Hashtag Blitz Dashboard</h1>
-            <p class="subtitle">Dashboard trending hashtag berdasarkan data asli Anda. Hashtag diacak dalam setiap kategori.</p>
+            <p class="subtitle">Pantau trending hashtag masalah sosial terkini. Pilih hashtag untuk bergabung dalam percakapan.</p>
         </header>
 
         <!-- DASHBOARD -->
         <div class="dashboard">
             <!-- KOLOM 1: PERSONAL PAIN -->
-            <div class="column personal-pain">
-                <div class="column-header">
-                    <div class="column-icon">😔</div>
-                    <h2 class="column-title">Personal Pain</h2>
+            <div class="column">
+                <div class="hashtag-item">
+                    <div class="hashtag-name">#MagangDigajiSertifikat</div>
+                    <div class="hashtag-meta">
+                        <span>PERSONAL PAIN</span>
+                        <span>245 posts</span>
+                    </div>
                 </div>
-                <div class="hashtag-list" id="personal-pain-list">
-                    <!-- Hashtag akan diacak oleh JavaScript -->
-                    <div class="hashtag-item">
-                        <div class="hashtag-name">#MagangDigajiSertifikat</div>
-                        <div class="hashtag-meta">
-                            <div class="hashtag-category">Personal Pain</div>
-                            <div class="hashtag-count">245 posts</div>
-                        </div>
+                <div class="hashtag-item">
+                    <div class="hashtag-name">#DiajakJalanTapiKempes</div>
+                    <div class="hashtag-meta">
+                        <span>PERSONAL PAIN</span>
+                        <span>178 posts</span>
                     </div>
-                    <div class="hashtag-item">
-                        <div class="hashtag-name">#DiajakJalanTapiKempes</div>
-                        <div class="hashtag-meta">
-                            <div class="hashtag-category">Personal Pain</div>
-                            <div class="hashtag-count">178 posts</div>
-                        </div>
-                    </div>
-                    <div class="hashtag-item">
-                        <div class="hashtag-name">#DiphostingGebetan</div>
-                        <div class="hashtag-meta">
-                            <div class="hashtag-category">Personal Pain</div>
-                            <div class="hashtag-count">312 posts</div>
-                        </div>
+                </div>
+                <div class="hashtag-item">
+                    <div class="hashtag-name">#DiphostingGebetan</div>
+                    <div class="hashtag-meta">
+                        <span>PERSONAL PAIN</span>
+                        <span>312 posts</span>
                     </div>
                 </div>
             </div>
 
             <!-- KOLOM 2: SOCIAL SICKNESS -->
-            <div class="column social-sickness">
-                <div class="column-header">
-                    <div class="column-icon">😷</div>
-                    <h2 class="column-title">Social Sickness</h2>
+            <div class="column">
+                <div class="hashtag-item">
+                    <div class="hashtag-name">#DramaQueenAnjay</div>
+                    <div class="hashtag-meta">
+                        <span>SOCIAL SICKNESS</span>
+                        <span>189 posts</span>
+                    </div>
                 </div>
-                <div class="hashtag-list" id="social-sickness-list">
-                    <div class="hashtag-item">
-                        <div class="hashtag-name">#DramaQueenAnjay</div>
-                        <div class="hashtag-meta">
-                            <div class="hashtag-category">Social Sickness</div>
-                            <div class="hashtag-count">189 posts</div>
-                        </div>
+                <div class="hashtag-item">
+                    <div class="hashtag-name">#BacotLambeTurah</div>
+                    <div class="hashtag-meta">
+                        <span>SOCIAL SICKNESS</span>
+                        <span>321 posts</span>
                     </div>
-                    <div class="hashtag-item">
-                        <div class="hashtag-name">#BacotLambeTurah</div>
-                        <div class="hashtag-meta">
-                            <div class="hashtag-category">Social Sickness</div>
-                            <div class="hashtag-count">321 posts</div>
-                        </div>
-                    </div>
-                    <div class="hashtag-item">
-                        <div class="hashtag-name">#RencanaPlinPlan</div>
-                        <div class="hashtag-meta">
-                            <div class="hashtag-category">Social Sickness</div>
-                            <div class="hashtag-count">267 posts</div>
-                        </div>
+                </div>
+                <div class="hashtag-item">
+                    <div class="hashtag-name">#RencanaPlinPlan</div>
+                    <div class="hashtag-meta">
+                        <span>SOCIAL SICKNESS</span>
+                        <span>267 posts</span>
                     </div>
                 </div>
             </div>
 
             <!-- KOLOM 3: POP CULTURE -->
-            <div class="column pop-culture">
-                <div class="column-header">
-                    <div class="column-icon">🎬</div>
-                    <h2 class="column-title">Pop Culture</h2>
+            <div class="column">
+                <div class="hashtag-item">
+                    <div class="hashtag-name">#BellTiketJualSinjal</div>
+                    <div class="hashtag-meta">
+                        <span>POP CULTURE</span>
+                        <span>89 posts</span>
+                    </div>
                 </div>
-                <div class="hashtag-list" id="pop-culture-list">
-                    <div class="hashtag-item">
-                        <div class="hashtag-name">#BellTiketJualSinjal</div>
-                        <div class="hashtag-meta">
-                            <div class="hashtag-category">Pop Culture</div>
-                            <div class="hashtag-count">89 posts</div>
-                        </div>
+                <div class="hashtag-item">
+                    <div class="hashtag-name">#InfluencerNgchek</div>
+                    <div class="hashtag-meta">
+                        <span>POP CULTURE</span>
+                        <span>203 posts</span>
                     </div>
-                    <div class="hashtag-item">
-                        <div class="hashtag-name">#InfluencerNgchek</div>
-                        <div class="hashtag-meta">
-                            <div class="hashtag-category">Pop Culture</div>
-                            <div class="hashtag-count">203 posts</div>
-                        </div>
-                    </div>
-                    <div class="hashtag-item">
-                        <div class="hashtag-name">#FilmEndingGaje</div>
-                        <div class="hashtag-meta">
-                            <div class="hashtag-category">Pop Culture</div>
-                            <div class="hashtag-count">142 posts</div>
-                        </div>
+                </div>
+                <div class="hashtag-item">
+                    <div class="hashtag-name">#FilmEndingGaje</div>
+                    <div class="hashtag-meta">
+                        <span>POP CULTURE</span>
+                        <span>142 posts</span>
                     </div>
                 </div>
             </div>
 
             <!-- KOLOM 4: LOCKED -->
-            <div class="column locked">
-                <div class="column-header">
-                    <div class="column-icon">🔒</div>
-                    <h2 class="column-title">Exclusive</h2>
-                </div>
-                <div class="locked-content">
-                    <div class="lock-icon">🔐</div>
-                    <h3 class="locked-title">TERKUNCI</h3>
-                    <p class="locked-desc">
-                        Akses hanya setelah 6 bulan atau melalui undangan.
+            <div class="column">
+                <div style="text-align: center; padding: 40px 20px; color: #9d4edd;">
+                    <div style="font-size: 3rem; margin-bottom: 20px;">🔒</div>
+                    <h3 style="font-size: 1.6rem; margin-bottom: 15px;">TERKUNCI</h3>
+                    <p style="color: #aaa; line-height: 1.6;">
+                        Akses hanya setelah 6 bulan atau undangan eksklusif.
                     </p>
-                    
-                    <div class="movement-list">
-                        <div class="movement-item">#SayNOPEBukanPilihan</div>
-                        <div class="movement-item">#NOPEltuHakKita</div>
-                        <div class="movement-item">#NOPEBersamaKitaKuat</div>
+                    <div style="margin-top: 25px; background: rgba(157, 78, 221, 0.1); padding: 15px; border-radius: 10px;">
+                        <div style="padding: 8px 0; color: #d0b0ff;">#SayNOPEBukanPilihan</div>
+                        <div style="padding: 8px 0; color: #d0b0ff;">#NOPEltuHakKita</div>
+                        <div style="padding: 8px 0; color: #d0b0ff;">#NOPEBersamaKitaKuat</div>
                     </div>
                 </div>
             </div>
         </div>
 
+        <!-- ==================== -->
+        <!-- WINDOW KEKESALAN -->
+        <!-- ==================== -->
+        <div class="window-kekesalan">
+            <h2 class="window-title">💥 WINDOW KEKESALAN 💥</h2>
+            
+            <p class="window-subtitle">
+                "Sudah muak dengan semua masalah di atas? Lampiaskan kekesalanmu di sini! 
+                Tuliskan apa yang bikin kamu kesal, jengkel, atau sebel dalam <strong>280 karakter</strong>."
+            </p>
+            
+            <textarea 
+                class="textarea-kekesalan" 
+                placeholder="Tulis kekesalanmu di sini... Misalnya: 'Aku kesel banget sama...' atau 'Gue sebel aja sama...'"
+                maxlength="280"
+                id="kekesalan-textarea"
+            ></textarea>
+            
+            <div class="char-counter" id="char-counter">
+                <span id="char-count">0</span> / 280 karakter
+            </div>
+            
+            <button class="btn-lampiaskan" id="btn-lampiaskan">
+                <i class="fas fa-fire"></i> LAMPIASKAN KEKESALANMU!
+            </button>
+            
+            <div style="margin-top: 30px; color: #aaa; font-size: 0.9rem;">
+                <i class="fas fa-shield-alt"></i> Kekesalanmu akan diproses secara anonim
+            </div>
+        </div>
+
         <!-- FOOTER -->
         <footer class="footer">
-            <p>Dashboard Hashtag Blitz • Data asli dari file Anda • Hashtag diacak secara otomatis</p>
-            <p style="margin-top: 10px; color: #aaa; font-size: 0.8rem;">
-                <i class="fas fa-info-circle"></i> Klik hashtag untuk detail • Refresh untuk acak ulang
-            </p>
+            <p>Hashtag Blitz Dashboard • Platform untuk melampiaskan kekesalan sosial</p>
+            <p class="cta-note">"Jangan pendam sendiri, bagikan kekesalanmu dengan bijak!"</p>
         </footer>
     </div>
 
     <!-- JAVASCRIPT -->
     <script>
-        // FUNGSI UNTUK MENGACAK ARRAY
-        function shuffleArray(array) {
-            for (let i = array.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [array[i], array[j]] = [array[j], array[i]];
-            }
-            return array;
-        }
+        // ELEMEN DOM
+        const textarea = document.getElementById('kekesalan-textarea');
+        const charCounter = document.getElementById('char-counter');
+        const charCount = document.getElementById('char-count');
+        const btnLampiaskan = document.getElementById('btn-lampiaskan');
 
-        // FUNGSI UNTUK MENGACAK HASHTAG DALAM KOLOM
-        function shuffleHashtags() {
-            // Kolom Personal Pain
-            const painList = document.getElementById('personal-pain-list');
-            if (painList) {
-                const painItems = Array.from(painList.children);
-                painList.innerHTML = '';
-                shuffleArray(painItems).forEach(item => painList.appendChild(item));
+        // UPDATE CHARACTER COUNTER
+        textarea.addEventListener('input', function() {
+            const count = this.value.length;
+            charCount.textContent = count;
+            
+            // Update warna counter
+            charCounter.className = 'char-counter';
+            if (count > 200) {
+                charCounter.classList.add('warning');
+            }
+            if (count >= 270) {
+                charCounter.classList.add('danger');
             }
             
-            // Kolom Social Sickness
-            const sicknessList = document.getElementById('social-sickness-list');
-            if (sicknessList) {
-                const sicknessItems = Array.from(sicknessList.children);
-                sicknessList.innerHTML = '';
-                shuffleArray(sicknessItems).forEach(item => sicknessList.appendChild(item));
-            }
-            
-            // Kolom Pop Culture
-            const popList = document.getElementById('pop-culture-list');
-            if (popList) {
-                const popItems = Array.from(popList.children);
-                popList.innerHTML = '';
-                shuffleArray(popItems).forEach(item => popList.appendChild(item));
-            }
-            
-            console.log("Hashtag telah diacak!");
-        }
-
-        // FUNGSI UNTUK KLIK HASHTAG
-        function setupHashtagClicks() {
-            const hashtagItems = document.querySelectorAll('.hashtag-item');
-            
-            hashtagItems.forEach(item => {
-                item.addEventListener('click', function() {
-                    const hashtagName = this.querySelector('.hashtag-name').textContent;
-                    const hashtagCount = this.querySelector('.hashtag-count').textContent;
-                    
-                    // Efek visual sederhana
-                    this.style.backgroundColor = 'rgba(255, 255, 255, 0.2)';
-                    setTimeout(() => {
-                        this.style.backgroundColor = '';
-                    }, 300);
-                    
-                    // Tampilkan info
-                    alert(`Hashtag: ${hashtagName}\n${hashtagCount}`);
-                });
-            });
-        }
-
-        // INISIALISASI SAAT HALAMAN DIMUAT
-        document.addEventListener('DOMContentLoaded', function() {
-            // Acak hashtag saat pertama kali load
-            shuffleHashtags();
-            
-            // Setup event listener untuk klik
-            setupHashtagClicks();
-            
-            // Tampilkan pesan di console
-            console.log("Dashboard Hashtag Blitz siap!");
-            console.log("Data asli dari file blitz.jpg");
+            // Enable/disable button
+            btnLampiaskan.disabled = count < 10;
+            btnLampiaskan.style.opacity = count < 10 ? '0.6' : '1';
         });
 
-        // OPSIONAL: Tombol untuk acak ulang manual
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'r' || e.key === 'R') {
-                shuffleHashtags();
+        // FUNGSI LAMPIASKAN KEKESALAN
+        btnLampiaskan.addEventListener('click', function() {
+            const kekesalan = textarea.value.trim();
+            
+            if (kekesalan.length < 10) {
+                alert('Minimal 10 karakter untuk melampiaskan kekesalan!');
+                return;
             }
+            
+            if (kekesalan.length > 280) {
+                alert('Maksimal 280 karakter!');
+                return;
+            }
+            
+            // Simulasi pengiriman
+            btnLampiaskan.innerHTML = '<i class="fas fa-spinner fa-spin"></i> MENGIRIM...';
+            btnLampiaskan.disabled = true;
+            
+            setTimeout(() => {
+                // Reset form
+                textarea.value = '';
+                charCount.textContent = '0';
+                charCounter.className = 'char-counter';
+                
+                // Tampilkan konfirmasi
+                alert('🎉 Kekesalanmu berhasil dilampiaskan!\n\n"'+kekesalan.substring(0, 100)+'..."\n\nPesanmu telah dikirim ke ruang kekecewaan bersama.');
+                
+                // Reset button
+                btnLampiaskan.innerHTML = '<i class="fas fa-fire"></i> LAMPIASKAN KEKESALANMU!';
+                btnLampiaskan.disabled = false;
+                
+                // Animasi konfirmasi
+                const windowElement = document.querySelector('.window-kekesalan');
+                windowElement.style.transform = 'scale(1.02)';
+                windowElement.style.boxShadow = '0 15px 40px rgba(255, 107, 107, 0.4)';
+                
+                setTimeout(() => {
+                    windowElement.style.transform = '';
+                    windowElement.style.boxShadow = '';
+                }, 500);
+                
+            }, 1500);
+        });
+
+        // FUNGSI RANDOM QUOTE KEKESALAN
+        const randomQuotes = [
+            "Aku kesel banget sama orang yang janji tapi nggak ditepati!",
+            "Gue sebel aja sama sistem yang nggak adil buat anak muda!",
+            "Muak banget sama orang yang bacot mulu tapi nggak ada action!",
+            "Kesel mode on: kerja keras tapi hasilnya nggak dihargai!",
+            "Jengkel banget sama kebiasaan nunda-nunda pekerjaan!",
+            "Sebel sama orang yang sok sibuk padahal cuma scroll medsos!",
+            "Kesel dah sama harga mahal tapi kualitas ampas!",
+            "Gue muak sama drama-drama yang nggak penting!",
+            "Kesel banget pas diajak jalan tapi akhirnya kempes!",
+            "Jengkel sama influencer yang kontennya cuma flexing doang!"
+        ];
+
+        // Tambahkan random quote sebagai placeholder saat focus
+        textarea.addEventListener('focus', function() {
+            if (!this.value) {
+                const randomQuote = randomQuotes[Math.floor(Math.random() * randomQuotes.length)];
+                this.placeholder = randomQuote;
+            }
+        });
+
+        // Inisialisasi
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log("Window Kekesalan siap digunakan!");
+            btnLampiaskan.disabled = true;
+            btnLampiaskan.style.opacity = '0.6';
         });
     </script>
 </body>
