@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hashtag Blitz - Window Kekesalan</title>
+    <title>Hashtag Blitz - Pilih & Lampiaskan Kekesalan</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         /* RESET & GLOBAL */
@@ -97,6 +97,7 @@
 
         .hashtag-item:hover {
             background: rgba(255, 255, 255, 0.12);
+            transform: translateX(5px);
         }
 
         .hashtag-name {
@@ -140,6 +141,70 @@
             margin-left: auto;
             margin-right: auto;
             line-height: 1.6;
+        }
+
+        /* 3# KEKESALAN YANG BISA DIPILIH */
+        .kekesalan-options {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .kekesalan-option {
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 15px;
+            padding: 25px;
+            width: 300px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+            text-align: left;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .kekesalan-option:hover {
+            transform: translateY(-8px);
+            border-color: rgba(255, 107, 107, 0.5);
+            background: rgba(255, 255, 255, 0.12);
+            box-shadow: 0 10px 25px rgba(255, 107, 107, 0.3);
+        }
+
+        .kekesalan-option.active {
+            border-color: #ff6b6b;
+            background: rgba(255, 107, 107, 0.15);
+            box-shadow: 0 10px 25px rgba(255, 107, 107, 0.4);
+        }
+
+        .option-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: #ffd166;
+        }
+
+        .option-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #ff6b6b;
+            margin-bottom: 10px;
+        }
+
+        .option-desc {
+            color: #ddd;
+            font-size: 1rem;
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+
+        .option-select {
+            color: #ffd166;
+            font-weight: 600;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
         /* TEXTAREA KEKESALAN */
@@ -244,21 +309,21 @@
         <div class="dashboard">
             <!-- KOLOM 1: PERSONAL PAIN -->
             <div class="column">
-                <div class="hashtag-item">
+                <div class="hashtag-item" data-hashtag="MagangDigajiSertifikat">
                     <div class="hashtag-name">#MagangDigajiSertifikat</div>
                     <div class="hashtag-meta">
                         <span>PERSONAL PAIN</span>
                         <span>245 posts</span>
                     </div>
                 </div>
-                <div class="hashtag-item">
+                <div class="hashtag-item" data-hashtag="DiajakJalanTapiKempes">
                     <div class="hashtag-name">#DiajakJalanTapiKempes</div>
                     <div class="hashtag-meta">
                         <span>PERSONAL PAIN</span>
                         <span>178 posts</span>
                     </div>
                 </div>
-                <div class="hashtag-item">
+                <div class="hashtag-item" data-hashtag="DiphostingGebetan">
                     <div class="hashtag-name">#DiphostingGebetan</div>
                     <div class="hashtag-meta">
                         <span>PERSONAL PAIN</span>
@@ -269,21 +334,21 @@
 
             <!-- KOLOM 2: SOCIAL SICKNESS -->
             <div class="column">
-                <div class="hashtag-item">
+                <div class="hashtag-item" data-hashtag="DramaQueenAnjay">
                     <div class="hashtag-name">#DramaQueenAnjay</div>
                     <div class="hashtag-meta">
                         <span>SOCIAL SICKNESS</span>
                         <span>189 posts</span>
                     </div>
                 </div>
-                <div class="hashtag-item">
+                <div class="hashtag-item" data-hashtag="BacotLambeTurah">
                     <div class="hashtag-name">#BacotLambeTurah</div>
                     <div class="hashtag-meta">
                         <span>SOCIAL SICKNESS</span>
                         <span>321 posts</span>
                     </div>
                 </div>
-                <div class="hashtag-item">
+                <div class="hashtag-item" data-hashtag="RencanaPlinPlan">
                     <div class="hashtag-name">#RencanaPlinPlan</div>
                     <div class="hashtag-meta">
                         <span>SOCIAL SICKNESS</span>
@@ -294,21 +359,21 @@
 
             <!-- KOLOM 3: POP CULTURE -->
             <div class="column">
-                <div class="hashtag-item">
+                <div class="hashtag-item" data-hashtag="BellTiketJualSinjal">
                     <div class="hashtag-name">#BellTiketJualSinjal</div>
                     <div class="hashtag-meta">
                         <span>POP CULTURE</span>
                         <span>89 posts</span>
                     </div>
                 </div>
-                <div class="hashtag-item">
+                <div class="hashtag-item" data-hashtag="InfluencerNgchek">
                     <div class="hashtag-name">#InfluencerNgchek</div>
                     <div class="hashtag-meta">
                         <span>POP CULTURE</span>
                         <span>203 posts</span>
                     </div>
                 </div>
-                <div class="hashtag-item">
+                <div class="hashtag-item" data-hashtag="FilmEndingGaje">
                     <div class="hashtag-name">#FilmEndingGaje</div>
                     <div class="hashtag-meta">
                         <span>POP CULTURE</span>
@@ -335,86 +400,177 @@
         </div>
 
         <!-- ==================== -->
-        <!-- WINDOW KEKESALAN -->
+        <!-- WINDOW KEKESALAN DENGAN 3# PILIHAN -->
         <!-- ==================== -->
         <div class="window-kekesalan">
-            <h2 class="window-title">💥 WINDOW KEKESALAN 💥</h2>
+            <h2 class="window-title">💥 PILIH & LAMPIASKAN KEKESALANMU 💥</h2>
             
             <p class="window-subtitle">
-                "Sudah muak dengan semua masalah di atas? Lampiaskan kekesalanmu di sini! 
-                Tuliskan apa yang bikin kamu kesal, jengkel, atau sebel dalam <strong>280 karakter</strong>."
+                "Pilih salah satu tipe kekesalan yang paling sesuai dengan perasaanmu saat ini, 
+                lalu tuliskan kekesalanmu secara detail (maksimal 280 karakter)."
             </p>
             
-            <textarea 
-                class="textarea-kekesalan" 
-                placeholder="Tulis kekesalanmu di sini... Misalnya: 'Aku kesel banget sama...' atau 'Gue sebel aja sama...'"
-                maxlength="280"
-                id="kekesalan-textarea"
-            ></textarea>
-            
-            <div class="char-counter" id="char-counter">
-                <span id="char-count">0</span> / 280 karakter
+            <!-- 3# KEKESALAN YANG BISA DIPILIH -->
+            <div class="kekesalan-options">
+                <div class="kekesalan-option" data-type="frustasi">
+                    <div class="option-icon">😤</div>
+                    <h3 class="option-title">#FrustasiHarian</h3>
+                    <p class="option-desc">Kesel dengan rutinitas, sistem kerja, atau hal-hal kecil yang mengganggu keseharianmu.</p>
+                    <div class="option-select">
+                        <i class="fas fa-mouse-pointer"></i> KLIK UNTUK MEMILIH
+                    </div>
+                </div>
+                
+                <div class="kekesalan-option" data-type="hubungan">
+                    <div class="option-icon">💔</div>
+                    <h3 class="option-title">#KeselHubungan</h3>
+                    <p class="option-desc">Kecewa dengan teman, gebetan, pacar, atau keluarga yang bikin hati sakit dan kesal.</p>
+                    <div class="option-select">
+                        <i class="fas fa-mouse-pointer"></i> KLIK UNTUK MEMILIH
+                    </div>
+                </div>
+                
+                <div class="kekesalan-option" data-type="sosial">
+                    <div class="option-icon">👥</div>
+                    <h3 class="option-title">#GeramSosial</h3>
+                    <p class="option-desc">Marah dengan ketidakadilan, sistem yang rusak, atau perilaku sosial yang menyebalkan.</p>
+                    <div class="option-select">
+                        <i class="fas fa-mouse-pointer"></i> KLIK UNTUK MEMILIH
+                    </div>
+                </div>
             </div>
             
-            <button class="btn-lampiaskan" id="btn-lampiaskan">
-                <i class="fas fa-fire"></i> LAMPIASKAN KEKESALANMU!
-            </button>
+            <!-- AREA TEKS UNTUK MENULIS -->
+            <div style="margin-top: 30px;">
+                <h3 style="color: #ffd166; margin-bottom: 15px; font-size: 1.4rem;">
+                    <i class="fas fa-edit"></i> TULISAN KEKESALANMU:
+                </h3>
+                
+                <textarea 
+                    class="textarea-kekesalan" 
+                    placeholder="Contoh: 'Aku kesel banget hari ini karena...'"
+                    maxlength="280"
+                    id="kekesalan-textarea"
+                ></textarea>
+                
+                <div class="char-counter" id="char-counter">
+                    <span id="char-count">0</span> / 280 karakter
+                </div>
+                
+                <div style="margin-bottom: 20px; color: #aaa; font-size: 0.9rem;">
+                    <i class="fas fa-info-circle"></i> Pilih salah satu kategori di atas terlebih dahulu
+                </div>
+                
+                <button class="btn-lampiaskan" id="btn-lampiaskan">
+                    <i class="fas fa-fire"></i> LAMPIASKAN KEKESALANMU SEKARANG!
+                </button>
+            </div>
             
-            <div style="margin-top: 30px; color: #aaa; font-size: 0.9rem;">
-                <i class="fas fa-shield-alt"></i> Kekesalanmu akan diproses secara anonim
+            <div style="margin-top: 40px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1);">
+                <div style="color: #aaa; font-size: 0.9rem;">
+                    <i class="fas fa-shield-alt"></i> 100% Anonim • <i class="fas fa-heart"></i> Didengarkan dengan empati
+                </div>
             </div>
         </div>
 
         <!-- FOOTER -->
         <footer class="footer">
-            <p>Hashtag Blitz Dashboard • Platform untuk melampiaskan kekesalan sosial</p>
-            <p class="cta-note">"Jangan pendam sendiri, bagikan kekesalanmu dengan bijak!"</p>
+            <p>Hashtag Blitz Dashboard • Platform untuk melampiaskan kekesalan sosial dengan bijak</p>
+            <p class="cta-note">"Pilih, tulis, dan lepaskan bebanmu di sini!"</p>
         </footer>
     </div>
 
     <!-- JAVASCRIPT -->
     <script>
+        // VARIABLES
+        let selectedKekesalanType = null;
+        let selectedHashtag = null;
+
         // ELEMEN DOM
         const textarea = document.getElementById('kekesalan-textarea');
         const charCounter = document.getElementById('char-counter');
         const charCount = document.getElementById('char-count');
         const btnLampiaskan = document.getElementById('btn-lampiaskan');
+        const kekesalanOptions = document.querySelectorAll('.kekesalan-option');
+        const hashtagItems = document.querySelectorAll('.hashtag-item');
 
-        // UPDATE CHARACTER COUNTER
-        textarea.addEventListener('input', function() {
-            const count = this.value.length;
-            charCount.textContent = count;
-            
-            // Update warna counter
-            charCounter.className = 'char-counter';
-            if (count > 200) {
-                charCounter.classList.add('warning');
-            }
-            if (count >= 270) {
-                charCounter.classList.add('danger');
-            }
-            
-            // Enable/disable button
-            btnLampiaskan.disabled = count < 10;
-            btnLampiaskan.style.opacity = count < 10 ? '0.6' : '1';
+        // ===== 1. PILIH TIPE KEKESALAN =====
+        kekesalanOptions.forEach(option => {
+            option.addEventListener('click', function() {
+                // Hapus active class dari semua
+                kekesalanOptions.forEach(opt => opt.classList.remove('active'));
+                
+                // Tambah active class ke yang dipilih
+                this.classList.add('active');
+                
+                // Simpan tipe yang dipilih
+                selectedKekesalanType = this.getAttribute('data-type');
+                
+                // Update placeholder berdasarkan pilihan
+                const typeText = this.querySelector('.option-title').textContent;
+                textarea.placeholder = `Tulis ${typeText.toLowerCase()}mu di sini... Misalnya: "Aku ${this.getAttribute('data-type')} karena..."`;
+                
+                // Enable textarea
+                textarea.focus();
+                
+                // Show feedback
+                showNotification(`Kamu memilih: ${typeText}`, '#ff6b6b');
+            });
         });
 
-        // FUNGSI LAMPIASKAN KEKESALAN
+        // ===== 2. PILIH HASHTAG DARI DASHBOARD =====
+        hashtagItems.forEach(item => {
+            item.addEventListener('click', function() {
+                const hashtag = this.getAttribute('data-hashtag');
+                selectedHashtag = hashtag;
+                
+                // Feedback visual
+                hashtagItems.forEach(i => i.style.border = 'none');
+                this.style.border = '2px solid #06d6a0';
+                this.style.borderRadius = '12px';
+                
+                // Auto-fill textarea dengan konteks hashtag
+                if (textarea.value === '') {
+                    textarea.value = `Saya kesal dengan #${hashtag} karena... `;
+                    updateCharCounter();
+                }
+                
+                showNotification(`Kamu memilih hashtag: #${hashtag}`, '#06d6a0');
+            });
+        });
+
+        // ===== 3. UPDATE CHARACTER COUNTER =====
+        function updateCharCounter() {
+            const count = textarea.value.length;
+            charCount.textContent = count;
+            
+            charCounter.className = 'char-counter';
+            if (count > 200) charCounter.classList.add('warning');
+            if (count >= 270) charCounter.classList.add('danger');
+            
+            btnLampiaskan.disabled = count < 10;
+            btnLampiaskan.style.opacity = count < 10 ? '0.6' : '1';
+        }
+
+        textarea.addEventListener('input', updateCharCounter);
+
+        // ===== 4. LAMPIASKAN KEKESALAN =====
         btnLampiaskan.addEventListener('click', function() {
             const kekesalan = textarea.value.trim();
             
-            if (kekesalan.length < 10) {
-                alert('Minimal 10 karakter untuk melampiaskan kekesalan!');
+            // Validasi
+            if (!selectedKekesalanType) {
+                alert('⚠️ Pilih salah satu tipe kekesalan terlebih dahulu!');
                 return;
             }
             
-            if (kekesalan.length > 280) {
-                alert('Maksimal 280 karakter!');
+            if (kekesalan.length < 10) {
+                alert('⚠️ Minimal 10 karakter untuk melampiaskan kekesalan!');
                 return;
             }
             
             // Simulasi pengiriman
-            btnLampiaskan.innerHTML = '<i class="fas fa-spinner fa-spin"></i> MENGIRIM...';
+            btnLampiaskan.innerHTML = '<i class="fas fa-spinner fa-spin"></i> MENGIRIM KEKESALAN...';
             btnLampiaskan.disabled = true;
             
             setTimeout(() => {
@@ -422,13 +578,28 @@
                 textarea.value = '';
                 charCount.textContent = '0';
                 charCounter.className = 'char-counter';
+                kekesalanOptions.forEach(opt => opt.classList.remove('active'));
+                hashtagItems.forEach(i => i.style.border = 'none');
                 
-                // Tampilkan konfirmasi
-                alert('🎉 Kekesalanmu berhasil dilampiaskan!\n\n"'+kekesalan.substring(0, 100)+'..."\n\nPesanmu telah dikirim ke ruang kekecewaan bersama.');
+                // Tampilkan hasil
+                const resultMessage = `
+🎉 KEKESALANMU TELAH DILAMPIASKAN!
+
+• Tipe: ${selectedKekesalanType.toUpperCase()}
+• Hashtag: ${selectedHashtag ? '#' + selectedHashtag : 'Tidak ada'}
+• Karakter: ${kekesalan.length}/280
+• Status: TERKIRIM & DIDENGARKAN
+
+"${kekesalan.substring(0, 80)}${kekesalan.length > 80 ? '...' : ''}"
+                `;
                 
-                // Reset button
-                btnLampiaskan.innerHTML = '<i class="fas fa-fire"></i> LAMPIASKAN KEKESALANMU!';
+                alert(resultMessage);
+                
+                // Reset semua
+                btnLampiaskan.innerHTML = '<i class="fas fa-fire"></i> LAMPIASKAN KEKESALANMU SEKARANG!';
                 btnLampiaskan.disabled = false;
+                selectedKekesalanType = null;
+                selectedHashtag = null;
                 
                 // Animasi konfirmasi
                 const windowElement = document.querySelector('.window-kekesalan');
@@ -443,31 +614,76 @@
             }, 1500);
         });
 
-        // FUNGSI RANDOM QUOTE KEKESALAN
-        const randomQuotes = [
-            "Aku kesel banget sama orang yang janji tapi nggak ditepati!",
-            "Gue sebel aja sama sistem yang nggak adil buat anak muda!",
-            "Muak banget sama orang yang bacot mulu tapi nggak ada action!",
-            "Kesel mode on: kerja keras tapi hasilnya nggak dihargai!",
-            "Jengkel banget sama kebiasaan nunda-nunda pekerjaan!",
-            "Sebel sama orang yang sok sibuk padahal cuma scroll medsos!",
-            "Kesel dah sama harga mahal tapi kualitas ampas!",
-            "Gue muak sama drama-drama yang nggak penting!",
-            "Kesel banget pas diajak jalan tapi akhirnya kempes!",
-            "Jengkel sama influencer yang kontennya cuma flexing doang!"
-        ];
+        // ===== 5. FUNGSI BANTUAN =====
+        function showNotification(message, color) {
+            // Hapus notifikasi lama
+            const oldNotif = document.querySelector('.temp-notification');
+            if (oldNotif) oldNotif.remove();
+            
+            // Buat notifikasi baru
+            const notification = document.createElement('div');
+            notification.className = 'temp-notification';
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: ${color};
+                color: white;
+                padding: 15px 25px;
+                border-radius: 10px;
+                box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+                z-index: 1000;
+                animation: slideInRight 0.3s ease;
+                font-weight: 600;
+                max-width: 300px;
+            `;
+            
+            notification.innerHTML = `
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <i class="fas fa-check-circle"></i>
+                    <div>${message}</div>
+                </div>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            // Hapus setelah 3 detik
+            setTimeout(() => {
+                notification.style.animation = 'slideOutRight 0.3s ease';
+                setTimeout(() => notification.remove(), 300);
+            }, 3000);
+        }
 
-        // Tambahkan random quote sebagai placeholder saat focus
-        textarea.addEventListener('focus', function() {
-            if (!this.value) {
-                const randomQuote = randomQuotes[Math.floor(Math.random() * randomQuotes.length)];
-                this.placeholder = randomQuote;
+        // ===== 6. TAMBAH STYLE ANIMASI =====
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideInRight {
+                from {
+                    transform: translateX(100%);
+                    opacity: 0;
+                }
+                to {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
             }
-        });
+            
+            @keyframes slideOutRight {
+                from {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+                to {
+                    transform: translateX(100%);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
 
-        // Inisialisasi
+        // ===== 7. INISIALISASI =====
         document.addEventListener('DOMContentLoaded', function() {
-            console.log("Window Kekesalan siap digunakan!");
+            console.log("🎯 Dashboard dengan 3# kekesalan siap!");
             btnLampiaskan.disabled = true;
             btnLampiaskan.style.opacity = '0.6';
         });
