@@ -1,9 +1,11 @@
-// NOPE - Clean Dark Theme Login
+// NOPE - Telegram Mini App Login
 const CONFIG = {
     APP_NAME: 'NOPE',
     STORAGE_KEYS: {
+        TELEGRAM_USERNAME: 'nope_tg_username',
         ANON_USERNAME: 'nope_anon_username',
-        LOGGED_IN: 'nope_logged_in'
+        LOGGED_IN: 'nope_logged_in',
+        USER_ID: 'nope_user_id'
     }
 };
 
@@ -12,6 +14,23 @@ if ('serviceWorker' in navigator) {
     navigator.serviceWorker.getRegistrations().then(registrations => {
         registrations.forEach(reg => reg.unregister());
     });
+}
+
+// Telegram Mini App Simulation
+function getTelegramUserData() {
+    // In real Telegram Mini App:
+    // return window.Telegram.WebApp.initDataUnsafe.user
+    
+    // For simulation/demo:
+    const params = new URLSearchParams(window.location.search);
+    const tgUsername = params.get('tg_user') || 'user_' + Math.floor(Math.random() * 10000);
+    
+    return {
+        username: tgUsername,
+        id: Math.floor(Math.random() * 1000000),
+        first_name: 'User',
+        last_name: ''
+    };
 }
 
 // Check username uniqueness
@@ -28,7 +47,7 @@ function registerUsername(username) {
     return true;
 }
 
-// Show clean notification
+// Show notification
 function showNotification(message) {
     const notification = document.createElement('div');
     notification.className = 'nope-notification';
@@ -40,15 +59,15 @@ function showNotification(message) {
         right: 20px;
         background: rgba(255, 255, 255, 0.1);
         color: #ffffff;
-        padding: 16px 24px;
-        border-radius: 12px;
+        padding: 14px 20px;
+        border-radius: 10px;
         backdrop-filter: blur(20px);
         border: 1px solid rgba(255, 255, 255, 0.1);
         z-index: 9999;
         animation: slideIn 0.3s ease;
         font-weight: 500;
         max-width: 300px;
-        font-size: 0.9rem;
+        font-size: 0.85rem;
     `;
     
     document.body.appendChild(notification);
@@ -64,40 +83,46 @@ function initLoginPage() {
     const form = document.getElementById('loginForm');
     const anonInput = document.getElementById('anonUsername');
     const submitBtn = document.getElementById('submitBtn');
+    const tgDisplay = document.getElementById('telegramUsernameDisplay');
     
-    if (!form || !anonInput || !submitBtn) return;
+    if (!form || !anonInput || !submitBtn || !tgDisplay) return;
+    
+    // Get Telegram user data
+    const tgUser = getTelegramUserData();
+    const tgUsername = tgUser.username;
+    
+    // Display Telegram username
+    tgDisplay.textContent = '@' + tgUsername;
+    
+    // Save Telegram username to localStorage
+    localStorage.setItem(CONFIG.STORAGE_KEYS.TELEGRAM_USERNAME, tgUsername);
+    localStorage.setItem(CONFIG.STORAGE_KEYS.USER_ID, tgUser.id.toString());
     
     // Username validation
     anonInput.addEventListener('input', function() {
         const username = this.value.trim();
-        const feedback = document.getElementById('usernameFeedback') || 
-                        document.createElement('div');
-        
-        if (!feedback.id) {
-            feedback.id = 'usernameFeedback';
-            this.parentNode.appendChild(feedback);
-        }
+        const feedback = document.getElementById('usernameFeedback');
         
         // Validation rules
         if (username.length < 3) {
-            feedback.textContent = 'Minimum 3 characters';
-            feedback.style.color = 'rgba(255, 255, 255, 0.5)';
+            feedback.textContent = 'min 3 characters';
+            feedback.style.color = 'rgba(255, 255, 255, 0.4)';
             submitBtn.disabled = true;
         } else if (username.length > 20) {
-            feedback.textContent = 'Maximum 20 characters';
-            feedback.style.color = 'rgba(255, 255, 255, 0.5)';
+            feedback.textContent = 'max 20 characters';
+            feedback.style.color = 'rgba(255, 255, 255, 0.4)';
             submitBtn.disabled = true;
         } else if (!/^[a-zA-Z0-9_]+$/.test(username)) {
-            feedback.textContent = 'Only letters, numbers, underscore';
-            feedback.style.color = 'rgba(255, 255, 255, 0.5)';
+            feedback.textContent = 'letters, numbers, underscore only';
+            feedback.style.color = 'rgba(255, 255, 255, 0.4)';
             submitBtn.disabled = true;
         } else if (!isUsernameUnique(username)) {
-            feedback.textContent = 'Username taken';
-            feedback.style.color = 'rgba(255, 255, 255, 0.5)';
+            feedback.textContent = 'username taken';
+            feedback.style.color = 'rgba(255, 59, 48, 0.7)';
             submitBtn.disabled = true;
         } else {
-            feedback.textContent = '✓ Available';
-            feedback.style.color = 'rgba(255, 255, 255, 0.7)';
+            feedback.textContent = '✓ available';
+            feedback.style.color = 'rgba(52, 199, 89, 0.7)';
             submitBtn.disabled = false;
         }
     });
@@ -128,7 +153,7 @@ function initLoginPage() {
         submitBtn.textContent = '...';
         submitBtn.disabled = true;
         
-        // Simulate processing
+        // Simulate API processing
         setTimeout(() => {
             // Register username
             registerUsername(anonUsername);
@@ -139,10 +164,10 @@ function initLoginPage() {
             
             showNotification(`Welcome, ${anonUsername}`);
             
-            // Redirect to next page
+            // Redirect to onboarding/hashtag selection
             setTimeout(() => {
                 window.location.href = 'rage.html';
-            }, 1200);
+            }, 1000);
         }, 800);
     });
     
@@ -152,7 +177,7 @@ function initLoginPage() {
 
 // Initialize when page loads
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('NOPE — Clean Dark Theme');
+    console.log('NOPE — Telegram Mini App Login');
     
     // Add animations
     const style = document.createElement('style');
@@ -164,11 +189,6 @@ document.addEventListener('DOMContentLoaded', function() {
         @keyframes slideOut {
             from { transform: translateX(0); opacity: 1; }
             to { transform: translateX(100%); opacity: 0; }
-        }
-        
-        /* Input focus glow */
-        input:focus {
-            box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.1);
         }
     `;
     document.head.appendChild(style);
