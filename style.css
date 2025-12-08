@@ -1,203 +1,53 @@
-/* DARK THEME - NOPE LOGIN PAGE */
-.login-container {
-    min-height: 100vh;
-    background: #000000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-}
-
-.login-card {
-    background: rgba(20, 20, 20, 0.95);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 16px;
-    padding: 40px 30px;
-    width: 100%;
-    max-width: 380px;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
-}
-
-/* Brand Logo */
-.brand-logo {
-    text-align: center;
-    margin-bottom: 40px;
-}
-
-.brand-logo h1 {
-    font-size: 3.8rem;
-    font-weight: 900;
-    color: #ffffff;
-    margin: 0 0 5px 0;
-    letter-spacing: -2px;
-    line-height: 1;
-}
-
-.brand-logo .tagline {
-    color: rgba(255, 255, 255, 0.4);
-    font-size: 0.75rem;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    font-weight: 500;
-}
-
-/* Telegram Account Display */
-.telegram-account-display {
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 10px;
-    padding: 15px 20px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    color: rgba(255, 255, 255, 0.8);
-    font-size: 0.95rem;
-}
-
-.telegram-account-display i {
-    color: #0088cc;
-    font-size: 1.1rem;
-}
-
-.telegram-account-display span {
-    font-weight: 500;
-}
-
-/* Form Elements */
-.login-form .input-group {
-    margin-bottom: 25px;
-}
-
-.login-form label {
-    display: block;
-    color: rgba(255, 255, 255, 0.6);
-    margin-bottom: 10px;
-    font-size: 0.8rem;
-    font-weight: 500;
-    letter-spacing: 0.5px;
-    text-transform: uppercase;
-}
-
-.login-form input {
-    width: 100%;
-    padding: 16px 18px;
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 10px;
-    color: #ffffff;
-    font-size: 1rem;
-    font-weight: 400;
-    transition: all 0.2s ease;
-}
-
-.login-form input:focus {
-    outline: none;
-    border-color: rgba(255, 255, 255, 0.3);
-    background: rgba(255, 255, 255, 0.05);
-}
-
-.login-form input::placeholder {
-    color: rgba(255, 255, 255, 0.3);
-}
-
-/* GO Button */
-.btn-go {
-    width: 100%;
-    padding: 18px;
-    background: #ffffff;
-    color: #000000;
-    border: none;
-    border-radius: 10px;
-    font-size: 1.1rem;
-    font-weight: 700;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    margin-top: 5px;
-    letter-spacing: 0.5px;
-}
-
-.btn-go:hover:not(:disabled) {
-    background: rgba(255, 255, 255, 0.95);
-    transform: translateY(-1px);
-}
-
-.btn-go:disabled {
-    opacity: 0.3;
-    cursor: not-allowed;
-}
-
-/* Username Feedback */
-#usernameFeedback {
-    display: block;
-    margin-top: 8px;
-    font-size: 0.8rem;
-    font-weight: 500;
-    padding: 6px 0;
-    transition: all 0.2s ease;
-    color: rgba(255, 255, 255, 0.5);
-}
-
-/* Login Note */
-.login-note {
-    text-align: center;
-    margin-top: 30px;
-    padding-top: 25px;
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
-    color: rgba(255, 255, 255, 0.4);
-    font-size: 0.75rem;
-    line-height: 1.5;
-}
-
-/* Responsive */
-@media (max-width: 480px) {
+<style>
+    /* EMERGENCY BACKUP STYLES */
+    body { 
+        background-color: #000000 !important;
+        color: #ffffff !important;
+        font-family: Arial, sans-serif !important;
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+        min-height: 100vh !important;
+        margin: 0 !important;
+        padding: 20px !important;
+    }
+    
+    .login-container {
+        width: 100% !important;
+        max-width: 400px !important;
+    }
+    
     .login-card {
-        padding: 35px 25px;
-        margin: 0 15px;
+        background-color: rgba(20, 20, 20, 0.95) !important;
+        border: 1px solid rgba(255, 255, 255, 0.08) !important;
+        border-radius: 16px !important;
+        padding: 40px 30px !important;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5) !important;
     }
     
     .brand-logo h1 {
-        font-size: 3.2rem;
+        font-size: 3.8rem !important;
+        font-weight: 900 !important;
+        color: #ffffff !important;
+        text-align: center !important;
+        margin: 0 0 40px 0 !important;
     }
     
-    .btn-go {
-        padding: 16px;
+    #username, button[type="submit"] {
+        width: 100% !important;
+        padding: 12px !important;
+        margin: 8px 0 !important;
+        background: #222222 !important;
+        border: 1px solid #333333 !important;
+        color: #ffffff !important;
+        border-radius: 8px !important;
+        font-size: 16px !important;
     }
-}
-/* Temporary fix for login page */
-h1:first-child {
-    font-size: 3.8rem;
-    font-weight: 900;
-    color: #ffffff;
-    text-align: center;
-    margin-bottom: 40px;
-}
-
-body {
-    background: #000000;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-}
-
-#loginForm {
-    background: rgba(20, 20, 20, 0.95);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 16px;
-    padding: 40px 30px;
-    width: 100%;
-    max-width: 380px;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
-}
-
-#username, button {
-    width: 100%;
-    padding: 12px;
-    margin: 10px 0;
-    background: #222;
-    border: 1px solid #333;
-    color: white;
-    border-radius: 8px;
-}
+    
+    button[type="submit"] {
+        background: #4CAF50 !important;
+        border: none !important;
+        font-weight: bold !important;
+        cursor: pointer !important;
+    }
+</style>
