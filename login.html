@@ -1,35 +1,17 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Login - NOPE</title>
-    <link rel="stylesheet" href="style.css">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- CSS dan meta tags -->
-</head>
 <body>
-    <h1>Login</h1>
-    <form id="loginForm">
-        <input type="text" id="username" placeholder="Username" required>
-        <button type="submit">Login</button>
-    </form>
+    <div class="login-container">
+        <div class="login-card">
+            <div class="brand-logo">
+                <h1>NOPE</h1>
+            </div>
+            <form id="loginForm">
+                <input type="text" id="username" placeholder="Username" required>
+                <button type="submit">Login</button>
+            </form>
+        </div>
+    </div>
 
     <script>
-        document.getElementById('loginForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const anonUsername = document.getElementById('username').value;
-            
-            // Save data
-            localStorage.setItem('nope_anon_username', anonUsername);
-            localStorage.setItem('nope_logged_in', 'true');
-            
-            console.log('Login successful, redirecting...');
-            
-            // Redirect ke home
-            setTimeout(() => {
-                window.location.href = 'home.html';
-            }, 500);
-        });
+        // Your existing JavaScript here
     </script>
 </body>
-</html>
