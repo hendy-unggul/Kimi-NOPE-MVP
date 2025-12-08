@@ -1,3 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - NOPE</title>
+    
+    <!-- INI YANG PERLU DITAMBAHKAN: -->
+    <link rel="stylesheet" href="style.css">
+    
+</head>
 <body>
     <div class="login-container">
         <div class="login-card">
@@ -12,6 +23,21 @@
     </div>
 
     <script>
-        // Your existing JavaScript here
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const anonUsername = document.getElementById('username').value;
+            
+            // Save data
+            localStorage.setItem('nope_anon_username', anonUsername);
+            localStorage.setItem('nope_logged_in', 'true');
+            
+            console.log('Login successful, redirecting...');
+            
+            // Redirect ke home
+            setTimeout(() => {
+                window.location.href = 'home.html';
+            }, 500);
+        });
     </script>
 </body>
+</html>
