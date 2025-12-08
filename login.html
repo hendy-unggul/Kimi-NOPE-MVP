@@ -1,42 +1,188 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - NOPE</title>
-    
-    <!-- INI YANG PERLU DITAMBAHKAN: -->
     <link rel="stylesheet" href="style.css">
-    
+    <style>
+        .login-container {
+            min-height: 100vh;
+            background: #000000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .login-card {
+            background: rgba(20, 20, 20, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 40px 30px;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+        }
+        
+        .brand-logo {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .brand-logo h1 {
+            font-size: 3.8rem;
+            font-weight: 900;
+            color: #ffffff;
+            margin: 0 0 10px 0;
+            letter-spacing: -2px;
+            line-height: 1;
+        }
+        
+        .brand-logo p {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
+        }
+        
+        #loginForm {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        #telegramUsername {
+            width: 100%;
+            padding: 14px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            color: white;
+            font-size: 16px;
+        }
+        
+        #telegramUsername::placeholder {
+            color: rgba(255, 255, 255, 0.4);
+        }
+        
+        button[type="submit"] {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        button[type="submit"]:hover {
+            background: #5a67d8;
+        }
+        
+        .login-note {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.8rem;
+            text-align: center;
+            margin-top: 20px;
+            line-height: 1.4;
+        }
+    </style>
 </head>
 <body>
     <div class="login-container">
         <div class="login-card">
             <div class="brand-logo">
                 <h1>NOPE</h1>
+                <p>Anonymous Rage Sharing</p>
             </div>
+            
             <form id="loginForm">
-                <input type="text" id="username" placeholder="Username" required>
-                <button type="submit">Login</button>
+                <input 
+                    type="text" 
+                    id="telegramUsername" 
+                    placeholder="@telegram_username" 
+                    required
+                    autocomplete="off"
+                >
+                <button type="submit">Enter NOPE</button>
             </form>
+            
+            <div class="login-note">
+                Login with your Telegram username. Your identity stays anonymous.
+            </div>
         </div>
     </div>
 
     <script>
-        document.getElementById('loginForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const anonUsername = document.getElementById('username').value;
+        document.addEventListener('DOMContentLoaded', function() {
+            const loginForm = document.getElementById('loginForm');
+            const telegramInput = document.getElementById('telegramUsername');
             
-            // Save data
-            localStorage.setItem('nope_anon_username', anonUsername);
-            localStorage.setItem('nope_logged_in', 'true');
+            // Auto-add @ if user types without it
+            telegramInput.addEventListener('blur', function() {
+                const value = this.value.trim();
+                if (value && !value.startsWith('@')) {
+                    this.value = '@' + value;
+                }
+            });
             
-            console.log('Login successful, redirecting...');
+            // Handle form submission
+            loginForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Get and validate Telegram username
+                const telegramInputValue = telegramInput.value.trim();
+                if (!telegramInputValue) {
+                    alert('Please enter your Telegram username');
+                    return;
+                }
+                
+                const telegramUsername = telegramInputValue.startsWith('@') 
+                    ? telegramInputValue 
+                    : '@' + telegramInputValue;
+                
+                console.log('🔐 Login attempt with Telegram:', telegramUsername);
+                
+                // Save Telegram username for authentication
+                localStorage.setItem('telegram_username', telegramUsername);
+                localStorage.setItem('nope_logged_in', 'true');
+                
+                // Check if user already has NOPE identity
+                const hasNopeIdentity = localStorage.getItem('nope_anon_username') && 
+                                        localStorage.getItem('user_hashtags');
+                
+                // Disable form while processing
+                const submitBtn = loginForm.querySelector('button[type="submit"]');
+                submitBtn.disabled = true;
+                submitBtn.textContent = 'Connecting...';
+                
+                setTimeout(() => {
+                    if (!hasNopeIdentity) {
+                        // 🆕 NEW USER: Generate temporary ID and go to onboarding
+                        const tempId = `temp_${Date.now()}_${Math.floor(Math.random() * 9999)}`;
+                        localStorage.setItem('temp_user_id', tempId);
+                        console.log('👶 New user detected, temporary ID:', tempId);
+                        console.log('Redirecting to onboarding...');
+                        window.location.href = 'onboarding.html';
+                    } else {
+                        // 🔄 RETURNING USER: Go directly to home
+                        const nopeUser = localStorage.getItem('nope_anon_username');
+                        console.log('👤 Returning NOPE user:', nopeUser);
+                        console.log('Redirecting to home...');
+                        window.location.href = 'home.html';
+                    }
+                }, 800);
+            });
             
-            // Redirect ke home
-            setTimeout(() => {
-                window.location.href = 'home.html';
-            }, 500);
+            // Check if already logged in
+            if (localStorage.getItem('nope_logged_in') === 'true' && 
+                localStorage.getItem('nope_anon_username')) {
+                console.log('Already logged in, redirecting to home...');
+                setTimeout(() => {
+                    window.location.href = 'home.html';
+                }, 1000);
+            }
         });
     </script>
 </body>
