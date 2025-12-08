@@ -13,8 +13,8 @@
       "destination": "/onboarding.html"
     },
     {
-      "source": "/wall",
-      "destination": "/wall.html"
+      "source": "/home",
+      "destination": "/home.html"
     },
     {
       "source": "/(.*)",
