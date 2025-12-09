@@ -2,9 +2,10 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>Inner Space – NOPE</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg: #0a0a0f;
@@ -13,6 +14,7 @@
             --text: #eaeaea;
             --muted: #7a7a8c;
             --accent1: #ff2d55;
+            --pulse: rgba(255, 45, 85, 0.3);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -21,20 +23,22 @@
             background: var(--bg);
             color: var(--text);
             font-family: 'Inter', sans-serif;
+            font-weight: 300;
             padding-bottom: 80px;
+            line-height: 1.5;
         }
 
         .container {
-            max-width: 780px;
+            max-width: 414px;
             margin: 0 auto;
-            padding: 0 20px;
+            padding: 0 16px;
         }
 
         .header {
             text-align: center;
-            padding: 48px 0 36px;
+            padding: 36px 0 24px;
             position: relative;
-            margin-bottom: 28px;
+            margin-bottom: 24px;
         }
 
         .header::after {
@@ -43,37 +47,37 @@
             bottom: 0;
             left: 50%;
             transform: translateX(-50%);
-            width: 80px;
+            width: 60px;
             height: 2px;
             background: linear-gradient(90deg, var(--accent1), #2db34d);
         }
 
         .title {
-            font-size: 36px;
-            font-weight: 900;
-            letter-spacing: -1.2px;
+            font-size: 28px;
+            font-weight: 800;
+            letter-spacing: -0.8px;
             background: linear-gradient(90deg, var(--accent1), #2db34d);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            margin-bottom: 14px;
+            margin-bottom: 12px;
         }
 
         .subtitle {
             font-size: 14px;
             color: var(--muted);
-            max-width: 500px;
+            max-width: 340px;
             margin: 0 auto;
             line-height: 1.5;
         }
 
         .artefak {
             position: relative;
-            margin-bottom: 32px;
+            margin-bottom: 28px;
         }
 
         .artefak-frame {
             position: relative;
-            padding: 16px;
+            padding: 12px;
         }
 
         .artefak-frame::before {
@@ -83,19 +87,20 @@
             left: 0;
             right: 0;
             bottom: 0;
-            border: 14px solid #1a1a22;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.7);
+            border: 12px solid #1a1a22;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.7);
             z-index: 0;
         }
 
         .artefak-image {
             width: 100%;
-            height: 340px;
+            height: 320px;
             object-fit: cover;
             filter: grayscale(15%) sepia(0.2) hue-rotate(190deg) brightness(0.9);
             position: relative;
             z-index: 2;
             display: block;
+            border-radius: 4px;
         }
 
         .artefak-burn {
@@ -113,110 +118,111 @@
 
         .quote-overlay {
             position: absolute;
-            top: 20px;
-            left: 20px;
+            top: 16px;
+            left: 16px;
             z-index: 4;
             color: white;
-            background: rgba(0,0,0,0.5);
-            padding: 12px 16px;
+            background: rgba(0,0,0,0.6);
+            padding: 10px 14px;
             backdrop-filter: blur(4px);
-            max-width: 80%;
+            max-width: 85%;
+            border-radius: 6px;
         }
 
         .quote-text {
-            font-size: 18px;
+            font-size: 16px;
             font-style: italic;
-            line-height: 1.5;
+            line-height: 1.4;
             margin: 0;
+            font-weight: 400;
         }
 
         .quote-text::before,
         .quote-text::after {
             content: '"';
             color: var(--accent1);
-            font-size: 22px;
+            font-size: 18px;
             opacity: 0.8;
         }
 
-        .response-emojis {
-            position: absolute;
-            bottom: 20px;
-            right: 20px;
-            display: flex;
-            gap: 12px;
-            z-index: 5;
-            opacity: 0.7;
-        }
-
-        .response-emojis:hover { opacity: 1; }
-
-        .emoji {
-            font-size: 16px;
-            cursor: help;
-            filter: drop-shadow(0 1px 2px rgba(0,0,0,0.4));
-        }
-
-        /* --- RANT USER SECTION --- */
+        /* === RANT USER === */
         .rant-title {
-            font-size: 16px;
-            font-weight: 800;
+            font-size: 15px;
+            font-weight: 700;
             color: var(--muted);
-            margin: 32px 0 16px;
+            margin: 28px 0 14px;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
         }
 
         .rant-list {
-            background: rgba(18, 18, 23, 0.6);
+            background: rgba(18, 18, 23, 0.7);
             border: 1px solid var(--border);
-            border-radius: 6px;
-            padding: 16px;
-            font-family: 'Courier New', monospace;
-            font-size: 13px;
+            border-radius: 8px;
+            padding: 14px;
+            font-size: 14px;
             line-height: 1.6;
-            color: #c0c0d6;
-            max-height: 240px;
+            color: #d0d0e0;
+            max-height: 220px;
             overflow-y: auto;
-            white-space: pre-wrap;
-            word-break: break-word;
+            -webkit-overflow-scrolling: touch;
         }
 
         .rant-entry {
-            margin-bottom: 14px;
+            margin-bottom: 18px;
             position: relative;
-            padding-left: 12px;
+            padding-left: 0;
         }
 
-        .rant-entry::before {
-            content: "•";
-            position: absolute;
-            left: 0;
-            color: var(--accent1);
-            opacity: 0.8;
+        .rant-text {
+            margin-bottom: 6px;
+            font-weight: 300;
+        }
+
+        .rant-pulses {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 4px;
+            opacity: 0.9;
+        }
+
+        .pulse-emoji {
+            font-size: 16px;
+            animation: pulseIn 1.8s ease-in-out infinite;
+        }
+
+        .pulse-emoji:nth-child(2) { animation-delay: 0.3s; }
+        .pulse-emoji:nth-child(3) { animation-delay: 0.6s; }
+        .pulse-emoji:nth-child(4) { animation-delay: 0.9s; }
+
+        @keyframes pulseIn {
+            0%, 100% { opacity: 0.4; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.1); }
         }
 
         .rant-timestamp {
-            font-size: 10px;
+            font-size: 11px;
             color: var(--muted);
-            margin-top: 4px;
-            display: block;
         }
 
-        /* --- JEJAK SECTION --- */
+        /* === JEJAK BATIN === */
         .jejak-title {
-            font-size: 18px;
+            font-size: 16px;
             font-weight: 800;
             color: #fff;
-            margin: 36px 0 24px;
+            margin: 32px 0 18px;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 0.8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
 
         .jejak-grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 14px;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
         }
 
         .jejak-item {
@@ -224,10 +230,11 @@
             border: 1px solid var(--border);
             overflow: hidden;
             cursor: pointer;
+            border-radius: 8px;
         }
 
         .jejak-item:hover {
-            transform: translateY(-4px) scale(1.03);
+            transform: translateY(-3px) scale(1.02);
             border-color: var(--accent1);
         }
 
@@ -235,7 +242,7 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            filter: sepia(0.15) brightness(0.95);
+            filter: sepia(0.1) brightness(0.95);
         }
 
         .jejak-overlay {
@@ -244,11 +251,13 @@
             left: 0;
             right: 0;
             background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
-            padding: 14px;
+            padding: 10px;
             color: white;
             font-size: 11px;
+            text-align: center;
         }
 
+        /* === BOTTOM NAV === */
         .bottom-nav {
             position: fixed;
             bottom: 0;
@@ -258,7 +267,7 @@
             border-top: 1px solid var(--border);
             display: flex;
             justify-content: space-around;
-            padding: 12px 0;
+            padding: 10px 0;
             z-index: 1000;
         }
 
@@ -268,15 +277,18 @@
             align-items: center;
             color: var(--muted);
             text-decoration: none;
-            min-width: 70px;
+            min-width: 60px;
+            font-size: 12px;
         }
 
-        .nav-item i { font-size: 1.3rem; margin-bottom: 4px; }
-        .nav-item span { font-size: 0.68rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.6px; }
+        .nav-item i { font-size: 1.2rem; margin-bottom: 3px; }
+        .nav-item span { font-size: 0.64rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; }
         .nav-item.active { color: #2db34d; }
 
-        @media (max-width: 768px) { .jejak-grid { grid-template-columns: repeat(3, 1fr); } }
-        @media (max-width: 480px) { .jejak-grid { grid-template-columns: repeat(2, 1fr); } }
+        /* Scrollbar styling (optional, for desktop dev) */
+        .rant-list::-webkit-scrollbar { width: 4px; }
+        .rant-list::-webkit-scrollbar-track { background: transparent; }
+        .rant-list::-webkit-scrollbar-thumb { background: var(--accent1); border-radius: 4px; }
     </style>
 </head>
 <body>
@@ -295,11 +307,6 @@
                 <div class="artefak-burn"></div>
                 <div class="quote-overlay">
                     <p class="quote-text">The courage to begin is everything</p>
-                </div>
-                <div class="response-emojis">
-                    <span class="emoji">👍</span>
-                    <span class="emoji">🤗</span>
-                    <span class="emoji">🎉</span>
                 </div>
             </div>
         </div>
@@ -339,17 +346,29 @@
             });
         }
 
-        // Sample rant data — replace with real API later
+        // Rant dengan emoji pulse anonim
         const rants = [
-            { text: "Aku capek pura-pura baik. Dunia ini terlalu banyak noise, dan aku butuh ruang untuk tidak menjawab.", timestamp: "2025-12-09T22:14:00" },
-            { text: "Kenapa harus selalu 'move on'? Kadang aku cuma mau nangis di sudut gelap tanpa solusi.", timestamp: "2025-12-08T19:33:00" },
-            { text: "Mereka bilang 'positive vibes only'. Tapi bagaimana kalau jiwaku sedang abu-abu?", timestamp: "2025-12-07T14:02:00" }
+            {
+                text: "Aku capek pura-pura baik. Dunia ini terlalu banyak noise, dan aku butuh ruang untuk tidak menjawab.",
+                timestamp: "2025-12-09T22:14:00",
+                pulses: ["🫠", "💔", "👁️‍🗨️"]
+            },
+            {
+                text: "Kenapa harus selalu 'move on'? Kadang aku cuma mau nangis di sudut gelap tanpa solusi.",
+                timestamp: "2025-12-08T19:33:00",
+                pulses: ["🌧️", "🫂", "🕯️"]
+            },
+            {
+                text: "Mereka bilang 'positive vibes only'. Tapi bagaimana kalau jiwaku sedang abu-abu?",
+                timestamp: "2025-12-07T14:02:00",
+                pulses: ["🌫️", "🖤", "🫥"]
+            }
         ];
 
         function formatTimestamp(isoString) {
             const date = new Date(isoString);
             return date.toLocaleDateString('id-ID', {
-                day: '2-digit',
+                day: 'numeric',
                 month: 'short',
                 hour: '2-digit',
                 minute: '2-digit'
@@ -357,7 +376,7 @@
         }
 
         document.addEventListener('DOMContentLoaded', () => {
-            // Render Jejak Grid
+            // Render Jejak Grid (2 kolom)
             const grid = document.getElementById('jejak-grid');
             artefaks.forEach(artefak => {
                 const el = document.createElement('div');
@@ -370,14 +389,16 @@
                 grid.appendChild(el);
             });
 
-            // Render Rants (newest first)
+            // Render Rants
             const rantList = document.getElementById('rant-list');
             rants.forEach(rant => {
                 const entry = document.createElement('div');
                 entry.className = 'rant-entry';
+                const emojis = rant.pulses.map(e => `<span class="pulse-emoji">${e}</span>`).join('');
                 entry.innerHTML = `
-                    ${rant.text}
-                    <span class="rant-timestamp">${formatTimestamp(rant.timestamp)}</span>
+                    <div class="rant-text">${rant.text}</div>
+                    <div class="rant-pulses">${emojis}</div>
+                    <div class="rant-timestamp">${formatTimestamp(rant.timestamp)}</div>
                 `;
                 rantList.appendChild(entry);
             });
@@ -393,3 +414,5 @@
     </script>
 </body>
 </html>
+
+Mau lanjut ke halaman berikutnya?
