@@ -6,6 +6,7 @@
     <title>Login - NOPE</title>
     <link rel="stylesheet" href="style.css">
     <style>
+        /* BASE STYLES */
         .login-container {
             min-height: 100vh;
             background: #000000;
@@ -27,7 +28,7 @@
         
         .brand-logo {
             text-align: center;
-            margin-bottom: 40px;
+            margin-bottom: 30px;
         }
         
         .brand-logo h1 {
@@ -51,10 +52,109 @@
             font-weight: 500;
         }
         
-        #loginForm {
+        /* AUTH OPTIONS STYLES */
+        .auth-options {
             display: flex;
             flex-direction: column;
             gap: 15px;
+            margin-bottom: 25px;
+        }
+        
+        .option-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .option-card:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+        
+        .option-card.selected {
+            background: rgba(255, 59, 48, 0.1);
+            border-color: #ff3b30;
+            box-shadow: 0 5px 15px rgba(255, 59, 48, 0.2);
+        }
+        
+        .option-icon {
+            font-size: 2rem;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+        }
+        
+        .new-user .option-icon {
+            background: rgba(52, 199, 89, 0.1);
+            color: #34c759;
+        }
+        
+        .returning-user .option-icon {
+            background: rgba(0, 122, 255, 0.1);
+            color: #007aff;
+        }
+        
+        .option-content {
+            flex: 1;
+        }
+        
+        .option-content h3 {
+            margin: 0 0 5px 0;
+            font-size: 1.1rem;
+            color: white;
+        }
+        
+        .option-content p {
+            margin: 0;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+        
+        .option-badge {
+            display: inline-block;
+            margin-top: 8px;
+            padding: 4px 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .new-user .option-badge {
+            background: #34c759;
+            color: white;
+        }
+        
+        .returning-user .option-badge {
+            background: #007aff;
+            color: white;
+        }
+        
+        /* FORM STYLES */
+        #loginForm {
+            display: none; /* Hidden by default */
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .form-title {
+            text-align: center;
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: white;
+            font-weight: 600;
         }
         
         .input-group {
@@ -117,23 +217,28 @@
             transform: none !important;
         }
         
-        .login-note {
-            color: rgba(255, 255, 255, 0.5);
-            font-size: 0.8rem;
+        .back-to-options {
             text-align: center;
-            margin-top: 25px;
-            line-height: 1.5;
-            padding: 15px;
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 8px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            margin-top: 15px;
         }
         
-        .login-note strong {
-            color: #ff9500;
-            font-weight: 600;
+        .back-to-options button {
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: rgba(255, 255, 255, 0.6);
+            padding: 8px 15px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.2s;
         }
         
+        .back-to-options button:hover {
+            background: rgba(255, 255, 255, 0.05);
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        /* STATUS & MESSAGES */
         .status-message {
             color: #34c759;
             font-size: 0.9rem;
@@ -176,6 +281,23 @@
             background: #ff3b30;
         }
         
+        .login-note {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.8rem;
+            text-align: center;
+            margin-top: 25px;
+            line-height: 1.5;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .login-note strong {
+            color: #ff9500;
+            font-weight: 600;
+        }
+        
         @keyframes pulse {
             0% { opacity: 0.6; }
             50% { opacity: 1; }
@@ -186,36 +308,25 @@
             animation: pulse 1.5s infinite;
         }
         
-        .switch-account {
-            text-align: center;
-            margin-top: 15px;
-        }
-        
-        .switch-btn {
-            background: transparent;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            color: rgba(255, 255, 255, 0.6);
-            padding: 8px 15px;
-            border-radius: 6px;
-            font-size: 0.85rem;
+        /* DEBUG BUTTON */
+        .debug-btn {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            background: #ff3b30;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 12px;
             cursor: pointer;
-            transition: all 0.2s;
+            opacity: 0.3;
+            z-index: 1000;
+            transition: opacity 0.3s;
         }
         
-        .switch-btn:hover {
-            background: rgba(255, 255, 255, 0.05);
-            color: rgba(255, 255, 255, 0.8);
-        }
-        
-        .user-status-info {
-            background: rgba(52, 199, 89, 0.1);
-            border: 1px solid rgba(52, 199, 89, 0.3);
-            border-radius: 8px;
-            padding: 10px;
-            margin-bottom: 15px;
-            font-size: 0.85rem;
-            text-align: center;
-            color: rgba(255, 255, 255, 0.8);
+        .debug-btn:hover {
+            opacity: 0.8;
         }
     </style>
 </head>
@@ -234,7 +345,31 @@
                 <div class="flow-step" id="step3"></div>
             </div>
             
+            <!-- AUTH OPTIONS (Initial View) -->
+            <div class="auth-options" id="authOptions">
+                <div class="option-card new-user" data-option="register">
+                    <div class="option-icon">🆕</div>
+                    <div class="option-content">
+                        <h3>New to NOPE?</h3>
+                        <p>Create anonymous identity & choose rage hashtags</p>
+                        <div class="option-badge">Register</div>
+                    </div>
+                </div>
+                
+                <div class="option-card returning-user" data-option="login">
+                    <div class="option-icon">👤</div>
+                    <div class="option-content">
+                        <h3>Returning User</h3>
+                        <p>Already have NOPE identity? Login with Telegram</p>
+                        <div class="option-badge">Login</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- LOGIN FORM (Hidden Initially) -->
             <form id="loginForm">
+                <div class="form-title" id="formTitle">Register New Account</div>
+                
                 <div class="input-group">
                     <span class="input-icon">@</span>
                     <input 
@@ -253,16 +388,15 @@
                 </div>
                 
                 <button type="submit" id="submitBtn">
-                    ENTER NOPE
+                    CREATE NOPE IDENTITY
                 </button>
                 
                 <div class="status-message" id="statusMessage"></div>
             </form>
             
-            <div class="switch-account" id="switchAccountSection" style="display: none;">
-                <button class="switch-btn" id="switchAccountBtn">
-                    Use different Telegram account
-                </button>
+            <!-- BACK BUTTON (Will be added dynamically) -->
+            <div class="back-to-options" id="backToOptionsContainer" style="display: none;">
+                <button id="backToOptionsBtn">← Back to options</button>
             </div>
             
             <div class="login-note">
@@ -276,7 +410,11 @@
     </div>
 
     <script>
-        console.log('=== NOPE LOGIN SYSTEM ===');
+        console.log('=== NOPE AUTHENTICATION SYSTEM ===');
+        
+        // Global variables
+        let selectedAuthType = null; // 'register' or 'login'
+        let currentStep = 1;
         
         // Function to generate random NOPE username
         function generateNopeUsername() {
@@ -290,12 +428,12 @@
             const prefix = prefixes[Math.floor(Math.random() * prefixes.length)];
             const suffix = suffixes[Math.floor(Math.random() * suffixes.length)];
             
-            // Format: prefix + suffix + 4-digit number (lowercase)
             return `${prefix}${suffix}${randomNum}`.toLowerCase();
         }
         
         // Update flow indicator
         function updateFlowIndicator(step) {
+            currentStep = step;
             document.getElementById('step1').classList.toggle('active', step >= 1);
             document.getElementById('step2').classList.toggle('active', step >= 2);
             document.getElementById('step3').classList.toggle('active', step >= 3);
@@ -342,209 +480,210 @@
             localStorage.removeItem('nope_logged_in');
             localStorage.removeItem('telegram_username');
             console.log('🧹 NOPE data cleared');
+            alert('LocalStorage cleared for testing');
+            location.reload();
         }
         
-        // Main initialization - NO AUTO-REDIRECT
-        document.addEventListener('DOMContentLoaded', function() {
-            const loginForm = document.getElementById('loginForm');
-            const telegramInput = document.getElementById('telegramUsername');
-            const submitBtn = document.getElementById('submitBtn');
-            const switchSection = document.getElementById('switchAccountSection');
-            const switchBtn = document.getElementById('switchAccountBtn');
+        // Select authentication type
+        function selectAuthType(type) {
+            selectedAuthType = type;
             
-            // Check login status - DISPLAY ONLY, NO AUTO-REDIRECT
-            const isLoggedIn = localStorage.getItem('nope_logged_in') === 'true';
-            const hasOnboarding = localStorage.getItem('nope_onboarding_complete') === 'true';
-            const currentNopeUser = localStorage.getItem('nope_anon_username');
-            const currentTelegram = localStorage.getItem('telegram_username');
-            
-            if (isLoggedIn && currentNopeUser) {
-                console.log('ℹ️ User status:', currentNopeUser, hasOnboarding ? '(ready)' : '(needs onboarding)');
-                
-                // Show user status info
-                const statusInfo = document.createElement('div');
-                statusInfo.className = 'user-status-info';
-                statusInfo.innerHTML = `
-                    Currently logged in as: <strong>${currentNopeUser}</strong><br>
-                    Telegram: ${currentTelegram || 'Not set'}<br>
-                    Status: ${hasOnboarding ? '✓ Ready' : '⏳ Needs onboarding'}
-                `;
-                
-                // Insert before form
-                loginForm.parentNode.insertBefore(statusInfo, loginForm);
-                
-                // Update button for existing user
-                submitBtn.textContent = hasOnboarding ? 'GO TO HOME' : 'CONTINUE ONBOARDING';
-                submitBtn.style.background = hasOnboarding ? '#34c759' : '#ff9500';
-                
-                // Show switch account option
-                switchSection.style.display = 'block';
-                
-                // Update placeholder to show current username
-                telegramInput.placeholder = `Current: ${currentTelegram || 'none'}`;
-                telegramInput.value = currentTelegram ? currentTelegram.replace('@', '') : '';
-                
-                // Update form handler for existing user
-                const originalHandler = loginForm.onsubmit;
-                loginForm.onsubmit = async function(e) {
-                    e.preventDefault();
-                    
-                    const inputValue = telegramInput.value.trim();
-                    const telegramUsername = inputValue ? `@${inputValue}` : currentTelegram;
-                    
-                    // If same Telegram username or empty, proceed with existing account
-                    if (!inputValue || telegramUsername === currentTelegram) {
-                        console.log('🔄 Continuing with existing account:', currentNopeUser);
-                        updateStatus(hasOnboarding ? 'Going to home...' : 'Continuing onboarding...');
-                        submitBtn.disabled = true;
-                        
-                        await new Promise(resolve => setTimeout(resolve, 800));
-                        
-                        if (hasOnboarding) {
-                            window.location.href = 'home.html';
-                        } else {
-                            window.location.href = 'onboarding.html';
-                        }
-                        return;
-                    }
-                    
-                    // Different Telegram username - treat as new registration
-                    console.log('🆕 Different Telegram detected, starting new registration...');
-                    await handleNewRegistration(telegramUsername);
-                };
-            } else {
-                // Not logged in - normal flow
-                console.log('👋 Not logged in, ready for new registration');
-                updateStatus('Enter your Telegram username to begin');
-            }
-            
-            // Switch account button handler
-            if (switchBtn) {
-                switchBtn.onclick = function() {
-                    if (confirm('Logout and use different Telegram account?')) {
-                        clearNopeData();
-                        location.reload();
-                    }
-                };
-            }
-            
-            // Auto-format input (remove @ if user types it)
-            telegramInput.addEventListener('input', function() {
-                let value = this.value.trim();
-                
-                // Remove any existing @
-                if (value.startsWith('@')) {
-                    value = value.substring(1);
-                }
-                
-                // Update value without @ for cleaner input
-                this.value = value;
+            // Update UI
+            document.querySelectorAll('.option-card').forEach(card => {
+                card.classList.remove('selected');
             });
             
-            // Handle new user registration
-            async function handleNewRegistration(telegramUsername) {
-                console.log('🔐 New registration with:', telegramUsername);
-                
-                updateStatus('Creating your anonymous identity...');
-                updateFlowIndicator(2);
-                submitBtn.disabled = true;
-                submitBtn.textContent = 'CREATING IDENTITY...';
-                
-                await new Promise(resolve => setTimeout(resolve, 800));
-                
-                // Generate NOPE username
-                const nopeUsername = generateNopeUsername();
-                console.log('🎲 Generated NOPE username:', nopeUsername);
-                
-                // Show generated username
-                showGeneratedUsername(nopeUsername);
-                
-                updateStatus('Saving your identity...');
-                
-                // Clear any old data (fresh start)
-                localStorage.removeItem('nope_user_profile');
-                localStorage.removeItem('nope_selected_hashtags');
-                localStorage.removeItem('nope_onboarding_complete');
-                
-                // Save new user data
-                localStorage.setItem('telegram_username', telegramUsername);
-                localStorage.setItem('nope_anon_username', nopeUsername);
-                localStorage.setItem('nope_logged_in', 'true');
-                localStorage.setItem('login_timestamp', new Date().toISOString());
-                
-                await new Promise(resolve => setTimeout(resolve, 800));
-                
-                updateStatus('Identity created! Redirecting...');
-                updateFlowIndicator(3);
-                submitBtn.textContent = 'IDENTITY CREATED!';
-                
-                console.log('✅ New user registered:', {
-                    telegram: telegramUsername,
-                    nope: nopeUsername,
-                    timestamp: new Date().toLocaleString()
-                });
-                
-                await new Promise(resolve => setTimeout(resolve, 1200));
-                
-                // Redirect to onboarding for new user
-                window.location.href = 'onboarding.html';
+            const selectedCard = document.querySelector(`[data-option="${type}"]`);
+            if (selectedCard) {
+                selectedCard.classList.add('selected');
             }
             
-            // Handle form submission for new users
-            if (!isLoggedIn) {
-                loginForm.addEventListener('submit', async function(e) {
-                    e.preventDefault();
-                    
-                    const telegramInputValue = telegramInput.value.trim();
-                    if (!telegramInputValue) {
-                        updateStatus('Please enter your Telegram username', true);
-                        telegramInput.focus();
-                        return;
-                    }
-                    
-                    if (telegramInputValue.length < 3) {
-                        updateStatus('Username too short (min 3 chars)', true);
-                        return;
-                    }
-                    
-                    const telegramUsername = `@${telegramInputValue}`;
-                    await handleNewRegistration(telegramUsername);
-                });
+            // Show form after delay
+            setTimeout(() => {
+                showAuthForm(type);
+            }, 300);
+        }
+        
+        // Show authentication form based on type
+        function showAuthForm(type) {
+            // Hide options, show form
+            document.getElementById('authOptions').style.display = 'none';
+            document.getElementById('loginForm').style.display = 'flex';
+            document.getElementById('backToOptionsContainer').style.display = 'block';
+            
+            const formTitle = document.getElementById('formTitle');
+            const submitBtn = document.getElementById('submitBtn');
+            const telegramInput = document.getElementById('telegramUsername');
+            
+            if (type === 'register') {
+                formTitle.textContent = 'Register New Account';
+                submitBtn.textContent = 'CREATE NOPE IDENTITY';
+                submitBtn.style.background = '#34c759';
+                telegramInput.placeholder = 'your_telegram_username';
+                updateStatus('Enter Telegram username to create anonymous identity');
+                updateFlowIndicator(2);
+            } else {
+                formTitle.textContent = 'Login with Telegram';
+                submitBtn.textContent = 'LOGIN TO NOPE';
+                submitBtn.style.background = '#007aff';
+                telegramInput.placeholder = 'existing_telegram_username';
+                updateStatus('Enter your registered Telegram username');
+                updateFlowIndicator(2);
             }
             
             // Focus on input
             telegramInput.focus();
+        }
+        
+        // Go back to options selection
+        function backToOptions() {
+            selectedAuthType = null;
             
-            // Update flow indicator
+            // Reset form
+            document.getElementById('authOptions').style.display = 'flex';
+            document.getElementById('loginForm').style.display = 'none';
+            document.getElementById('backToOptionsContainer').style.display = 'none';
+            document.getElementById('generatedUsername').style.display = 'none';
+            document.getElementById('telegramUsername').value = '';
+            
+            // Reset UI
+            document.querySelectorAll('.option-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            
+            updateStatus('Welcome to NOPE. Choose an option to begin.');
             updateFlowIndicator(1);
+        }
+        
+        // Handle form submission
+        async function handleFormSubmit(e) {
+            e.preventDefault();
             
-            // Debug button for testing (remove in production)
-            if (window.location.hostname === 'localhost' || window.location.hostname.includes('127.0.0.1') || window.location.hostname.includes('vercel')) {
-                const debugBtn = document.createElement('button');
-                debugBtn.textContent = '🧪 Debug: Clear Data';
-                debugBtn.style.cssText = `
-                    position: fixed;
-                    bottom: 10px;
-                    right: 10px;
-                    background: #ff3b30;
-                    color: white;
-                    border: none;
-                    padding: 5px 10px;
-                    border-radius: 5px;
-                    font-size: 12px;
-                    cursor: pointer;
-                    opacity: 0.3;
-                    z-index: 1000;
-                `;
-                debugBtn.onclick = function(e) {
-                    e.preventDefault();
-                    clearNopeData();
-                    alert('LocalStorage cleared for testing');
-                    location.reload();
-                };
-                document.body.appendChild(debugBtn);
+            const telegramInput = document.getElementById('telegramUsername');
+            const telegramValue = telegramInput.value.trim();
+            
+            if (!telegramValue) {
+                updateStatus('Please enter Telegram username', true);
+                return;
             }
-        });
-    </script>
-</body>
-</html>
+            
+            if (telegramValue.length < 3) {
+                updateStatus('Username too short (min 3 characters)', true);
+                return;
+            }
+            
+            const telegramUsername = `@${telegramValue}`;
+            const submitBtn = document.getElementById('submitBtn');
+            
+            if (selectedAuthType === 'register') {
+                await handleRegister(telegramUsername, submitBtn);
+            } else {
+                await handleLogin(telegramUsername, submitBtn);
+            }
+        }
+        
+        // Handle new user registration
+        async function handleRegister(telegramUsername, submitBtn) {
+            // Check if Telegram already exists
+            const existingTelegram = localStorage.getItem('telegram_username');
+            if (existingTelegram === telegramUsername) {
+                const existingUser = localStorage.getItem('nope_anon_username');
+                const result = confirm(`This Telegram is already registered as: ${existingUser}\n\nDo you want to login instead?`);
+                
+                if (result) {
+                    // Switch to login flow
+                    selectAuthType('login');
+                    document.getElementById('telegramUsername').value = telegramUsername.replace('@', '');
+                    return;
+                } else {
+                    updateStatus('Please use a different Telegram username', true);
+                    return;
+                }
+            }
+            
+            // Start registration process
+            updateStatus('Creating your anonymous identity...');
+            submitBtn.disabled = true;
+            updateFlowIndicator(2);
+            
+            await new Promise(resolve => setTimeout(resolve, 800));
+            
+            // Generate NOPE username
+            const nopeUsername = generateNopeUsername();
+            showGeneratedUsername(nopeUsername);
+            
+            updateStatus('Saving your identity...');
+            
+            // Clear any old data and save new user
+            localStorage.removeItem('nope_user_profile');
+            localStorage.removeItem('nope_selected_hashtags');
+            localStorage.removeItem('nope_onboarding_complete');
+            
+            localStorage.setItem('telegram_username', telegramUsername);
+            localStorage.setItem('nope_anon_username', nopeUsername);
+            localStorage.setItem('nope_logged_in', 'true');
+            localStorage.setItem('login_timestamp', new Date().toISOString());
+            
+            await new Promise(resolve => setTimeout(resolve, 800));
+            
+            updateStatus('Identity created! Redirecting...');
+            updateFlowIndicator(3);
+            submitBtn.textContent = 'IDENTITY CREATED!';
+            
+            console.log('✅ New user registered:', {
+                telegram: telegramUsername,
+                nope: nopeUsername,
+                timestamp: new Date().toLocaleString()
+            });
+            
+            await new Promise(resolve => setTimeout(resolve, 1200));
+            
+            // Redirect to onboarding for new user
+            window.location.href = 'onboarding.html';
+        }
+        
+        // Handle existing user login
+        async function handleLogin(telegramUsername, submitBtn) {
+            // Check if user exists
+            const storedTelegram = localStorage.getItem('telegram_username');
+            const storedNopeUser = localStorage.getItem('nope_anon_username');
+            const hasOnboarding = localStorage.getItem('nope_onboarding_complete') === 'true';
+            
+            if (storedTelegram !== telegramUsername || !storedNopeUser) {
+                updateStatus('Telegram username not found.', true);
+                
+                // Show option to register instead
+                setTimeout(() => {
+                    const registerOption = document.createElement('div');
+                    registerOption.style.textAlign = 'center';
+                    registerOption.style.marginTop = '10px';
+                    registerOption.innerHTML = `
+                        <button id="switchToRegister" style="
+                            background: #34c759;
+                            color: white;
+                            border: none;
+                            padding: 10px 15px;
+                            border-radius: 8px;
+                            cursor: pointer;
+                            font-size: 0.9rem;
+                        ">
+                            Register as New User
+                        </button>
+                    `;
+                    
+                    const statusEl = document.getElementById('statusMessage');
+                    statusEl.appendChild(registerOption);
+                    
+                    document.getElementById('switchToRegister').onclick = function() {
+                        selectAuthType('register');
+                        document.getElementById('telegramUsername').value = telegramUsername.replace('@', '');
+                        registerOption.remove();
+                    };
+                }, 500);
+                
+                return;
+            }
+            
+            // Successful login
+            updateStatus('Login successful!');
+            submitBtn.disabled =
