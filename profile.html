@@ -229,14 +229,14 @@
             color: white;
         }
         
-        /* Empathetic Emojis */
-        .empathy-section {
+        /* ===== REACTIONS STYLES ===== */
+        .reactions-section {
             border-top: 1px solid #eee;
             padding-top: 20px;
             margin-top: 20px;
         }
         
-        .empathy-title {
+        .reactions-title {
             font-size: 14px;
             color: #666;
             margin-bottom: 15px;
@@ -245,59 +245,183 @@
             gap: 8px;
         }
         
-        .empathy-emojis {
+        .reactions-buttons {
             display: flex;
+            justify-content: space-between;
             gap: 10px;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
         }
         
-        .emoji-btn {
+        .reaction-btn {
+            flex: 1;
             background: #f8f9fa;
             border: 2px solid #eee;
-            border-radius: 50px;
-            padding: 8px 15px;
+            border-radius: 12px;
+            padding: 12px 8px;
             cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.3s;
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .reaction-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .reaction-btn.active {
+            background: rgba(52, 199, 89, 0.1);
+            border-color: #34c759;
+        }
+        
+        .reaction-icon {
+            font-size: 24px;
+        }
+        
+        .reaction-text {
+            font-size: 12px;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .reaction-count {
+            font-size: 13px;
+            font-weight: 700;
+            color: #ff6b6b;
+            min-width: 20px;
+            height: 20px;
+            background: rgba(255,107,107,0.1);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 6px;
+        }
+        
+        /* ===== CHATBOX STYLES ===== */
+        .chatbox-section {
+            margin: 20px 0;
+            padding: 15px;
+            background: #f9f9f9;
+            border-radius: 10px;
+            border: 1px solid #eaeaea;
+        }
+        
+        .chatbox-title {
+            font-size: 13px;
+            color: #666;
+            margin-bottom: 10px;
             display: flex;
             align-items: center;
             gap: 8px;
+        }
+        
+        .chatbox-wrapper {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        
+        .chatbox-input {
+            flex: 1;
+            padding: 12px 15px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: 'Inter', sans-serif;
             transition: all 0.3s;
         }
         
-        .emoji-btn:hover {
-            background: #fff5f5;
-            border-color: #ffcccc;
+        .chatbox-input:focus {
+            outline: none;
+            border-color: #667eea;
+            background: #fff;
+        }
+        
+        .chatbox-counter {
+            font-size: 11px;
+            color: #888;
+            white-space: nowrap;
+        }
+        
+        .chatbox-send {
+            width: 44px;
+            height: 44px;
+            background: #667eea;
+            border: none;
+            border-radius: 8px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .chatbox-send:hover {
+            background: #5a67d8;
             transform: scale(1.05);
         }
         
-        .emoji-btn.active {
-            background: #fff5f5;
-            border-color: #ff6b6b;
-            box-shadow: 0 3px 10px rgba(255,107,107,0.2);
+        /* ===== RANTS TIMELINE STYLES ===== */
+        .rants-timeline {
+            margin-top: 20px;
+            padding: 15px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 10px;
+            border: 1px solid #dee2e6;
         }
         
-        .emoji-icon {
-            font-size: 20px;
-        }
-        
-        .emoji-count {
-            font-size: 14px;
-            font-weight: 600;
-            color: #333;
-            min-width: 20px;
-            text-align: center;
-        }
-        
-        .empathy-total {
+        .rants-title {
             font-size: 13px;
-            color: #888;
+            color: #666;
+            margin-bottom: 12px;
             display: flex;
             align-items: center;
-            gap: 5px;
+            gap: 8px;
         }
         
-        .total-number {
-            font-weight: bold;
-            color: #ff6b6b;
+        .rants-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .rant-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            background: white;
+            border-radius: 6px;
+            border: 1px solid #f1f3f5;
+            transition: all 0.2s;
+        }
+        
+        .rant-item:hover {
+            background: #f8f9fa;
+            border-color: #dee2e6;
+        }
+        
+        .rant-time {
+            font-size: 11px;
+            color: #888;
+            background: #f1f3f5;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-weight: 500;
+        }
+        
+        .rant-text {
+            font-size: 13px;
+            color: #495057;
+            font-style: italic;
+            flex: 1;
+            margin-left: 10px;
+            text-align: right;
         }
         
         /* Artefak Description */
@@ -394,6 +518,58 @@
             to { opacity: 1; transform: translateY(0); }
         }
         
+        /* ===== BOTTOM NAVIGATION ===== */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(15, 15, 25, 0.95);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(255, 255, 255, 0.15);
+            display: flex;
+            justify-content: space-around;
+            padding: 12px 0;
+            z-index: 1000;
+        }
+        
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: #8a8aa8;
+            padding: 8px 12px;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            min-width: 70px;
+        }
+        
+        .nav-item i {
+            font-size: 1.3rem;
+            margin-bottom: 4px;
+        }
+        
+        .nav-item span {
+            font-size: 0.7rem;
+            font-weight: 500;
+        }
+        
+        .nav-item.active {
+            color: #34c759;
+            background: rgba(52, 199, 89, 0.15);
+        }
+        
+        .nav-item:hover:not(.active) {
+            color: #b0b0d0;
+            background: rgba(255, 255, 255, 0.05);
+        }
+        
+        /* Add space for bottom nav */
+        body {
+            padding-bottom: 80px !important;
+        }
+        
         /* Responsive */
         @media (max-width: 768px) {
             .artefak-grid {
@@ -411,6 +587,18 @@
             
             .artefak-media {
                 height: 200px;
+            }
+            
+            .reactions-buttons {
+                flex-direction: column;
+            }
+            
+            .chatbox-wrapper {
+                flex-direction: column;
+            }
+            
+            .chatbox-input {
+                width: 100%;
             }
         }
     </style>
@@ -438,7 +626,7 @@
                 <h1 class="gallery-title">Artefak Gallery</h1>
                 <p class="gallery-subtitle">
                     Monumen permanen dari setiap 30 hari. Tidak bisa dihapus, tidak ada komentar.<br>
-                    Hanya empati dan kata-kata yang memorable.
+                    Hanya reaksi dan kata-kata yang memorable.
                 </p>
                 
                 <div class="gallery-stats">
@@ -454,8 +642,8 @@
                         <div class="stat-icon">
                             <i class="fas fa-heart"></i>
                         </div>
-                        <div class="stat-number" id="total-empathy">42</div>
-                        <div class="stat-label">Total Empati</div>
+                        <div class="stat-number" id="total-reactions">86</div>
+                        <div class="stat-label">Total Reaksi</div>
                     </div>
                     
                     <div class="gallery-stat">
@@ -516,37 +704,61 @@
                             </button>
                         </div>
                         
-                        <!-- Empathetic Emojis -->
-                        <div class="empathy-section">
-                            <div class="empathy-title">
-                                <i class="fas fa-heart"></i> Empathetic Responses
+                        <!-- Reactions - 3 Only -->
+                        <div class="reactions-section">
+                            <div class="reactions-title">
+                                <i class="fas fa-heart"></i> Reactions
                             </div>
                             
-                            <div class="empathy-emojis">
-                                <button class="emoji-btn" data-emoji="❤️" onclick="addEmpathy(1, 'heart')">
-                                    <span class="emoji-icon">❤️</span>
-                                    <span class="emoji-count" id="count-1-heart">8</span>
+                            <div class="reactions-buttons">
+                                <button class="reaction-btn" data-reaction="guejuga" onclick="addReaction(1, 'guejuga')">
+                                    <span class="reaction-icon">👍</span>
+                                    <span class="reaction-text">GueJuga</span>
+                                    <span class="reaction-count" id="react-1-guejuga">8</span>
                                 </button>
                                 
-                                <button class="emoji-btn" data-emoji="😢" onclick="addEmpathy(1, 'sad')">
-                                    <span class="emoji-icon">😢</span>
-                                    <span class="emoji-count" id="count-1-sad">3</span>
+                                <button class="reaction-btn" data-reaction="peluk" onclick="addReaction(1, 'peluk')">
+                                    <span class="reaction-icon">🤗</span>
+                                    <span class="reaction-text">Peluk</span>
+                                    <span class="reaction-count" id="react-1-peluk">3</span>
                                 </button>
                                 
-                                <button class="emoji-btn" data-emoji="🤔" onclick="addEmpathy(1, 'think')">
-                                    <span class="emoji-icon">🤔</span>
-                                    <span class="emoji-count" id="count-1-think">5</span>
-                                </button>
-                                
-                                <button class="emoji-btn" data-emoji="🙏" onclick="addEmpathy(1, 'pray')">
-                                    <span class="emoji-icon">🙏</span>
-                                    <span class="emoji-count" id="count-1-pray">2</span>
+                                <button class="reaction-btn" data-reaction="bangga" onclick="addReaction(1, 'bangga')">
+                                    <span class="reaction-icon">🎉</span>
+                                    <span class="reaction-text">Bangga</span>
+                                    <span class="reaction-count" id="react-1-bangga">5</span>
                                 </button>
                             </div>
                             
-                            <div class="empathy-total">
-                                <i class="fas fa-hands-helping"></i>
-                                Total: <span class="total-number" id="total-1">18</span> empati
+                            <!-- 3-Word Chatbox -->
+                            <div class="chatbox-section">
+                                <div class="chatbox-title">
+                                    <i class="fas fa-comment-alt"></i> Quick Response (Max 3 kata)
+                                </div>
+                                <div class="chatbox-wrapper">
+                                    <input type="text" 
+                                           class="chatbox-input" 
+                                           id="chatbox-1"
+                                           placeholder="Tulis 3 kata..." 
+                                           maxlength="30"
+                                           oninput="updateCharCount(1)">
+                                    <div class="chatbox-counter">
+                                        <span id="char-count-1">0</span>/3 kata
+                                    </div>
+                                    <button class="chatbox-send" onclick="sendResponse(1)">
+                                        <i class="fas fa-paper-plane"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <!-- Recent Rants Timeline -->
+                            <div class="rants-timeline">
+                                <div class="rants-title">
+                                    <i class="fas fa-history"></i> 3 Rants Terakhir
+                                </div>
+                                <div class="rants-list" id="rants-list-1">
+                                    <!-- Rants will be populated by JavaScript -->
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -580,37 +792,61 @@
                             </button>
                         </div>
                         
-                        <!-- Empathetic Emojis -->
-                        <div class="empathy-section">
-                            <div class="empathy-title">
-                                <i class="fas fa-heart"></i> Empathetic Responses
+                        <!-- Reactions - 3 Only -->
+                        <div class="reactions-section">
+                            <div class="reactions-title">
+                                <i class="fas fa-heart"></i> Reactions
                             </div>
                             
-                            <div class="empathy-emojis">
-                                <button class="emoji-btn" data-emoji="❤️" onclick="addEmpathy(2, 'heart')">
-                                    <span class="emoji-icon">❤️</span>
-                                    <span class="emoji-count" id="count-2-heart">12</span>
+                            <div class="reactions-buttons">
+                                <button class="reaction-btn" data-reaction="guejuga" onclick="addReaction(2, 'guejuga')">
+                                    <span class="reaction-icon">👍</span>
+                                    <span class="reaction-text">GueJuga</span>
+                                    <span class="reaction-count" id="react-2-guejuga">12</span>
                                 </button>
                                 
-                                <button class="emoji-btn active" data-emoji="😢" onclick="addEmpathy(2, 'sad')">
-                                    <span class="emoji-icon">😢</span>
-                                    <span class="emoji-count" id="count-2-sad">7</span>
+                                <button class="reaction-btn active" data-reaction="peluk" onclick="addReaction(2, 'peluk')">
+                                    <span class="reaction-icon">🤗</span>
+                                    <span class="reaction-text">Peluk</span>
+                                    <span class="reaction-count" id="react-2-peluk">7</span>
                                 </button>
                                 
-                                <button class="emoji-btn" data-emoji="🤔" onclick="addEmpathy(2, 'think')">
-                                    <span class="emoji-icon">🤔</span>
-                                    <span class="emoji-count" id="count-2-think">4</span>
-                                </button>
-                                
-                                <button class="emoji-btn" data-emoji="🙏" onclick="addEmpathy(2, 'pray')">
-                                    <span class="emoji-icon">🙏</span>
-                                    <span class="emoji-count" id="count-2-pray">3</span>
+                                <button class="reaction-btn" data-reaction="bangga" onclick="addReaction(2, 'bangga')">
+                                    <span class="reaction-icon">🎉</span>
+                                    <span class="reaction-text">Bangga</span>
+                                    <span class="reaction-count" id="react-2-bangga">4</span>
                                 </button>
                             </div>
                             
-                            <div class="empathy-total">
-                                <i class="fas fa-hands-helping"></i>
-                                Total: <span class="total-number" id="total-2">26</span> empati
+                            <!-- 3-Word Chatbox -->
+                            <div class="chatbox-section">
+                                <div class="chatbox-title">
+                                    <i class="fas fa-comment-alt"></i> Quick Response (Max 3 kata)
+                                </div>
+                                <div class="chatbox-wrapper">
+                                    <input type="text" 
+                                           class="chatbox-input" 
+                                           id="chatbox-2"
+                                           placeholder="Tulis 3 kata..." 
+                                           maxlength="30"
+                                           oninput="updateCharCount(2)">
+                                    <div class="chatbox-counter">
+                                        <span id="char-count-2">0</span>/3 kata
+                                    </div>
+                                    <button class="chatbox-send" onclick="sendResponse(2)">
+                                        <i class="fas fa-paper-plane"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <!-- Recent Rants Timeline -->
+                            <div class="rants-timeline">
+                                <div class="rants-title">
+                                    <i class="fas fa-history"></i> 3 Rants Terakhir
+                                </div>
+                                <div class="rants-list" id="rants-list-2">
+                                    <!-- Rants will be populated by JavaScript -->
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -644,37 +880,61 @@
                             </button>
                         </div>
                         
-                        <!-- Empathetic Emojis -->
-                        <div class="empathy-section">
-                            <div class="empathy-title">
-                                <i class="fas fa-heart"></i> Empathetic Responses
+                        <!-- Reactions - 3 Only -->
+                        <div class="reactions-section">
+                            <div class="reactions-title">
+                                <i class="fas fa-heart"></i> Reactions
                             </div>
                             
-                            <div class="empathy-emojis">
-                                <button class="emoji-btn" data-emoji="❤️" onclick="addEmpathy(3, 'heart')">
-                                    <span class="emoji-icon">❤️</span>
-                                    <span class="emoji-count" id="count-3-heart">6</span>
+                            <div class="reactions-buttons">
+                                <button class="reaction-btn" data-reaction="guejuga" onclick="addReaction(3, 'guejuga')">
+                                    <span class="reaction-icon">👍</span>
+                                    <span class="reaction-text">GueJuga</span>
+                                    <span class="reaction-count" id="react-3-guejuga">6</span>
                                 </button>
                                 
-                                <button class="emoji-btn" data-emoji="😢" onclick="addEmpathy(3, 'sad')">
-                                    <span class="emoji-icon">😢</span>
-                                    <span class="emoji-count" id="count-3-sad">2</span>
+                                <button class="reaction-btn" data-reaction="peluk" onclick="addReaction(3, 'peluk')">
+                                    <span class="reaction-icon">🤗</span>
+                                    <span class="reaction-text">Peluk</span>
+                                    <span class="reaction-count" id="react-3-peluk">2</span>
                                 </button>
                                 
-                                <button class="emoji-btn active" data-emoji="🤔" onclick="addEmpathy(3, 'think')">
-                                    <span class="emoji-icon">🤔</span>
-                                    <span class="emoji-count" id="count-3-think">9</span>
-                                </button>
-                                
-                                <button class="emoji-btn" data-emoji="🙏" onclick="addEmpathy(3, 'pray')">
-                                    <span class="emoji-icon">🙏</span>
-                                    <span class="emoji-count" id="count-3-pray">1</span>
+                                <button class="reaction-btn active" data-reaction="bangga" onclick="addReaction(3, 'bangga')">
+                                    <span class="reaction-icon">🎉</span>
+                                    <span class="reaction-text">Bangga</span>
+                                    <span class="reaction-count" id="react-3-bangga">9</span>
                                 </button>
                             </div>
                             
-                            <div class="empathy-total">
-                                <i class="fas fa-hands-helping"></i>
-                                Total: <span class="total-number" id="total-3">18</span> empati
+                            <!-- 3-Word Chatbox -->
+                            <div class="chatbox-section">
+                                <div class="chatbox-title">
+                                    <i class="fas fa-comment-alt"></i> Quick Response (Max 3 kata)
+                                </div>
+                                <div class="chatbox-wrapper">
+                                    <input type="text" 
+                                           class="chatbox-input" 
+                                           id="chatbox-3"
+                                           placeholder="Tulis 3 kata..." 
+                                           maxlength="30"
+                                           oninput="updateCharCount(3)">
+                                    <div class="chatbox-counter">
+                                        <span id="char-count-3">0</span>/3 kata
+                                    </div>
+                                    <button class="chatbox-send" onclick="sendResponse(3)">
+                                        <i class="fas fa-paper-plane"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <!-- Recent Rants Timeline -->
+                            <div class="rants-timeline">
+                                <div class="rants-title">
+                                    <i class="fas fa-history"></i> 3 Rants Terakhir
+                                </div>
+                                <div class="rants-list" id="rants-list-3">
+                                    <!-- Rants will be populated by JavaScript -->
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -708,37 +968,61 @@
                             </button>
                         </div>
                         
-                        <!-- Empathetic Emojis -->
-                        <div class="empathy-section">
-                            <div class="empathy-title">
-                                <i class="fas fa-heart"></i> Empathetic Responses
+                        <!-- Reactions - 3 Only -->
+                        <div class="reactions-section">
+                            <div class="reactions-title">
+                                <i class="fas fa-heart"></i> Reactions
                             </div>
                             
-                            <div class="empathy-emojis">
-                                <button class="emoji-btn active" data-emoji="❤️" onclick="addEmpathy(4, 'heart')">
-                                    <span class="emoji-icon">❤️</span>
-                                    <span class="emoji-count" id="count-4-heart">15</span>
+                            <div class="reactions-buttons">
+                                <button class="reaction-btn active" data-reaction="guejuga" onclick="addReaction(4, 'guejuga')">
+                                    <span class="reaction-icon">👍</span>
+                                    <span class="reaction-text">GueJuga</span>
+                                    <span class="reaction-count" id="react-4-guejuga">15</span>
                                 </button>
                                 
-                                <button class="emoji-btn" data-emoji="😢" onclick="addEmpathy(4, 'sad')">
-                                    <span class="emoji-icon">😢</span>
-                                    <span class="emoji-count" id="count-4-sad">4</span>
+                                <button class="reaction-btn" data-reaction="peluk" onclick="addReaction(4, 'peluk')">
+                                    <span class="reaction-icon">🤗</span>
+                                    <span class="reaction-text">Peluk</span>
+                                    <span class="reaction-count" id="react-4-peluk">4</span>
                                 </button>
                                 
-                                <button class="emoji-btn" data-emoji="🤔" onclick="addEmpathy(4, 'think')">
-                                    <span class="emoji-icon">🤔</span>
-                                    <span class="emoji-count" id="count-4-think">3</span>
-                                </button>
-                                
-                                <button class="emoji-btn" data-emoji="🙏" onclick="addEmpathy(4, 'pray')">
-                                    <span class="emoji-icon">🙏</span>
-                                    <span class="emoji-count" id="count-4-pray">2</span>
+                                <button class="reaction-btn" data-reaction="bangga" onclick="addReaction(4, 'bangga')">
+                                    <span class="reaction-icon">🎉</span>
+                                    <span class="reaction-text">Bangga</span>
+                                    <span class="reaction-count" id="react-4-bangga">3</span>
                                 </button>
                             </div>
                             
-                            <div class="empathy-total">
-                                <i class="fas fa-hands-helping"></i>
-                                Total: <span class="total-number" id="total-4">24</span> empati
+                            <!-- 3-Word Chatbox -->
+                            <div class="chatbox-section">
+                                <div class="chatbox-title">
+                                    <i class="fas fa-comment-alt"></i> Quick Response (Max 3 kata)
+                                </div>
+                                <div class="chatbox-wrapper">
+                                    <input type="text" 
+                                           class="chatbox-input" 
+                                           id="chatbox-4"
+                                           placeholder="Tulis 3 kata..." 
+                                           maxlength="30"
+                                           oninput="updateCharCount(4)">
+                                    <div class="chatbox-counter">
+                                        <span id="char-count-4">0</span>/3 kata
+                                    </div>
+                                    <button class="chatbox-send" onclick="sendResponse(4)">
+                                        <i class="fas fa-paper-plane"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <!-- Recent Rants Timeline -->
+                            <div class="rants-timeline">
+                                <div class="rants-title">
+                                    <i class="fas fa-history"></i> 3 Rants Terakhir
+                                </div>
+                                <div class="rants-list" id="rants-list-4">
+                                    <!-- Rants will be populated by JavaScript -->
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -790,7 +1074,7 @@
                     <p style="text-align: center; margin-bottom: 20px; font-style: italic;">
                         "These artefacts are permanent monuments. They cannot be deleted, for they are pieces of a journey.<br>
                         They cannot be commented on, for words often distort empathy.<br>
-                        They can only receive emojis of understanding, and bear short words that matter."
+                        They can only receive reactions of understanding, and bear short words that matter."
                     </p>
                     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-top: 30px;">
                         <div style="text-align: center;">
@@ -798,12 +1082,12 @@
                             <div style="font-size: 14px; opacity: 0.8;">Permanent</div>
                         </div>
                         <div style="text-align: center;">
-                            <div style="font-size: 24px; margin-bottom: 10px;">🤐</div>
-                            <div style="font-size: 14px; opacity: 0.8;">No Comments</div>
+                            <div style="font-size: 24px; margin-bottom: 10px;">👍🤗🎉</div>
+                            <div style="font-size: 14px; opacity: 0.8;">3 Reactions Only</div>
                         </div>
                         <div style="text-align: center;">
-                            <div style="font-size: 24px; margin-bottom: 10px;">💖</div>
-                            <div style="font-size: 14px; opacity: 0.8;">Only Empathy</div>
+                            <div style="font-size: 24px; margin-bottom: 10px;">💬</div>
+                            <div style="font-size: 14px; opacity: 0.8;">3-Word Responses</div>
                         </div>
                         <div style="text-align: center;">
                             <div style="font-size: 24px; margin-bottom: 10px;">📝</div>
@@ -861,27 +1145,51 @@
     </div>
 
     <script>
-        // Artefak data
+        // Artefak data - UPDATED
         let artefakData = {
             1: {
                 memorable: "The courage to begin is everything.",
-                empathy: { heart: 8, sad: 3, think: 5, pray: 2 },
-                userEmpathy: null // which emoji user has given
+                reactions: { guejuga: 8, peluk: 3, bangga: 5 },
+                userReaction: null,
+                chatResponses: [],
+                recentRants: [
+                    { time: "2h ago", text: "Meeting useless banget hari ini" },
+                    { time: "1d ago", text: "Macetnya bikin stress" },
+                    { time: "3d ago", text: "App error mulu" }
+                ]
             },
             2: {
                 memorable: "Some codes are better left unexecuted.",
-                empathy: { heart: 12, sad: 7, think: 4, pray: 3 },
-                userEmpathy: 'sad'
+                reactions: { guejuga: 12, peluk: 7, bangga: 4 },
+                userReaction: 'peluk',
+                chatResponses: [],
+                recentRants: [
+                    { time: "4h ago", text: "Deadline impossible" },
+                    { time: "2d ago", text: "Lagi bad mood" },
+                    { time: "4d ago", text: "Capek banget" }
+                ]
             },
             3: {
                 memorable: "Invisibility is the new presence.",
-                empathy: { heart: 6, sad: 2, think: 9, pray: 1 },
-                userEmpathy: 'think'
+                reactions: { guejuga: 6, peluk: 2, bangga: 9 },
+                userReaction: 'bangga',
+                chatResponses: [],
+                recentRants: [
+                    { time: "5h ago", text: "Bos sok tau" },
+                    { time: "1d ago", text: "Kerjaan numpuk" },
+                    { time: "2d ago", text: "Pengen liburan" }
+                ]
             },
             4: {
                 memorable: "Silence speaks volumes to those who listen.",
-                empathy: { heart: 15, sad: 4, think: 3, pray: 2 },
-                userEmpathy: 'heart'
+                reactions: { guejuga: 15, peluk: 4, bangga: 3 },
+                userReaction: 'guejuga',
+                chatResponses: [],
+                recentRants: [
+                    { time: "3h ago", text: "Beresin dong" },
+                    { time: "1d ago", text: "Lelah mental" },
+                    { time: "3d ago", text: "Mau resign" }
+                ]
             }
         };
         
@@ -889,8 +1197,9 @@
         
         // Initialize
         document.addEventListener('DOMContentLoaded', function() {
-            updateEmpathyCounts();
+            updateReactionCounts();
             updateStats();
+            updateAllRantsTimelines();
             
             // Character counter for memorable words
             const textarea = document.getElementById('memorable-edit-text');
@@ -899,27 +1208,33 @@
                     document.getElementById('char-count').textContent = this.value.length;
                 });
             }
+            
+            // Initialize char counters for all artefaks
+            for (let i = 1; i <= 4; i++) {
+                const input = document.getElementById(`chatbox-${i}`);
+                if (input) {
+                    input.addEventListener('input', () => updateCharCount(i));
+                }
+            }
         });
         
-        // Update all empathy counts
-        function updateEmpathyCounts() {
+        // Update all reaction counts
+        function updateReactionCounts() {
             for (let id in artefakData) {
                 const data = artefakData[id];
-                const total = data.empathy.heart + data.empathy.sad + data.empathy.think + data.empathy.pray;
+                const total = data.reactions.guejuga + data.reactions.peluk + data.reactions.bangga;
                 
-                // Update counts
-                document.getElementById(`count-${id}-heart`).textContent = data.empathy.heart;
-                document.getElementById(`count-${id}-sad`).textContent = data.empathy.sad;
-                document.getElementById(`count-${id}-think`).textContent = data.empathy.think;
-                document.getElementById(`count-${id}-pray`).textContent = data.empathy.pray;
-                document.getElementById(`total-${id}`).textContent = total;
+                // Update reaction counts
+                document.getElementById(`react-${id}-guejuga`).textContent = data.reactions.guejuga;
+                document.getElementById(`react-${id}-peluk`).textContent = data.reactions.peluk;
+                document.getElementById(`react-${id}-bangga`).textContent = data.reactions.bangga;
                 
                 // Update active state
-                const buttons = document.querySelectorAll(`[data-cycle="${id}"] .emoji-btn`);
+                const buttons = document.querySelectorAll(`[data-cycle="${id}"] .reaction-btn`);
                 buttons.forEach(btn => btn.classList.remove('active'));
                 
-                if (data.userEmpathy) {
-                    const activeBtn = document.querySelector(`[data-cycle="${id}"] .emoji-btn[data-emoji="${getEmojiSymbol(data.userEmpathy)}"]`);
+                if (data.userReaction) {
+                    const activeBtn = document.querySelector(`[data-cycle="${id}"] .reaction-btn[data-reaction="${data.userReaction}"]`);
                     if (activeBtn) activeBtn.classList.add('active');
                 }
             }
@@ -927,77 +1242,176 @@
         
         // Update gallery stats
         function updateStats() {
-            let totalEmpathy = 0;
+            let totalReactions = 0;
             let totalDays = 0;
             
             for (let id in artefakData) {
                 const data = artefakData[id];
-                totalEmpathy += data.empathy.heart + data.empathy.sad + data.empathy.think + data.empathy.pray;
+                totalReactions += data.reactions.guejuga + data.reactions.peluk + data.reactions.bangga;
                 totalDays += 30; // Each artefak = 30 days
             }
             
             document.getElementById('total-artefak').textContent = Object.keys(artefakData).length;
-            document.getElementById('total-empathy').textContent = totalEmpathy;
+            document.getElementById('total-reactions').textContent = totalReactions;
             document.getElementById('days-covered').textContent = totalDays;
             document.getElementById('completion-rate').textContent = Math.round((Object.keys(artefakData).length / 12) * 100) + '%';
         }
         
-        // Add empathy to artefak
-        function addEmpathy(artefakId, type) {
+        // Add reaction
+        function addReaction(artefakId, type) {
             const data = artefakData[artefakId];
             
-            // If user already gave this type of empathy, remove it
-            if (data.userEmpathy === type) {
-                data.empathy[type]--;
-                data.userEmpathy = null;
+            // If user already gave this reaction, remove it
+            if (data.userReaction === type) {
+                data.reactions[type]--;
+                data.userReaction = null;
             } 
-            // If user gave different type before, switch
-            else if (data.userEmpathy) {
-                // Remove previous empathy
-                data.empathy[data.userEmpathy]--;
-                // Add new empathy
-                data.empathy[type]++;
-                data.userEmpathy = type;
+            // If user gave different reaction before, switch
+            else if (data.userReaction) {
+                // Remove previous reaction
+                data.reactions[data.userReaction]--;
+                // Add new reaction
+                data.reactions[type]++;
+                data.userReaction = type;
             }
-            // First time giving empathy
+            // First time giving reaction
             else {
-                data.empathy[type]++;
-                data.userEmpathy = type;
+                data.reactions[type]++;
+                data.userReaction = type;
             }
             
-            updateEmpathyCounts();
+            updateReactionCounts();
             updateStats();
             
             // Show feedback
-            const emoji = getEmojiSymbol(type);
+            const emoji = getReactionEmoji(type);
+            showFeedback(`${emoji} ${getReactionText(type)}`);
+        }
+        
+        function getReactionEmoji(type) {
+            const emojis = {
+                'guejuga': '👍',
+                'peluk': '🤗',
+                'bangga': '🎉'
+            };
+            return emojis[type] || '👍';
+        }
+        
+        function getReactionText(type) {
+            const texts = {
+                'guejuga': 'GueJuga',
+                'peluk': 'Peluk',
+                'bangga': 'Bangga'
+            };
+            return texts[type] || 'GueJuga';
+        }
+        
+        // Character counter for chatbox
+        function updateCharCount(artefakId) {
+            const input = document.getElementById(`chatbox-${artefakId}`);
+            const text = input.value.trim();
+            const words = text.split(/\s+/).filter(word => word.length > 0);
+            const charCount = document.getElementById(`char-count-${artefakId}`);
+            
+            charCount.textContent = words.length;
+            
+            // Change color if exceed 3 words
+            if (words.length > 3) {
+                charCount.style.color = '#ff6b6b';
+                input.style.borderColor = '#ff6b6b';
+            } else {
+                charCount.style.color = '#888';
+                input.style.borderColor = '#ddd';
+            }
+        }
+        
+        // Send response
+        function sendResponse(artefakId) {
+            const input = document.getElementById(`chatbox-${artefakId}`);
+            const text = input.value.trim();
+            const words = text.split(/\s+/).filter(word => word.length > 0);
+            
+            if (words.length === 0) {
+                showFeedback('Tulis dulu responnya', 'info');
+                return;
+            }
+            
+            if (words.length > 3) {
+                showFeedback('Maksimal 3 kata saja', 'error');
+                return;
+            }
+            
+            // Add to responses
+            artefakData[artefakId].chatResponses.push({
+                text: text,
+                time: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}),
+                user: 'You'
+            });
+            
+            // Clear input
+            input.value = '';
+            updateCharCount(artefakId);
+            
+            showFeedback('Respon terkirim! 👍');
+            
+            // In real app, send to backend
+            console.log(`Response for artefak ${artefakId}: "${text}"`);
+        }
+        
+        // Update all rants timelines
+        function updateAllRantsTimelines() {
+            for (let id in artefakData) {
+                updateRantsTimeline(id);
+            }
+        }
+        
+        // Update rants timeline
+        function updateRantsTimeline(artefakId) {
+            const data = artefakData[artefakId];
+            const rantsList = document.getElementById(`rants-list-${artefakId}`);
+            
+            if (!rantsList) return;
+            
+            rantsList.innerHTML = '';
+            data.recentRants.forEach((rant, index) => {
+                const rantItem = document.createElement('div');
+                rantItem.className = 'rant-item';
+                rantItem.innerHTML = `
+                    <span class="rant-time">${rant.time}</span>
+                    <span class="rant-text">${rant.text}</span>
+                `;
+                rantsList.appendChild(rantItem);
+            });
+        }
+        
+        // Show feedback popup
+        function showFeedback(message, type = 'success') {
+            const colors = {
+                success: '#34c759',
+                error: '#ff6b6b',
+                info: '#667eea'
+            };
+            
             const feedback = document.createElement('div');
             feedback.style.cssText = `
                 position: fixed;
                 top: 50%;
                 left: 50%;
                 transform: translate(-50%, -50%);
-                background: rgba(0,0,0,0.8);
+                background: ${colors[type] || colors.success};
                 color: white;
-                padding: 20px 30px;
-                border-radius: 50px;
-                font-size: 24px;
+                padding: 15px 25px;
+                border-radius: 12px;
+                font-size: 16px;
+                font-weight: 600;
                 z-index: 1001;
                 animation: fadeOut 1s forwards;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.2);
             `;
-            feedback.innerHTML = `${emoji} Empathy sent`;
+            feedback.textContent = message;
             document.body.appendChild(feedback);
             
             setTimeout(() => feedback.remove(), 1000);
-        }
-        
-        function getEmojiSymbol(type) {
-            const emojis = {
-                'heart': '❤️',
-                'sad': '😢',
-                'think': '🤔',
-                'pray': '🙏'
-            };
-            return emojis[type] || '❤️';
         }
         
         // Edit memorable words
@@ -1056,12 +1470,10 @@
                 gridBtn.classList.add('active');
                 timelineBtn.classList.remove('active');
                 document.getElementById('artefak-grid').style.display = 'grid';
-                // In full app, would show timeline view
             } else {
                 gridBtn.classList.remove('active');
                 timelineBtn.classList.add('active');
                 document.getElementById('artefak-grid').style.display = 'none';
-                // In full app, would show timeline view
                 alert('Timeline view coming soon!');
             }
         }
@@ -1084,7 +1496,8 @@
         `;
         document.head.appendChild(style);
     </script>
-        <!-- ========== BOTTOM NAVIGATION START ========== -->
+
+    <!-- ========== BOTTOM NAVIGATION START ========== -->
     <div class="bottom-nav">
         <a href="home.html" class="nav-item" id="navHome">
             <i class="fas fa-home"></i>
@@ -1108,7 +1521,5 @@
     </div>
     <!-- ========== BOTTOM NAVIGATION END ========== -->
     
-</body>
-</html>
 </body>
 </html>
