@@ -185,6 +185,38 @@
         .loading {
             animation: pulse 1.5s infinite;
         }
+        
+        .switch-account {
+            text-align: center;
+            margin-top: 15px;
+        }
+        
+        .switch-btn {
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: rgba(255, 255, 255, 0.6);
+            padding: 8px 15px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .switch-btn:hover {
+            background: rgba(255, 255, 255, 0.05);
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        .user-status-info {
+            background: rgba(52, 199, 89, 0.1);
+            border: 1px solid rgba(52, 199, 89, 0.3);
+            border-radius: 8px;
+            padding: 10px;
+            margin-bottom: 15px;
+            font-size: 0.85rem;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.8);
+        }
     </style>
 </head>
 <body>
@@ -226,6 +258,12 @@
                 
                 <div class="status-message" id="statusMessage"></div>
             </form>
+            
+            <div class="switch-account" id="switchAccountSection" style="display: none;">
+                <button class="switch-btn" id="switchAccountBtn">
+                    Use different Telegram account
+                </button>
+            </div>
             
             <div class="login-note">
                 <strong>How it works:</strong><br>
@@ -302,40 +340,95 @@
             localStorage.removeItem('nope_onboarding_complete');
             localStorage.removeItem('nope_anon_username');
             localStorage.removeItem('nope_logged_in');
+            localStorage.removeItem('telegram_username');
             console.log('🧹 NOPE data cleared');
         }
         
-        // Main initialization
+        // Main initialization - NO AUTO-REDIRECT
         document.addEventListener('DOMContentLoaded', function() {
             const loginForm = document.getElementById('loginForm');
             const telegramInput = document.getElementById('telegramUsername');
             const submitBtn = document.getElementById('submitBtn');
+            const switchSection = document.getElementById('switchAccountSection');
+            const switchBtn = document.getElementById('switchAccountBtn');
             
-            // Check if already logged in and completed onboarding
+            // Check login status - DISPLAY ONLY, NO AUTO-REDIRECT
             const isLoggedIn = localStorage.getItem('nope_logged_in') === 'true';
             const hasOnboarding = localStorage.getItem('nope_onboarding_complete') === 'true';
+            const currentNopeUser = localStorage.getItem('nope_anon_username');
+            const currentTelegram = localStorage.getItem('telegram_username');
             
-            if (isLoggedIn && hasOnboarding) {
-                // Already logged in with complete profile, redirect to home
-                console.log('🔄 Already logged in, redirecting to home...');
-                updateStatus('Already logged in, redirecting...');
+            if (isLoggedIn && currentNopeUser) {
+                console.log('ℹ️ User status:', currentNopeUser, hasOnboarding ? '(ready)' : '(needs onboarding)');
                 
-                setTimeout(() => {
-                    window.location.href = 'home.html';
-                }, 1000);
-                return;
-            } else if (isLoggedIn && !hasOnboarding) {
-                // Logged in but onboarding not complete
-                console.log('⚠️ Onboarding incomplete, redirecting...');
-                updateStatus('Continuing onboarding...');
+                // Show user status info
+                const statusInfo = document.createElement('div');
+                statusInfo.className = 'user-status-info';
+                statusInfo.innerHTML = `
+                    Currently logged in as: <strong>${currentNopeUser}</strong><br>
+                    Telegram: ${currentTelegram || 'Not set'}<br>
+                    Status: ${hasOnboarding ? '✓ Ready' : '⏳ Needs onboarding'}
+                `;
                 
-                setTimeout(() => {
-                    window.location.href = 'onboarding.html';
-                }, 1000);
-                return;
+                // Insert before form
+                loginForm.parentNode.insertBefore(statusInfo, loginForm);
+                
+                // Update button for existing user
+                submitBtn.textContent = hasOnboarding ? 'GO TO HOME' : 'CONTINUE ONBOARDING';
+                submitBtn.style.background = hasOnboarding ? '#34c759' : '#ff9500';
+                
+                // Show switch account option
+                switchSection.style.display = 'block';
+                
+                // Update placeholder to show current username
+                telegramInput.placeholder = `Current: ${currentTelegram || 'none'}`;
+                telegramInput.value = currentTelegram ? currentTelegram.replace('@', '') : '';
+                
+                // Update form handler for existing user
+                const originalHandler = loginForm.onsubmit;
+                loginForm.onsubmit = async function(e) {
+                    e.preventDefault();
+                    
+                    const inputValue = telegramInput.value.trim();
+                    const telegramUsername = inputValue ? `@${inputValue}` : currentTelegram;
+                    
+                    // If same Telegram username or empty, proceed with existing account
+                    if (!inputValue || telegramUsername === currentTelegram) {
+                        console.log('🔄 Continuing with existing account:', currentNopeUser);
+                        updateStatus(hasOnboarding ? 'Going to home...' : 'Continuing onboarding...');
+                        submitBtn.disabled = true;
+                        
+                        await new Promise(resolve => setTimeout(resolve, 800));
+                        
+                        if (hasOnboarding) {
+                            window.location.href = 'home.html';
+                        } else {
+                            window.location.href = 'onboarding.html';
+                        }
+                        return;
+                    }
+                    
+                    // Different Telegram username - treat as new registration
+                    console.log('🆕 Different Telegram detected, starting new registration...');
+                    await handleNewRegistration(telegramUsername);
+                };
+            } else {
+                // Not logged in - normal flow
+                console.log('👋 Not logged in, ready for new registration');
+                updateStatus('Enter your Telegram username to begin');
             }
             
-            // Auto-add @ when user types
+            // Switch account button handler
+            if (switchBtn) {
+                switchBtn.onclick = function() {
+                    if (confirm('Logout and use different Telegram account?')) {
+                        clearNopeData();
+                        location.reload();
+                    }
+                };
+            }
+            
+            // Auto-format input (remove @ if user types it)
             telegramInput.addEventListener('input', function() {
                 let value = this.value.trim();
                 
@@ -348,73 +441,24 @@
                 this.value = value;
             });
             
-            // Handle form submission
-            loginForm.addEventListener('submit', async function(e) {
-                e.preventDefault();
+            // Handle new user registration
+            async function handleNewRegistration(telegramUsername) {
+                console.log('🔐 New registration with:', telegramUsername);
                 
-                // Get and validate Telegram username
-                const telegramInputValue = telegramInput.value.trim();
-                if (!telegramInputValue) {
-                    updateStatus('Please enter your Telegram username', true);
-                    telegramInput.focus();
-                    return;
-                }
-                
-                if (telegramInputValue.length < 5) {
-                    updateStatus('Username too short', true);
-                    return;
-                }
-                
-                // Format Telegram username
-                const telegramUsername = `@${telegramInputValue}`;
-                console.log('🔐 Attempting login with:', telegramUsername);
-                
-                // Step 1: Validating
-                updateStatus('Validating Telegram username...');
+                updateStatus('Creating your anonymous identity...');
                 updateFlowIndicator(2);
                 submitBtn.disabled = true;
-                submitBtn.textContent = 'VALIDATING...';
+                submitBtn.textContent = 'CREATING IDENTITY...';
                 
                 await new Promise(resolve => setTimeout(resolve, 800));
                 
-                // Step 2: Check if this is new or returning user
-                // We'll check localStorage for existing data with this Telegram username
-                const existingTelegram = localStorage.getItem('telegram_username');
-                const hasExistingProfile = localStorage.getItem('nope_onboarding_complete') === 'true';
-                const hasExistingUsername = localStorage.getItem('nope_anon_username');
-                
-                if (existingTelegram === telegramUsername && hasExistingProfile && hasExistingUsername) {
-                    // 🔄 RETURNING USER
-                    console.log('👤 Returning user detected');
-                    updateStatus('Welcome back! Redirecting...');
-                    updateFlowIndicator(3);
-                    
-                    // Ensure login state
-                    localStorage.setItem('nope_logged_in', 'true');
-                    
-                    submitBtn.textContent = 'WELCOME BACK!';
-                    
-                    await new Promise(resolve => setTimeout(resolve, 1000));
-                    
-                    // Redirect to home
-                    window.location.href = 'home.html';
-                    return;
-                }
-                
-                // 🆕 NEW USER / REGISTER FLOW
-                console.log('👶 New user registration');
-                updateStatus('Creating your anonymous identity...');
-                
-                // Step 3: Generate NOPE username
-                await new Promise(resolve => setTimeout(resolve, 600));
-                
+                // Generate NOPE username
                 const nopeUsername = generateNopeUsername();
                 console.log('🎲 Generated NOPE username:', nopeUsername);
                 
-                // Show generated username to user
+                // Show generated username
                 showGeneratedUsername(nopeUsername);
                 
-                // Step 4: Save user data
                 updateStatus('Saving your identity...');
                 
                 // Clear any old data (fresh start)
@@ -430,7 +474,6 @@
                 
                 await new Promise(resolve => setTimeout(resolve, 800));
                 
-                // Step 5: Complete and redirect
                 updateStatus('Identity created! Redirecting...');
                 updateFlowIndicator(3);
                 submitBtn.textContent = 'IDENTITY CREATED!';
@@ -441,20 +484,44 @@
                     timestamp: new Date().toLocaleString()
                 });
                 
-                // Show final message before redirect
                 await new Promise(resolve => setTimeout(resolve, 1200));
                 
-                // Redirect to onboarding
+                // Redirect to onboarding for new user
                 window.location.href = 'onboarding.html';
-            });
+            }
+            
+            // Handle form submission for new users
+            if (!isLoggedIn) {
+                loginForm.addEventListener('submit', async function(e) {
+                    e.preventDefault();
+                    
+                    const telegramInputValue = telegramInput.value.trim();
+                    if (!telegramInputValue) {
+                        updateStatus('Please enter your Telegram username', true);
+                        telegramInput.focus();
+                        return;
+                    }
+                    
+                    if (telegramInputValue.length < 3) {
+                        updateStatus('Username too short (min 3 chars)', true);
+                        return;
+                    }
+                    
+                    const telegramUsername = `@${telegramInputValue}`;
+                    await handleNewRegistration(telegramUsername);
+                });
+            }
             
             // Focus on input
             telegramInput.focus();
             
-            // For debugging: Add clear data button (remove in production)
-            if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+            // Update flow indicator
+            updateFlowIndicator(1);
+            
+            // Debug button for testing (remove in production)
+            if (window.location.hostname === 'localhost' || window.location.hostname.includes('127.0.0.1') || window.location.hostname.includes('vercel')) {
                 const debugBtn = document.createElement('button');
-                debugBtn.textContent = '🧪 Clear Data';
+                debugBtn.textContent = '🧪 Debug: Clear Data';
                 debugBtn.style.cssText = `
                     position: fixed;
                     bottom: 10px;
@@ -477,10 +544,6 @@
                 };
                 document.body.appendChild(debugBtn);
             }
-            
-            // Update flow indicator to step 1
-            updateFlowIndicator(1);
-            updateStatus('Enter your Telegram username to begin');
         });
     </script>
 </body>
