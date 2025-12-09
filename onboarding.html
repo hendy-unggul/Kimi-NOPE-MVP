@@ -593,5 +593,48 @@
         // Initialize app
         document.addEventListener('DOMContentLoaded', init);
     </script>
+        <script src="onboarding-script.js"></script>
+    
+    <!-- ========== BOTTOM NAVIGATION START ========== -->
+    <div class="bottom-nav">
+        <a href="home.html" class="nav-item" id="navHome">
+            <i class="fas fa-home"></i>
+            <span>Home</span>
+        </a>
+        
+        <a href="notifications.html" class="nav-item" id="navNotifications">
+            <i class="fas fa-bell"></i>
+            <span>Notifikasi</span>
+        </a>
+        
+        <a href="onboarding.html" class="nav-item active" id="navOnboarding">
+            <i class="fas fa-fire"></i>
+            <span>Rage</span>
+        </a>
+        
+        <a href="profile.html" class="nav-item" id="navProfile">
+            <i class="fas fa-user-secret"></i>
+            <span>Profile</span>
+        </a>
+    </div>
+    
+    <script>
+        // Bottom Navigation Logic
+        document.addEventListener('DOMContentLoaded', function() {
+            const navItems = document.querySelectorAll('.nav-item');
+            
+            // Set onboarding as active
+            navItems.forEach(item => {
+                item.classList.remove('active');
+                if (item.id === 'navOnboarding') {
+                    item.classList.add('active');
+                }
+            });
+        });
+    </script>
+    <!-- ========== BOTTOM NAVIGATION END ========== -->
+    
+</body>
+</html>
 </body>
 </html>
