@@ -8,6 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
     <div class="container">
@@ -17,31 +18,73 @@
         </header>
 
         <main>
-            <div class="card-section">
-                <!-- Register Card -->
-                <div class="card" id="registerCard">
-                    <div class="card-icon">🆕</div>
-                    <h2 class="card-title">New to NOPE?</h2>
-                    <p class="card-description">
-                        Create anonymous identity & choose<br>
-                        rage hashtags
-                    </p>
-                    <button class="cta-btn" id="registerBtn" style="background: #34c759;">
-                        CREATE NOPE IDENTITY
-                    </button>
+            <!-- Form Section (Default: Register) -->
+            <div class="form-container" id="formContainer">
+                <div class="form-header">
+                    <h2 id="formTitle">Register to NOPE</h2>
+                    <p id="formSubtitle">Create your anonymous identity</p>
                 </div>
 
-                <!-- Login Card -->
-                <div class="card" id="loginCard">
-                    <div class="card-icon">↩️</div>
-                    <h2 class="card-title">Returning User</h2>
-                    <p class="card-description">
-                        Already have NOPE identity?<br>
-                        Login with Telegram
-                    </p>
-                    <button class="cta-btn" id="loginBtn" style="background: #007aff;">
-                        LOGIN TO NOPE
-                    </button>
+                <!-- Telegram Username Input -->
+                <div class="input-group">
+                    <div class="input-icon">
+                        <i class="fab fa-telegram"></i>
+                    </div>
+                    <input 
+                        type="text" 
+                        id="telegramUsername" 
+                        placeholder="Enter your Telegram username (e.g., @username)" 
+                        autocomplete="off"
+                    >
+                    <div class="input-hint">
+                        <i class="fas fa-info-circle"></i>
+                        Just your Telegram username, no password needed
+                    </div>
+                </div>
+
+                <!-- Rage Hashtags (For Register) -->
+                <div class="hashtags-section" id="hashtagsSection">
+                    <h3>Choose 3 rage hashtags</h3>
+                    <div class="hashtags-grid">
+                        <div class="hashtag-option">#WorkRage</div>
+                        <div class="hashtag-option">#TrafficHell</div>
+                        <div class="hashtag-option">#TechFrustration</div>
+                        <div class="hashtag-option">#RelationshipDrama</div>
+                        <div class="hashtag-option">#MoneyStress</div>
+                        <div class="hashtag-option">#SocialAnxiety</div>
+                        <div class="hashtag-option">#FamilyDrama</div>
+                        <div class="hashtag-option">#HealthStruggle</div>
+                        <div class="hashtag-option">#DailyAnnoyance</div>
+                    </div>
+                    <div class="selected-hashtags" id="selectedHashtags">
+                        <span class="selected-tag">No hashtags selected yet</span>
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <button class="submit-btn" id="submitBtn">
+                    <i class="fas fa-fingerprint"></i>
+                    CREATE NOPE IDENTITY
+                </button>
+
+                <!-- Toggle between Register/Login -->
+                <div class="toggle-form">
+                    <span id="toggleText">Already have an account?</span>
+                    <button class="toggle-link" id="toggleBtn">Login instead</button>
+                </div>
+
+                <!-- Loading Indicator -->
+                <div class="loading" id="loading">
+                    <div class="spinner"></div>
+                    <p>Creating your anonymous identity...</p>
+                </div>
+
+                <!-- Success Message -->
+                <div class="success-message" id="successMessage">
+                    <i class="fas fa-check-circle"></i>
+                    <h3>Identity Created!</h3>
+                    <p>Your anonymous NOPE identity is ready. You can now start sharing.</p>
+                    <button class="success-btn" id="goToDashboard">Go to Dashboard</button>
                 </div>
             </div>
 
@@ -49,17 +92,28 @@
             <div class="how-it-works">
                 <h2>How it works:</h2>
                 <ol class="steps">
-                    <li>Enter your Telegram username</li>
+                    <li>Enter your Telegram username (no password needed)</li>
                     <li>We create your anonymous NOPE identity</li>
-                    <li>Choose 3 rage hashtags</li>
+                    <li>Choose 3 rage hashtags (for new users)</li>
                     <li>Start sharing anonymously</li>
                 </ol>
+                
+                <div class="security-note">
+                    <i class="fas fa-shield-alt"></i>
+                    <div>
+                        <strong>Your privacy is protected</strong>
+                        <p>We only use your Telegram username for verification. Your identity remains anonymous to other users.</p>
+                    </div>
+                </div>
             </div>
         </main>
 
         <footer>
             <p>© 2024 NOPE. All rage reserved.</p>
-            <p class="disclaimer">Your identity is encrypted. Nobody knows it's you.</p>
+            <p class="disclaimer">
+                <i class="fas fa-lock"></i>
+                Your identity is encrypted. Nobody knows it's you.
+            </p>
         </footer>
     </div>
 
