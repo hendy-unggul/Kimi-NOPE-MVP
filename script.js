@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', function() {
     console.log('NOPE loaded successfully! 🚀');
     
     // Telegram Bot URL (GANTI DENGAN BOT ANDA)
-    const TELEGRAM_BOT_USERNAME = 'your_bot_username'; // Ganti dengan username bot Anda
+    const TELEGRAM_BOT_USERNAME = '@nope_app_bot'; // Ganti dengan username bot Anda
     const TELEGRAM_BOT_URL = `https://t.me/${TELEGRAM_BOT_USERNAME}`;
     
     // Get buttons
