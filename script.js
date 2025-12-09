@@ -1,97 +1,24 @@
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('NOPE Register Page Loaded 🔥');
-    
-    // State
-    let selectedTags = [];
-    const MAX_TAGS = 3;
+    console.log('NOPE - Anonymous Register/Login Loaded');
     
     // Elements
     const telegramInput = document.getElementById('telegramInput');
-    const hashtagOptions = document.querySelectorAll('.hashtag-option');
-    const selectedTagsEl = document.getElementById('selectedTags');
-    const hashtagCounter = document.getElementById('hashtagCounter');
     const submitBtn = document.getElementById('submitBtn');
-    const loginLink = document.querySelector('.login-link');
+    const loginLink = document.getElementById('loginLink');
     
     // Auto-focus input
     telegramInput.focus();
     
-    // Hashtag Selection
-    hashtagOptions.forEach(option => {
-        option.addEventListener('click', function() {
-            const tag = this.getAttribute('data-tag');
-            const tagText = `#${tag}`;
-            
-            // Check if already selected
-            const isSelected = this.classList.contains('selected');
-            
-            if (isSelected) {
-                // Remove
-                this.classList.remove('selected');
-                selectedTags = selectedTags.filter(t => t !== tag);
-            } else {
-                // Check limit
-                if (selectedTags.length >= MAX_TAGS) {
-                    alert(`You can only select ${MAX_TAGS} hashtags`);
-                    return;
-                }
-                
-                // Add
-                this.classList.add('selected');
-                selectedTags.push(tag);
-            }
-            
-            updateSelectedTags();
-        });
-    });
-    
-    // Update selected tags display
-    function updateSelectedTags() {
-        // Update counter
-        hashtagCounter.textContent = `${selectedTags.length}/${MAX_TAGS}`;
+    // Generate anonymous username
+    function generateAnonymousId() {
+        const adjectives = ['Silent', 'Ghost', 'Shadow', 'Hidden', 'Unknown', 'Secret', 'Mystery', 'Anonymous'];
+        const nouns = ['Rager', 'Whisper', 'Phantom', 'Specter', 'Wraith', 'Stranger', 'Voyager', 'Observer'];
+        const randomNum = Math.floor(Math.random() * 999) + 1;
         
-        // Clear container
-        selectedTagsEl.innerHTML = '';
+        const adj = adjectives[Math.floor(Math.random() * adjectives.length)];
+        const noun = nouns[Math.floor(Math.random() * nouns.length)];
         
-        if (selectedTags.length === 0) {
-            selectedTagsEl.innerHTML = '<div class="empty-state">No hashtags selected yet</div>';
-            return;
-        }
-        
-        // Add selected tags
-        selectedTags.forEach(tag => {
-            const tagEl = document.createElement('div');
-            tagEl.className = 'selected-tag';
-            tagEl.innerHTML = `
-                #${tag}
-                <i class="fas fa-times" data-tag="${tag}"></i>
-            `;
-            selectedTagsEl.appendChild(tagEl);
-            
-            // Add remove functionality
-            const removeBtn = tagEl.querySelector('i');
-            removeBtn.addEventListener('click', function(e) {
-                e.stopPropagation();
-                removeTag(tag);
-            });
-        });
-        
-        // Update submit button state
-        updateSubmitButton();
-    }
-    
-    // Remove tag
-    function removeTag(tag) {
-        // Remove from array
-        selectedTags = selectedTags.filter(t => t !== tag);
-        
-        // Remove visual selection
-        const option = document.querySelector(`.hashtag-option[data-tag="${tag}"]`);
-        if (option) {
-            option.classList.remove('selected');
-        }
-        
-        updateSelectedTags();
+        return `${adj}_${noun}_${randomNum}`;
     }
     
     // Validate Telegram username
@@ -112,9 +39,9 @@ document.addEventListener('DOMContentLoaded', function() {
             return { valid: false, message: 'Username must be at least 5 characters' };
         }
         
-        // Check format (Telegram allows a-z, 0-9, underscore)
+        // Check format
         if (!/^[a-zA-Z0-9_]+$/.test(cleanUsername)) {
-            return { valid: false, message: 'Username can only contain letters, numbers, and underscores' };
+            return { valid: false, message: 'Only letters, numbers, and underscores allowed' };
         }
         
         return { 
@@ -124,48 +51,25 @@ document.addEventListener('DOMContentLoaded', function() {
         };
     }
     
-    // Update submit button state
-    function updateSubmitButton() {
-        const usernameValid = validateUsername(telegramInput.value).valid;
-        const tagsValid = selectedTags.length === MAX_TAGS;
-        
-        submitBtn.disabled = !(usernameValid && tagsValid);
-        
-        if (!submitBtn.disabled) {
-            submitBtn.style.opacity = '1';
-            submitBtn.style.cursor = 'pointer';
-        } else {
-            submitBtn.style.opacity = '0.7';
-            submitBtn.style.cursor = 'not-allowed';
-        }
-    }
-    
-    // Real-time validation
-    telegramInput.addEventListener('input', updateSubmitButton);
-    
-    // Submit
+    // Handle Submit (Register/Login)
     submitBtn.addEventListener('click', async function() {
-        if (submitBtn.disabled) return;
-        
         // Validate
         const usernameValidation = validateUsername(telegramInput.value);
         if (!usernameValidation.valid) {
             alert(usernameValidation.message);
+            telegramInput.focus();
             return;
         }
         
-        if (selectedTags.length !== MAX_TAGS) {
-            alert(`Please select exactly ${MAX_TAGS} hashtags`);
-            return;
-        }
+        // Generate anonymous ID
+        const anonymousId = generateAnonymousId();
         
-        // Prepare data
+        // Prepare user data
         const userData = {
             telegramUsername: usernameValidation.username,
             displayName: usernameValidation.displayName,
-            hashtags: selectedTags,
-            timestamp: new Date().toISOString(),
-            anonymousId: generateAnonymousId()
+            anonymousId: anonymousId,
+            timestamp: new Date().toISOString().split('T')[0]
         };
         
         // Show loading
@@ -174,18 +78,18 @@ document.addEventListener('DOMContentLoaded', function() {
         submitBtn.disabled = true;
         
         // Simulate API call
-        console.log('Submitting registration:', userData);
+        console.log('Processing:', userData);
         
         try {
             // Simulate network delay
-            await new Promise(resolve => setTimeout(resolve, 1500));
+            await new Promise(resolve => setTimeout(resolve, 1200));
             
-            // Success
-            showSuccess(userData);
+            // Success - Update UI
+            showSuccessPage(userData);
             
         } catch (error) {
-            console.error('Registration failed:', error);
-            alert('Registration failed. Please try again.');
+            console.error('Error:', error);
+            alert('Something went wrong. Please try again.');
             
             // Reset button
             submitBtn.innerHTML = originalText;
@@ -193,83 +97,115 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
-    // Generate anonymous ID
-    function generateAnonymousId() {
-        const chars = '0123456789abcdef';
-        let id = '';
-        for (let i = 0; i < 12; i++) {
-            id += chars[Math.floor(Math.random() * chars.length)];
-        }
-        return `nope_${id}`;
-    }
-    
-    // Show success
-    function showSuccess(userData) {
-        // Update UI
-        document.querySelector('.form-title').textContent = 'Identity Created!';
-        document.querySelector('.form-subtitle').innerHTML = `
-            <i class="fas fa-check-circle"></i>
-            Welcome to NOPE, ${userData.displayName}
+    // Show success page
+    function showSuccessPage(userData) {
+        // Update header
+        document.querySelector('.header').innerHTML = `
+            <h1 class="logo">NOPE</h1>
+            <p class="tagline">Identity created successfully!</p>
         `;
         
-        // Hide input and hashtags
-        document.querySelector('.input-section').style.display = 'none';
-        document.querySelector('.hashtags-section').style.display = 'none';
-        
-        // Update submit button
-        submitBtn.innerHTML = '<i class="fas fa-rocket"></i> GO TO ANONYMOUS DASHBOARD';
-        submitBtn.disabled = false;
-        submitBtn.style.background = 'linear-gradient(90deg, #ff375f, #ff6b9d)';
-        submitBtn.onclick = function() {
-            window.location.href = `dashboard.html?user=${encodeURIComponent(userData.anonymousId)}`;
-        };
-        
-        // Update privacy note
-        const privacyNote = document.querySelector('.privacy-note');
-        privacyNote.innerHTML = `
-            <i class="fas fa-user-secret"></i>
-            <div>
-                <strong>Your anonymous identity is ready!</strong>
-                <p>Your ID: <code style="background:rgba(255,255,255,0.1);padding:2px 6px;border-radius:4px;">${userData.anonymousId}</code></p>
-                <p style="margin-top:8px;font-size:0.85rem;">Start sharing your rage anonymously. No one will know it's you.</p>
+        // Update form card to success card
+        const formCard = document.querySelector('.form-card');
+        formCard.innerHTML = `
+            <div class="title-section">
+                <h2 class="form-title">Welcome to NOPE, ${userData.displayName}</h2>
+                <p class="form-subtitle">
+                    <i class="fas fa-check-circle"></i>
+                    Your anonymous identity is ready
+                </p>
+            </div>
+            
+            <div class="identity-display">
+                <div class="identity-card">
+                    <div class="identity-label">Your Anonymous ID:</div>
+                    <div class="anonymous-id">${userData.anonymousId}</div>
+                    <div class="identity-note">
+                        <i class="fas fa-info-circle"></i>
+                        Use this ID to login. Your Telegram username is not stored.
+                    </div>
+                </div>
+            </div>
+            
+            <button class="submit-btn success-btn" id="continueToOnboarding">
+                <i class="fas fa-arrow-right"></i>
+                CONTINUE TO ONBOARDING
+            </button>
+            
+            <div class="privacy-guarantee">
+                <i class="fas fa-user-secret"></i>
+                <div>
+                    <strong>Next: Choose your rage topics</strong>
+                    <p>In the next step, you'll select topics you want to rage about anonymously.</p>
+                </div>
             </div>
         `;
         
-        // Log to console
+        // Update info section
+        document.querySelector('.info-section').innerHTML = `
+            <h3><i class="fas fa-shield-alt"></i> Your identity is protected</h3>
+            <ul class="steps">
+                <li>Your anonymous ID: <code>${userData.anonymousId}</code></li>
+                <li>Your Telegram username is encrypted</li>
+                <li>All posts are completely anonymous</li>
+                <li>No tracking, no personal data stored</li>
+            </ul>
+        `;
+        
+        // Add continue button handler
+        setTimeout(() => {
+            const continueBtn = document.getElementById('continueToOnboarding');
+            if (continueBtn) {
+                continueBtn.addEventListener('click', function() {
+                    // Redirect to onboarding.html with anonymous ID
+                    window.location.href = `onboarding.html?id=${encodeURIComponent(userData.anonymousId)}`;
+                });
+            }
+        }, 100);
+        
+        // Log success
         console.log(`
-        🎉 REGISTRATION SUCCESSFUL!
-        ===========================
-        Username: ${userData.displayName}
+        ✅ IDENTITY CREATED
+        ===================
+        Telegram: ${userData.displayName}
         Anonymous ID: ${userData.anonymousId}
-        Hashtags: ${selectedTags.map(t => `#${t}`).join(', ')}
-        ===========================
+        Date: ${userData.timestamp}
+        Next: onboarding.html
+        ===================
         `);
     }
     
-    // Login link
+    // Login Link
     if (loginLink) {
         loginLink.addEventListener('click', function(e) {
             e.preventDefault();
-            alert('Login feature coming soon! For now, please register.');
+            
+            // Simple login prompt
+            const anonymousId = prompt('Enter your Anonymous ID (e.g., Silent_Rager_42):');
+            if (anonymousId && anonymousId.trim() !== '') {
+                // Verify with backend in real app
+                
+                // Redirect langsung ke onboarding.html
+                window.location.href = `onboarding.html?id=${encodeURIComponent(anonymousId)}`;
+            }
         });
     }
     
-    // Enter key to submit
+    // Enter key support
     telegramInput.addEventListener('keypress', function(e) {
-        if (e.key === 'Enter' && !submitBtn.disabled) {
+        if (e.key === 'Enter') {
             submitBtn.click();
         }
     });
-    
-    // Initial button state
-    updateSubmitButton();
     
     // Console welcome
     console.log(`
     ╔══════════════════════════════════╗
     ║                                  ║
     ║   NOPE - Anonymous Platform      ║
-    ║   Register your identity         ║
+    ║   Simple Register/Login          ║
+    ║   Telegram → Anonymous ID        ║
+    ║   Next: onboarding.html          ║
     ║                                  ║
     ╚══════════════════════════════════╝
     `);
