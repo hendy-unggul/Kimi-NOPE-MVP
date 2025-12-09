@@ -1,1192 +1,309 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jejak Emosi - NOPE</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css  ">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Inner Space – NOPE</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <style>
-        /* Dark Edgy Theme */
+        :root {
+            --bg: #0a0a0f;
+            --card: #121217;
+            --border: #25252d;
+            --text: #eaeaea;
+            --muted: #7a7a8c;
+            --accent1: #ff2d55;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
         body {
-            background: #0a0a0f;
-            color: #e0e0e0;
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
             padding-bottom: 80px;
-            margin: 0;
         }
-        
-        /* Main Container */
-        .profile-container {
-            max-width: 800px;
+
+        .container {
+            max-width: 780px;
             margin: 0 auto;
-            padding: 20px;
+            padding: 0 20px;
         }
-        
-        /* Header */
-        .profile-header {
+
+        .header {
             text-align: center;
-            padding: 40px 20px 30px;
-            margin-bottom: 20px;
-            border-bottom: 1px solid #222;
+            padding: 48px 0 36px;
             position: relative;
+            margin-bottom: 28px;
         }
-        
-        .profile-header::after {
+
+        .header::after {
             content: '';
             position: absolute;
-            bottom: -1px;
+            bottom: 0;
             left: 50%;
             transform: translateX(-50%);
-            width: 100px;
+            width: 80px;
             height: 2px;
-            background: linear-gradient(90deg, #ff375f, #34c759);
+            background: linear-gradient(90deg, var(--accent1), #2db34d);
         }
-        
-        .profile-title {
-            font-size: 42px;
-            font-weight: 800;
-            margin-bottom: 10px;
-            background: linear-gradient(90deg, #ff375f, #34c759);
+
+        .title {
+            font-size: 36px;
+            font-weight: 900;
+            letter-spacing: -1.2px;
+            background: linear-gradient(90deg, var(--accent1), #2db34d);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            letter-spacing: -1px;
+            margin-bottom: 14px;
         }
-        
-        .profile-subtitle {
+
+        .subtitle {
             font-size: 14px;
-            color: #8a8aa8;
+            color: var(--muted);
+            max-width: 500px;
+            margin: 0 auto;
             line-height: 1.5;
-            font-weight: 500;
         }
-        
-        /* Main Artefak */
-        .main-artefak {
-            background: #111116;
-            border-radius: 0;
-            overflow: hidden;
-            margin-bottom: 30px;
-            border: 1px solid #222;
+
+        .artefak {
             position: relative;
+            margin-bottom: 32px;
         }
-        
-        .artefak-permanent {
+
+        .artefak-frame {
+            position: relative;
+            padding: 16px;
+        }
+
+        .artefak-frame::before {
+            content: '';
             position: absolute;
-            top: 15px;
-            right: 15px;
-            background: rgba(255, 55, 95, 0.9);
-            color: white;
-            font-size: 10px;
-            padding: 6px 12px;
-            border-radius: 0;
-            font-weight: 800;
-            letter-spacing: 1px;
-            z-index: 2;
-            text-transform: uppercase;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border: 14px solid #1a1a22;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.7);
+            z-index: 0;
         }
-        
+
         .artefak-image {
             width: 100%;
-            height: 350px;
+            height: 340px;
             object-fit: cover;
-            filter: grayscale(20%) contrast(110%);
-        }
-        
-        .artefak-content {
-            padding: 25px;
-        }
-        
-        .artefak-cycle {
-            font-size: 12px;
-            color: #34c759;
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        
-        .artefak-title {
-            font-size: 24px;
-            font-weight: 700;
-            color: #fff;
-            margin-bottom: 10px;
-            letter-spacing: -0.5px;
-        }
-        
-        .artefak-date {
-            font-size: 13px;
-            color: #8a8aa8;
-            margin-bottom: 20px;
-            font-weight: 500;
-        }
-        
-        .artefak-description {
-            font-size: 15px;
-            color: #b0b0d0;
-            line-height: 1.6;
-            margin-bottom: 30px;
-            font-weight: 400;
-        }
-        
-        /* Memorable Quote */
-        .memorable-quote {
-            margin: 30px 0;
-            padding: 25px;
-            background: rgba(255, 55, 95, 0.05);
-            border-left: 3px solid #ff375f;
+            filter: grayscale(15%) sepia(0.2) hue-rotate(190deg) brightness(0.9);
             position: relative;
-        }
-        
-        .quote-text {
-            font-size: 20px;
-            color: #fff;
-            line-height: 1.5;
-            font-style: italic;
-            font-weight: 500;
-            margin-bottom: 10px;
-            quotes: "“" "”" "‘" "’";
-        }
-        
-        .quote-text::before {
-            content: open-quote;
-            color: #ff375f;
-            font-size: 24px;
-            margin-right: 5px;
-        }
-        
-        .quote-text::after {
-            content: close-quote;
-            color: #ff375f;
-            font-size: 24px;
-            margin-left: 5px;
-        }
-        
-        .quote-date {
-            font-size: 12px;
-            color: #8a8aa8;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-weight: 500;
-        }
-        
-        /* Mini Reactions */
-        .mini-reactions-container {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            margin: 30px 0;
-            padding: 25px;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid #222;
-        }
-        
-        .mini-reaction {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            cursor: pointer;
-            transition: all 0.3s;
-            position: relative;
-            min-width: 80px;
-        }
-        
-        .mini-reaction:hover {
-            transform: translateY(-5px);
-        }
-        
-        .mini-reaction.active {
-            transform: scale(1.1);
-        }
-        
-        .mini-reaction-emoji {
-            font-size: 18px;
-            margin-bottom: 10px;
-            transition: all 0.3s;
-            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
-        }
-        
-        .mini-reaction.active .mini-reaction-emoji {
-            transform: scale(1.2);
-            filter: drop-shadow(0 4px 8px rgba(255, 55, 95, 0.3));
-        }
-        
-        .mini-reaction-text {
-            font-size: 13px;
-            font-weight: 600;
-            color: #b0b0d0;
-            margin-bottom: 8px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        
-        .mini-reaction-count {
-            font-size: 14px;
-            font-weight: 800;
-            color: #ff375f;
-            background: rgba(255, 55, 95, 0.1);
-            padding: 4px 12px;
-            border-radius: 0;
-            min-width: 30px;
-            text-align: center;
-            border: 1px solid rgba(255, 55, 95, 0.3);
-        }
-        
-        .mini-reaction-info {
-            position: absolute;
-            top: -8px;
-            right: -8px;
-            background: #34c759;
-            color: #000;
-            width: 22px;
-            height: 22px;
-            border-radius: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 11px;
-            cursor: pointer;
-            transition: all 0.3s;
             z-index: 2;
-            font-weight: 800;
-            border: 1px solid #000;
+            display: block;
         }
-        
-        .mini-reaction-info:hover {
-            background: #2db34d;
-            transform: scale(1.2) rotate(15deg);
+
+        .artefak-burn {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background:
+                radial-gradient(circle at top left, transparent 70%, rgba(0,0,0,0.6) 100%),
+                radial-gradient(circle at bottom right, transparent 70%, rgba(0,0,0,0.6) 100%);
+            pointer-events: none;
+            z-index: 3;
         }
-        
-        /* Recent Rants */
-        .recent-rants {
-            background: #111116;
-            border-radius: 0;
-            padding: 25px;
-            margin-bottom: 30px;
-            border: 1px solid #222;
+
+        .quote-overlay {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 4;
+            color: white;
+            background: rgba(0,0,0,0.5);
+            padding: 12px 16px;
+            backdrop-filter: blur(4px);
+            max-width: 80%;
         }
-        
-        .recent-rants-title {
+
+        .quote-text {
             font-size: 18px;
-            font-weight: 700;
-            color: #fff;
-            margin-bottom: 25px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        
-        .recent-rants-title i {
-            color: #ff375f;
-        }
-        
-        .rant-item {
-            padding: 20px;
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 0;
-            margin-bottom: 15px;
-            border-left: 3px solid #34c759;
-            transition: all 0.3s;
-            border: 1px solid transparent;
-        }
-        
-        .rant-item:hover {
-            background: rgba(255, 255, 255, 0.05);
-            transform: translateX(5px);
-            border-color: #333;
-        }
-        
-        .rant-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-        
-        .rant-time {
-            font-size: 11px;
-            color: #8a8aa8;
-            background: rgba(255, 255, 255, 0.1);
-            padding: 5px 12px;
-            border-radius: 0;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        
-        .rant-tag {
-            font-size: 10px;
-            color: #34c759;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        
-        .rant-text {
-            font-size: 14px;
-            color: #d0d0f0;
-            line-height: 1.6;
-            margin: 0;
-            font-weight: 400;
-        }
-        
-        .no-rants {
-            text-align: center;
-            padding: 40px 20px;
-            color: #666;
             font-style: italic;
+            line-height: 1.5;
+            margin: 0;
         }
-        
-        /* Jejak Emosi Grid */
-        .jejak-grid-section {
-            margin-bottom: 100px;
+
+        .quote-text::before,
+        .quote-text::after {
+            content: '"';
+            color: var(--accent1);
+            font-size: 22px;
+            opacity: 0.8;
         }
-        
+
+        .response-emojis {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            display: flex;
+            gap: 12px;
+            z-index: 5;
+            opacity: 0.7;
+        }
+
+        .response-emojis:hover { opacity: 1; }
+
+        .emoji {
+            font-size: 16px;
+            cursor: help;
+            filter: drop-shadow(0 1px 2px rgba(0,0,0,0.4));
+        }
+
         .jejak-title {
             font-size: 18px;
-            font-weight: 700;
+            font-weight: 800;
             color: #fff;
-            margin-bottom: 25px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
+            margin: 36px 0 24px;
             text-transform: uppercase;
             letter-spacing: 1px;
         }
-        
-        .jejak-title i {
-            color: #34c759;
-        }
-        
+
         .jejak-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 15px;
+            gap: 14px;
         }
-        
+
         .jejak-item {
-            position: relative;
-            border-radius: 0;
+            aspect-ratio: 1;
+            border: 1px solid var(--border);
             overflow: hidden;
             cursor: pointer;
-            transition: all 0.3s;
-            aspect-ratio: 1;
-            border: 1px solid #222;
         }
-        
+
         .jejak-item:hover {
-            transform: translateY(-5px) scale(1.03);
-            border-color: #ff375f;
-            box-shadow: 0 10px 25px rgba(255, 55, 95, 0.1);
+            transform: translateY(-4px) scale(1.03);
+            border-color: var(--accent1);
         }
-        
-        .jejak-item.active {
-            border: 2px solid #34c759;
-            transform: scale(1.03);
-        }
-        
-        .jejak-item.empty {
-            opacity: 0.4;
-            filter: grayscale(1);
-            cursor: not-allowed;
-        }
-        
-        .jejak-item.empty:hover {
-            transform: none;
-            border-color: #222;
-        }
-        
+
         .jejak-img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            filter: contrast(110%);
+            filter: sepia(0.15) brightness(0.95);
         }
-        
+
         .jejak-overlay {
             position: absolute;
             bottom: 0;
             left: 0;
             right: 0;
             background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
-            padding: 15px;
+            padding: 14px;
             color: white;
-        }
-        
-        .jejak-cycle {
-            font-size: 12px;
-            font-weight: 800;
-            margin-bottom: 5px;
-            color: #34c759;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        
-        .jejak-date {
             font-size: 11px;
-            opacity: 0.8;
-            font-weight: 500;
         }
-        
-        /* Stats Popup */
-        .stats-popup {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: #111116;
-            border-radius: 0;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
-            z-index: 1001;
-            width: 90%;
-            max-width: 400px;
-            overflow: hidden;
-            animation: popupFadeIn 0.3s;
-            border: 1px solid #222;
-        }
-        
-        @keyframes popupFadeIn {
-            from { opacity: 0; transform: translate(-50%, -60%); }
-            to { opacity: 1; transform: translate(-50%, -50%); }
-        }
-        
-        .stats-popup-header {
-            background: linear-gradient(135deg, #ff375f 0%, #222 100%);
-            color: white;
-            padding: 25px;
-            text-align: center;
-            border-bottom: 1px solid #333;
-        }
-        
-        .stats-popup-title {
-            font-size: 20px;
-            font-weight: 800;
-            margin-bottom: 8px;
-            letter-spacing: -0.5px;
-        }
-        
-        .stats-popup-subtitle {
-            font-size: 13px;
-            opacity: 0.8;
-            font-weight: 500;
-        }
-        
-        .stats-popup-close {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            background: rgba(0,0,0,0.5);
-            border: 1px solid #333;
-            color: white;
-            width: 36px;
-            height: 36px;
-            border-radius: 0;
-            cursor: pointer;
-            font-size: 18px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s;
-            font-weight: 300;
-        }
-        
-        .stats-popup-close:hover {
-            background: rgba(255, 55, 95, 0.5);
-            border-color: #ff375f;
-            transform: rotate(90deg);
-        }
-        
-        .stats-popup-content {
-            padding: 25px;
-            max-height: 300px;
-            overflow-y: auto;
-        }
-        
-        .stats-list {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-        
-        .stat-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px;
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 0;
-            border: 1px solid #222;
-        }
-        
-        .stat-label {
-            font-size: 13px;
-            color: #8a8aa8;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        
-        .stat-value {
-            font-size: 16px;
-            font-weight: 800;
-            color: #fff;
-        }
-        
-        /* ===== BOTTOM NAVIGATION ===== */
+
         .bottom-nav {
             position: fixed;
             bottom: 0;
             left: 0;
             right: 0;
-            background: #111116;
-            backdrop-filter: blur(20px);
-            border-top: 1px solid #222;
+            background: #050507;
+            border-top: 1px solid var(--border);
             display: flex;
             justify-content: space-around;
             padding: 12px 0;
             z-index: 1000;
         }
-        
+
         .nav-item {
             display: flex;
             flex-direction: column;
             align-items: center;
+            color: var(--muted);
             text-decoration: none;
-            color: #8a8aa8;
-            padding: 8px 12px;
-            border-radius: 0;
-            transition: all 0.3s ease;
             min-width: 70px;
         }
-        
-        .nav-item i {
-            font-size: 1.3rem;
-            margin-bottom: 4px;
-        }
-        
-        .nav-item span {
-            font-size: 0.7rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        
-        .nav-item.active {
-            color: #34c759;
-            background: rgba(52, 199, 89, 0.1);
-        }
-        
-        .nav-item:hover:not(.active) {
-            color: #fff;
-            background: rgba(255, 255, 255, 0.05);
-        }
-        
-        /* Responsive */
-        @media (max-width: 768px) {
-            .profile-container {
-                padding: 15px;
-            }
-            
-            .jejak-grid {
-                grid-template-columns: repeat(3, 1fr);
-            }
-            
-            .profile-title {
-                font-size: 32px;
-            }
-            
-            .artefak-image {
-                height: 250px;
-            }
-            
-            .mini-reactions-container {
-                gap: 20px;
-            }
-            
-            .mini-reaction {
-                min-width: 70px;
-            }
-            
-            .quote-text {
-                font-size: 18px;
-            }
-        }
-        
-        @media (max-width: 480px) {
-            .jejak-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            
-            .mini-reactions-container {
-                flex-direction: column;
-                gap: 20px;
-            }
-            
-            .mini-reaction {
-                min-width: auto;
-                width: 100%;
-            }
-            
-            .profile-title {
-                font-size: 28px;
-            }
-        }
+
+        .nav-item i { font-size: 1.3rem; margin-bottom: 4px; }
+        .nav-item span { font-size: 0.68rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.6px; }
+        .nav-item.active { color: #2db34d; }
+
+        @media (max-width: 768px) { .jejak-grid { grid-template-columns: repeat(3, 1fr); } }
+        @media (max-width: 480px) { .jejak-grid { grid-template-columns: repeat(2, 1fr); } }
     </style>
 </head>
 <body>
-    <div class="profile-container">
-        <!-- Header -->
-        <div class="profile-header">
-            <h1 class="profile-title">Jejak Emosi</h1>
-            <p class="profile-subtitle">
-                Monumen permanen setiap 30 hari. Tidak bisa dihapus. Tidak ada komentar.<br>
-                Hanya 3 reaksi: GueJuga, Peluk, Bangga.
+    <div class="container">
+        <div class="header">
+            <h1 class="title">Inner Space</h1>
+            <p class="subtitle">
+                Di sini, kamu tidak melihat dunia.<br>
+                Kamu melihat ke dalam — ke arsip batin yang tak bisa dihapus.
             </p>
         </div>
 
-        <!-- Main Artefak -->
-        <div class="main-artefak" id="main-artefak">
-            <div class="artefak-permanent">Permanent</div>
-            <img id="artefak-image" src="https://images.unsplash.com/photo-1542744095-fcf48d80b0fd?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80  " alt="Artefak" class="artefak-image">
-            
-            <div class="artefak-content">
-                <div class="artefak-cycle">
-                    <i class="fas fa-skull-crossbones"></i>
-                    <span id="artefak-cycle">Cycle 1</span>
+        <div class="artefak">
+            <div class="artefak-frame">
+                <img src="https://images.unsplash.com/photo-1542744095-fcf48d80b0fd" class="artefak-image" />
+                <div class="artefak-burn"></div>
+                <div class="quote-overlay">
+                    <p class="quote-text">The courage to begin is everything</p>
                 </div>
-                
-                <h3 class="artefak-title" id="artefak-title">The Beginning</h3>
-                <div class="artefak-date" id="artefak-date">Posted: 15.01.2024</div>
-                
-                <p class="artefak-description" id="artefak-description">
-                    The first 30 days in NOPE. Learning to fragment identity across digital space.
-                </p>
-                
-                <!-- Memorable Quote -->
-                <div class="memorable-quote">
-                    <p class="quote-text" id="quote-text">The courage to begin is everything</p>
-                    <div class="quote-date">
-                        <i class="fas fa-clock"></i>
-                        <span id="quote-date">Posted: 15.01.2024</span>
-                    </div>
-                </div>
-                
-                <!-- Mini Reactions -->
-                <div class="mini-reactions-container">
-                    <div class="mini-reaction" onclick="addReaction('guejuga')" id="mini-guejuga">
-                        <div class="mini-reaction-info" onclick="showStatsPopup(event, 'guejuga')">
-                            <i class="fas fa-chart-bar"></i>
-                        </div>
-                        <div class="mini-reaction-emoji">👍</div>
-                        <div class="mini-reaction-text">GueJuga</div>
-                        <div class="mini-reaction-count" id="count-guejuga">8</div>
-                    </div>
-                    
-                    <div class="mini-reaction" onclick="addReaction('peluk')" id="mini-peluk">
-                        <div class="mini-reaction-info" onclick="showStatsPopup(event, 'peluk')">
-                            <i class="fas fa-chart-bar"></i>
-                        </div>
-                        <div class="mini-reaction-emoji">🤗</div>
-                        <div class="mini-reaction-text">Peluk</div>
-                        <div class="mini-reaction-count" id="count-peluk">3</div>
-                    </div>
-                    
-                    <div class="mini-reaction" onclick="addReaction('bangga')" id="mini-bangga">
-                        <div class="mini-reaction-info" onclick="showStatsPopup(event, 'bangga')">
-                            <i class="fas fa-chart-bar"></i>
-                        </div>
-                        <div class="mini-reaction-emoji">🎉</div>
-                        <div class="mini-reaction-text">Bangga</div>
-                        <div class="mini-reaction-count" id="count-bangga">5</div>
-                    </div>
+                <div class="response-emojis">
+                    <span class="emoji">👍</span>
+                    <span class="emoji">🤗</span>
+                    <span class="emoji">🎉</span>
                 </div>
             </div>
         </div>
 
-        <!-- Recent Rants -->
-        <div class="recent-rants">
-            <h3 class="recent-rants-title">
-                <i class="fas fa-fire"></i> 3 Rant Terakhir
-            </h3>
-            
-            <div id="rants-container">
-                <!-- Rants will be populated by JavaScript -->
-            </div>
-        </div>
-
-        <!-- Jejak Emosi Grid -->
-        <div class="jejak-grid-section">
-            <h3 class="jejak-title">
-                <i class="fas fa-skull"></i> 12 Jejak Emosi
-            </h3>
-            
-            <div class="jejak-grid" id="jejak-grid">
-                <!-- Jejak items will be populated by JavaScript -->
-            </div>
-        </div>
+        <h3 class="jejak-title"><i class="fas fa-archive"></i> 12 Jejak Batin</h3>
+        <div class="jejak-grid" id="jejak-grid"></div>
     </div>
 
-    <!-- Stats Popup -->
-    <div class="stats-popup" id="stats-popup">
-        <div class="stats-popup-header">
-            <button class="stats-popup-close" onclick="closeStatsPopup()">&times;</button>
-            <h3 class="stats-popup-title" id="popup-title">Statistik Reaksi</h3>
-            <p class="stats-popup-subtitle" id="popup-subtitle">Detail statistik reaksi emosi</p>
-        </div>
-        <div class="stats-popup-content">
-            <div class="stats-list" id="stats-content">
-                <!-- Stats will be populated by JavaScript -->
-            </div>
-        </div>
-    </div>
-
-    <!-- ===== BOTTOM NAVIGATION ===== -->
     <div class="bottom-nav">
-        <a href="home.html" class="nav-item" id="navHome">
-            <i class="fas fa-home"></i>
-            <span>Home</span>
-        </a>
-        
-        <a href="notifications.html" class="nav-item" id="navNotifications">
-            <i class="fas fa-bell"></i>
-            <span>Notifikasi</span>
-        </a>
-        
-        <a href="onboarding.html" class="nav-item" id="navOnboarding">
-            <i class="fas fa-fire"></i>
-            <span>Rage</span>
-        </a>
-        
-        <a href="profile.html" class="nav-item active" id="navProfile">
-            <i class="fas fa-user-secret"></i>
-            <span>Profile</span>
-        </a>
+        <a href="home.html" class="nav-item"><i class="fas fa-globe"></i><span>Home</span></a>
+        <a href="notifications.html" class="nav-item"><i class="fas fa-bell"></i><span>Notifikasi</span></a>
+        <a href="onboarding.html" class="nav-item"><i class="fas fa-fire"></i><span>Rage</span></a>
+        <a href="profile.html" class="nav-item active"><i class="fas fa-mirror"></i><span>Inner</span></a>
     </div>
 
     <script>
-        // Artefak data with edgy themes
-        const artefakData = [
-            {
-                id: 1,
-                title: "The Beginning",
-                date: "Posted: 15.01.2024",
-                cycle: "Cycle 1",
-                image: "https://images.unsplash.com/photo-1542744095-fcf48d80b0fd?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80  ",
-                description: "The first 30 days in NOPE. Learning to fragment identity across digital space.",
-                quote: "The courage to begin is everything",
-                reactions: { guejuga: 8, peluk: 3, bangga: 5 },
-                userReaction: null
-            },
-            {
-                id: 2,
-                title: "Code Fragment #42",
-                date: "Posted: 14.02.2024",
-                cycle: "Cycle 2",
-                image: "https://images.unsplash.com/photo-1517077304055-6e89abbf09b0?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80  ",
-                description: "A piece of algorithm that was meant to be forgotten. Still running somewhere.",
-                quote: "Some codes are better left unexecuted",
-                reactions: { guejuga: 12, peluk: 7, bangga: 4 },
-                userReaction: 'peluk'
-            },
-            {
-                id: 3,
-                title: "Ghost Protocol",
-                date: "Posted: 15.03.2024",
-                cycle: "Cycle 3",
-                image: "https://images.unsplash.com/photo-1550684376-efcbd6e3f031?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80  ",
-                description: "First successful dispersion of identity. Becoming less than a person, more than data.",
-                quote: "Invisibility is the new presence",
-                reactions: { guejuga: 6, peluk: 2, bangga: 9 },
-                userReaction: 'bangga'
-            },
-            {
-                id: 4,
-                title: "Silent Echo",
-                date: "Posted: 14.04.2024",
-                cycle: "Cycle 4",
-                image: "https://images.unsplash.com/photo-1518709268805-4e9042af2176?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80  ",
-                description: "Learning that some memories are louder when they're silent. The echo of what's not said.",
-                quote: "Silence speaks volumes to those who listen",
-                reactions: { guejuga: 15, peluk: 4, bangga: 3 },
-                userReaction: 'guejuga'
-            }
+        const artefaks = [
+            { id: 1, quote: "The courage to begin is everything", image: "https://images.unsplash.com/photo-1542744095-fcf48d80b0fd" },
+            { id: 2, quote: "Ada kode yang lebih baik tak pernah dijalankan.", image: "https://images.unsplash.com/photo-1517077304055-6e89abbf09b0" },
+            { id: 3, quote: "Invisibility is the new presence", image: "https://images.unsplash.com/photo-1550684376-efcbd6e3f031" },
+            { id: 4, quote: "Silence speaks volumes to those who listen", image: "https://images.unsplash.com/photo-1518709268805-4e9042af2176" }
         ];
 
-        // Empty artefacts for cycles 5-12 with edgy images
-        const emptyArtefaks = [];
-        const edgyImages = [
-            "https://images.unsplash.com/photo-1519681393784-d120267933ba?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80  ",
-            "https://images.unsplash.com/photo-1550684376-efcbd6e3f031?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80  ",
-            "https://images.unsplash.com/photo-1558591710-4b4a1ae0f04d?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80  ",
-            "https://images.unsplash.com/photo-1518709268805-4e9042af2176?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80  ",
-            "https://images.unsplash.com/photo-1542744095-fcf48d80b0fd?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80  ",
-            "https://images.unsplash.com/photo-1517077304055-6e89abbf09b0?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80  ",
-            "https://images.unsplash.com/photo-1550684376-efcbd6e3f031?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80  ",
-            "https://images.unsplash.com/photo-1518709268805-4e9042af2176?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80  "
-        ];
-        
         for (let i = 5; i <= 12; i++) {
-            emptyArtefaks.push({
+            artefaks.push({
                 id: i,
-                title: `Cycle ${i}`,
-                date: "Coming Soon",
-                cycle: `Cycle ${i}`,
-                image: edgyImages[(i-5) % edgyImages.length],
-                description: "Future artefak - your journey continues",
-                quote: "To be written...",
-                reactions: { guejuga: 0, peluk: 0, bangga: 0 },
-                userReaction: null,
-                isEmpty: true
+                quote: "Nanti akan terisi...",
+                image: "https://images.unsplash.com/photo-1519681393784-d120267933ba"
             });
         }
 
-        // All artefacts combined
-        const allArtefaks = [...artefakData, ...emptyArtefaks];
-
-        // Recent rants data with edgy themes
-        const recentRants = [
-            {
-                id: 1,
-                time: "2 hours ago",
-                tag: "#WorkRage",
-                text: "Meeting useless banget hari ini, 3 jam buang-buang waktu!"
-            },
-            {
-                id: 2,
-                time: "1 day ago",
-                tag: "#TrafficHell",
-                text: "Macet 2 jam pulang kerja, AC mobil rusak, benar-benar hari sial"
-            },
-            {
-                id: 3,
-                time: "3 days ago",
-                text: "App error mulu sejak update, developer-nya tidur ya?"
-            }
-        ];
-
-        let currentArtefakId = 1;
-        let currentReactionStats = null;
-
-        // Initialize
-        document.addEventListener('DOMContentLoaded', function() {
-            loadMainArtefak(1);
-            loadJejakGrid();
-            loadRecentRants();
-            
-            // Close popup on background click
-            document.getElementById('stats-popup').addEventListener('click', function(e) {
-                if (e.target === this) {
-                    closeStatsPopup();
-                }
+        document.addEventListener('DOMContentLoaded', () => {
+            const grid = document.getElementById('jejak-grid');
+            artefaks.forEach(artefak => {
+                const el = document.createElement('div');
+                el.className = `jejak-item ${artefak.id === 1 ? 'active' : ''} ${artefak.id > 4 ? 'empty' : ''}`;
+                if (artefak.id <= 4) el.onclick = () => updateArtefak(artefak);
+                el.innerHTML = `
+                    <img src="${artefak.image}" class="jejak-img" />
+                    <div class="jejak-overlay">${artefak.id}</div>
+                `;
+                grid.appendChild(el);
             });
         });
 
-        // Load main artefak
-        function loadMainArtefak(id) {
-            const artefak = allArtefaks.find(a => a.id === id) || allArtefaks[0];
-            currentArtefakId = artefak.id;
-            
-            // Update main display
-            document.getElementById('artefak-image').src = artefak.image;
-            document.getElementById('artefak-cycle').textContent = artefak.cycle;
-            document.getElementById('artefak-title').textContent = artefak.title;
-            document.getElementById('artefak-date').textContent = artefak.date;
-            document.getElementById('artefak-description').textContent = artefak.description;
-            document.getElementById('quote-text').textContent = artefak.quote;
-            document.getElementById('quote-date').textContent = artefak.date;
-            
-            // Update reaction counts
-            document.getElementById('count-guejuga').textContent = artefak.reactions.guejuga;
-            document.getElementById('count-peluk').textContent = artefak.reactions.peluk;
-            document.getElementById('count-bangga').textContent = artefak.reactions.bangga;
-            
-            // Update active states
-            updateReactionActiveStates();
-            
-            // Update jejak grid active state
-            updateJejakActiveState();
-        }
-
-        // Load jejak grid
-        function loadJejakGrid() {
-            const grid = document.getElementById('jejak-grid');
-            grid.innerHTML = '';
-            
-            allArtefaks.forEach(artefak => {
-                const jejakItem = document.createElement('div');
-                jejakItem.className = `jejak-item ${artefak.id === currentArtefakId ? 'active' : ''} ${artefak.isEmpty ? 'empty' : ''}`;
-                jejakItem.onclick = () => !artefak.isEmpty && loadMainArtefak(artefak.id);
-                
-                jejakItem.innerHTML = `
-                    <img src="${artefak.image}" alt="${artefak.title}" class="jejak-img">
-                    <div class="jejak-overlay">
-                        <div class="jejak-cycle">${artefak.cycle}</div>
-                        <div class="jejak-date">${artefak.date}</div>
-                    </div>
-                `;
-                
-                grid.appendChild(jejakItem);
+        function updateArtefak(artefak) {
+            document.querySelector('.artefak-image').src = artefak.image;
+            document.querySelector('.quote-text').textContent = artefak.quote;
+            document.querySelectorAll('.jejak-item').forEach((el, i) => {
+                el.classList.toggle('active', i === artefak.id - 1);
             });
         }
-
-        // Load recent rants
-        function loadRecentRants() {
-            const container = document.getElementById('rants-container');
-            
-            if (recentRants.length === 0) {
-                container.innerHTML = `
-                    <div class="no-rants">
-                        <i class="fas fa-comment-slash" style="font-size: 48px; margin-bottom: 15px;"></i>
-                        <p>Belum ada rant pribadi</p>
-                        <small>Rant di Home untuk mencatat perasaanmu</small>
-                    </div>
-                `;
-                return;
-            }
-            
-            container.innerHTML = '';
-            recentRants.forEach(rant => {
-                const rantItem = document.createElement('div');
-                rantItem.className = 'rant-item';
-                rantItem.innerHTML = `
-                    <div class="rant-header">
-                        <span class="rant-time">${rant.time}</span>
-                        ${rant.tag ? `<span class="rant-tag">${rant.tag}</span>` : ''}
-                    </div>
-                    <p class="rant-text">"${rant.text}"</p>
-                `;
-                container.appendChild(rantItem);
-            });
-        }
-
-        // Update jejak active state
-        function updateJejakActiveState() {
-            document.querySelectorAll('.jejak-item').forEach((item, index) => {
-                item.classList.remove('active');
-                if (index === currentArtefakId - 1) {
-                    item.classList.add('active');
-                }
-            });
-        }
-
-        // Update reaction active states
-        function updateReactionActiveStates() {
-            const artefak = allArtefaks.find(a => a.id === currentArtefakId);
-            if (!artefak) return;
-            
-            // Remove all active classes
-            document.querySelectorAll('.mini-reaction').forEach(reaction => {
-                reaction.classList.remove('active');
-            });
-            
-            // Add active class to user's reaction
-            if (artefak.userReaction) {
-                document.getElementById(`mini-${artefak.userReaction}`).classList.add('active');
-            }
-        }
-
-        // Add reaction
-        function addReaction(type) {
-            const artefak = allArtefaks.find(a => a.id === currentArtefakId);
-            if (!artefak || artefak.isEmpty) return;
-            
-            // If user already gave this reaction, remove it
-            if (artefak.userReaction === type) {
-                artefak.reactions[type]--;
-                artefak.userReaction = null;
-            } 
-            // If user gave different reaction before, switch
-            else if (artefak.userReaction) {
-                // Remove previous reaction
-                artefak.reactions[artefak.userReaction]--;
-                // Add new reaction
-                artefak.reactions[type]++;
-                artefak.userReaction = type;
-            }
-            // First time giving reaction
-            else {
-                artefak.reactions[type]++;
-                artefak.userReaction = type;
-            }
-            
-            // Update UI
-            document.getElementById(`count-${type}`).textContent = artefak.reactions[type];
-            updateReactionActiveStates();
-            
-            // Show feedback
-            showFeedback(`${getReactionEmoji(type)} ${getReactionText(type)}`);
-        }
-
-        function getReactionEmoji(type) {
-            const emojis = {
-                'guejuga': '👍',
-                'peluk': '🤗',
-                'bangga': '🎉'
-            };
-            return emojis[type] || '👍';
-        }
-
-        function getReactionText(type) {
-            const texts = {
-                'guejuga': 'GueJuga',
-                'peluk': 'Peluk',
-                'bangga': 'Bangga'
-            };
-            return texts[type] || 'GueJuga';
-        }
-
-        // Show stats popup
-        function showStatsPopup(event, reactionType) {
-            event.stopPropagation();
-            
-            const artefak = allArtefaks.find(a => a.id === currentArtefakId);
-            if (!artefak) return;
-            
-            currentReactionStats = reactionType;
-            
-            // Update popup content
-            document.getElementById('popup-title').textContent = `${getReactionEmoji(reactionType)} ${getReactionText(reactionType)}`;
-            document.getElementById('popup-subtitle').textContent = `Statistik untuk ${artefak.cycle}`;
-            
-            const totalReactions = artefak.reactions.guejuga + artefak.reactions.peluk + artefak.reactions.bangga;
-            const percentage = totalReactions > 0 ? (artefak.reactions[reactionType] / totalReactions * 100).toFixed(1) : 0;
-            
-            const statsContent = document.getElementById('stats-content');
-            statsContent.innerHTML = `
-                <div class="stat-item">
-                    <span class="stat-label">Total Reaksi</span>
-                    <span class="stat-value">${artefak.reactions[reactionType]}</span>
-                </div>
-                
-                <div class="stat-item">
-                    <span class="stat-label">Persentase</span>
-                    <span class="stat-value">${percentage}%</span>
-                </div>
-                
-                <div class="stat-item">
-                    <span class="stat-label">Reaksi Anda</span>
-                    <span class="stat-value">${artefak.userReaction === reactionType ? '✓' : '✗'}</span>
-                </div>
-                
-                <div class="stat-item">
-                    <span class="stat-label">Peringkat</span>
-                    <span class="stat-value">#${getReactionRank(reactionType)}/3</span>
-                </div>
-                
-                <div class="stat-item">
-                    <span class="stat-label">Trend</span>
-                    <span class="stat-value">${getReactionTrend(reactionType)}</span>
-                </div>
-            `;
-            
-            // Show popup
-            document.getElementById('stats-popup').style.display = 'block';
-            document.body.style.overflow = 'hidden';
-        }
-
-        function getReactionTrend(reactionType) {
-            const trends = {
-                'guejuga': '📈 Naik',
-                'peluk': '📊 Stabil',
-                'bangga': '🔥 Tinggi'
-            };
-            return trends[reactionType] || '📊 Stabil';
-        }
-
-        function getReactionRank(reactionType) {
-            const artefak = allArtefaks.find(a => a.id === currentArtefakId);
-            if (!artefak) return 3;
-            
-            const reactions = [
-                { type: 'guejuga', count: artefak.reactions.guejuga },
-                { type: 'peluk', count: artefak.reactions.peluk },
-                { type: 'bangga', count: artefak.reactions.bangga }
-            ];
-            
-            reactions.sort((a, b) => b.count - a.count);
-            
-            for (let i = 0; i < reactions.length; i++) {
-                if (reactions[i].type === reactionType) {
-                    return i + 1;
-                }
-            }
-            
-            return 3;
-        }
-
-        function closeStatsPopup() {
-            document.getElementById('stats-popup').style.display = 'none';
-            document.body.style.overflow = 'auto';
-            currentReactionStats = null;
-        }
-
-        // Show feedback
-        function showFeedback(message, type = 'success') {
-            const colors = {
-                success: '#34c759',
-                error: '#ff375f',
-                info: '#667eea'
-            };
-            
-            const feedback = document.createElement('div');
-            feedback.style.cssText = `
-                position: fixed;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-                background: ${colors[type] || colors.success};
-                color: ${type === 'success' ? '#000' : '#fff'};
-                padding: 15px 25px;
-                border-radius: 0;
-                font-size: 16px;
-                font-weight: 800;
-                z-index: 1001;
-                animation: fadeOut 1s forwards;
-                box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-                border: 1px solid #000;
-            `;
-            feedback.textContent = message;
-            document.body.appendChild(feedback);
-            
-            setTimeout(() => feedback.remove(), 1000);
-        }
-
-        // Add CSS for animations
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes fadeOut {
-                0% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
-                70% { opacity: 1; transform: translate(-50%, -150%) scale(1.1); }
-                100% { opacity: 0; transform: translate(-50%, -200%) scale(1.2); }
-            }
-            
-            /* Dark scrollbar */
-            ::-webkit-scrollbar {
-                width: 8px;
-                height: 8px;
-            }
-            
-            ::-webkit-scrollbar-track {
-                background: #111116;
-            }
-            
-            ::-webkit-scrollbar-thumb {
-                background: #333;
-                border-radius: 0;
-            }
-            
-            ::-webkit-scrollbar-thumb:hover {
-                background: #444;
-            }
-        `;
-        document.head.appendChild(style);
     </script>
 </body>
 </html>
-
