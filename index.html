@@ -1,121 +1,69 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ready Unggul - Loading...</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: white;
-        }
-        
-        .redirect-container {
-            text-align: center;
-            padding: 40px;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            max-width: 500px;
-            width: 90%;
-        }
-        
-        .logo {
-            font-size: 3rem;
-            margin-bottom: 20px;
-            animation: pulse 2s infinite;
-        }
-        
-        h1 {
-            font-size: 2rem;
-            margin-bottom: 10px;
-        }
-        
-        p {
-            font-size: 1.1rem;
-            margin-bottom: 30px;
-            opacity: 0.9;
-        }
-        
-        .spinner {
-            width: 50px;
-            height: 50px;
-            border: 5px solid rgba(255, 255, 255, 0.3);
-            border-radius: 50%;
-            border-top-color: white;
-            margin: 0 auto 30px;
-            animation: spin 1s linear infinite;
-        }
-        
-        .manual-link {
-            display: inline-block;
-            padding: 12px 30px;
-            background: white;
-            color: #667eea;
-            text-decoration: none;
-            border-radius: 50px;
-            font-weight: 600;
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-        
-        .manual-link:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-        }
-        
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-        
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-        }
-    </style>
+    <title>NOPE - Anonymous Sharing</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="redirect-container">
-        <div class="logo">⚡</div>
-        <h1>Ready Unggul</h1>
-        <p>Mengarahkan Anda ke halaman login...</p>
-        
-        <div class="spinner"></div>
-        
-        <p>Jika tidak otomatis redirect, klik:</p>
-        <a href="login.html" class="manual-link">Masuk ke Aplikasi</a>
+    <div class="container">
+        <header>
+            <h1 class="logo">NOPE</h1>
+            <p class="tagline">Share anonymously. Rage freely.</p>
+        </header>
+
+        <main>
+            <div class="card-section">
+                <!-- Register Card -->
+                <div class="card" id="registerCard">
+                    <div class="card-icon">🆕</div>
+                    <h2 class="card-title">New to NOPE?</h2>
+                    <p class="card-description">
+                        Create anonymous identity & choose<br>
+                        rage hashtags
+                    </p>
+                    <button class="cta-btn" id="registerBtn" style="background: #34c759;">
+                        CREATE NOPE IDENTITY
+                    </button>
+                </div>
+
+                <!-- Login Card -->
+                <div class="card" id="loginCard">
+                    <div class="card-icon">↩️</div>
+                    <h2 class="card-title">Returning User</h2>
+                    <p class="card-description">
+                        Already have NOPE identity?<br>
+                        Login with Telegram
+                    </p>
+                    <button class="cta-btn" id="loginBtn" style="background: #007aff;">
+                        LOGIN TO NOPE
+                    </button>
+                </div>
+            </div>
+
+            <!-- How It Works Section -->
+            <div class="how-it-works">
+                <h2>How it works:</h2>
+                <ol class="steps">
+                    <li>Enter your Telegram username</li>
+                    <li>We create your anonymous NOPE identity</li>
+                    <li>Choose 3 rage hashtags</li>
+                    <li>Start sharing anonymously</li>
+                </ol>
+            </div>
+        </main>
+
+        <footer>
+            <p>© 2024 NOPE. All rage reserved.</p>
+            <p class="disclaimer">Your identity is encrypted. Nobody knows it's you.</p>
+        </footer>
     </div>
 
-    <script>
-        // Redirect setelah 2 detik
-        setTimeout(function() {
-            window.location.href = "login.html";
-        }, 2000);
-        
-        // Fallback redirect
-        window.onload = function() {
-            // Jika masih di halaman ini setelah 5 detik, force redirect
-            setTimeout(function() {
-                if (window.location.pathname.endsWith('index.html') || 
-                    window.location.pathname === '/') {
-                    window.location.href = "login.html";
-                }
-            }, 5000);
-        };
-        
-        // Analytics/Log jika perlu
-        console.log('Redirect page loaded at:', new Date().toLocaleString());
-    </script>
+    <!-- JavaScript -->
+    <script src="script.js"></script>
 </body>
 </html>
