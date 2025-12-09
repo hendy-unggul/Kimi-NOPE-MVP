@@ -247,6 +247,78 @@
             margin-bottom: 10px;
         }
         .quick-textarea:focus {
+                    </div>
+    </div> <!-- LINE 249 -->
+
+    <!-- ========== BOTTOM NAVIGATION START ========== -->
+    <div class="bottom-nav">
+        <a href="home.html" class="nav-item active" id="navHome">
+            <i class="fas fa-home"></i>
+            <span>Home</span>
+        </a>
+        
+        <a href="notifications.html" class="nav-item" id="navNotifications">
+            <i class="fas fa-bell"></i>
+            <span>Notifikasi</span>
+        </a>
+        
+        <a href="onboarding.html" class="nav-item" id="navOnboarding">
+            <i class="fas fa-fire"></i>
+            <span>Rage</span>
+        </a>
+        
+        <a href="profile.html" class="nav-item" id="navProfile">
+            <i class="fas fa-user-secret"></i>
+            <span>Profile</span>
+        </a>
+    </div>
+    
+    <script>
+        // Bottom Navigation Logic
+        document.addEventListener('DOMContentLoaded', function() {
+            const navItems = document.querySelectorAll('.nav-item');
+            
+            // Set active based on current page
+            const currentPage = window.location.pathname.split('/').pop();
+            
+            navItems.forEach(item => {
+                item.classList.remove('active');
+                
+                if (currentPage.includes('home') && item.id === 'navHome') {
+                    item.classList.add('active');
+                }
+                if (currentPage.includes('notification') && item.id === 'navNotifications') {
+                    item.classList.add('active');
+                }
+                if (currentPage.includes('onboarding') && item.id === 'navOnboarding') {
+                    item.classList.add('active');
+                }
+                if (currentPage.includes('profile') && item.id === 'navProfile') {
+                    item.classList.add('active');
+                }
+            });
+            
+            // Add click effects
+            navItems.forEach(item => {
+                item.addEventListener('click', function(e) {
+                    if (this.classList.contains('active')) {
+                        e.preventDefault();
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                        return;
+                    }
+                    
+                    this.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        this.style.transform = '';
+                    }, 200);
+                });
+            });
+        });
+    </script>
+    <!-- ========== BOTTOM NAVIGATION END ========== -->
+
+</body> <!-- LINE 250 -->
+</html>
             outline: none;
             border-color: #ff3b30;
         }
