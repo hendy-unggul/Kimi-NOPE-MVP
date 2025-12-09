@@ -1,53 +1,189 @@
-<style>
-    /* EMERGENCY BACKUP STYLES */
-    body { 
-        background-color: #000000 !important;
-        color: #ffffff !important;
-        font-family: Arial, sans-serif !important;
-        display: flex !important;
-        justify-content: center !important;
-        align-items: center !important;
-        min-height: 100vh !important;
-        margin: 0 !important;
-        padding: 20px !important;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 100%);
+    color: #ffffff;
+    min-height: 100vh;
+    padding: 20px;
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Header */
+header {
+    text-align: center;
+    margin-bottom: 60px;
+    padding-top: 40px;
+}
+
+.logo {
+    font-size: 4rem;
+    font-weight: 800;
+    background: linear-gradient(90deg, #ff375f, #34c759);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 10px;
+    letter-spacing: -2px;
+}
+
+.tagline {
+    font-size: 1.2rem;
+    color: #a0a0c0;
+    font-weight: 500;
+}
+
+/* Card Section */
+.card-section {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 40px;
+    margin-bottom: 80px;
+}
+
+.card {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 24px;
+    padding: 40px 30px;
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.card:hover {
+    transform: translateY(-10px);
+    border-color: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.card-icon {
+    font-size: 3rem;
+    margin-bottom: 20px;
+}
+
+.card-title {
+    font-size: 1.8rem;
+    margin-bottom: 15px;
+    color: #ffffff;
+    font-weight: 700;
+}
+
+.card-description {
+    color: #b0b0d0;
+    font-size: 1.1rem;
+    margin-bottom: 30px;
+    line-height: 1.5;
+}
+
+/* CTA Button */
+.cta-btn {
+    width: 100%;
+    padding: 18px 24px;
+    border: none;
+    border-radius: 16px;
+    color: white;
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: 'Inter', sans-serif;
+    letter-spacing: 0.5px;
+}
+
+.cta-btn:hover {
+    transform: scale(1.02);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+.cta-btn:active {
+    transform: scale(0.98);
+}
+
+/* How It Works */
+.how-it-works {
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 20px;
+    padding: 40px;
+    max-width: 800px;
+    margin: 0 auto 60px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.how-it-works h2 {
+    font-size: 2rem;
+    margin-bottom: 30px;
+    text-align: center;
+    color: #ffffff;
+    font-weight: 700;
+}
+
+.steps {
+    list-style-position: inside;
+    font-size: 1.2rem;
+    color: #d0d0f0;
+}
+
+.steps li {
+    margin-bottom: 20px;
+    padding-left: 10px;
+    line-height: 1.5;
+}
+
+.steps li:before {
+    content: counter(list-item) ". ";
+    font-weight: bold;
+    color: #34c759;
+    margin-right: 10px;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 40px 0;
+    color: #8080a0;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+footer .disclaimer {
+    font-size: 0.9rem;
+    margin-top: 10px;
+    color: #606080;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .card-section {
+        flex-direction: column;
+        align-items: center;
     }
     
-    .login-container {
-        width: 100% !important;
-        max-width: 400px !important;
+    .card {
+        max-width: 100%;
     }
     
-    .login-card {
-        background-color: rgba(20, 20, 20, 0.95) !important;
-        border: 1px solid rgba(255, 255, 255, 0.08) !important;
-        border-radius: 16px !important;
-        padding: 40px 30px !important;
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5) !important;
+    .logo {
+        font-size: 3rem;
     }
     
-    .brand-logo h1 {
-        font-size: 3.8rem !important;
-        font-weight: 900 !important;
-        color: #ffffff !important;
-        text-align: center !important;
-        margin: 0 0 40px 0 !important;
+    .how-it-works {
+        padding: 30px 20px;
     }
     
-    #username, button[type="submit"] {
-        width: 100% !important;
-        padding: 12px !important;
-        margin: 8px 0 !important;
-        background: #222222 !important;
-        border: 1px solid #333333 !important;
-        color: #ffffff !important;
-        border-radius: 8px !important;
-        font-size: 16px !important;
+    .steps {
+        font-size: 1.1rem;
     }
-    
-    button[type="submit"] {
-        background: #4CAF50 !important;
-        border: none !important;
-        font-weight: bold !important;
-        cursor: pointer !important;
-    }
-</style>
+}
