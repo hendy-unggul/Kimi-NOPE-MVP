@@ -732,7 +732,20 @@
         </div>
     </div>
 
-    
+    <!-- Stats Popup -->
+    <div class="stats-popup" id="stats-popup">
+        <div class="stats-popup-header">
+            <button class="stats-popup-close" onclick="closeStatsPopup()">&times;</button>
+            <h3 class="stats-popup-title" id="popup-title">Statistik Reaksi</h3>
+            <p class="stats-popup-subtitle" id="popup-subtitle">Detail statistik reaksi emosi</p>
+        </div>
+        <div class="stats-popup-content">
+            <div class="stats-list" id="stats-content">
+                <!-- Stats will be populated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
     <!-- ===== BOTTOM NAVIGATION ===== -->
     <div class="bottom-nav">
         <a href="home.html" class="nav-item" id="navHome">
@@ -1176,3 +1189,4 @@
     </script>
 </body>
 </html>
+
