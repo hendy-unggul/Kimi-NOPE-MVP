@@ -3,107 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Artefak Gallery - NOPE</title>
+    <title>Jejak Emosi - NOPE</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* Artefak Gallery Styles */
-        .gallery-container {
-            max-width: 1400px;
+        /* Main Container */
+        .profile-container {
+            max-width: 800px;
             margin: 0 auto;
             padding: 20px;
         }
         
-        /* Gallery Header */
-        .gallery-header {
+        /* Header */
+        .profile-header {
             text-align: center;
-            padding: 40px 20px;
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-            color: white;
-            border-radius: 15px;
-            margin-bottom: 40px;
-            position: relative;
-            overflow: hidden;
+            padding: 30px 20px;
+            margin-bottom: 30px;
         }
         
-        .gallery-header::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, #ff6b6b, #667eea, #4ecdc4);
-        }
-        
-        .gallery-title {
-            font-size: 36px;
-            font-weight: 300;
-            margin-bottom: 15px;
-            letter-spacing: 1px;
-        }
-        
-        .gallery-subtitle {
-            font-size: 18px;
-            opacity: 0.8;
-            margin-bottom: 25px;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-            line-height: 1.6;
-        }
-        
-        .gallery-stats {
-            display: flex;
-            justify-content: center;
-            gap: 40px;
-            margin-top: 30px;
-        }
-        
-        .gallery-stat {
-            text-align: center;
-        }
-        
-        .stat-icon {
-            font-size: 24px;
-            margin-bottom: 10px;
-            color: #4ecdc4;
-        }
-        
-        .stat-number {
+        .profile-title {
             font-size: 32px;
-            font-weight: bold;
-            display: block;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: #333;
         }
         
-        .stat-label {
-            font-size: 14px;
-            opacity: 0.8;
+        .profile-subtitle {
+            font-size: 16px;
+            color: #666;
+            line-height: 1.5;
         }
         
-        /* Main Artefak Display */
-        .main-artefak-container {
-            display: flex;
-            gap: 40px;
-            margin-bottom: 40px;
-            align-items: flex-start;
-        }
-        
-        /* Main Artefak (Besar) */
+        /* Main Artefak */
         .main-artefak {
-            flex: 2;
             background: white;
-            border-radius: 20px;
+            border-radius: 16px;
             overflow: hidden;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            margin-bottom: 30px;
             position: relative;
         }
         
-        .main-artefak.permanent::before {
-            content: 'PERMANENT';
+        .artefak-permanent {
             position: absolute;
-            top: 20px;
-            right: 20px;
+            top: 15px;
+            right: 15px;
             background: rgba(255,107,107,0.9);
             color: white;
             font-size: 11px;
@@ -114,66 +58,158 @@
             z-index: 2;
         }
         
-        .main-artefak-media {
+        .artefak-image {
             width: 100%;
-            height: 400px;
-            overflow: hidden;
-            position: relative;
-        }
-        
-        .main-artefak-media img {
-            width: 100%;
-            height: 100%;
+            height: 300px;
             object-fit: cover;
-            transition: transform 0.5s;
         }
         
-        .main-artefak-cycle {
-            position: absolute;
-            bottom: 20px;
-            left: 20px;
-            background: rgba(0,0,0,0.8);
-            color: white;
-            padding: 8px 16px;
-            border-radius: 25px;
+        .artefak-content {
+            padding: 25px;
+        }
+        
+        .artefak-cycle {
             font-size: 14px;
-            font-weight: bold;
-        }
-        
-        .main-artefak-content {
-            padding: 30px;
-        }
-        
-        .main-artefak-header {
+            color: #888;
+            margin-bottom: 10px;
             display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .artefak-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 15px;
+        }
+        
+        .artefak-date {
+            font-size: 14px;
+            color: #999;
             margin-bottom: 20px;
         }
         
-        .main-artefak-title {
-            font-size: 24px;
-            font-weight: 700;
+        .artefak-description {
+            font-size: 16px;
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+        
+        .memorable-words {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 25px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .memorable-label {
+            font-size: 12px;
+            color: #667eea;
+            font-weight: 600;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .memorable-text {
+            font-size: 18px;
             color: #333;
-            margin: 0;
-            flex: 1;
+            line-height: 1.5;
+            font-style: italic;
+            font-weight: 500;
         }
         
-        .main-artefak-date {
+        /* Mini Reactions */
+        .mini-reactions-container {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 25px 0;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 16px;
+        }
+        
+        .mini-reaction {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+            min-width: 80px;
+        }
+        
+        .mini-reaction:hover {
+            transform: translateY(-5px);
+        }
+        
+        .mini-reaction.active {
+            transform: scale(1.1);
+        }
+        
+        .mini-reaction-emoji {
+            font-size: 28px;
+            margin-bottom: 8px;
+            transition: all 0.3s;
+        }
+        
+        .mini-reaction.active .mini-reaction-emoji {
+            transform: scale(1.2);
+        }
+        
+        .mini-reaction-text {
+            font-size: 12px;
+            font-weight: 600;
+            color: #495057;
+            margin-bottom: 5px;
+        }
+        
+        .mini-reaction-count {
             font-size: 14px;
-            color: #888;
-            white-space: nowrap;
-            margin-left: 15px;
+            font-weight: 700;
+            color: #ff6b6b;
+            background: rgba(255,107,107,0.1);
+            padding: 3px 10px;
+            border-radius: 12px;
+            min-width: 30px;
+            text-align: center;
         }
         
-        /* Recent Rants Sidebar */
-        .recent-rants-sidebar {
-            flex: 1;
+        .mini-reaction-info {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: #667eea;
+            color: white;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            z-index: 2;
+        }
+        
+        .mini-reaction-info:hover {
+            background: #5a67d8;
+            transform: scale(1.2);
+        }
+        
+        /* Recent Rants */
+        .recent-rants {
             background: white;
-            border-radius: 20px;
+            border-radius: 16px;
             padding: 25px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-            height: fit-content;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
         }
         
         .recent-rants-title {
@@ -184,8 +220,6 @@
             display: flex;
             align-items: center;
             gap: 10px;
-            border-bottom: 2px solid #f0f0f0;
-            padding-bottom: 15px;
         }
         
         .recent-rants-title i {
@@ -245,149 +279,13 @@
             font-style: italic;
         }
         
-        /* Memorable Words */
-        .memorable-words {
-            background: #f8f9fa;
-            border-radius: 15px;
-            padding: 20px;
-            margin-bottom: 25px;
-            border-left: 4px solid #667eea;
-            position: relative;
+        /* Jejak Emosi Grid */
+        .jejak-grid-section {
+            margin-bottom: 100px;
         }
         
-        .memorable-label {
-            font-size: 12px;
-            text-transform: uppercase;
-            color: #667eea;
-            font-weight: bold;
-            letter-spacing: 1px;
-            margin-bottom: 8px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        .memorable-text {
+        .jejak-title {
             font-size: 18px;
-            color: #333;
-            line-height: 1.6;
-            font-style: italic;
-            margin: 0;
-            font-weight: 500;
-        }
-        
-        .memorable-edit {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            background: rgba(102,126,234,0.1);
-            border: none;
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            cursor: pointer;
-            color: #667eea;
-            font-size: 14px;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .memorable-edit:hover {
-            background: #667eea;
-            color: white;
-            transform: rotate(15deg);
-        }
-        
-        /* Mini Reactions */
-        .mini-reactions {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            margin: 25px 0;
-            padding: 20px;
-            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-            border-radius: 15px;
-            border: 1px solid #dee2e6;
-        }
-        
-        .mini-reaction {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            cursor: pointer;
-            transition: all 0.3s;
-            position: relative;
-            min-width: 80px;
-        }
-        
-        .mini-reaction:hover {
-            transform: translateY(-5px);
-        }
-        
-        .mini-reaction.active {
-            transform: scale(1.1);
-        }
-        
-        .mini-reaction-emoji {
-            font-size: 32px;
-            margin-bottom: 8px;
-            transition: all 0.3s;
-        }
-        
-        .mini-reaction.active .mini-reaction-emoji {
-            transform: scale(1.2);
-        }
-        
-        .mini-reaction-text {
-            font-size: 13px;
-            font-weight: 600;
-            color: #495057;
-            margin-bottom: 5px;
-        }
-        
-        .mini-reaction-count {
-            font-size: 14px;
-            font-weight: 700;
-            color: #ff6b6b;
-            background: rgba(255,107,107,0.1);
-            padding: 3px 10px;
-            border-radius: 12px;
-            min-width: 30px;
-            text-align: center;
-        }
-        
-        .mini-reaction-info {
-            position: absolute;
-            top: -5px;
-            right: -5px;
-            background: #667eea;
-            color: white;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 10px;
-            cursor: pointer;
-            transition: all 0.3s;
-            z-index: 2;
-        }
-        
-        .mini-reaction-info:hover {
-            background: #5a67d8;
-            transform: scale(1.2);
-        }
-        
-        /* Artefak Thumbnails Grid */
-        .thumbnails-section {
-            margin-top: 40px;
-        }
-        
-        .thumbnails-title {
-            font-size: 20px;
             font-weight: 600;
             color: #333;
             margin-bottom: 20px;
@@ -396,18 +294,17 @@
             gap: 10px;
         }
         
-        .thumbnails-title i {
+        .jejak-title i {
             color: #4ecdc4;
         }
         
-        .thumbnails-grid {
+        .jejak-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 20px;
-            margin-bottom: 50px;
+            gap: 15px;
         }
         
-        .thumbnail-item {
+        .jejak-item {
             position: relative;
             border-radius: 12px;
             overflow: hidden;
@@ -416,41 +313,51 @@
             aspect-ratio: 1;
         }
         
-        .thumbnail-item:hover {
+        .jejak-item:hover {
             transform: translateY(-5px) scale(1.05);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
         }
         
-        .thumbnail-item.active {
+        .jejak-item.active {
             border: 3px solid #34c759;
             transform: scale(1.05);
         }
         
-        .thumbnail-img {
+        .jejak-item.empty {
+            opacity: 0.6;
+            filter: grayscale(0.7);
+            cursor: not-allowed;
+        }
+        
+        .jejak-item.empty:hover {
+            transform: none;
+        }
+        
+        .jejak-img {
             width: 100%;
             height: 100%;
             object-fit: cover;
         }
         
-        .thumbnail-overlay {
+        .jejak-overlay {
             position: absolute;
             bottom: 0;
             left: 0;
             right: 0;
-            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
-            padding: 15px;
+            background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+            padding: 12px;
             color: white;
         }
         
-        .thumbnail-cycle {
-            font-size: 12px;
+        .jejak-cycle {
+            font-size: 11px;
             font-weight: 600;
-            margin-bottom: 5px;
+            margin-bottom: 3px;
             color: #4ecdc4;
         }
         
-        .thumbnail-date {
-            font-size: 11px;
+        .jejak-date {
+            font-size: 10px;
             opacity: 0.8;
         }
         
@@ -466,7 +373,7 @@
             box-shadow: 0 20px 60px rgba(0,0,0,0.3);
             z-index: 1001;
             width: 90%;
-            max-width: 500px;
+            max-width: 400px;
             overflow: hidden;
             animation: popupFadeIn 0.3s;
         }
@@ -479,18 +386,18 @@
         .stats-popup-header {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            padding: 25px;
+            padding: 20px;
             text-align: center;
         }
         
         .stats-popup-title {
-            font-size: 20px;
+            font-size: 18px;
             font-weight: 600;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
         }
         
         .stats-popup-subtitle {
-            font-size: 14px;
+            font-size: 13px;
             opacity: 0.9;
         }
         
@@ -501,11 +408,11 @@
             background: rgba(255,255,255,0.2);
             border: none;
             color: white;
-            width: 36px;
-            height: 36px;
+            width: 32px;
+            height: 32px;
             border-radius: 50%;
             cursor: pointer;
-            font-size: 18px;
+            font-size: 16px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -518,142 +425,35 @@
         }
         
         .stats-popup-content {
-            padding: 30px;
-            max-height: 400px;
+            padding: 25px;
+            max-height: 300px;
             overflow-y: auto;
         }
         
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 20px;
+        .stats-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
         }
         
-        .stat-box {
+        .stat-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px;
             background: #f8f9fa;
-            border-radius: 12px;
-            padding: 20px;
-            text-align: center;
-            transition: all 0.3s;
+            border-radius: 10px;
         }
         
-        .stat-box:hover {
-            background: #e9ecef;
-            transform: translateY(-3px);
+        .stat-label {
+            font-size: 14px;
+            color: #666;
         }
         
-        .stat-box-icon {
-            font-size: 28px;
-            margin-bottom: 10px;
-            color: #667eea;
-        }
-        
-        .stat-box-number {
-            font-size: 24px;
+        .stat-value {
+            font-size: 16px;
             font-weight: 700;
             color: #333;
-            margin-bottom: 5px;
-        }
-        
-        .stat-box-label {
-            font-size: 12px;
-            color: #666;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        
-        /* Artefak Description */
-        .artefak-description {
-            font-size: 16px;
-            color: #666;
-            line-height: 1.6;
-            margin-bottom: 25px;
-        }
-        
-        /* Empty State */
-        .empty-gallery {
-            text-align: center;
-            padding: 80px 20px;
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-            margin-bottom: 40px;
-        }
-        
-        .empty-icon {
-            font-size: 72px;
-            color: #ddd;
-            margin-bottom: 20px;
-        }
-        
-        .empty-title {
-            font-size: 24px;
-            color: #999;
-            margin-bottom: 15px;
-        }
-        
-        .empty-desc {
-            color: #aaa;
-            max-width: 500px;
-            margin: 0 auto 30px;
-            line-height: 1.6;
-        }
-        
-        /* Timeline View Toggle */
-        .view-toggle {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 30px;
-            background: white;
-            border-radius: 50px;
-            padding: 5px;
-            width: fit-content;
-            margin-left: auto;
-            margin-right: auto;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-        }
-        
-        .view-btn {
-            padding: 10px 25px;
-            border: none;
-            background: none;
-            cursor: pointer;
-            border-radius: 50px;
-            font-weight: 600;
-            color: #666;
-            transition: all 0.3s;
-        }
-        
-        .view-btn.active {
-            background: #667eea;
-            color: white;
-        }
-        
-        /* Modal for Editing Memorable Words */
-        .memorable-modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.8);
-            z-index: 1000;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .memorable-modal-content {
-            background: white;
-            border-radius: 15px;
-            width: 90%;
-            max-width: 500px;
-            animation: modalFadeIn 0.3s;
-        }
-        
-        @keyframes modalFadeIn {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
         }
         
         /* ===== BOTTOM NAVIGATION ===== */
@@ -706,299 +506,181 @@
         /* Add space for bottom nav */
         body {
             padding-bottom: 80px !important;
+            background: #f5f7fa;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
         }
         
         /* Responsive */
-        @media (max-width: 1200px) {
-            .main-artefak-container {
-                flex-direction: column;
+        @media (max-width: 768px) {
+            .profile-container {
+                padding: 15px;
             }
             
-            .thumbnails-grid {
+            .jejak-grid {
                 grid-template-columns: repeat(3, 1fr);
             }
-        }
-        
-        @media (max-width: 768px) {
-            .thumbnails-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
             
-            .gallery-stats {
-                flex-wrap: wrap;
-                gap: 20px;
-            }
-            
-            .gallery-title {
+            .profile-title {
                 font-size: 28px;
             }
             
-            .main-artefak-media {
-                height: 300px;
+            .artefak-image {
+                height: 250px;
             }
             
-            .mini-reactions {
-                gap: 15px;
+            .mini-reactions-container {
+                gap: 20px;
             }
             
             .mini-reaction {
-                min-width: 60px;
+                min-width: 70px;
             }
         }
         
         @media (max-width: 480px) {
-            .thumbnails-grid {
-                grid-template-columns: 1fr;
+            .jejak-grid {
+                grid-template-columns: repeat(2, 1fr);
             }
             
-            .mini-reactions {
+            .mini-reactions-container {
                 flex-direction: column;
-                gap: 20px;
+                gap: 15px;
             }
             
-            .stats-grid {
-                grid-template-columns: 1fr;
+            .mini-reaction {
+                min-width: auto;
+                width: 100%;
             }
         }
     </style>
 </head>
 <body>
-    <div class="container">
+    <div class="profile-container">
         <!-- Header -->
-        <header class="header">
-            <div class="logo">
-                <a href="home.html">
-                    <i class="fas fa-times-circle"></i>
-                    <span>NOPE</span>
-                </a>
-            </div>
-            <nav class="nav">
-                <a href="home.html"><i class="fas fa-home"></i> Home</a>
-                <a href="profile.html" class="active"><i class="fas fa-archive"></i> Artefak Gallery</a>
-                <a href="login.html" class="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a>
-            </nav>
-        </header>
+        <div class="profile-header">
+            <h1 class="profile-title">Jejak Emosi</h1>
+            <p class="profile-subtitle">
+                Catatan permanen setiap 30 hari. Tidak bisa dihapus, tidak ada komentar.<br>
+                Hanya bisa direspon dengan 3 emosi: GueJuga, Peluk, Bangga.
+            </p>
+        </div>
 
-        <main class="gallery-container">
-            <!-- Gallery Header -->
-            <div class="gallery-header">
-                <h1 class="gallery-title">Artefak Gallery</h1>
-                <p class="gallery-subtitle">
-                    Monumen permanen dari setiap 30 hari. Tidak bisa dihapus, tidak ada komentar.<br>
-                    Hanya 3 reaksi: GueJuga, Peluk, Bangga.
+        <!-- Main Artefak -->
+        <div class="main-artefak" id="main-artefak">
+            <div class="artefak-permanent">PERMANENT</div>
+            <img id="artefak-image" src="https://images.unsplash.com/photo-1542744095-fcf48d80b0fd?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Artefak" class="artefak-image">
+            
+            <div class="artefak-content">
+                <div class="artefak-cycle">
+                    <i class="fas fa-history"></i>
+                    <span id="artefak-cycle">Cycle 1</span>
+                </div>
+                
+                <h3 class="artefak-title" id="artefak-title">The Beginning</h3>
+                <div class="artefak-date" id="artefak-date">15.01.2024</div>
+                
+                <p class="artefak-description" id="artefak-description">
+                    The first 30 days in NOPE. Learning to fragment identity across digital space.
                 </p>
                 
-                <div class="gallery-stats">
-                    <div class="gallery-stat">
-                        <div class="stat-icon">
-                            <i class="fas fa-monument"></i>
-                        </div>
-                        <div class="stat-number" id="total-artefak">4</div>
-                        <div class="stat-label">Total Artefak</div>
+                <!-- Memorable Words -->
+                <div class="memorable-words">
+                    <div class="memorable-label">
+                        <i class="fas fa-quote-left"></i> Kata yang Diingat
                     </div>
-                    
-                    <div class="gallery-stat">
-                        <div class="stat-icon">
-                            <i class="fas fa-heart"></i>
-                        </div>
-                        <div class="stat-number" id="total-reactions">86</div>
-                        <div class="stat-label">Total Reaksi</div>
-                    </div>
-                    
-                    <div class="gallery-stat">
-                        <div class="stat-icon">
-                            <i class="fas fa-history"></i>
-                        </div>
-                        <div class="stat-number" id="days-covered">120</div>
-                        <div class="stat-label">Hari Tercatat</div>
-                    </div>
-                    
-                    <div class="gallery-stat">
-                        <div class="stat-icon">
-                            <i class="fas fa-crown"></i>
-                        </div>
-                        <div class="stat-number" id="completion-rate">33%</div>
-                        <div class="stat-label">Koleksi Lengkap</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Main Content Area -->
-            <div class="main-artefak-container">
-                <!-- Main Artefak (Besar) -->
-                <div class="main-artefak permanent" id="main-artefak">
-                    <div class="main-artefak-media">
-                        <img id="main-artefak-img" src="https://images.unsplash.com/photo-1542744095-fcf48d80b0fd?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Artefak">
-                        <div class="main-artefak-cycle" id="main-cycle">Cycle 1</div>
-                    </div>
-                    
-                    <div class="main-artefak-content">
-                        <div class="main-artefak-header">
-                            <h3 class="main-artefak-title" id="main-title">The Beginning</h3>
-                            <div class="main-artefak-date" id="main-date">15.01.2024</div>
-                        </div>
-                        
-                        <p class="artefak-description" id="main-description">
-                            The first 30 days in NOPE. Learning to fragment identity across digital space.
-                        </p>
-                        
-                        <!-- Memorable Words -->
-                        <div class="memorable-words">
-                            <div class="memorable-label">
-                                <i class="fas fa-quote-left"></i> Memorable Words
-                            </div>
-                            <p class="memorable-text" id="main-memorable">"The courage to begin is everything."</p>
-                            <button class="memorable-edit" onclick="editMemorableWords(1)">
-                                <i class="fas fa-pen"></i>
-                            </button>
-                        </div>
-                        
-                        <!-- Mini Reactions -->
-                        <div class="mini-reactions">
-                            <div class="mini-reaction" onclick="addReaction('guejuga')" id="mini-guejuga">
-                                <div class="mini-reaction-info" onclick="showStatsPopup(event, 'guejuga')">
-                                    <i class="fas fa-info"></i>
-                                </div>
-                                <div class="mini-reaction-emoji">👍</div>
-                                <div class="mini-reaction-text">GueJuga</div>
-                                <div class="mini-reaction-count" id="count-guejuga">8</div>
-                            </div>
-                            
-                            <div class="mini-reaction" onclick="addReaction('peluk')" id="mini-peluk">
-                                <div class="mini-reaction-info" onclick="showStatsPopup(event, 'peluk')">
-                                    <i class="fas fa-info"></i>
-                                </div>
-                                <div class="mini-reaction-emoji">🤗</div>
-                                <div class="mini-reaction-text">Peluk</div>
-                                <div class="mini-reaction-count" id="count-peluk">3</div>
-                            </div>
-                            
-                            <div class="mini-reaction" onclick="addReaction('bangga')" id="mini-bangga">
-                                <div class="mini-reaction-info" onclick="showStatsPopup(event, 'bangga')">
-                                    <i class="fas fa-info"></i>
-                                </div>
-                                <div class="mini-reaction-emoji">🎉</div>
-                                <div class="mini-reaction-text">Bangga</div>
-                                <div class="mini-reaction-count" id="count-bangga">5</div>
-                            </div>
-                        </div>
-                    </div>
+                    <p class="memorable-text" id="memorable-text">"The courage to begin is everything."</p>
                 </div>
                 
-                <!-- Recent Rants Sidebar -->
-                <div class="recent-rants-sidebar">
-                    <h3 class="recent-rants-title">
-                        <i class="fas fa-comment-dots"></i> 3 Rant Pribadi Terakhir
-                    </h3>
+                <!-- Mini Reactions -->
+                <div class="mini-reactions-container">
+                    <div class="mini-reaction" onclick="addReaction('guejuga')" id="mini-guejuga">
+                        <div class="mini-reaction-info" onclick="showStatsPopup(event, 'guejuga')">
+                            <i class="fas fa-info"></i>
+                        </div>
+                        <div class="mini-reaction-emoji">👍</div>
+                        <div class="mini-reaction-text">GueJuga</div>
+                        <div class="mini-reaction-count" id="count-guejuga">8</div>
+                    </div>
                     
-                    <div id="rants-container">
-                        <!-- Rants will be populated by JavaScript -->
+                    <div class="mini-reaction" onclick="addReaction('peluk')" id="mini-peluk">
+                        <div class="mini-reaction-info" onclick="showStatsPopup(event, 'peluk')">
+                            <i class="fas fa-info"></i>
+                        </div>
+                        <div class="mini-reaction-emoji">🤗</div>
+                        <div class="mini-reaction-text">Peluk</div>
+                        <div class="mini-reaction-count" id="count-peluk">3</div>
+                    </div>
+                    
+                    <div class="mini-reaction" onclick="addReaction('bangga')" id="mini-bangga">
+                        <div class="mini-reaction-info" onclick="showStatsPopup(event, 'bangga')">
+                            <i class="fas fa-info"></i>
+                        </div>
+                        <div class="mini-reaction-emoji">🎉</div>
+                        <div class="mini-reaction-text">Bangga</div>
+                        <div class="mini-reaction-count" id="count-bangga">5</div>
                     </div>
                 </div>
             </div>
+        </div>
 
-            <!-- Artefak Thumbnails Grid -->
-            <div class="thumbnails-section">
-                <h3 class="thumbnails-title">
-                    <i class="fas fa-th"></i> Koleksi Artefak (12 Cycles)
-                </h3>
-                
-                <div class="thumbnails-grid" id="thumbnails-grid">
-                    <!-- Thumbnails will be populated by JavaScript -->
-                </div>
+        <!-- Recent Rants -->
+        <div class="recent-rants">
+            <h3 class="recent-rants-title">
+                <i class="fas fa-comment-dots"></i> 3 Rant Terakhir
+            </h3>
+            
+            <div id="rants-container">
+                <!-- Rants will be populated by JavaScript -->
             </div>
+        </div>
 
-            <!-- Gallery Manifesto -->
-            <div style="background: #1a1a2e; color: white; padding: 40px; border-radius: 15px; margin-top: 40px;">
-                <h3 style="text-align: center; margin-bottom: 20px; color: #4ecdc4;">
-                    <i class="fas fa-scroll"></i> Gallery Manifesto
-                </h3>
-                <div style="max-width: 800px; margin: 0 auto; line-height: 1.8;">
-                    <p style="text-align: center; margin-bottom: 20px; font-style: italic;">
-                        "Artefak adalah monumen permanen. Tidak bisa dihapus karena mereka adalah potongan perjalanan.<br>
-                        Tidak bisa dikomentari karena kata sering mendistorsi empati.<br>
-                        Hanya bisa menerima 3 reaksi: GueJuga, Peluk, Bangga."
-                    </p>
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-top: 30px;">
-                        <div style="text-align: center;">
-                            <div style="font-size: 24px; margin-bottom: 10px;">🗿</div>
-                            <div style="font-size: 14px; opacity: 0.8;">Permanen</div>
-                        </div>
-                        <div style="text-align: center;">
-                            <div style="font-size: 24px; margin-bottom: 10px;">👍🤗🎉</div>
-                            <div style="font-size: 14px; opacity: 0.8;">3 Reaksi Saja</div>
-                        </div>
-                        <div style="text-align: center;">
-                            <div style="font-size: 24px; margin-bottom: 10px;">🚫💬</div>
-                            <div style="font-size: 14px; opacity: 0.8;">Tanpa Komentar</div>
-                        </div>
-                        <div style="text-align: center;">
-                            <div style="font-size: 24px; margin-bottom: 10px;">📝</div>
-                            <div style="font-size: 14px; opacity: 0.8;">Kata Memorabilia</div>
-                        </div>
-                    </div>
-                </div>
+        <!-- Jejak Emosi Grid -->
+        <div class="jejak-grid-section">
+            <h3 class="jejak-title">
+                <i class="fas fa-th"></i> 12 Jejak Emosi
+            </h3>
+            
+            <div class="jejak-grid" id="jejak-grid">
+                <!-- Jejak items will be populated by JavaScript -->
             </div>
-        </main>
-
-        <!-- Footer -->
-        <footer class="footer">
-            <p>&copy; 2024 NOPE. Monuments, not moments.</p>
-            <div class="footer-links">
-                <a href="#" style="color: #666;">Manifesto</a>
-                <a href="#" style="color: #666;">Empathy Guide</a>
-                <a href="#" style="color: #666;">Permanent Archive</a>
-            </div>
-        </footer>
+        </div>
     </div>
 
     <!-- Stats Popup -->
     <div class="stats-popup" id="stats-popup">
         <div class="stats-popup-header">
             <button class="stats-popup-close" onclick="closeStatsPopup()">&times;</button>
-            <h3 class="stats-popup-title" id="popup-title">Reaction Statistics</h3>
-            <p class="stats-popup-subtitle" id="popup-subtitle">Detailed breakdown of reactions</p>
+            <h3 class="stats-popup-title" id="popup-title">Statistik Reaksi</h3>
+            <p class="stats-popup-subtitle" id="popup-subtitle">Detail statistik reaksi emosi</p>
         </div>
         <div class="stats-popup-content">
-            <div class="stats-grid" id="stats-content">
+            <div class="stats-list" id="stats-content">
                 <!-- Stats will be populated by JavaScript -->
             </div>
         </div>
     </div>
 
-    <!-- Memorable Words Modal -->
-    <div class="memorable-modal" id="memorable-modal">
-        <div class="memorable-modal-content">
-            <div class="upload-modal-header">
-                <h2>Edit Memorable Words</h2>
-                <button class="close-modal" onclick="closeMemorableModal()">&times;</button>
-            </div>
-            <div class="upload-modal-body">
-                <p style="color: #666; margin-bottom: 20px;">
-                    Write a short, memorable phrase that captures the essence of this artefact.<br>
-                    <small style="color: #888;">Maximum 50 characters. This cannot be changed after 24 hours.</small>
-                </p>
-                
-                <textarea id="memorable-edit-text" 
-                          rows="3" 
-                          maxlength="50" 
-                          placeholder="e.g., 'The courage to begin is everything.'"
-                          style="width: 100%; padding: 15px; border: 1px solid #ddd; border-radius: 8px; font-size: 16px; resize: vertical;"></textarea>
-                
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 10px;">
-                    <div style="font-size: 12px; color: #888;">
-                        <span id="char-count">0</span>/50 characters
-                    </div>
-                    <div style="font-size: 12px; color: #ff6b6b;">
-                        <i class="fas fa-clock"></i> Editable for 24h only
-                    </div>
-                </div>
-                
-                <button class="btn-primary" onclick="saveMemorableWords()" style="width: 100%; margin-top: 25px;">
-                    <i class="fas fa-save"></i> Save Memorable Words
-                </button>
-            </div>
-        </div>
+    <!-- ===== BOTTOM NAVIGATION ===== -->
+    <div class="bottom-nav">
+        <a href="home.html" class="nav-item" id="navHome">
+            <i class="fas fa-home"></i>
+            <span>Home</span>
+        </a>
+        
+        <a href="notifications.html" class="nav-item" id="navNotifications">
+            <i class="fas fa-bell"></i>
+            <span>Notifikasi</span>
+        </a>
+        
+        <a href="onboarding.html" class="nav-item" id="navOnboarding">
+            <i class="fas fa-fire"></i>
+            <span>Rage</span>
+        </a>
+        
+        <a href="profile.html" class="nav-item active" id="navProfile">
+            <i class="fas fa-user-secret"></i>
+            <span>Profile</span>
+        </a>
     </div>
 
     <script>
@@ -1013,8 +695,7 @@
                 description: "The first 30 days in NOPE. Learning to fragment identity across digital space.",
                 memorable: "The courage to begin is everything.",
                 reactions: { guejuga: 8, peluk: 3, bangga: 5 },
-                userReaction: null,
-                userHasRanted: true
+                userReaction: null
             },
             {
                 id: 2,
@@ -1025,8 +706,7 @@
                 description: "A piece of algorithm that was meant to be forgotten. Still running somewhere.",
                 memorable: "Some codes are better left unexecuted.",
                 reactions: { guejuga: 12, peluk: 7, bangga: 4 },
-                userReaction: 'peluk',
-                userHasRanted: true
+                userReaction: 'peluk'
             },
             {
                 id: 3,
@@ -1037,8 +717,7 @@
                 description: "First successful dispersion of identity. Becoming less than a person, more than data.",
                 memorable: "Invisibility is the new presence.",
                 reactions: { guejuga: 6, peluk: 2, bangga: 9 },
-                userReaction: 'bangga',
-                userHasRanted: true
+                userReaction: 'bangga'
             },
             {
                 id: 4,
@@ -1049,12 +728,31 @@
                 description: "Learning that some memories are louder when they're silent. The echo of what's not said.",
                 memorable: "Silence speaks volumes to those who listen.",
                 reactions: { guejuga: 15, peluk: 4, bangga: 3 },
-                userReaction: 'guejuga',
-                userHasRanted: false
+                userReaction: 'guejuga'
             }
         ];
 
-        // Recent rants data (user's personal rants)
+        // Empty artefacts for cycles 5-12
+        const emptyArtefaks = [];
+        for (let i = 5; i <= 12; i++) {
+            emptyArtefaks.push({
+                id: i,
+                title: `Cycle ${i}`,
+                date: "Coming Soon",
+                cycle: `Cycle ${i}`,
+                image: "https://images.unsplash.com/photo-1558591710-4b4a1ae0f04d?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+                description: "Future artefak - your journey continues",
+                memorable: "To be written...",
+                reactions: { guejuga: 0, peluk: 0, bangga: 0 },
+                userReaction: null,
+                isEmpty: true
+            });
+        }
+
+        // All artefacts combined
+        const allArtefaks = [...artefakData, ...emptyArtefaks];
+
+        // Recent rants data
         const recentRants = [
             {
                 id: 1,
@@ -1075,57 +773,19 @@
             }
         ];
 
-        // Empty artefacts for cycles 5-12
-        const emptyArtefaks = [];
-        for (let i = 5; i <= 12; i++) {
-            emptyArtefaks.push({
-                id: i,
-                title: `Cycle ${i}`,
-                date: "Coming Soon",
-                cycle: `Cycle ${i}`,
-                image: "https://images.unsplash.com/photo-1558591710-4b4a1ae0f04d?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
-                description: "Future artefak - your journey continues",
-                memorable: "To be written...",
-                reactions: { guejuga: 0, peluk: 0, bangga: 0 },
-                userReaction: null,
-                userHasRanted: false,
-                isEmpty: true
-            });
-        }
-
-        // All artefacts combined
-        const allArtefaks = [...artefakData, ...emptyArtefaks];
-        
         let currentArtefakId = 1;
-        let currentEditingArtefak = null;
         let currentReactionStats = null;
 
         // Initialize
         document.addEventListener('DOMContentLoaded', function() {
             loadMainArtefak(1);
-            loadThumbnails();
+            loadJejakGrid();
             loadRecentRants();
-            updateStats();
-            
-            // Character counter for memorable words
-            const textarea = document.getElementById('memorable-edit-text');
-            if (textarea) {
-                textarea.addEventListener('input', function() {
-                    document.getElementById('char-count').textContent = this.value.length;
-                });
-            }
             
             // Close popup on background click
             document.getElementById('stats-popup').addEventListener('click', function(e) {
                 if (e.target === this) {
                     closeStatsPopup();
-                }
-            });
-            
-            // Close memorable modal on background click
-            document.getElementById('memorable-modal').addEventListener('click', function(e) {
-                if (e.target === this) {
-                    closeMemorableModal();
                 }
             });
         });
@@ -1136,12 +796,12 @@
             currentArtefakId = artefak.id;
             
             // Update main display
-            document.getElementById('main-artefak-img').src = artefak.image;
-            document.getElementById('main-cycle').textContent = artefak.cycle;
-            document.getElementById('main-title').textContent = artefak.title;
-            document.getElementById('main-date').textContent = artefak.date;
-            document.getElementById('main-description').textContent = artefak.description;
-            document.getElementById('main-memorable').textContent = artefak.memorable;
+            document.getElementById('artefak-image').src = artefak.image;
+            document.getElementById('artefak-cycle').textContent = artefak.cycle;
+            document.getElementById('artefak-title').textContent = artefak.title;
+            document.getElementById('artefak-date').textContent = artefak.date;
+            document.getElementById('artefak-description').textContent = artefak.description;
+            document.getElementById('memorable-text').textContent = artefak.memorable;
             
             // Update reaction counts
             document.getElementById('count-guejuga').textContent = artefak.reactions.guejuga;
@@ -1151,29 +811,29 @@
             // Update active states
             updateReactionActiveStates();
             
-            // Update thumbnail active state
-            updateThumbnailActiveState();
+            // Update jejak grid active state
+            updateJejakActiveState();
         }
 
-        // Load thumbnails
-        function loadThumbnails() {
-            const grid = document.getElementById('thumbnails-grid');
+        // Load jejak grid
+        function loadJejakGrid() {
+            const grid = document.getElementById('jejak-grid');
             grid.innerHTML = '';
             
             allArtefaks.forEach(artefak => {
-                const thumbnail = document.createElement('div');
-                thumbnail.className = `thumbnail-item ${artefak.id === currentArtefakId ? 'active' : ''} ${artefak.isEmpty ? 'empty' : ''}`;
-                thumbnail.onclick = () => !artefak.isEmpty && loadMainArtefak(artefak.id);
+                const jejakItem = document.createElement('div');
+                jejakItem.className = `jejak-item ${artefak.id === currentArtefakId ? 'active' : ''} ${artefak.isEmpty ? 'empty' : ''}`;
+                jejakItem.onclick = () => !artefak.isEmpty && loadMainArtefak(artefak.id);
                 
-                thumbnail.innerHTML = `
-                    <img src="${artefak.image}" alt="${artefak.title}" class="thumbnail-img">
-                    <div class="thumbnail-overlay">
-                        <div class="thumbnail-cycle">${artefak.cycle}</div>
-                        <div class="thumbnail-date">${artefak.date}</div>
+                jejakItem.innerHTML = `
+                    <img src="${artefak.image}" alt="${artefak.title}" class="jejak-img">
+                    <div class="jejak-overlay">
+                        <div class="jejak-cycle">${artefak.cycle}</div>
+                        <div class="jejak-date">${artefak.date}</div>
                     </div>
                 `;
                 
-                grid.appendChild(thumbnail);
+                grid.appendChild(jejakItem);
             });
         }
 
@@ -1207,12 +867,12 @@
             });
         }
 
-        // Update thumbnail active state
-        function updateThumbnailActiveState() {
-            document.querySelectorAll('.thumbnail-item').forEach((thumb, index) => {
-                thumb.classList.remove('active');
+        // Update jejak active state
+        function updateJejakActiveState() {
+            document.querySelectorAll('.jejak-item').forEach((item, index) => {
+                item.classList.remove('active');
                 if (index === currentArtefakId - 1) {
-                    thumb.classList.add('active');
+                    item.classList.add('active');
                 }
             });
         }
@@ -1260,7 +920,6 @@
             // Update UI
             document.getElementById(`count-${type}`).textContent = artefak.reactions[type];
             updateReactionActiveStates();
-            updateStats();
             
             // Show feedback
             showFeedback(`${getReactionEmoji(type)} ${getReactionText(type)}`);
@@ -1294,45 +953,37 @@
             currentReactionStats = reactionType;
             
             // Update popup content
-            document.getElementById('popup-title').textContent = `${getReactionEmoji(reactionType)} ${getReactionText(reactionType)} Statistics`;
-            document.getElementById('popup-subtitle').textContent = `Cycle ${artefak.id}: ${artefak.title}`;
+            document.getElementById('popup-title').textContent = `${getReactionEmoji(reactionType)} ${getReactionText(reactionType)}`;
+            document.getElementById('popup-subtitle').textContent = `Statistik untuk ${artefak.cycle}`;
+            
+            const totalReactions = artefak.reactions.guejuga + artefak.reactions.peluk + artefak.reactions.bangga;
+            const percentage = totalReactions > 0 ? (artefak.reactions[reactionType] / totalReactions * 100).toFixed(1) : 0;
             
             const statsContent = document.getElementById('stats-content');
             statsContent.innerHTML = `
-                <div class="stat-box">
-                    <div class="stat-box-icon">📊</div>
-                    <div class="stat-box-number">${artefak.reactions[reactionType]}</div>
-                    <div class="stat-box-label">Total Reactions</div>
+                <div class="stat-item">
+                    <span class="stat-label">Total Reaksi</span>
+                    <span class="stat-value">${artefak.reactions[reactionType]}</span>
                 </div>
                 
-                <div class="stat-box">
-                    <div class="stat-box-icon">👥</div>
-                    <div class="stat-box-number">${Math.floor(artefak.reactions[reactionType] * 0.3)}</div>
-                    <div class="stat-box-label">Unique Users</div>
+                <div class="stat-item">
+                    <span class="stat-label">Persentase</span>
+                    <span class="stat-value">${percentage}%</span>
                 </div>
                 
-                <div class="stat-box">
-                    <div class="stat-box-icon">📈</div>
-                    <div class="stat-box-number">${(artefak.reactions[reactionType] / (artefak.reactions.guejuga + artefak.reactions.peluk + artefak.reactions.bangga) * 100).toFixed(1)}%</div>
-                    <div class="stat-box-label">Of All Reactions</div>
+                <div class="stat-item">
+                    <span class="stat-label">Reaksi Anda</span>
+                    <span class="stat-value">${artefak.userReaction === reactionType ? 'Ya' : 'Tidak'}</span>
                 </div>
                 
-                <div class="stat-box">
-                    <div class="stat-box-icon">⭐</div>
-                    <div class="stat-box-number">${artefak.userReaction === reactionType ? 'Yes' : 'No'}</div>
-                    <div class="stat-box-label">Your Reaction</div>
+                <div class="stat-item">
+                    <span class="stat-label">Peringkat</span>
+                    <span class="stat-value">#${getReactionRank(reactionType)} dari 3</span>
                 </div>
                 
-                <div class="stat-box">
-                    <div class="stat-box-icon">🔥</div>
-                    <div class="stat-box-number">${getReactionTrend(reactionType)}</div>
-                    <div class="stat-box-label">Trend</div>
-                </div>
-                
-                <div class="stat-box">
-                    <div class="stat-box-icon">🏆</div>
-                    <div class="stat-box-number">#${getReactionRank(reactionType)}</div>
-                    <div class="stat-box-label">Popularity Rank</div>
+                <div class="stat-item">
+                    <span class="stat-label">Trend</span>
+                    <span class="stat-value">${getReactionTrend(reactionType)}</span>
                 </div>
             `;
             
@@ -1343,20 +994,32 @@
 
         function getReactionTrend(reactionType) {
             const trends = {
-                'guejuga': 'Rising',
-                'peluk': 'Stable',
-                'bangga': 'High'
+                'guejuga': 'Naik',
+                'peluk': 'Stabil',
+                'bangga': 'Tinggi'
             };
-            return trends[reactionType] || 'Stable';
+            return trends[reactionType] || 'Stabil';
         }
 
         function getReactionRank(reactionType) {
-            const ranks = {
-                'guejuga': 1,
-                'peluk': 3,
-                'bangga': 2
-            };
-            return ranks[reactionType] || 3;
+            const artefak = allArtefaks.find(a => a.id === currentArtefakId);
+            if (!artefak) return 3;
+            
+            const reactions = [
+                { type: 'guejuga', count: artefak.reactions.guejuga },
+                { type: 'peluk', count: artefak.reactions.peluk },
+                { type: 'bangga', count: artefak.reactions.bangga }
+            ];
+            
+            reactions.sort((a, b) => b.count - a.count);
+            
+            for (let i = 0; i < reactions.length; i++) {
+                if (reactions[i].type === reactionType) {
+                    return i + 1;
+                }
+            }
+            
+            return 3;
         }
 
         function closeStatsPopup() {
@@ -1365,23 +1028,7 @@
             currentReactionStats = null;
         }
 
-        // Update gallery stats
-        function updateStats() {
-            let totalReactions = 0;
-            let totalDays = 0;
-            
-            artefakData.forEach(artefak => {
-                totalReactions += artefak.reactions.guejuga + artefak.reactions.peluk + artefak.reactions.bangga;
-                totalDays += 30; // Each artefak = 30 days
-            });
-            
-            document.getElementById('total-artefak').textContent = artefakData.length;
-            document.getElementById('total-reactions').textContent = totalReactions;
-            document.getElementById('days-covered').textContent = totalDays;
-            document.getElementById('completion-rate').textContent = Math.round((artefakData.length / 12) * 100) + '%';
-        }
-
-        // Show feedback popup
+        // Show feedback
         function showFeedback(message, type = 'success') {
             const colors = {
                 success: '#34c759',
@@ -1411,54 +1058,6 @@
             setTimeout(() => feedback.remove(), 1000);
         }
 
-        // Edit memorable words
-        function editMemorableWords(artefakId) {
-            const artefak = allArtefaks.find(a => a.id === artefakId);
-            if (!artefak || artefak.isEmpty) return;
-            
-            currentEditingArtefak = artefakId;
-            const currentText = artefak.memorable;
-            
-            document.getElementById('memorable-edit-text').value = currentText;
-            document.getElementById('char-count').textContent = currentText.length;
-            document.getElementById('memorable-modal').style.display = 'flex';
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeMemorableModal() {
-            document.getElementById('memorable-modal').style.display = 'none';
-            document.body.style.overflow = 'auto';
-            currentEditingArtefak = null;
-        }
-
-        function saveMemorableWords() {
-            if (!currentEditingArtefak) return;
-            
-            const newText = document.getElementById('memorable-edit-text').value.trim();
-            if (!newText) {
-                alert('Please write something memorable');
-                return;
-            }
-            
-            if (newText.length > 50) {
-                alert('Maximum 50 characters allowed');
-                return;
-            }
-            
-            // Update data
-            const artefak = allArtefaks.find(a => a.id === currentEditingArtefak);
-            artefak.memorable = newText;
-            
-            // Update UI
-            if (currentEditingArtefak === currentArtefakId) {
-                document.getElementById('main-memorable').textContent = newText;
-            }
-            
-            // Show success
-            showFeedback('Memorable words saved! ✨');
-            closeMemorableModal();
-        }
-
         // Add CSS for animations
         const style = document.createElement('style');
         style.textContent = `
@@ -1467,43 +1066,8 @@
                 70% { opacity: 1; transform: translate(-50%, -150%) scale(1.1); }
                 100% { opacity: 0; transform: translate(-50%, -200%) scale(1.2); }
             }
-            
-            .thumbnail-item.empty {
-                opacity: 0.6;
-                filter: grayscale(0.7);
-            }
-            
-            .thumbnail-item.empty:hover {
-                transform: none;
-                cursor: not-allowed;
-            }
         `;
         document.head.appendChild(style);
     </script>
-
-    <!-- ========== BOTTOM NAVIGATION START ========== -->
-    <div class="bottom-nav">
-        <a href="home.html" class="nav-item" id="navHome">
-            <i class="fas fa-home"></i>
-            <span>Home</span>
-        </a>
-        
-        <a href="notifications.html" class="nav-item" id="navNotifications">
-            <i class="fas fa-bell"></i>
-            <span>Notifikasi</span>
-        </a>
-        
-        <a href="onboarding.html" class="nav-item" id="navOnboarding">
-            <i class="fas fa-fire"></i>
-            <span>Rage</span>
-        </a>
-        
-        <a href="profile.html" class="nav-item active" id="navProfile">
-            <i class="fas fa-user-secret"></i>
-            <span>Profile</span>
-        </a>
-    </div>
-    <!-- ========== BOTTOM NAVIGATION END ========== -->
-    
 </body>
 </html>
