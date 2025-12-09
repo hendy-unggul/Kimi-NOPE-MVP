@@ -7,6 +7,15 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        /* Dark Edgy Theme */
+        body {
+            background: #0a0a0f;
+            color: #e0e0e0;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            padding-bottom: 80px;
+            margin: 0;
+        }
+        
         /* Main Container */
         .profile-container {
             max-width: 800px;
@@ -17,30 +26,47 @@
         /* Header */
         .profile-header {
             text-align: center;
-            padding: 30px 20px;
-            margin-bottom: 30px;
+            padding: 40px 20px 30px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #222;
+            position: relative;
+        }
+        
+        .profile-header::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 2px;
+            background: linear-gradient(90deg, #ff375f, #34c759);
         }
         
         .profile-title {
-            font-size: 32px;
-            font-weight: 700;
+            font-size: 42px;
+            font-weight: 800;
             margin-bottom: 10px;
-            color: #333;
+            background: linear-gradient(90deg, #ff375f, #34c759);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -1px;
         }
         
         .profile-subtitle {
-            font-size: 16px;
-            color: #666;
+            font-size: 14px;
+            color: #8a8aa8;
             line-height: 1.5;
+            font-weight: 500;
         }
         
         /* Main Artefak */
         .main-artefak {
-            background: white;
-            border-radius: 16px;
+            background: #111116;
+            border-radius: 0;
             overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
             margin-bottom: 30px;
+            border: 1px solid #222;
             position: relative;
         }
         
@@ -48,32 +74,102 @@
             position: absolute;
             top: 15px;
             right: 15px;
-            background: rgba(255,107,107,0.9);
+            background: rgba(255, 55, 95, 0.9);
             color: white;
-            font-size: 11px;
+            font-size: 10px;
             padding: 6px 12px;
-            border-radius: 15px;
-            font-weight: bold;
+            border-radius: 0;
+            font-weight: 800;
             letter-spacing: 1px;
             z-index: 2;
+            text-transform: uppercase;
         }
         
         .artefak-image {
             width: 100%;
-            height: 300px;
+            height: 350px;
             object-fit: cover;
+            filter: grayscale(20%) contrast(110%);
         }
         
         .artefak-content {
             padding: 25px;
         }
         
+        .artefak-cycle {
+            font-size: 12px;
+            color: #34c759;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
         
-        .memorable-text {
-            font-size: 18px;
-            color: #333;
+        .artefak-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 10px;
+            letter-spacing: -0.5px;
+        }
+        
+        .artefak-date {
+            font-size: 13px;
+            color: #8a8aa8;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+        
+        .artefak-description {
+            font-size: 15px;
+            color: #b0b0d0;
+            line-height: 1.6;
+            margin-bottom: 30px;
+            font-weight: 400;
+        }
+        
+        /* Memorable Quote */
+        .memorable-quote {
+            margin: 30px 0;
+            padding: 25px;
+            background: rgba(255, 55, 95, 0.05);
+            border-left: 3px solid #ff375f;
+            position: relative;
+        }
+        
+        .quote-text {
+            font-size: 20px;
+            color: #fff;
             line-height: 1.5;
             font-style: italic;
+            font-weight: 500;
+            margin-bottom: 10px;
+            quotes: "“" "”" "‘" "’";
+        }
+        
+        .quote-text::before {
+            content: open-quote;
+            color: #ff375f;
+            font-size: 24px;
+            margin-right: 5px;
+        }
+        
+        .quote-text::after {
+            content: close-quote;
+            color: #ff375f;
+            font-size: 24px;
+            margin-left: 5px;
+        }
+        
+        .quote-date {
+            font-size: 12px;
+            color: #8a8aa8;
+            display: flex;
+            align-items: center;
+            gap: 8px;
             font-weight: 500;
         }
         
@@ -82,10 +178,10 @@
             display: flex;
             justify-content: center;
             gap: 30px;
-            margin: 25px 0;
-            padding: 20px;
-            background: #f8f9fa;
-            border-radius: 16px;
+            margin: 30px 0;
+            padding: 25px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid #222;
         }
         
         .mini-reaction {
@@ -107,129 +203,142 @@
         }
         
         .mini-reaction-emoji {
-            font-size: 28px;
-            margin-bottom: 8px;
+            font-size: 32px;
+            margin-bottom: 10px;
             transition: all 0.3s;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
         }
         
         .mini-reaction.active .mini-reaction-emoji {
             transform: scale(1.2);
+            filter: drop-shadow(0 4px 8px rgba(255, 55, 95, 0.3));
         }
         
         .mini-reaction-text {
-            font-size: 12px;
+            font-size: 13px;
             font-weight: 600;
-            color: #495057;
-            margin-bottom: 5px;
+            color: #b0b0d0;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
         
         .mini-reaction-count {
             font-size: 14px;
-            font-weight: 700;
-            color: #ff6b6b;
-            background: rgba(255,107,107,0.1);
-            padding: 3px 10px;
-            border-radius: 12px;
+            font-weight: 800;
+            color: #ff375f;
+            background: rgba(255, 55, 95, 0.1);
+            padding: 4px 12px;
+            border-radius: 0;
             min-width: 30px;
             text-align: center;
+            border: 1px solid rgba(255, 55, 95, 0.3);
         }
         
         .mini-reaction-info {
             position: absolute;
-            top: -5px;
-            right: -5px;
-            background: #667eea;
-            color: white;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
+            top: -8px;
+            right: -8px;
+            background: #34c759;
+            color: #000;
+            width: 22px;
+            height: 22px;
+            border-radius: 0;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 10px;
+            font-size: 11px;
             cursor: pointer;
             transition: all 0.3s;
             z-index: 2;
+            font-weight: 800;
+            border: 1px solid #000;
         }
         
         .mini-reaction-info:hover {
-            background: #5a67d8;
-            transform: scale(1.2);
+            background: #2db34d;
+            transform: scale(1.2) rotate(15deg);
         }
         
         /* Recent Rants */
         .recent-rants {
-            background: white;
-            border-radius: 16px;
+            background: #111116;
+            border-radius: 0;
             padding: 25px;
             margin-bottom: 30px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            border: 1px solid #222;
         }
         
         .recent-rants-title {
             font-size: 18px;
-            font-weight: 600;
-            color: #333;
-            margin-bottom: 20px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 25px;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
         
         .recent-rants-title i {
-            color: #ff6b6b;
+            color: #ff375f;
         }
         
         .rant-item {
-            padding: 15px;
-            background: #f8f9fa;
-            border-radius: 12px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 0;
             margin-bottom: 15px;
-            border-left: 4px solid #667eea;
+            border-left: 3px solid #34c759;
             transition: all 0.3s;
+            border: 1px solid transparent;
         }
         
         .rant-item:hover {
-            background: #f0f2f5;
+            background: rgba(255, 255, 255, 0.05);
             transform: translateX(5px);
+            border-color: #333;
         }
         
         .rant-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 8px;
+            margin-bottom: 10px;
         }
         
         .rant-time {
-            font-size: 12px;
-            color: #888;
-            background: #e9ecef;
-            padding: 4px 10px;
-            border-radius: 12px;
-            font-weight: 500;
-        }
-        
-        .rant-tag {
             font-size: 11px;
-            color: #667eea;
+            color: #8a8aa8;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 5px 12px;
+            border-radius: 0;
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
         
+        .rant-tag {
+            font-size: 10px;
+            color: #34c759;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
         .rant-text {
             font-size: 14px;
-            color: #495057;
-            line-height: 1.5;
-            font-style: italic;
+            color: #d0d0f0;
+            line-height: 1.6;
             margin: 0;
+            font-weight: 400;
         }
         
         .no-rants {
             text-align: center;
             padding: 40px 20px;
-            color: #aaa;
+            color: #666;
             font-style: italic;
         }
         
@@ -240,16 +349,18 @@
         
         .jejak-title {
             font-size: 18px;
-            font-weight: 600;
-            color: #333;
-            margin-bottom: 20px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 25px;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
         
         .jejak-title i {
-            color: #4ecdc4;
+            color: #34c759;
         }
         
         .jejak-grid {
@@ -260,37 +371,41 @@
         
         .jejak-item {
             position: relative;
-            border-radius: 12px;
+            border-radius: 0;
             overflow: hidden;
             cursor: pointer;
             transition: all 0.3s;
             aspect-ratio: 1;
+            border: 1px solid #222;
         }
         
         .jejak-item:hover {
-            transform: translateY(-5px) scale(1.05);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            transform: translateY(-5px) scale(1.03);
+            border-color: #ff375f;
+            box-shadow: 0 10px 25px rgba(255, 55, 95, 0.1);
         }
         
         .jejak-item.active {
-            border: 3px solid #34c759;
-            transform: scale(1.05);
+            border: 2px solid #34c759;
+            transform: scale(1.03);
         }
         
         .jejak-item.empty {
-            opacity: 0.6;
-            filter: grayscale(0.7);
+            opacity: 0.4;
+            filter: grayscale(1);
             cursor: not-allowed;
         }
         
         .jejak-item.empty:hover {
             transform: none;
+            border-color: #222;
         }
         
         .jejak-img {
             width: 100%;
             height: 100%;
             object-fit: cover;
+            filter: contrast(110%);
         }
         
         .jejak-overlay {
@@ -298,21 +413,24 @@
             bottom: 0;
             left: 0;
             right: 0;
-            background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
-            padding: 12px;
+            background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+            padding: 15px;
             color: white;
         }
         
         .jejak-cycle {
-            font-size: 11px;
-            font-weight: 600;
-            margin-bottom: 3px;
-            color: #4ecdc4;
+            font-size: 12px;
+            font-weight: 800;
+            margin-bottom: 5px;
+            color: #34c759;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
         
         .jejak-date {
-            font-size: 10px;
+            font-size: 11px;
             opacity: 0.8;
+            font-weight: 500;
         }
         
         /* Stats Popup */
@@ -322,14 +440,15 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            background: #111116;
+            border-radius: 0;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
             z-index: 1001;
             width: 90%;
             max-width: 400px;
             overflow: hidden;
             animation: popupFadeIn 0.3s;
+            border: 1px solid #222;
         }
         
         @keyframes popupFadeIn {
@@ -338,43 +457,48 @@
         }
         
         .stats-popup-header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #ff375f 0%, #222 100%);
             color: white;
-            padding: 20px;
+            padding: 25px;
             text-align: center;
+            border-bottom: 1px solid #333;
         }
         
         .stats-popup-title {
-            font-size: 18px;
-            font-weight: 600;
+            font-size: 20px;
+            font-weight: 800;
             margin-bottom: 8px;
+            letter-spacing: -0.5px;
         }
         
         .stats-popup-subtitle {
             font-size: 13px;
-            opacity: 0.9;
+            opacity: 0.8;
+            font-weight: 500;
         }
         
         .stats-popup-close {
             position: absolute;
             top: 15px;
             right: 15px;
-            background: rgba(255,255,255,0.2);
-            border: none;
+            background: rgba(0,0,0,0.5);
+            border: 1px solid #333;
             color: white;
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
+            width: 36px;
+            height: 36px;
+            border-radius: 0;
             cursor: pointer;
-            font-size: 16px;
+            font-size: 18px;
             display: flex;
             align-items: center;
             justify-content: center;
             transition: all 0.3s;
+            font-weight: 300;
         }
         
         .stats-popup-close:hover {
-            background: rgba(255,255,255,0.3);
+            background: rgba(255, 55, 95, 0.5);
+            border-color: #ff375f;
             transform: rotate(90deg);
         }
         
@@ -387,27 +511,31 @@
         .stats-list {
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            gap: 12px;
         }
         
         .stat-item {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 12px;
-            background: #f8f9fa;
-            border-radius: 10px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 0;
+            border: 1px solid #222;
         }
         
         .stat-label {
-            font-size: 14px;
-            color: #666;
+            font-size: 13px;
+            color: #8a8aa8;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
         
         .stat-value {
             font-size: 16px;
-            font-weight: 700;
-            color: #333;
+            font-weight: 800;
+            color: #fff;
         }
         
         /* ===== BOTTOM NAVIGATION ===== */
@@ -416,9 +544,9 @@
             bottom: 0;
             left: 0;
             right: 0;
-            background: rgba(15, 15, 25, 0.95);
+            background: #111116;
             backdrop-filter: blur(20px);
-            border-top: 1px solid rgba(255, 255, 255, 0.15);
+            border-top: 1px solid #222;
             display: flex;
             justify-content: space-around;
             padding: 12px 0;
@@ -432,7 +560,7 @@
             text-decoration: none;
             color: #8a8aa8;
             padding: 8px 12px;
-            border-radius: 12px;
+            border-radius: 0;
             transition: all 0.3s ease;
             min-width: 70px;
         }
@@ -444,24 +572,19 @@
         
         .nav-item span {
             font-size: 0.7rem;
-            font-weight: 500;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
         
         .nav-item.active {
             color: #34c759;
-            background: rgba(52, 199, 89, 0.15);
+            background: rgba(52, 199, 89, 0.1);
         }
         
         .nav-item:hover:not(.active) {
-            color: #b0b0d0;
+            color: #fff;
             background: rgba(255, 255, 255, 0.05);
-        }
-        
-        /* Add space for bottom nav */
-        body {
-            padding-bottom: 80px !important;
-            background: #f5f7fa;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
         }
         
         /* Responsive */
@@ -475,7 +598,7 @@
             }
             
             .profile-title {
-                font-size: 28px;
+                font-size: 32px;
             }
             
             .artefak-image {
@@ -489,6 +612,10 @@
             .mini-reaction {
                 min-width: 70px;
             }
+            
+            .quote-text {
+                font-size: 18px;
+            }
         }
         
         @media (max-width: 480px) {
@@ -498,12 +625,16 @@
             
             .mini-reactions-container {
                 flex-direction: column;
-                gap: 15px;
+                gap: 20px;
             }
             
             .mini-reaction {
                 min-width: auto;
                 width: 100%;
+            }
+            
+            .profile-title {
+                font-size: 28px;
             }
         }
     </style>
@@ -514,42 +645,43 @@
         <div class="profile-header">
             <h1 class="profile-title">Jejak Emosi</h1>
             <p class="profile-subtitle">
-                Catatan permanen setiap 30 hari. Tidak bisa dihapus, tidak ada komentar.<br>
-                Hanya bisa direspon dengan 3 emosi: GueJuga, Peluk, Bangga.
+                Monumen permanen setiap 30 hari. Tidak bisa dihapus. Tidak ada komentar.<br>
+                Hanya 3 reaksi: GueJuga, Peluk, Bangga.
             </p>
         </div>
 
         <!-- Main Artefak -->
         <div class="main-artefak" id="main-artefak">
-            <div class="artefak-permanent">PERMANENT</div>
+            <div class="artefak-permanent">Permanent</div>
             <img id="artefak-image" src="https://images.unsplash.com/photo-1542744095-fcf48d80b0fd?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Artefak" class="artefak-image">
             
             <div class="artefak-content">
                 <div class="artefak-cycle">
-                    <i class="fas fa-history"></i>
+                    <i class="fas fa-skull-crossbones"></i>
                     <span id="artefak-cycle">Cycle 1</span>
                 </div>
                 
                 <h3 class="artefak-title" id="artefak-title">The Beginning</h3>
-                <div class="artefak-date" id="artefak-date">15.01.2024</div>
+                <div class="artefak-date" id="artefak-date">Posted: 15.01.2024</div>
                 
                 <p class="artefak-description" id="artefak-description">
                     The first 30 days in NOPE. Learning to fragment identity across digital space.
                 </p>
                 
-                <!-- Memorable Words -->
-                <div class="memorable-words">
-                    <div class="memorable-label">
-                        <i class="fas fa-quote-left"></i> Kata yang Diingat
+                <!-- Memorable Quote -->
+                <div class="memorable-quote">
+                    <p class="quote-text" id="quote-text">The courage to begin is everything</p>
+                    <div class="quote-date">
+                        <i class="fas fa-clock"></i>
+                        <span id="quote-date">Posted: 15.01.2024</span>
                     </div>
-                    <p class="memorable-text" id="memorable-text">"The courage to begin is everything."</p>
                 </div>
                 
                 <!-- Mini Reactions -->
                 <div class="mini-reactions-container">
                     <div class="mini-reaction" onclick="addReaction('guejuga')" id="mini-guejuga">
                         <div class="mini-reaction-info" onclick="showStatsPopup(event, 'guejuga')">
-                            <i class="fas fa-info"></i>
+                            <i class="fas fa-chart-bar"></i>
                         </div>
                         <div class="mini-reaction-emoji">👍</div>
                         <div class="mini-reaction-text">GueJuga</div>
@@ -558,7 +690,7 @@
                     
                     <div class="mini-reaction" onclick="addReaction('peluk')" id="mini-peluk">
                         <div class="mini-reaction-info" onclick="showStatsPopup(event, 'peluk')">
-                            <i class="fas fa-info"></i>
+                            <i class="fas fa-chart-bar"></i>
                         </div>
                         <div class="mini-reaction-emoji">🤗</div>
                         <div class="mini-reaction-text">Peluk</div>
@@ -567,7 +699,7 @@
                     
                     <div class="mini-reaction" onclick="addReaction('bangga')" id="mini-bangga">
                         <div class="mini-reaction-info" onclick="showStatsPopup(event, 'bangga')">
-                            <i class="fas fa-info"></i>
+                            <i class="fas fa-chart-bar"></i>
                         </div>
                         <div class="mini-reaction-emoji">🎉</div>
                         <div class="mini-reaction-text">Bangga</div>
@@ -580,7 +712,7 @@
         <!-- Recent Rants -->
         <div class="recent-rants">
             <h3 class="recent-rants-title">
-                <i class="fas fa-comment-dots"></i> 3 Rant Terakhir
+                <i class="fas fa-fire"></i> 3 Rant Terakhir
             </h3>
             
             <div id="rants-container">
@@ -591,7 +723,7 @@
         <!-- Jejak Emosi Grid -->
         <div class="jejak-grid-section">
             <h3 class="jejak-title">
-                <i class="fas fa-th"></i> 12 Jejak Emosi
+                <i class="fas fa-skull"></i> 12 Jejak Emosi
             </h3>
             
             <div class="jejak-grid" id="jejak-grid">
@@ -638,65 +770,76 @@
     </div>
 
     <script>
-        // Artefak data
+        // Artefak data with edgy themes
         const artefakData = [
             {
                 id: 1,
                 title: "The Beginning",
-                date: "15.01.2024",
+                date: "Posted: 15.01.2024",
                 cycle: "Cycle 1",
                 image: "https://images.unsplash.com/photo-1542744095-fcf48d80b0fd?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
                 description: "The first 30 days in NOPE. Learning to fragment identity across digital space.",
-                memorable: "The courage to begin is everything.",
+                quote: "The courage to begin is everything",
                 reactions: { guejuga: 8, peluk: 3, bangga: 5 },
                 userReaction: null
             },
             {
                 id: 2,
                 title: "Code Fragment #42",
-                date: "14.02.2024",
+                date: "Posted: 14.02.2024",
                 cycle: "Cycle 2",
                 image: "https://images.unsplash.com/photo-1517077304055-6e89abbf09b0?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
                 description: "A piece of algorithm that was meant to be forgotten. Still running somewhere.",
-                memorable: "Some codes are better left unexecuted.",
+                quote: "Some codes are better left unexecuted",
                 reactions: { guejuga: 12, peluk: 7, bangga: 4 },
                 userReaction: 'peluk'
             },
             {
                 id: 3,
                 title: "Ghost Protocol",
-                date: "15.03.2024",
+                date: "Posted: 15.03.2024",
                 cycle: "Cycle 3",
                 image: "https://images.unsplash.com/photo-1550684376-efcbd6e3f031?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
                 description: "First successful dispersion of identity. Becoming less than a person, more than data.",
-                memorable: "Invisibility is the new presence.",
+                quote: "Invisibility is the new presence",
                 reactions: { guejuga: 6, peluk: 2, bangga: 9 },
                 userReaction: 'bangga'
             },
             {
                 id: 4,
                 title: "Silent Echo",
-                date: "14.04.2024",
+                date: "Posted: 14.04.2024",
                 cycle: "Cycle 4",
                 image: "https://images.unsplash.com/photo-1518709268805-4e9042af2176?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
                 description: "Learning that some memories are louder when they're silent. The echo of what's not said.",
-                memorable: "Silence speaks volumes to those who listen.",
+                quote: "Silence speaks volumes to those who listen",
                 reactions: { guejuga: 15, peluk: 4, bangga: 3 },
                 userReaction: 'guejuga'
             }
         ];
 
-        // Empty artefacts for cycles 5-12
+        // Empty artefacts for cycles 5-12 with edgy images
         const emptyArtefaks = [];
+        const edgyImages = [
+            "https://images.unsplash.com/photo-1519681393784-d120267933ba?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+            "https://images.unsplash.com/photo-1550684376-efcbd6e3f031?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+            "https://images.unsplash.com/photo-1558591710-4b4a1ae0f04d?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+            "https://images.unsplash.com/photo-1518709268805-4e9042af2176?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+            "https://images.unsplash.com/photo-1542744095-fcf48d80b0fd?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+            "https://images.unsplash.com/photo-1517077304055-6e89abbf09b0?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+            "https://images.unsplash.com/photo-1550684376-efcbd6e3f031?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+            "https://images.unsplash.com/photo-1518709268805-4e9042af2176?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+        ];
+        
         for (let i = 5; i <= 12; i++) {
             emptyArtefaks.push({
                 id: i,
                 title: `Cycle ${i}`,
                 date: "Coming Soon",
                 cycle: `Cycle ${i}`,
-                image: "https://images.unsplash.com/photo-1558591710-4b4a1ae0f04d?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+                image: edgyImages[(i-5) % edgyImages.length],
                 description: "Future artefak - your journey continues",
-                memorable: "To be written...",
+                quote: "To be written...",
                 reactions: { guejuga: 0, peluk: 0, bangga: 0 },
                 userReaction: null,
                 isEmpty: true
@@ -706,7 +849,7 @@
         // All artefacts combined
         const allArtefaks = [...artefakData, ...emptyArtefaks];
 
-        // Recent rants data
+        // Recent rants data with edgy themes
         const recentRants = [
             {
                 id: 1,
@@ -755,7 +898,8 @@
             document.getElementById('artefak-title').textContent = artefak.title;
             document.getElementById('artefak-date').textContent = artefak.date;
             document.getElementById('artefak-description').textContent = artefak.description;
-            document.getElementById('memorable-text').textContent = artefak.memorable;
+            document.getElementById('quote-text').textContent = artefak.quote;
+            document.getElementById('quote-date').textContent = artefak.date;
             
             // Update reaction counts
             document.getElementById('count-guejuga').textContent = artefak.reactions.guejuga;
@@ -927,12 +1071,12 @@
                 
                 <div class="stat-item">
                     <span class="stat-label">Reaksi Anda</span>
-                    <span class="stat-value">${artefak.userReaction === reactionType ? 'Ya' : 'Tidak'}</span>
+                    <span class="stat-value">${artefak.userReaction === reactionType ? '✓' : '✗'}</span>
                 </div>
                 
                 <div class="stat-item">
                     <span class="stat-label">Peringkat</span>
-                    <span class="stat-value">#${getReactionRank(reactionType)} dari 3</span>
+                    <span class="stat-value">#${getReactionRank(reactionType)}/3</span>
                 </div>
                 
                 <div class="stat-item">
@@ -948,11 +1092,11 @@
 
         function getReactionTrend(reactionType) {
             const trends = {
-                'guejuga': 'Naik',
-                'peluk': 'Stabil',
-                'bangga': 'Tinggi'
+                'guejuga': '📈 Naik',
+                'peluk': '📊 Stabil',
+                'bangga': '🔥 Tinggi'
             };
-            return trends[reactionType] || 'Stabil';
+            return trends[reactionType] || '📊 Stabil';
         }
 
         function getReactionRank(reactionType) {
@@ -986,7 +1130,7 @@
         function showFeedback(message, type = 'success') {
             const colors = {
                 success: '#34c759',
-                error: '#ff6b6b',
+                error: '#ff375f',
                 info: '#667eea'
             };
             
@@ -997,14 +1141,15 @@
                 left: 50%;
                 transform: translate(-50%, -50%);
                 background: ${colors[type] || colors.success};
-                color: white;
+                color: ${type === 'success' ? '#000' : '#fff'};
                 padding: 15px 25px;
-                border-radius: 12px;
+                border-radius: 0;
                 font-size: 16px;
-                font-weight: 600;
+                font-weight: 800;
                 z-index: 1001;
                 animation: fadeOut 1s forwards;
-                box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+                box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+                border: 1px solid #000;
             `;
             feedback.textContent = message;
             document.body.appendChild(feedback);
@@ -1019,6 +1164,25 @@
                 0% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
                 70% { opacity: 1; transform: translate(-50%, -150%) scale(1.1); }
                 100% { opacity: 0; transform: translate(-50%, -200%) scale(1.2); }
+            }
+            
+            /* Dark scrollbar */
+            ::-webkit-scrollbar {
+                width: 8px;
+                height: 8px;
+            }
+            
+            ::-webkit-scrollbar-track {
+                background: #111116;
+            }
+            
+            ::-webkit-scrollbar-thumb {
+                background: #333;
+                border-radius: 0;
+            }
+            
+            ::-webkit-scrollbar-thumb:hover {
+                background: #444;
             }
         `;
         document.head.appendChild(style);
