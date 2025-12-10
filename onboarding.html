@@ -20,24 +20,25 @@
             background: var(--bg);
             color: var(--text);
             font-family: 'Inter', sans-serif;
-            padding: 16px;
+            padding: 14px;
             max-width: 500px;
             margin: 0 auto;
-            line-height: 1.4;
+            line-height: 1.3;
+            overflow-x: hidden;
         }
         .back-btn {
             position: absolute;
-            top: 14px;
-            left: 14px;
+            top: 12px;
+            left: 12px;
             color: var(--muted);
             font-size: 1.2rem;
             text-decoration: none;
         }
         .title {
             text-align: center;
-            font-size: 20px;
+            font-size: 19px;
             font-weight: 800;
-            margin: 18px 0 6px;
+            margin: 16px 0 4px;
             line-height: 1.3;
             background: linear-gradient(90deg, var(--accent1), #2db34d);
             -webkit-background-clip: text;
@@ -45,21 +46,32 @@
         }
         .subtitle {
             text-align: center;
-            font-size: 12px;
+            font-size: 11px;
             color: var(--muted);
-            margin-bottom: 20px;
+            margin-bottom: 16px;
             line-height: 1.3;
         }
-        .zone-section {
+
+        /* 2x2 GRID */
+        .zones-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
             margin-bottom: 18px;
         }
+        .zone {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 10px;
+        }
         .zone-label {
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 600;
             margin-bottom: 8px;
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 5px;
             color: var(--muted);
         }
         .pop-culture { color: #2db34d !important; }
@@ -68,51 +80,50 @@
         .movement { opacity: 0.4 !important; }
         .hashtag-options {
             display: grid;
-            gap: 8px;
+            gap: 6px;
         }
         .hashtag-option {
-            background: var(--card);
-            padding: 10px;
-            border: 1px solid var(--border);
-            border-radius: 6px;
+            background: rgba(0,0,0,0.3);
+            padding: 6px;
+            border-radius: 4px;
             text-align: center;
-            font-size: 12px;
+            font-size: 11px;
             font-weight: 600;
             cursor: pointer;
         }
         .hashtag-option.selected {
-            background: rgba(255, 45, 85, 0.15);
-            border-color: var(--accent1);
+            background: rgba(255, 45, 85, 0.25);
+            border: 1px solid var(--accent1);
         }
         .hashtag-option.locked {
-            opacity: 0.25;
+            opacity: 0.2;
             cursor: not-allowed;
-            background: #0a0a0f;
         }
+
         .status {
             background: var(--card);
             border: 1px solid var(--border);
             border-radius: 8px;
-            padding: 12px;
-            margin: 20px 0;
-            font-size: 12px;
+            padding: 10px;
+            margin: 16px 0;
+            font-size: 11px;
         }
         .status-row {
             display: flex;
             justify-content: space-between;
-            margin: 4px 0;
+            margin: 3px 0;
         }
         .status-value.complete { color: #2db34d; }
         .status-value.incomplete { color: #ff9500; }
         .btn {
             width: 100%;
-            padding: 12px;
+            padding: 11px;
             background: linear-gradient(135deg, var(--accent1), #ff9500);
             color: white;
             border: none;
             border-radius: 8px;
             font-weight: 700;
-            font-size: 15px;
+            font-size: 14px;
             cursor: pointer;
         }
         .btn:disabled {
@@ -127,36 +138,39 @@
     <div class="title">Jangan pilih yang kau suka.<br>Pilih yang kau benci.</div>
     <div class="subtitle">* Pilih 1 hashtag dari tiap zona — ini yang menentukan siapa yang bisa mendengarmu.</div>
 
-    <div class="zone-section">
-        <div class="zone-label"><i class="fas fa-film"></i> Pop Culture</div>
-        <div class="hashtag-options" id="popCultureOptions"></div>
-    </div>
-
-    <div class="zone-section">
-        <div class="zone-label"><i class="fas fa-heart-broken"></i> Personal Pain</div>
-        <div class="hashtag-options" id="personalPainOptions"></div>
-    </div>
-
-    <div class="zone-section">
-        <div class="zone-label"><i class="fas fa-virus"></i> Social Sickness</div>
-        <div class="hashtag-options" id="socialSicknessOptions"></div>
-    </div>
-
-    <div class="zone-section">
-        <div class="zone-label"><i class="fas fa-rocket"></i> Movement <span style="font-size:10px">(terkunci)</span></div>
-        <div class="hashtag-options" id="movementOptions"></div>
+    <div class="zones-grid">
+        <!-- Zona 1 -->
+        <div class="zone">
+            <div class="zone-label pop-culture"><i class="fas fa-film"></i> Pop Culture</div>
+            <div class="hashtag-options" id="popCulture"></div>
+        </div>
+        <!-- Zona 2 -->
+        <div class="zone">
+            <div class="zone-label personal-pain"><i class="fas fa-heart-broken"></i> Personal Pain</div>
+            <div class="hashtag-options" id="personalPain"></div>
+        </div>
+        <!-- Zona 3 -->
+        <div class="zone">
+            <div class="zone-label social-sickness"><i class="fas fa-virus"></i> Social Sickness</div>
+            <div class="hashtag-options" id="socialSickness"></div>
+        </div>
+        <!-- Zona 4 -->
+        <div class="zone">
+            <div class="zone-label movement"><i class="fas fa-rocket"></i> Movement<span style="font-size:9px">(terkunci)</span></div>
+            <div class="hashtag-options" id="movement"></div>
+        </div>
     </div>
 
     <div class="status">
-        <div class="status-row"><span>Pop Culture</span><span class="status-value incomplete" id="statusPop">–</span></div>
-        <div class="status-row"><span>Personal Pain</span><span class="status-value incomplete" id="statusPersonal">–</span></div>
-        <div class="status-row"><span>Social Sickness</span><span class="status-value incomplete" id="statusSocial">–</span></div>
+        <div class="status-row"><span>Pop Culture</span><span class="status-value incomplete" id="s1">–</span></div>
+        <div class="status-row"><span>Personal Pain</span><span class="status-value incomplete" id="s2">–</span></div>
+        <div class="status-row"><span>Social Sickness</span><span class="status-value incomplete" id="s3">–</span></div>
     </div>
 
-    <button class="btn" id="continueBtn" disabled>LANJUT KE LUAR</button>
+    <button class="btn" id="btn" disabled>LANJUT KE LUAR</button>
 
     <script>
-        const ZONE_DATA = {
+        const Z = {
             'pop-culture': ['#BellTiketJualSinjal','#InfluencerNgchek','#FilmEndingGaje','#TikTokCringe','#CelebrityFail'],
             'personal-pain': ['#MagangDigajiSertifikat','#DiajakJalanTapiKempes','#DiphostingGebetan','#MinjemDuitGaBalik','#ProjectLastMinute'],
             'social-sickness': ['#DramaQueenAnjay','#BacotLambeTurah','#RencanaPlinPlan','#GhostingCulture','#FlexingGaJelas'],
@@ -165,62 +179,52 @@
 
         let s = {'pop-culture':null,'personal-pain':null,'social-sickness':null};
 
-        function init() {
-            const u = localStorage.getItem('nope_anon_username');
-            if (!u) return window.location.href = 'login.html';
-            r(); setup();
-        }
-
         function r() {
             const render = (k, id, locked) => {
                 const el = document.getElementById(id);
                 el.innerHTML = '';
-                ZONE_DATA[k].forEach(t => {
+                Z[k].forEach(t => {
                     const d = document.createElement('div');
                     d.className = `hashtag-option ${s[k] === t ? 'selected' : ''} ${locked ? 'locked' : ''}`;
                     d.textContent = t;
-                    if (!locked) d.onclick = () => { s[k] = s[k] === t ? null : t; r(); upd(); };
+                    if (!locked) d.onclick = () => { s[k] = s[k] === t ? null : t; r(); u(); };
                     el.appendChild(d);
                 });
             };
-            render('pop-culture', 'popCultureOptions', false);
-            render('personal-pain', 'personalPainOptions', false);
-            render('social-sickness', 'socialSicknessOptions', false);
-            render('movement', 'movementOptions', true);
+            render('pop-culture', 'popCulture', false);
+            render('personal-pain', 'personalPain', false);
+            render('social-sickness', 'socialSickness', false);
+            render('movement', 'movement', true);
         }
 
-        function upd() {
-            const set = (id, val) => {
-                const el = document.getElementById(id);
-                el.textContent = val || '–';
-                el.className = val ? 'status-value complete' : 'status-value incomplete';
+        function u() {
+            const m = (id, v) => { document.getElementById(id).textContent = v || '–'; document.getElementById(id).className = v ? 'status-value complete' : 'status-value incomplete'; };
+            m('s1', s['pop-culture']); m('s2', s['personal-pain']); m('s3', s['social-sickness']);
+            document.getElementById('btn').disabled = !(s['pop-culture'] && s['personal-pain'] && s['social-sickness']);
+        }
+
+        document.getElementById('btn').onclick = () => {
+            const u = localStorage.getItem('nope_anon_username');
+            if (!u) return;
+            const p = {
+                username: u,
+                selections: {
+                    popCulture: s['pop-culture'],
+                    personalPain: s['personal-pain'],
+                    socialSickness: s['social-sickness']
+                },
+                joinedAt: new Date().toISOString()
             };
-            set('statusPop', s['pop-culture']);
-            set('statusPersonal', s['personal-pain']);
-            set('statusSocial', s['social-sickness']);
-            document.getElementById('continueBtn').disabled = !(s['pop-culture'] && s['personal-pain'] && s['social-sickness']);
-        }
+            localStorage.setItem('nope_user_profile', JSON.stringify(p));
+            localStorage.setItem('nope_onboarding_complete', 'true');
+            localStorage.setItem('nope_join_date', p.joinedAt);
+            window.location.href = 'luar.html';
+        };
 
-        function setup() {
-            document.getElementById('continueBtn').onclick = () => {
-                const u = localStorage.getItem('nope_anon_username');
-                const p = {
-                    username: u,
-                    selections: {
-                        popCulture: s['pop-culture'],
-                        personalPain: s['personal-pain'],
-                        socialSickness: s['social-sickness']
-                    },
-                    joinedAt: new Date().toISOString()
-                };
-                localStorage.setItem('nope_user_profile', JSON.stringify(p));
-                localStorage.setItem('nope_onboarding_complete', 'true');
-                localStorage.setItem('nope_join_date', p.joinedAt);
-                window.location.href = 'luar.html';
-            };
-        }
-
-        document.addEventListener('DOMContentLoaded', init);
+        document.addEventListener('DOMContentLoaded', () => {
+            if (!localStorage.getItem('nope_anon_username')) return window.location.href = 'login.html';
+            r(); u();
+        });
     </script>
 </body>
 </html>
