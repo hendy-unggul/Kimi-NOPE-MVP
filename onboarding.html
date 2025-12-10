@@ -24,7 +24,6 @@
             max-width: 500px;
             margin: 0 auto;
             line-height: 1.3;
-            overflow-x: hidden;
         }
         .back-btn {
             position: absolute;
@@ -39,8 +38,7 @@
             font-size: 19px;
             font-weight: 800;
             margin: 16px 0 4px;
-            line-height: 1.3;
-            background: linear-gradient(90deg, var(--accent1), #2db34d);
+            background: linear-gradient(90deg, var(--accent1), var(--accent1));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
@@ -49,7 +47,6 @@
             font-size: 11px;
             color: var(--muted);
             margin-bottom: 16px;
-            line-height: 1.3;
         }
 
         .zones-grid {
@@ -73,16 +70,12 @@
             gap: 5px;
             color: var(--muted);
         }
-        .pop-culture { color: #2db34d !important; }
-        .personal-pain { color: #ff9500 !important; }
-        .social-sickness { color: var(--accent1) !important; }
-        .movement { opacity: 0.4 !important; }
         .hashtag-options {
             display: grid;
             gap: 6px;
         }
         .hashtag-option {
-            background: rgba(0,0,0,0.3);
+            background: rgba(255,255,255,0.03);
             padding: 6px;
             border-radius: 4px;
             text-align: center;
@@ -112,12 +105,11 @@
             justify-content: space-between;
             margin: 3px 0;
         }
-        .status-value.complete { color: #2db34d; }
-        .status-value.incomplete { color: #ff9500; }
+        .status-value.complete { color: var(--accent1); }
         .btn {
             width: 100%;
             padding: 11px;
-            background: linear-gradient(135deg, var(--accent1), #ff9500);
+            background: var(--accent1);
             color: white;
             border: none;
             border-radius: 8px;
@@ -127,31 +119,30 @@
         }
         .btn:disabled {
             opacity: 0.4;
-            cursor: not-allowed;
         }
     </style>
 </head>
 <body>
-    <a href="login.html" class="back-btn" onclick="localStorage.removeItem('nope_logged_in')">←</a>
+    <a href="login.html" class="back-btn">←</a>
     
     <div class="title">Jangan pilih yang kau suka.<br>Pilih yang kau benci.</div>
     <div class="subtitle">* Pilih 1 hashtag dari tiap zona — ini yang menentukan siapa yang bisa mendengarmu.</div>
 
     <div class="zones-grid">
         <div class="zone">
-            <div class="zone-label pop-culture"><i class="fas fa-film"></i> Pop Culture</div>
+            <div class="zone-label"><i class="fas fa-film"></i> Pop Culture</div>
             <div class="hashtag-options" id="popculture"></div>
         </div>
         <div class="zone">
-            <div class="zone-label personal-pain"><i class="fas fa-heart-broken"></i> Personal Pain</div>
+            <div class="zone-label"><i class="fas fa-heart-broken"></i> Personal Pain</div>
             <div class="hashtag-options" id="personalpain"></div>
         </div>
         <div class="zone">
-            <div class="zone-label social-sickness"><i class="fas fa-virus"></i> Social Sickness</div>
+            <div class="zone-label"><i class="fas fa-virus"></i> Social Sickness</div>
             <div class="hashtag-options" id="socialsickness"></div>
         </div>
         <div class="zone">
-            <div class="zone-label movement"><i class="fas fa-rocket"></i> Movement<span style="font-size:9px">(terkunci)</span></div>
+            <div class="zone-label"><i class="fas fa-rocket"></i> Movement <span style="font-size:9px">(terkunci)</span></div>
             <div class="hashtag-options" id="movement"></div>
         </div>
     </div>
@@ -165,95 +156,54 @@
     <button class="btn" id="continueBtn" disabled>LANJUT KE LUAR</button>
 
     <script>
-        const ZONE_DATA = {
-            'pop-culture': ['#BellTiketJualSinjal','#InfluencerNgchek','#FilmEndingGaje','#TikTokCringe','#CelebrityFail'],
-            'personal-pain': ['#MagangDigajiSertifikat','#DiajakJalanTapiKempes','#DiphostingGebetan','#MinjemDuitGaBalik','#ProjectLastMinute'],
-            'social-sickness': ['#DramaQueenAnjay','#BacotLambeTurah','#RencanaPlinPlan','#GhostingCulture','#FlexingGaJelas'],
-            'movement': ['#ReformasiSistem','#AksiNyata2024','#VoiceForChange','#YouthPower','#DigitalProtest']
-        };
+        // Minimal logic — pasti jalan
+        let pc = null, pp = null, ss = null;
 
-        let selections = {
-            'pop-culture': null,
-            'personal-pain': null,
-            'social-sickness': null
-        };
+        function render() {
+            const zones = [
+                { id: 'popculture', tags: ['#A', '#B', '#C', '#D', '#E'] },
+                { id: 'personalpain', tags: ['#F', '#G', '#H', '#I', '#J'] },
+                { id: 'socialsickness', tags: ['#K', '#L', '#M', '#N', '#O'] },
+                { id: 'movement', tags: ['#X', '#Y', '#Z', '#W', '#V'], locked: true }
+            ];
 
-        function isComplete() {
-            return selections['pop-culture'] && selections['personal-pain'] && selections['social-sickness'];
-        }
-
-        function renderZones() {
-            for (const [zoneKey, tags] of Object.entries(ZONE_DATA)) {
-                const id = zoneKey.replace(/-/g, '');
-                const container = document.getElementById(id);
-                if (!container) continue;
-
-                container.innerHTML = '';
-                const locked = zoneKey === 'movement';
-
-                tags.forEach(tag => {
-                    const el = document.createElement('div');
-                    el.className = `hashtag-option ${selections[zoneKey] === tag ? 'selected' : ''} ${locked ? 'locked' : ''}`;
-                    el.textContent = tag;
-                    if (!locked) {
-                        el.onclick = () => {
-                            selections[zoneKey] = selections[zoneKey] === tag ? null : tag;
-                            renderZones();
-                            updateStatus();
+            zones.forEach(z => {
+                const el = document.getElementById(z.id);
+                el.innerHTML = '';
+                z.tags.forEach(tag => {
+                    const div = document.createElement('div');
+                    div.className = `hashtag-option ${((z.id === 'popculture' && tag === pc) || (z.id === 'personalpain' && tag === pp) || (z.id === 'socialsickness' && tag === ss)) ? 'selected' : ''} ${z.locked ? 'locked' : ''}`;
+                    div.textContent = tag;
+                    if (!z.locked) {
+                        div.onclick = () => {
+                            if (z.id === 'popculture') pc = pc === tag ? null : tag;
+                            if (z.id === 'personalpain') pp = pp === tag ? null : tag;
+                            if (z.id === 'socialsickness') ss = ss === tag ? null : tag;
+                            render();
+                            update();
                         };
                     }
-                    container.appendChild(el);
+                    el.appendChild(div);
                 });
-            }
+            });
         }
 
-        function updateStatus() {
-            const setStatus = (id, value) => {
-                const el = document.getElementById(id);
-                el.textContent = value || '–';
-                el.className = value ? 'status-value complete' : 'status-value incomplete';
-            };
-            setStatus('s1', selections['pop-culture']);
-            setStatus('s2', selections['personal-pain']);
-            setStatus('s3', selections['social-sickness']);
-            document.getElementById('continueBtn').disabled = !isComplete();
+        function update() {
+            document.getElementById('s1').textContent = pc || '–';
+            document.getElementById('s2').textContent = pp || '–';
+            document.getElementById('s3').textContent = ss || '–';
+            document.getElementById('continueBtn').disabled = !(pc && pp && ss);
         }
 
-        function handleContinue() {
-            const username = localStorage.getItem('nope_anon_username');
-            if (!username) {
-                window.location.href = 'login.html';
-                return;
-            }
-
-            const profile = {
-                username: username,
-                selections: {
-                    popCulture: selections['pop-culture'],
-                    personalPain: selections['personal-pain'],
-                    socialSickness: selections['social-sickness']
-                },
-                joinedAt: new Date().toISOString()
-            };
-
-            localStorage.setItem('nope_user_profile', JSON.stringify(profile));
+        document.getElementById('continueBtn').onclick = () => {
+            localStorage.setItem('nope_anon_username', 'user_' + Date.now().toString(36).slice(-6));
             localStorage.setItem('nope_onboarding_complete', 'true');
-            localStorage.setItem('nope_join_date', profile.joinedAt);
-
+            localStorage.setItem('nope_join_date', new Date().toISOString());
             window.location.href = 'luar.html';
-        }
+        };
 
-        document.addEventListener('DOMContentLoaded', () => {
-            const username = localStorage.getItem('nope_anon_username');
-            if (!username) {
-                window.location.href = 'login.html';
-                return;
-            }
-
-            renderZones();
-            updateStatus();
-            document.getElementById('continueBtn').addEventListener('click', handleContinue);
-        });
+        render();
+        update();
     </script>
 </body>
 </html>
