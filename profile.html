@@ -1,338 +1,165 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>NOPE — Inner Space</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        :root {
-            --bg: #0a0a0f;
-            --card: #121217;
-            --border: #25252d;
-            --text: #eaeaea;
-            --muted: #7a7a8c;
-            --accent1: #ff2d55;
-        }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            background: var(--bg);
-            color: var(--text);
-            font-family: 'Inter', sans-serif;
-            padding-bottom: 80px;
-            line-height: 1.5;
-        }
-        .container { max-width: 414px; margin: 0 auto; padding: 0 16px; }
-        .header {
-            text-align: center;
-            padding: 36px 0 24px;
-            position: relative;
-            margin-bottom: 24px;
-        }
-        .title {
-            font-size: 28px;
-            font-weight: 800;
-            background: linear-gradient(90deg, var(--accent1), #2db34d);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 12px;
-        }
-        .subtitle {
-            font-size: 14px;
-            color: var(--muted);
-            max-width: 340px;
-            margin: 0 auto;
-            line-height: 1.5;
-        }
-        .username-section {
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            padding: 14px;
-            margin: 20px 0 28px;
-            text-align: center;
-        }
-        .current-username {
-            font-family: 'Courier New', monospace;
-            font-size: 15px;
-            margin-bottom: 10px;
-            word-break: break-all;
-        }
-        .edit-btn {
-            background: rgba(255, 45, 85, 0.15);
-            color: var(--accent1);
-            border: 1px solid var(--accent1);
-            border-radius: 6px;
-            padding: 6px 12px;
-            font-size: 13px;
-            cursor: pointer;
-        }
-        .edit-form {
-            display: none;
-            margin-top: 10px;
-        }
-        .edit-input {
-            width: 100%;
-            padding: 8px 10px;
-            background: rgba(0,0,0,0.3);
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            color: var(--text);
-            font-family: 'Courier New', monospace;
-            font-size: 14px;
-            margin-bottom: 8px;
-        }
-        .save-btn {
-            background: var(--accent1);
-            color: white;
-            border: none;
-            border-radius: 6px;
-            padding: 6px 12px;
-            font-size: 13px;
-            cursor: pointer;
-        }
-        .artefak {
-            position: relative;
-            margin-bottom: 28px;
-        }
-        .artefak-image {
-            width: 100%;
-            height: 320px;
-            object-fit: cover;
-            border-radius: 4px;
-            display: block;
-        }
-        .pulse-indicator {
-            position: absolute;
-            top: 16px;
-            right: 16px;
-            background: rgba(255, 45, 85, 0.2);
-            padding: 4px 8px;
-            border-radius: 20px;
-            font-size: 14px;
-            display: none;
-            z-index: 10;
-        }
-        .pulse-indicator.show { display: flex; gap: 4px; align-items: center; }
-        .rantbox {
-            margin: 28px 0;
-        }
-        .rantbox-instruction {
-            font-size: 15px;
-            color: var(--muted);
-            margin-bottom: 12px;
-            line-height: 1.5;
-        }
-        .rantbox-list {
-            background: rgba(18, 18, 23, 0.7);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 14px;
-            font-size: 14px;
-            line-height: 1.6;
-            color: #d0d0e0;
-            max-height: 180px;
-            overflow-y: auto;
-        }
-        .rant-entry {
-            margin-bottom: 16px;
-        }
-        .rant-text { margin-bottom: 4px; font-weight: 300; }
-        .rant-timestamp { font-size: 11px; color: var(--muted); }
-        .jejak-title {
-            font-size: 16px;
-            font-weight: 800;
-            margin: 32px 0 18px;
-            letter-spacing: 0.8px;
-        }
-        .jejak-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
-        }
-        .jejak-item {
-            aspect-ratio: 1;
-            border: 1px solid var(--border);
-            overflow: hidden;
-            border-radius: 8px;
-        }
-        .jejak-img { width: 100%; height: 100%; object-fit: cover; }
-        .inner-closing {
-            margin-top: 40px;
-            text-align: center;
-            font-size: 15px;
-            color: #b0b0c6;
-            font-weight: 300;
-            line-height: 1.6;
-            padding: 0 12px;
-        }
-        .bottom-nav {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: #050507;
-            border-top: 1px solid var(--border);
-            display: flex;
-            justify-content: space-around;
-            padding: 10px 0;
-            z-index: 1000;
-        }
-        .nav-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            color: var(--muted);
-            text-decoration: none;
-            min-width: 60px;
-            font-size: 12px;
-        }
-        .nav-item i { font-size: 1.2rem; margin-bottom: 3px; }
-        .nav-item span { font-size: 0.64rem; font-weight: 800; letter-spacing: 0.5px; }
-        .nav-item.active { color: #2db34d; }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NOPE • Inner</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; background: #000; color: #fff; }
+    .header-id { @apply text-[#ff2d55] font-bold mb-4; }
+    .input-rage {
+      @apply w-full bg-[#222] text-white rounded-xl px-4 py-3 text-sm border-none outline-none mb-4;
+    }
+    .hashtag-selector {
+      @apply bg-[#222] rounded-xl p-3 mb-4;
+    }
+    .hashtag-item {
+      @apply inline-block bg-[#333] text-gray-300 px-3 py-1 rounded-full text-xs mr-2 mb-2 cursor-pointer;
+    }
+    .hashtag-item.active {
+      @apply bg-[#ff2d55] text-black;
+    }
+    .preview-box {
+      @apply bg-[#222] rounded-xl p-3 mt-4;
+    }
+    .btn-leave {
+      @apply w-full bg-[#ff2d55] text-black font-bold py-3 rounded-xl mt-4;
+    }
+  </style>
 </head>
-<body>
-    <div class="container">
-        <div class="header">
-            <div class="pulse-indicator" id="pulseIndicator">
-                <span>🫠</span>
-                <span id="pulseCount">0</span>
-            </div>
-            <h1 class="title">Inner Space</h1>
-            <p class="subtitle">
-                Di sini, kamu tidak melihat dunia.<br>
-                Kamu melihat jejakmu — di setiap ruang dan waktu.
-            </p>
-        </div>
+<body class="min-h-screen p-4">
+  <div class="max-w-md mx-auto">
 
-        <div class="username-section">
-            <div class="current-username" id="currentUsername">Memuat...</div>
-            <button class="edit-btn" id="editBtn">Ubah Username</button>
-            <div class="edit-form" id="editForm">
-                <input type="text" class="edit-input" id="usernameInput" maxlength="20" placeholder="Contoh: gelap_7">
-                <button class="save-btn" id="saveBtn">Simpan</button>
-            </div>
-        </div>
-
-        <div class="artefak">
-            <img src="https://images.unsplash.com/photo-1542744095-fcf48d80b0fd" class="artefak-image" />
-        </div>
-
-        <section class="rantbox">
-            <p class="rantbox-instruction">
-                Tulis. Ledakkan. Tinggalkan di sini.<br>
-                Tak ada yang akan menghakimi.
-            </p>
-            <div class="rantbox-list" id="rant-list"></div>
-        </section>
-
-        <h3 class="jejak-title">Jejakmu</h3>
-        <div class="jejak-grid" id="jejak-grid"></div>
-
-        <div class="inner-closing">
-            Dunia minta kau bersinar.<br>
-            Di sini, kau boleh jadi abu.<br>
-            Dan tetap dianggap utuh.
-        </div>
+    <!-- Header -->
+    <div class="flex justify-between items-center mb-2">
+      <h1 class="text-xl font-bold">NOPE</h1>
+      <div class="w-2 h-2 rounded-full bg-red-500"></div>
     </div>
 
-    <div class="bottom-nav">
-        <a href="luar.html" class="nav-item"><i class="fas fa-globe"></i><span>Luar</span></a>
-        <a href="notifications.html" class="nav-item"><i class="fas fa-bell"></i><span>Notifikasi</span></a>
-        <a href="onboarding.html" class="nav-item"><i class="fas fa-fire"></i><span>Rage</span></a>
-        <a href="profile.html" class="nav-item active"><i class="fas fa-mirror"></i><span>Inner</span></a>
+    <!-- Identitas -->
+    <div id="userId" class="header-id"></div>
+
+    <!-- Form Rage -->
+    <form id="rageForm">
+      <textarea 
+        id="rageInput" 
+        class="input-rage" 
+        placeholder="Ngomong pelan-pelan… gue denger." 
+        rows="4"
+      ></textarea>
+
+      <!-- Pilih Zona -->
+      <div class="hashtag-selector">
+        <p class="text-xs text-gray-400 mb-2">Pilih zona jejak lo:</p>
+        <div id="hashtagOptions"></div>
+      </div>
+
+      <!-- Preview -->
+      <div class="preview-box">
+        <p class="text-xs text-gray-400 mb-1">Preview jejak:</p>
+        <p id="previewText" class="text-sm text-gray-300 italic">“...”</p>
+        <p id="previewHashtag" class="text-xs text-[#ff2d55] mt-1"></p>
+      </div>
+
+      <button type="submit" class="btn-leave">TINGGALKAN JEJAK</button>
+    </form>
+
+    <!-- Bottom Nav -->
+    <div class="fixed bottom-0 left-0 right-0 bg-black border-t border-gray-800">
+      <div class="flex justify-around py-2">
+        <div class="text-gray-400 text-xs">Luar</div>
+        <div class="text-gray-600 text-xs">Notifikasi</div>
+        <div class="text-[#ff2d55] font-bold text-xs">Rage</div>
+        <div class="text-gray-600 text-xs">Inner</div>
+      </div>
     </div>
+  </div>
 
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <script>
-        const tg = window.Telegram.WebApp;
-        tg.expand();
-        tg.ready();
+  <script>
+    // Ambil user
+    const currentUser = JSON.parse(localStorage.getItem('current_user'));
+    if (!currentUser) {
+      window.location.href = 'register.html';
+    }
 
-        // Generate username aman
-        function generateSafeUsername() {
-            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-            let randomStr = '';
-            for (let i = 0; i < 6; i++) {
-                randomStr += chars.charAt(Math.floor(Math.random() * chars.length));
-            }
-            return 'NOPE_' + randomStr;
-        }
+    // Tampilkan ID
+    document.getElementById('userId').textContent = `@${currentUser.nope_id}`;
 
-        // Ambil atau buat username
-        let username = localStorage.getItem('nope_display_username');
-        if (!username) {
-            username = generateSafeUsername();
-            localStorage.setItem('nope_display_username', username);
-        }
+    // Muat hashtag dari onboarding
+    const users = JSON.parse(localStorage.getItem('nope_users') || '{}');
+    const userData = users[currentUser.email];
+    const hashtags = userData.hashtags || { pilih: '#Pilih', personal: '#PersonalPain', social: '#SocialSickness' };
 
-        // Tampilkan username
-        document.getElementById('currentUsername').textContent = username;
+    // Render opsi hashtag
+    const hashtagList = [
+      { key: 'pilih', label: hashtags.pilih },
+      { key: 'personal', label: hashtags.personal },
+      { key: 'social', label: hashtags.social }
+    ];
 
-        // Fitur ubah username
-        document.getElementById('editBtn').addEventListener('click', () => {
-            document.getElementById('editForm').style.display = 'block';
-            document.getElementById('usernameInput').value = username;
-        });
+    const hashtagContainer = document.getElementById('hashtagOptions');
+    hashtagList.forEach(item => {
+      const el = document.createElement('div');
+      el.className = 'hashtag-item';
+      el.textContent = item.label;
+      el.onclick = () => {
+        document.querySelectorAll('.hashtag-item').forEach(e => e.classList.remove('active'));
+        el.classList.add('active');
+        updatePreview();
+      };
+      hashtagContainer.appendChild(el);
+    });
 
-        document.getElementById('saveBtn').addEventListener('click', () => {
-            const newUsername = document.getElementById('usernameInput').value.trim();
-            if (newUsername && newUsername.length >= 3) {
-                // Validasi: hanya huruf, angka, underscore
-                if (/^[a-zA-Z0-9_]+$/.test(newUsername)) {
-                    localStorage.setItem('nope_display_username', newUsername);
-                    username = newUsername;
-                    document.getElementById('currentUsername').textContent = username;
-                    document.getElementById('editForm').style.display = 'none';
-                } else {
-                    alert('Username hanya boleh huruf, angka, dan _');
-                }
-            } else {
-                alert('Username minimal 3 karakter');
-            }
-        });
+    // Aktifkan yang pertama
+    if (hashtagContainer.firstChild) {
+      hashtagContainer.firstChild.classList.add('active');
+    }
 
-        // Cek onboarding
-        if (localStorage.getItem('nope_onboarding_complete') !== 'true') {
-            window.location.href = 'onboarding.html';
-        }
+    // Preview
+    const rageInput = document.getElementById('rageInput');
+    const previewText = document.getElementById('previewText');
+    const previewHashtag = document.getElementById('previewHashtag');
 
-        // Data dummy
-        const rants = [
-            "Aku lelah jadi versi yang ‘aman’ untuk orang lain.",
-            "Kenapa harus selalu ‘move on’? Kadang aku cuma mau nangis di sudut gelap.",
-            "Mereka bilang ‘positive vibes only’. Tapi bagaimana kalau jiwaku sedang abu-abu?"
-        ];
-        const pulses = 3;
+    function updatePreview() {
+      const text = rageInput.value.trim() || '“...”';
+      previewText.textContent = `“${text}”`;
+      
+      const active = document.querySelector('.hashtag-item.active');
+      previewHashtag.textContent = active ? active.textContent : '';
+    }
 
-        if (pulses > 0) {
-            document.getElementById('pulseIndicator').classList.add('show');
-            document.getElementById('pulseCount').textContent = pulses;
-        }
+    rageInput.addEventListener('input', updatePreview);
+    updatePreview();
 
-        // Render rant & jejak (sama seperti sebelumnya)
-        const rantList = document.getElementById('rant-list');
-        rants.forEach(text => {
-            const el = document.createElement('div');
-            el.className = 'rant-entry';
-            el.innerHTML = `<div class="rant-text">${text}</div><div class="rant-timestamp">2j</div>`;
-            rantList.appendChild(el);
-        });
+    // Submit
+    document.getElementById('rageForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const text = rageInput.value.trim();
+      const active = document.querySelector('.hashtag-item.active');
+      const hashtag = active ? active.textContent : '#Pilih';
 
-        const jejakGrid = document.getElementById('jejak-grid');
-        const jejakImgs = [
-            "https://images.unsplash.com/photo-1542744095-fcf48d80b0fd",
-            "https://images.unsplash.com/photo-1517077304055-6e89abbf09b0",
-            "https://images.unsplash.com/photo-1550684376-efcbd6e3f031",
-            "https://images.unsplash.com/photo-1518709268805-4e9042af2176"
-        ];
-        jejakImgs.forEach(src => {
-            const el = document.createElement('div');
-            el.className = 'jejak-item';
-            el.innerHTML = `<img src="${src}" class="jejak-img" />`;
-            jejakGrid.appendChild(el);
-        });
-    </script>
+      if (!text) return alert('Jejak lo kosong.');
+
+      // Simpan ke mock feed (localStorage)
+      const feeds = JSON.parse(localStorage.getItem('nope_feeds') || '[]');
+      feeds.push({
+        id: Date.now(),
+        user: currentUser.nope_id,
+        text: text,
+        hashtag: hashtag,
+        timestamp: new Date().toISOString()
+      });
+      localStorage.setItem('nope_feeds', JSON.stringify(feeds));
+
+      // Reset & feedback
+      rageInput.value = '';
+      updatePreview();
+      alert('Jejak lo sudah meninggalkan gema.');
+    });
+  </script>
 </body>
-</html>
+</html> 
+
+Kamu yang tentuin, bro. 🖤
