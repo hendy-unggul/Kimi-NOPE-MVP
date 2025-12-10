@@ -1,101 +1,103 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NOPE - Anonymous Sharing</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <title>NOPE — Veranda</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg: #0a0a0f;
+            --text: #eaeaea;
+            --accent1: #ff2d55;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            padding: 20px;
+            max-width: 500px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .veranda {
+            text-align: center;
+            opacity: 0;
+            animation: fadeIn 1s ease-in-out forwards;
+        }
+        .tagline {
+            font-size: 24px;
+            font-weight: 800;
+            line-height: 1.4;
+            margin-bottom: 20px;
+            background: linear-gradient(90deg, var(--accent1), #2db34d);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .sub {
+            font-size: 14px;
+            color: #7a7a8c;
+            margin-bottom: 40px;
+            line-height: 1.5;
+        }
+        .btn {
+            width: 100%;
+            padding: 16px;
+            background: rgba(255, 45, 85, 0.15);
+            color: var(--accent1);
+            border: 1px solid var(--accent1);
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 16px;
+            cursor: pointer;
+            opacity: 0;
+            animation: fadeIn 1s ease-in-out 1s forwards;
+        }
+        .btn:hover {
+            background: rgba(255, 45, 85, 0.25);
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .pulse {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, transparent, rgba(255, 45, 85, 0.05));
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            animation: pulse 4s ease-in-out infinite;
+        }
+        @keyframes pulse {
+            0% { transform: translate(-50%, -50%) scale(1); }
+            50% { transform: translate(-50%, -50%) scale(1.1); }
+            100% { transform: translate(-50%, -50%) scale(1); }
+        }
+    </style>
 </head>
 <body>
-    <div class="container">
-        <!-- Header -->
-        <header class="header">
-            <h1 class="logo">NOPE</h1>
-            <p class="tagline">Share anonymously. Rage freely.</p>
-        </header>
-
-        <!-- Main Content -->
-        <main class="main-content">
-            <!-- Form Card -->
-            <div class="form-card">
-                <div class="title-section">
-                    <h2 class="form-title">Create your anonymous identity</h2>
-                    <p class="form-subtitle">
-                        <i class="fas fa-user-secret"></i>
-                        Your real identity stays hidden forever
-                    </p>
-                </div>
-
-                <!-- Telegram Input -->
-                <div class="input-section">
-                    <div class="input-wrapper">
-                        <div class="input-label">
-                            <i class="fab fa-telegram"></i>
-                            Your Telegram Username
-                        </div>
-                        <input 
-                            type="text" 
-                            id="telegramInput"
-                            placeholder="Enter your Telegram username (e.g., john_doe)"
-                            autocomplete="off"
-                        >
-                        <div class="input-note">
-                            <i class="fas fa-info-circle"></i>
-                            Just username, no password needed. We'll create your anonymous identity.
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Submit Button -->
-                <button class="submit-btn" id="submitBtn">
-                    <i class="fas fa-fingerprint"></i>
-                    CREATE ANONYMOUS IDENTITY
-                </button>
-
-                <!-- Already have account -->
-                <div class="login-link-section">
-                    <p>Already have an anonymous identity?</p>
-                    <a href="#" id="loginLink">
-                        <i class="fas fa-sign-in-alt"></i>
-                        Login to NOPE
-                    </a>
-                </div>
-            </div>
-
-            <!-- Info Section -->
-            <div class="info-section">
-                <h3><i class="fas fa-shield-alt"></i> How it works:</h3>
-                <ul class="steps">
-                    <li>Enter your Telegram username</li>
-                    <li>We create your anonymous NOPE identity</li>
-                    <li>Start sharing anonymously</li>
-                </ul>
-                
-                <div class="privacy-guarantee">
-                    <i class="fas fa-lock"></i>
-                    <div>
-                        <strong>Complete Anonymity</strong>
-                        <p>Your Telegram username is only used for verification. Your posts and identity remain completely anonymous.</p>
-                    </div>
-                </div>
-            </div>
-        </main>
-
-        <!-- Footer -->
-        <footer class="footer">
-            <p>© 2024 NOPE. All rage remains anonymous.</p>
-            <p class="footer-note">
-                <i class="fas fa-user-secret"></i>
-                No tracking • No personal data • Pure anonymity
-            </p>
-        </footer>
+    <div class="pulse"></div>
+    <div class="veranda">
+        <div class="tagline">Di sini, kamu tidak melihat dunia.</div>
+        <div class="sub">Kamu melihat jejakmu — di setiap ruang dan waktu.</div>
+        <button class="btn" onclick="window.location.href='login.html'">MASUK JIKA KAU SIAP</button>
     </div>
 
-    <!-- JavaScript -->
-    <script src="script.js"></script>
+    <script>
+        // Hanya tampilkan tombol setelah 3 detik
+        setTimeout(() => {
+            document.querySelector('.btn').style.opacity = '1';
+        }, 3000);
+    </script>
 </body>
 </html>
