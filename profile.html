@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>Inner Space – NOPE</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>NOPE — Inner Space</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
             --bg: #0a0a0f;
@@ -14,55 +13,30 @@
             --text: #eaeaea;
             --muted: #7a7a8c;
             --accent1: #ff2d55;
-            --pulse: rgba(255, 45, 85, 0.3);
         }
-
         * { margin: 0; padding: 0; box-sizing: border-box; }
-
         body {
             background: var(--bg);
             color: var(--text);
             font-family: 'Inter', sans-serif;
-            font-weight: 300;
             padding-bottom: 80px;
             line-height: 1.5;
         }
-
-        .container {
-            max-width: 414px;
-            margin: 0 auto;
-            padding: 0 16px;
-        }
-
+        .container { max-width: 414px; margin: 0 auto; padding: 0 16px; }
         .header {
             text-align: center;
             padding: 36px 0 24px;
             position: relative;
             margin-bottom: 24px;
         }
-
-        .header::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 60px;
-            height: 2px;
-            background: linear-gradient(90deg, var(--accent1), #2db34d);
-        }
-
         .title {
             font-size: 28px;
             font-weight: 800;
-            letter-spacing: -0.8px;
             background: linear-gradient(90deg, var(--accent1), #2db34d);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             margin-bottom: 12px;
-            line-height: 1.3;
         }
-
         .subtitle {
             font-size: 14px;
             color: var(--muted);
@@ -70,94 +44,38 @@
             margin: 0 auto;
             line-height: 1.5;
         }
-
         .artefak {
             position: relative;
             margin-bottom: 28px;
         }
-
-        .artefak-frame {
-            position: relative;
-            padding: 12px;
-        }
-
-        .artefak-frame::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            border: 12px solid #1a1a22;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.7);
-            z-index: 0;
-        }
-
         .artefak-image {
             width: 100%;
             height: 320px;
             object-fit: cover;
-            filter: grayscale(15%) sepia(0.2) hue-rotate(190deg) brightness(0.9);
-            position: relative;
-            z-index: 2;
-            display: block;
             border-radius: 4px;
+            display: block;
         }
-
-        .artefak-burn {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background:
-                radial-gradient(circle at top left, transparent 70%, rgba(0,0,0,0.6) 100%),
-                radial-gradient(circle at bottom right, transparent 70%, rgba(0,0,0,0.6) 100%);
-            pointer-events: none;
-            z-index: 3;
-        }
-
-        .quote-overlay {
+        .pulse-indicator {
             position: absolute;
             top: 16px;
-            left: 16px;
-            z-index: 4;
-            color: white;
-            background: rgba(0,0,0,0.6);
-            padding: 10px 14px;
-            backdrop-filter: blur(4px);
-            max-width: 85%;
-            border-radius: 6px;
+            right: 16px;
+            background: rgba(255, 45, 85, 0.2);
+            padding: 4px 8px;
+            border-radius: 20px;
+            font-size: 14px;
+            display: none;
+            z-index: 10;
         }
-
-        .quote-text {
-            font-size: 16px;
-            font-style: italic;
-            line-height: 1.4;
-            margin: 0;
-            font-weight: 400;
-        }
-
-        .quote-text::before,
-        .quote-text::after {
-            content: '"';
-            color: var(--accent1);
-            font-size: 18px;
-            opacity: 0.8;
-        }
-
-        /* === RANTBOX === */
+        .pulse-indicator.show { display: flex; gap: 4px; align-items: center; }
         .rantbox {
-            margin: 32px 0 28px;
+            margin: 28px 0;
         }
-
         .rantbox-instruction {
             font-size: 15px;
             color: var(--muted);
             margin-bottom: 12px;
             line-height: 1.5;
         }
-
         .rantbox-list {
             background: rgba(18, 18, 23, 0.7);
             border: 1px solid var(--border);
@@ -168,82 +86,30 @@
             color: #d0d0e0;
             max-height: 180px;
             overflow-y: auto;
-            -webkit-overflow-scrolling: touch;
-            margin-bottom: 14px;
         }
-
         .rant-entry {
             margin-bottom: 16px;
         }
-
-        .rant-text {
-            margin-bottom: 4px;
-            font-weight: 300;
-        }
-
-        .rant-timestamp {
-            font-size: 11px;
-            color: var(--muted);
-        }
-
-        .rant-input {
-            background: rgba(18, 18, 23, 0.7);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            color: var(--text);
-            font-family: 'Inter', sans-serif;
-            font-size: 14px;
-            padding: 10px 12px;
-            width: 100%;
-            resize: none;
-            min-height: 44px;
-            outline: none;
-        }
-
-        .rant-input::placeholder {
-            color: var(--muted);
-            opacity: 0.7;
-        }
-
-        /* === JEJAKMU === */
+        .rant-text { margin-bottom: 4px; font-weight: 300; }
+        .rant-timestamp { font-size: 11px; color: var(--muted); }
         .jejak-title {
             font-size: 16px;
             font-weight: 800;
-            color: #fff;
             margin: 32px 0 18px;
             letter-spacing: 0.8px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
         }
-
         .jejak-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 12px;
         }
-
         .jejak-item {
             aspect-ratio: 1;
             border: 1px solid var(--border);
             overflow: hidden;
-            cursor: pointer;
             border-radius: 8px;
         }
-
-        .jejak-item:hover {
-            transform: translateY(-3px) scale(1.02);
-            border-color: var(--accent1);
-        }
-
-        .jejak-img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            filter: sepia(0.1) brightness(0.95);
-        }
-
-        /* === CLOSING SACRAL === */
+        .jejak-img { width: 100%; height: 100%; object-fit: cover; }
         .inner-closing {
             margin-top: 40px;
             text-align: center;
@@ -252,10 +118,7 @@
             font-weight: 300;
             line-height: 1.6;
             padding: 0 12px;
-            opacity: 0.95;
         }
-
-        /* === BOTTOM NAV === */
         .bottom-nav {
             position: fixed;
             bottom: 0;
@@ -268,7 +131,6 @@
             padding: 10px 0;
             z-index: 1000;
         }
-
         .nav-item {
             display: flex;
             flex-direction: column;
@@ -278,20 +140,18 @@
             min-width: 60px;
             font-size: 12px;
         }
-
         .nav-item i { font-size: 1.2rem; margin-bottom: 3px; }
-        .nav-item span { font-size: 0.64rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; }
+        .nav-item span { font-size: 0.64rem; font-weight: 800; letter-spacing: 0.5px; }
         .nav-item.active { color: #2db34d; }
-
-        /* Scrollbar styling */
-        .rantbox-list::-webkit-scrollbar { width: 4px; }
-        .rantbox-list::-webkit-scrollbar-track { background: transparent; }
-        .rantbox-list::-webkit-scrollbar-thumb { background: var(--accent1); border-radius: 4px; }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
+            <div class="pulse-indicator" id="pulseIndicator">
+                <span>🫠</span>
+                <span id="pulseCount">0</span>
+            </div>
             <h1 class="title">Inner Space</h1>
             <p class="subtitle">
                 Di sini, kamu tidak melihat dunia.<br>
@@ -300,16 +160,9 @@
         </div>
 
         <div class="artefak">
-            <div class="artefak-frame">
-                <img src="https://images.unsplash.com/photo-1542744095-fcf48d80b0fd" class="artefak-image" />
-                <div class="artefak-burn"></div>
-                <div class="quote-overlay">
-                    <p class="quote-text">The courage to begin is everything</p>
-                </div>
-            </div>
+            <img src="https://images.unsplash.com/photo-1542744095-fcf48d80b0fd" class="artefak-image" />
         </div>
 
-        <!-- RANTBOX -->
         <section class="rantbox">
             <p class="rantbox-instruction">
                 Tulis. Ledakkan. Tinggalkan di sini.<br>
@@ -318,14 +171,11 @@
             <div class="rantbox-list" id="rant-list">
                 <!-- 3 rant terakhir akan muncul di sini -->
             </div>
-            <textarea class="rant-input" placeholder="Tulis apa yang tak bisa kau simpan lagi…"></textarea>
         </section>
 
-        <!-- JEJAKMU -->
-        <h3 class="jejak-title"><i class="fas fa-archive"></i> Jejakmu</h3>
+        <h3 class="jejak-title">Jejakmu</h3>
         <div class="jejak-grid" id="jejak-grid"></div>
 
-        <!-- CLOSING SACRAL -->
         <div class="inner-closing">
             Dunia minta kau bersinar.<br>
             Di sini, kau boleh jadi abu.<br>
@@ -334,84 +184,69 @@
     </div>
 
     <div class="bottom-nav">
-        <a href="home.html" class="nav-item"><i class="fas fa-globe"></i><span>Home</span></a>
+        <a href="luar.html" class="nav-item"><i class="fas fa-globe"></i><span>Luar</span></a>
         <a href="notifications.html" class="nav-item"><i class="fas fa-bell"></i><span>Notifikasi</span></a>
         <a href="onboarding.html" class="nav-item"><i class="fas fa-fire"></i><span>Rage</span></a>
         <a href="profile.html" class="nav-item active"><i class="fas fa-mirror"></i><span>Inner</span></a>
     </div>
 
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script>
-        // === ARTEFAK SAMPLE ===
-        const artefaks = [
-            { id: 1, quote: "The courage to begin is everything", image: "https://images.unsplash.com/photo-1542744095-fcf48d80b0fd" },
-            { id: 2, quote: "Ada kode yang lebih baik tak pernah dijalankan.", image: "https://images.unsplash.com/photo-1517077304055-6e89abbf09b0" },
-            { id: 3, quote: "Invisibility is the new presence", image: "https://images.unsplash.com/photo-1550684376-efcbd6e3f031" },
-            { id: 4, quote: "Silence speaks volumes to those who listen", image: "https://images.unsplash.com/photo-1518709268805-4e9042af2176" }
-        ];
+        // Inisialisasi Telegram WebApp
+        const tg = window.Telegram.WebApp;
+        tg.expand();
+        tg.ready();
 
-        for (let i = 5; i <= 12; i++) {
-            artefaks.push({
-                id: i,
-                quote: "Nanti akan terisi...",
-                image: "https://images.unsplash.com/photo-1519681393784-d120267933ba"
-            });
+        // Ambil user data dari Telegram
+        const tgUser = tg.initDataUnsafe?.user;
+        const userId = tgUser?.id || 'nope_user_' + Date.now();
+        const username = tgUser?.username || 'NOPE_' + Math.random().toString(36).substr(2, 6).toUpperCase();
+
+        // Simpan ke localStorage (simulasi backend)
+        localStorage.setItem('nope_anon_username', username);
+        localStorage.setItem('nope_logged_in', 'true');
+
+        // Cek apakah sudah onboarding
+        if (localStorage.getItem('nope_onboarding_complete') !== 'true') {
+            window.location.href = 'onboarding.html';
         }
 
-        // === 3 RANT TERAKHIR (kronologis terbaru di atas) ===
-        const lastRants = [
+        // Data dummy
+        const rants = [
             "Aku lelah jadi versi yang ‘aman’ untuk orang lain.",
-            "Aku ingin marah, tapi takut dikira ‘terlalu banyak’.",
-            "Ada rahasia yang bahkan doaku tak berani sebut namanya."
+            "Kenapa harus selalu ‘move on’? Kadang aku cuma mau nangis di sudut gelap.",
+            "Mereka bilang ‘positive vibes only’. Tapi bagaimana kalau jiwaku sedang abu-abu?"
         ];
+        const pulses = 3; // Simulasi: ada 3 emoji pulse baru
 
-        function formatTimestampFromNow(index) {
-            // Simulasi: rant terbaru = hari ini, lalu mundur
-            const now = new Date();
-            const past = new Date(now);
-            past.setDate(now.getDate() - index);
-            return past.toLocaleDateString('id-ID', {
-                day: 'numeric',
-                month: 'short',
-                hour: '2-digit',
-                minute: '2-digit'
-            });
+        // Tampilkan indikator pulse jika > 0
+        if (pulses > 0) {
+            document.getElementById('pulseIndicator').classList.add('show');
+            document.getElementById('pulseCount').textContent = pulses;
         }
 
-        document.addEventListener('DOMContentLoaded', () => {
-            // Render Jejakmu (2 kolom)
-            const grid = document.getElementById('jejak-grid');
-            artefaks.forEach((artefak, idx) => {
-                if (idx >= 6) return; // hanya tampilkan 6 jejak pertama (contoh)
-                const el = document.createElement('div');
-                el.className = 'jejak-item';
-                el.innerHTML = `<img src="${artefak.image}" class="jejak-img" />`;
-                grid.appendChild(el);
-            });
-
-            // Render 3 Rant Terakhir
-            const rantList = document.getElementById('rant-list');
-            lastRants.forEach((text, i) => {
-                const entry = document.createElement('div');
-                entry.className = 'rant-entry';
-                entry.innerHTML = `
-                    <div class="rant-text">${text}</div>
-                    <div class="rant-timestamp">${formatTimestampFromNow(i)}</div>
-                `;
-                rantList.appendChild(entry);
-            });
+        // Render rant
+        const rantList = document.getElementById('rant-list');
+        rants.forEach(text => {
+            const el = document.createElement('div');
+            el.className = 'rant-entry';
+            el.innerHTML = `<div class="rant-text">${text}</div><div class="rant-timestamp">2j</div>`;
+            rantList.appendChild(el);
         });
 
-        // Optional: handle input submit (mock)
-        document.querySelector('.rant-input').addEventListener('keydown', (e) => {
-            if (e.key === 'Enter' && !e.shiftKey) {
-                e.preventDefault();
-                const input = e.target;
-                if (input.value.trim()) {
-                    // In real app: send to API, prepend to rant-list
-                    input.value = '';
-                    // Visual feedback: subtle pulse or ash animation (future)
-                }
-            }
+        // Render jejak
+        const jejakGrid = document.getElementById('jejak-grid');
+        const jejakImgs = [
+            "https://images.unsplash.com/photo-1542744095-fcf48d80b0fd",
+            "https://images.unsplash.com/photo-1517077304055-6e89abbf09b0",
+            "https://images.unsplash.com/photo-1550684376-efcbd6e3f031",
+            "https://images.unsplash.com/photo-1518709268805-4e9042af2176"
+        ];
+        jejakImgs.forEach(src => {
+            const el = document.createElement('div');
+            el.className = 'jejak-item';
+            el.innerHTML = `<img src="${src}" class="jejak-img" />`;
+            jejakGrid.appendChild(el);
         });
     </script>
 </body>
