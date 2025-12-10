@@ -16,8 +16,11 @@
     .reaction-btn { 
       @apply flex flex-col items-center justify-center w-16 h-16 bg-transparent border-none cursor-pointer transition-transform;
     }
-    .reaction-btn:hover { transform: scale(1.1); }
+    .reaction-btn:hover { transform: scale(1.05); }
     .reaction-text { @apply text-[10px] mt-1 text-center leading-tight; }
+    .comment-item { @apply bg-[#222] rounded-xl p-3 mb-2; }
+    .comment-username { @apply text-[#ff2d55] text-xs font-bold; }
+    .comment-text { @apply text-xs mt-1; }
     .comment-box { @apply w-full bg-[#111] rounded-xl p-3 mt-3 text-sm; }
     .send-btn { @apply mt-2 bg-[#ff2d55] text-black px-4 py-1.5 rounded-full text-sm font-bold; }
   </style>
@@ -29,7 +32,7 @@
     <div class="flex justify-between items-center mb-6">
       <h1 class="text-xl font-bold">NOPE</h1>
       <div class="flex space-x-2">
-        <div class="w-2 h-2 rounded-full bg-red-500"></div> <!-- fake notif -->
+        <div class="w-2 h-2 rounded-full bg-red-500"></div>
       </div>
     </div>
 
@@ -40,79 +43,38 @@
       <div class="nope-tab inactive">✊ Solidaritas</div>
     </div>
 
-    <!-- Feed Placeholder -->
-    <div id="feed-container" class="space-y-6">
-      <!-- Contoh: Sefrekuensi -->
-      <div class="bg-[#111] rounded-2xl p-4">
-        <p class="text-sm mb-3">“Gue capek pura-pura okay pas orang tua bilang ‘kapan nikah?’”</p>
-        
-        <!-- Reactions: hanya 2 untuk Sefrekuensi -->
-        <div class="flex space-x-4 mt-4">
-          <button class="reaction-btn">
-            <span>🫶</span>
-            <span class="reaction-text">Gue ngerti banget</span>
-          </button>
-          <button class="reaction-btn">
-            <span>🤲</span>
-            <span class="reaction-text">Peluk kenceng,<br>gak perlu jawab</span>
-          </button>
-        </div>
+    <!-- Feed: Sefrekuensi with Comments -->
+    <div class="bg-[#111] rounded-2xl p-4">
+      <p class="text-sm mb-3">“Gue capek pura-pura okay pas orang tua bilang ‘kapan nikah?’”</p>
+      
+      <!-- Reactions -->
+      <div class="flex space-x-4 mt-4">
+        <button class="reaction-btn">
+          <span>🫶</span>
+          <span class="reaction-text">Gue ngerti banget</span>
+        </button>
+        <button class="reaction-btn">
+          <span>🤲</span>
+          <span class="reaction-text">Peluk kenceng,<br>gak perlu jawab</span>
+        </button>
+      </div>
 
-        <!-- Komentar aktif di Sefrekuensi -->
-        <div class="comment-box">
-          <textarea placeholder="Balas pelan-pelan..." class="w-full bg-transparent border-none focus:outline-none text-white placeholder:text-gray-500 text-sm" rows="2"></textarea>
-          <button class="send-btn">KIRIM</button>
+      <!-- Comments with @nope_username -->
+      <div class="mt-4 space-y-2">
+        <div class="comment-item">
+          <div class="comment-username">@nope_8x2m4</div>
+          <div class="comment-text">Gue juga ngerasain ini tiap Lebaran. Capek jawab, tapi gak enak marah.</div>
+        </div>
+        <div class="comment-item">
+          <div class="comment-username">@nope_3q9r1</div>
+          <div class="comment-text">Peluk diam-diam dari jauh. Lo udah cukup berani.</div>
         </div>
       </div>
 
-      <!-- Contoh: Segelombang -->
-      <div class="bg-[#111] rounded-2xl p-4">
-        <p class="text-sm mb-3">“Nggak tahan liat influencer pake isu mental health buat jualan skincare.”</p>
-        
-        <!-- Reactions: 5 untuk Segelombang (tanpa komentar) -->
-        <div class="flex flex-wrap gap-3 mt-4">
-          <button class="reaction-btn">
-            <span>🫶</span>
-            <span class="reaction-text">GueDiSini</span>
-          </button>
-          <button class="reaction-btn">
-            <span>🤲</span>
-            <span class="reaction-text">Peluk Lo<br>Diam-Diam</span>
-          </button>
-          <button class="reaction-btn">
-            <span>👏</span>
-            <span class="reaction-text">Bangga Lo<br>Berani Ngomong Ini</span>
-          </button>
-          <button class="reaction-btn">
-            <span>😮‍💨</span>
-            <span class="reaction-text">Napas dulu,<br>lo udah cukup keras</span>
-          </button>
-          <button class="reaction-btn">
-            <span>💥</span>
-            <span class="reaction-text">Gue juga<br>nger asain ini,<br>beneran</span>
-          </button>
-        </div>
-      </div>
-
-      <!-- Contoh: Solidaritas (Artefak Emosional) -->
-      <div class="bg-[#111] rounded-2xl p-4">
-        <p class="text-sm mb-3">“Dulu gue di-bully karena suka warna ungu. Sekarang gue hidup buat itu.”</p>
-        
-        <!-- Hanya 3 emoji, tanpa komentar -->
-        <div class="flex space-x-5 mt-4">
-          <div class="reaction-btn cursor-default opacity-80">
-            <span>🫶</span>
-            <span class="reaction-text">GueDiSini</span>
-          </div>
-          <div class="reaction-btn cursor-default opacity-80">
-            <span>🤲</span>
-            <span class="reaction-text">Peluk Lo<br>Diam-Diam</span>
-          </div>
-          <div class="reaction-btn cursor-default opacity-80">
-            <span>👏</span>
-            <span class="reaction-text">Bangga Lo<br>Berani Ngomong Ini</span>
-          </div>
-        </div>
+      <!-- Comment Input -->
+      <div class="comment-box">
+        <textarea placeholder="Balas pelan-pelan..." class="w-full bg-transparent border-none focus:outline-none text-white placeholder:text-gray-500 text-sm" rows="2"></textarea>
+        <button class="send-btn">KIRIM</button>
       </div>
     </div>
 
