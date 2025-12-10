@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NOPE - Rage Identity</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg: #0a0a0f;
@@ -15,111 +15,72 @@
             --muted: #7a7a8c;
             --accent1: #ff2d55;
         }
-
         * { margin: 0; padding: 0; box-sizing: border-box; }
-
         body {
             background: var(--bg);
             color: var(--text);
             font-family: 'Inter', sans-serif;
-            font-weight: 300;
             padding: 20px;
-            max-width: 800px;
+            max-width: 500px;
             margin: 0 auto;
             line-height: 1.5;
         }
-        
         .back-btn {
             position: absolute;
-            top: 20px;
-            left: 20px;
+            top: 16px;
+            left: 16px;
             color: var(--muted);
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             text-decoration: none;
             z-index: 100;
         }
-        
-        .header {
+        .title {
             text-align: center;
-            margin: 30px 0 25px;
-        }
-        .header h1 {
-            font-size: 28px;
+            font-size: 24px;
             font-weight: 800;
+            margin: 20px 0 30px;
             background: linear-gradient(90deg, var(--accent1), #2db34d);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            margin-bottom: 10px;
         }
-        .header p {
-            color: var(--muted);
-            font-size: 15px;
+        .zone-pair {
+            margin-bottom: 30px;
         }
-        
-        .mode-label {
-            text-align: center;
-            background: rgba(255, 45, 85, 0.1);
-            color: var(--accent1);
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 13px;
-            font-weight: 600;
-            margin-bottom: 20px;
-            display: inline-block;
+        .zone-row {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 24px;
         }
-        
-        .rules-box {
-            background: rgba(255, 45, 85, 0.08);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 16px;
-            margin-bottom: 25px;
+        .zone {
+            flex: 1;
+        }
+        .zone-label {
             font-size: 14px;
-        }
-        .rules-box h3 {
-            color: var(--accent1);
-            margin-bottom: 10px;
-            font-size: 16px;
-        }
-        .rules-box ul {
-            padding-left: 20px;
-        }
-        .rules-box li { margin: 6px 0; }
-        
-        .zone-section { margin-bottom: 25px; }
-        .zone-title {
-            font-size: 16px;
-            font-weight: 700;
-            margin-bottom: 15px;
+            font-weight: 600;
+            margin-bottom: 12px;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
         }
         .pop-culture { color: #2db34d; }
         .personal-pain { color: #ff9500; }
         .social-sickness { color: var(--accent1); }
-        .movement { 
-            color: #5ac8fa;
-            opacity: 0.4;
-        }
-        
+        .movement { color: #5ac8fa; opacity: 0.5; }
         .hashtag-options {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-            gap: 12px;
-            margin-bottom: 15px;
+            gap: 10px;
         }
         .hashtag-option {
             background: var(--card);
-            padding: 14px;
-            border-radius: 10px;
-            cursor: pointer;
+            padding: 12px;
             border: 1px solid var(--border);
+            border-radius: 8px;
             text-align: center;
-            transition: all 0.2s;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
         }
         .hashtag-option:hover:not(.locked) {
-            transform: translateY(-2px);
             border-color: #444;
         }
         .hashtag-option.selected {
@@ -131,426 +92,185 @@
             cursor: not-allowed;
             background: #0a0a0f;
         }
-        .hashtag-option .name {
-            font-weight: 600;
-            margin-bottom: 4px;
-        }
-        .hashtag-option .posts {
-            color: var(--muted);
-            font-size: 12px;
-        }
-        
-        /* Artefak Upload - Hanya muncul di Cycle Mode */
-        .artefak-section {
-            margin: 25px 0;
-            display: none;
-        }
-        .artefak-section h3 {
-            margin-bottom: 15px;
-            font-size: 16px;
-        }
-        .artefak-options {
-            display: flex;
-            gap: 15px;
-        }
-        .artefak-option {
-            flex: 1;
+        .status {
             background: var(--card);
             border: 1px solid var(--border);
             border-radius: 10px;
-            padding: 20px 10px;
-            text-align: center;
-            cursor: pointer;
-        }
-        .artefak-option.selected {
-            border-color: var(--accent1);
-            background: rgba(255, 45, 85, 0.1);
-        }
-        .artefak-option i {
-            font-size: 2rem;
-            margin-bottom: 10px;
-            color: var(--muted);
-        }
-        .artefak-option.selected i { color: var(--accent1); }
-        
-        .selection-status {
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 20px;
+            padding: 16px;
             margin: 25px 0;
+            font-size: 14px;
         }
-        .status-item {
+        .status-row {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 12px;
-            padding-bottom: 12px;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-        }
-        .status-item:last-child {
-            border-bottom: none;
-            margin-bottom: 0;
-            padding-bottom: 0;
-        }
-        .status-label { color: var(--muted); }
-        .status-value {
-            font-weight: 600;
+            margin: 6px 0;
         }
         .status-value.complete { color: #2db34d; }
         .status-value.incomplete { color: #ff9500; }
-        
-        .continue-btn {
-            display: block;
+        .btn {
             width: 100%;
-            padding: 16px;
+            padding: 14px;
             background: linear-gradient(135deg, var(--accent1), #ff9500);
             color: white;
             border: none;
-            border-radius: 12px;
+            border-radius: 10px;
             font-weight: 700;
             font-size: 16px;
             cursor: pointer;
-            margin-top: 20px;
-            transition: opacity 0.2s;
         }
-        .continue-btn:disabled {
+        .btn:disabled {
             opacity: 0.4;
             cursor: not-allowed;
-        }
-        
-        @media (max-width: 500px) {
-            .hashtag-options { grid-template-columns: 1fr; }
-            .artefak-options { flex-direction: column; }
         }
     </style>
 </head>
 <body>
-    <a href="login.html" class="back-btn" onclick="localStorage.removeItem('nope_logged_in')">×</a>
+    <a href="login.html" class="back-btn" onclick="localStorage.removeItem('nope_logged_in')">←</a>
     
-    <div class="header">
-        <h1 id="headerTitle">Pilih Frekuensi Jiwa-mu</h1>
-        <p id="headerDesc">Pilih 1 hashtag dari tiap zona (3 total)</p>
-    </div>
-    
-    <div class="mode-label" id="modeLabel">ONBOARDING PERTAMA</div>
-    
-    <div class="rules-box">
-        <h3>📋 Aturan Pemilihan</h3>
-        <ul>
-            <li>🎬 Pilih 1 dari <strong>Pop Culture</strong></li>
-            <li>💔 Pilih 1 dari <strong>Personal Pain</strong></li>
-            <li>😷 Pilih 1 dari <strong>Social Sickness</strong></li>
-            <li>🚀 <strong>Movement Zone</strong> terkunci — butuh undangan</li>
-        </ul>
-    </div>
-    
-    <!-- ZONA 1 -->
-    <div class="zone-section">
-        <div class="zone-title pop-culture">
-            <span>🎬</span> POP CULTURE
-        </div>
-        <div class="hashtag-options" id="popCultureOptions"></div>
-    </div>
-    
-    <!-- ZONA 2 -->
-    <div class="zone-section">
-        <div class="zone-title personal-pain">
-            <span>💔</span> PERSONAL PAIN
-        </div>
-        <div class="hashtag-options" id="personalPainOptions"></div>
-    </div>
-    
-    <!-- ZONA 3 -->
-    <div class="zone-section">
-        <div class="zone-title social-sickness">
-            <span>😷</span> SOCIAL SICKNESS
-        </div>
-        <div class="hashtag-options" id="socialSicknessOptions"></div>
-    </div>
-    
-    <!-- ZONA 4 (LOCKED) -->
-    <div class="zone-section">
-        <div class="zone-title movement">
-            <span>🚀</span> MOVEMENT (TERKUNCI)
-        </div>
-        <div class="hashtag-options" id="movementOptions"></div>
-    </div>
-    
-    <!-- ARTEFAK SECTION (Hanya di Cycle Mode) -->
-    <div class="artefak-section" id="artefakSection">
-        <h3>Jejak Visual untuk Siklus Ini</h3>
-        <div class="artefak-options">
-            <div class="artefak-option" id="uploadOption">
-                <i class="fas fa-image"></i>
-                <div>Unggah Artefak</div>
+    <div class="title">Pilih frekuensi jiwa-mu</div>
+
+    <!-- PASANGAN 1: ZONA 1 + 2 -->
+    <div class="zone-pair">
+        <div class="zone-row">
+            <div class="zone">
+                <div class="zone-label pop-culture"><i class="fas fa-film"></i> Pop Culture</div>
+                <div class="hashtag-options" id="popCultureOptions"></div>
             </div>
-            <div class="artefak-option" id="blankOption">
-                <i class="fas fa-border-none"></i>
-                <div>Blank Canvas</div>
+            <div class="zone">
+                <div class="zone-label personal-pain"><i class="fas fa-heart-broken"></i> Personal Pain</div>
+                <div class="hashtag-options" id="personalPainOptions"></div>
             </div>
         </div>
-        <input type="file" id="artefakFile" accept="image/*" style="display:none;" />
     </div>
-    
-    <!-- STATUS -->
-    <div class="selection-status">
-        <div class="status-item">
-            <span class="status-label">🎬 Pop Culture</span>
-            <span class="status-value incomplete" id="statusPop">Belum dipilih</span>
-        </div>
-        <div class="status-item">
-            <span class="status-label">💔 Personal Pain</span>
-            <span class="status-value incomplete" id="statusPersonal">Belum dipilih</span>
-        </div>
-        <div class="status-item">
-            <span class="status-label">😷 Social Sickness</span>
-            <span class="status-value incomplete" id="statusSocial">Belum dipilih</span>
-        </div>
-        <div class="status-item">
-            <span class="status-label">🎨 Artefak</span>
-            <span class="status-value incomplete" id="statusArtefak">Opsional</span>
-        </div>
-        <div class="status-item">
-            <span class="status-label">Total</span>
-            <span class="status-value" id="statusTotal">0/3</span>
+
+    <!-- PASANGAN 2: ZONA 3 + 4 -->
+    <div class="zone-pair">
+        <div class="zone-row">
+            <div class="zone">
+                <div class="zone-label social-sickness"><i class="fas fa-virus"></i> Social Sickness</div>
+                <div class="hashtag-options" id="socialSicknessOptions"></div>
+            </div>
+            <div class="zone">
+                <div class="zone-label movement"><i class="fas fa-rocket"></i> Movement</div>
+                <div class="hashtag-options" id="movementOptions"></div>
+            </div>
         </div>
     </div>
-    
-    <button class="continue-btn" id="continueBtn" disabled>
-        LANJUT KE LUAR
-    </button>
+
+    <!-- STATUS & KIRIM -->
+    <div class="status">
+        <div class="status-row">
+            <span>Pop Culture</span>
+            <span class="status-value incomplete" id="statusPop">–</span>
+        </div>
+        <div class="status-row">
+            <span>Personal Pain</span>
+            <span class="status-value incomplete" id="statusPersonal">–</span>
+        </div>
+        <div class="status-row">
+            <span>Social Sickness</span>
+            <span class="status-value incomplete" id="statusSocial">–</span>
+        </div>
+        <div style="margin-top: 12px; color: var(--muted); font-size: 12px;">
+            Pilih 1 dari tiap zona (3 wajib, 1 opsional/terkunci)
+        </div>
+    </div>
+
+    <button class="btn" id="continueBtn" disabled>LANJUT KE LUAR</button>
 
     <script>
-        // === DATA HASHTAG ===
         const ZONE_DATA = {
             'pop-culture': [
-                { id: 'pc1', name: '#BellTiketJualSinjal', posts: 89 },
-                { id: 'pc2', name: '#InfluencerNgchek', posts: 203 },
-                { id: 'pc3', name: '#FilmEndingGaje', posts: 142 },
-                { id: 'pc4', name: '#TikTokCringe', posts: 156 },
-                { id: 'pc5', name: '#CelebrityFail', posts: 98 }
+                '#BellTiketJualSinjal', '#InfluencerNgchek', '#FilmEndingGaje',
+                '#TikTokCringe', '#CelebrityFail'
             ],
             'personal-pain': [
-                { id: 'pp1', name: '#MagangDigajiSertifikat', posts: 245 },
-                { id: 'pp2', name: '#DiajakJalanTapiKempes', posts: 178 },
-                { id: 'pp3', name: '#DiphostingGebetan', posts: 312 },
-                { id: 'pp4', name: '#MinjemDuitGaBalik', posts: 210 },
-                { id: 'pp5', name: '#ProjectLastMinute', posts: 189 }
+                '#MagangDigajiSertifikat', '#DiajakJalanTapiKempes', '#DiphostingGebetan',
+                '#MinjemDuitGaBalik', '#ProjectLastMinute'
             ],
             'social-sickness': [
-                { id: 'ss1', name: '#DramaQueenAnjay', posts: 189 },
-                { id: 'ss2', name: '#BacotLambeTurah', posts: 321 },
-                { id: 'ss3', name: '#RencanaPlinPlan', posts: 267 },
-                { id: 'ss4', name: '#GhostingCulture', posts: 198 },
-                { id: 'ss5', name: '#FlexingGaJelas', posts: 145 }
+                '#DramaQueenAnjay', '#BacotLambeTurah', '#RencanaPlinPlan',
+                '#GhostingCulture', '#FlexingGaJelas'
             ],
             'movement': [
-                { id: 'mv1', name: '#ReformasiSistem', posts: 312, locked: true },
-                { id: 'mv2', name: '#AksiNyata2024', posts: 189, locked: true },
-                { id: 'mv3', name: '#VoiceForChange', posts: 245, locked: true },
-                { id: 'mv4', name: '#YouthPower', posts: 178, locked: true },
-                { id: 'mv5', name: '#DigitalProtest', posts: 156, locked: true }
+                '#ReformasiSistem', '#AksiNyata2024', '#VoiceForChange',
+                '#YouthPower', '#DigitalProtest'
             ]
         };
 
-        // === STATE ===
-        let userSelections = {
+        let selections = {
             'pop-culture': null,
             'personal-pain': null,
             'social-sickness': null
         };
-        let artefakMode = 'blank'; // 'blank' or 'uploaded'
-        let currentMode = 'onboarding'; // 'onboarding' or 'cycle'
 
-        // === INIT ===
         function init() {
             const username = localStorage.getItem('nope_anon_username');
             if (!username) return window.location.href = 'login.html';
-
-            const onboardingComplete = localStorage.getItem('nope_onboarding_complete') === 'true';
-            const joinDateStr = localStorage.getItem('nope_join_date');
-            
-            if (onboardingComplete && joinDateStr) {
-                const joinDate = new Date(joinDateStr);
-                const now = new Date();
-                const days = Math.floor((now - joinDate) / (1000 * 60 * 60 * 24));
-                
-                if (days >= 30 && days % 30 === 0) {
-                    currentMode = 'cycle';
-                }
-            }
-
-            setupUIByMode();
-            renderAllZones();
-            setupEventListeners();
-            updateStatus();
+            renderZones();
+            setupListeners();
         }
 
-        function setupUIByMode() {
-            const title = document.getElementById('headerTitle');
-            const desc = document.getElementById('headerDesc');
-            const modeLabel = document.getElementById('modeLabel');
-            const artefakSection = document.getElementById('artefakSection');
-            const statusArtefak = document.getElementById('statusArtefak');
-            
-            if (currentMode === 'cycle') {
-                title.textContent = 'Pembaruan Jiwa – Hari ke-30';
-                desc.textContent = 'Pilih ulang 3 frekuensi. Tinggalkan jejak atau biarkan kanvas kosong.';
-                modeLabel.textContent = 'Siklus 30 Hari';
-                modeLabel.style.background = 'rgba(45, 179, 77, 0.15)';
-                modeLabel.style.color = '#2db34d';
-                artefakSection.style.display = 'block';
-                statusArtefak.textContent = 'Wajib pilih';
-                statusArtefak.className = 'status-value incomplete';
-            }
-        }
-
-        // === RENDER ===
-        function renderAllZones() {
-            renderZone('pop-culture', 'popCultureOptions');
-            renderZone('personal-pain', 'personalPainOptions');
-            renderZone('social-sickness', 'socialSicknessOptions');
+        function renderZones() {
+            renderZone('pop-culture', 'popCultureOptions', false);
+            renderZone('personal-pain', 'personalPainOptions', false);
+            renderZone('social-sickness', 'socialSicknessOptions', false);
             renderZone('movement', 'movementOptions', true);
         }
 
-        function renderZone(zoneKey, containerId, isLocked = false) {
-            const container = document.getElementById(containerId);
-            if (!container) return;
-
-            const hashtags = ZONE_DATA[zoneKey];
-            container.innerHTML = '';
-
-            hashtags.forEach(hashtag => {
-                const isSelected = userSelections[zoneKey]?.id === hashtag.id;
-                const isLockedTag = hashtag.locked || isLocked;
-                
+        function renderZone(key, id, locked) {
+            const el = document.getElementById(id);
+            el.innerHTML = '';
+            ZONE_DATA[key].forEach(tag => {
                 const div = document.createElement('div');
-                div.className = `hashtag-option ${isSelected ? 'selected' : ''} ${isLockedTag ? 'locked' : ''}`;
-                div.dataset.id = hashtag.id;
-                div.dataset.zone = zoneKey;
-                div.dataset.name = hashtag.name;
-                
-                div.innerHTML = `
-                    <div class="name">${hashtag.name}</div>
-                    <div class="posts">${hashtag.posts} posts</div>
-                `;
-                
-                if (!isLockedTag) {
-                    div.addEventListener('click', () => selectHashtag(zoneKey, hashtag));
+                div.className = `hashtag-option ${selections[key] === tag ? 'selected' : ''} ${locked ? 'locked' : ''}`;
+                div.textContent = tag;
+                if (!locked) {
+                    div.onclick = () => toggleSelection(key, tag);
                 }
-                
-                container.appendChild(div);
+                el.appendChild(div);
             });
         }
 
-        function selectHashtag(zoneKey, hashtag) {
-            userSelections[zoneKey] = userSelections[zoneKey]?.id === hashtag.id ? null : hashtag;
-            renderAllZones();
+        function toggleSelection(zone, tag) {
+            selections[zone] = selections[zone] === tag ? null : tag;
+            renderZones();
             updateStatus();
         }
 
-        // === ARTEFAK ===
-        document.getElementById('uploadOption').addEventListener('click', () => {
-            document.getElementById('artefakFile').click();
-        });
-        document.getElementById('blankOption').addEventListener('click', () => {
-            artefakMode = 'blank';
-            updateArtefakSelection();
-        });
-        document.getElementById('artefakFile').addEventListener('change', (e) => {
-            if (e.target.files.length > 0) {
-                artefakMode = 'uploaded';
-                updateArtefakSelection();
-            }
-        });
-
-        function updateArtefakSelection() {
-            document.getElementById('uploadOption').classList.toggle('selected', artefakMode === 'uploaded');
-            document.getElementById('blankOption').classList.toggle('selected', artefakMode === 'blank');
-            updateStatus();
-        }
-
-        // === STATUS & SUBMIT ===
         function updateStatus() {
-            const pop = !!userSelections['pop-culture'];
-            const personal = !!userSelections['personal-pain'];
-            const social = !!userSelections['social-sickness'];
-            const artefakReady = currentMode === 'onboarding' || artefakMode !== null;
-            
-            document.getElementById('statusPop').textContent = pop ? userSelections['pop-culture'].name : 'Belum dipilih';
-            document.getElementById('statusPop').className = pop ? 'status-value complete' : 'status-value incomplete';
-            
-            document.getElementById('statusPersonal').textContent = personal ? userSelections['personal-pain'].name : 'Belum dipilih';
-            document.getElementById('statusPersonal').className = personal ? 'status-value complete' : 'status-value incomplete';
-            
-            document.getElementById('statusSocial').textContent = social ? userSelections['social-sickness'].name : 'Belum dipilih';
-            document.getElementById('statusSocial').className = social ? 'status-value complete' : 'status-value incomplete';
-            
-            document.getElementById('statusArtefak').textContent = 
-                currentMode === 'onboarding' ? 'Opsional' : 
-                artefakMode === 'blank' ? 'Blank Canvas' : 'Diunggah';
-            document.getElementById('statusArtefak').className = 
-                currentMode === 'onboarding' ? 'status-value' : 
-                'status-value complete';
-            
-            const total = [pop, personal, social].filter(Boolean).length;
-            document.getElementById('statusTotal').textContent = `${total}/3`;
-            
-            const canContinue = pop && personal && social && artefakReady;
-            document.getElementById('continueBtn').disabled = !canContinue;
+            document.getElementById('statusPop').textContent = selections['pop-culture'] || '–';
+            document.getElementById('statusPop').className = selections['pop-culture'] ? 'status-value complete' : 'status-value incomplete';
+
+            document.getElementById('statusPersonal').textContent = selections['personal-pain'] || '–';
+            document.getElementById('statusPersonal').className = selections['personal-pain'] ? 'status-value complete' : 'status-value incomplete';
+
+            document.getElementById('statusSocial').textContent = selections['social-sickness'] || '–';
+            document.getElementById('statusSocial').className = selections['social-sickness'] ? 'status-value complete' : 'status-value incomplete';
+
+            const ready = selections['pop-culture'] && selections['personal-pain'] && selections['social-sickness'];
+            document.getElementById('continueBtn').disabled = !ready;
         }
 
-        document.getElementById('continueBtn').addEventListener('click', completeFlow);
-
-        function completeFlow() {
-            const username = localStorage.getItem('nope_anon_username');
-            const userProfile = {
-                username,
-                selections: {
-                    popCulture: userSelections['pop-culture'].name,
-                    personalPain: userSelections['personal-pain'].name,
-                    socialSickness: userSelections['social-sickness'].name
-                }
-            };
-
-            if (currentMode === 'onboarding') {
-                userProfile.joinedAt = new Date().toISOString();
-                localStorage.setItem('nope_join_date', userProfile.joinedAt);
+        function setupListeners() {
+            document.getElementById('continueBtn').onclick = () => {
+                const username = localStorage.getItem('nope_anon_username');
+                const profile = {
+                    username,
+                    selections: {
+                        popCulture: selections['pop-culture'],
+                        personalPain: selections['personal-pain'],
+                        socialSickness: selections['social-sickness']
+                    },
+                    joinedAt: new Date().toISOString()
+                };
+                localStorage.setItem('nope_user_profile', JSON.stringify(profile));
                 localStorage.setItem('nope_onboarding_complete', 'true');
-                
-                // Generate mock data
-                generateMockCommunityData();
-            }
-
-            // Simpan artefak status
-            localStorage.setItem('nope_artefak_mode', artefakMode);
-            if (artefakMode === 'uploaded') {
-                // In real app: upload to server
-                // For now: just store a flag
-                localStorage.setItem('nope_has_artefak', 'true');
-            }
-
-            localStorage.setItem('nope_user_profile', JSON.stringify(userProfile));
-
-            // Redirect
-            document.getElementById('continueBtn').innerHTML = '<i class="fas fa-spinner fa-spin"></i> MEMASUKI LUAR...';
-            document.getElementById('continueBtn').disabled = true;
-            
-            setTimeout(() => {
+                localStorage.setItem('nope_join_date', profile.joinedAt);
                 window.location.href = 'luar.html';
-            }, 1200);
+            };
         }
 
-        // === MOCK DATA (only on first onboarding) ===
-        function generateMockCommunityData() {
-            // ... (gunakan fungsi yang sudah ada di kode lama)
-            // Untuk ringkas, kita skip detailnya — fokus pada flow
-            console.log('Mock community data generated');
-            localStorage.setItem('nope_mock_users', JSON.stringify([]));
-            localStorage.setItem('nope_mock_posts', JSON.stringify([]));
-        }
-
-        // === START ===
         document.addEventListener('DOMContentLoaded', init);
     </script>
 </body>
