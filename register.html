@@ -1,1 +1,83 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NOPE • Masuk</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; background: #000; color: #fff; }
+    .input-email {
+      @apply w-full bg-[#222] text-white rounded-xl px-4 py-3 text-sm border-none outline-none;
+    }
+    .btn-enter {
+      @apply w-full bg-[#ff2d55] text-black font-bold py-3 rounded-xl mt-2;
+    }
+    .tagline { @apply text-xs text-gray-400 mt-1; }
+    .footer-note { @apply text-xs text-gray-500 mt-6; }
+  </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-4">
+  <div class="bg-[#111] rounded-2xl p-6 w-full max-w-md text-center">
 
+    <!-- Logo -->
+    <h1 class="text-4xl font-black mb-2">NOPE</h1>
+    <p class="text-sm text-gray-400 mb-6">Masukin email. Gue jaga rahasia lo.</p>
+
+    <!-- Email Form -->
+    <form id="entryForm">
+      <input 
+        type="email" 
+        id="emailInput" 
+        class="input-email" 
+        placeholder="email@lo.com" 
+        required
+      />
+      <button type="submit" class="btn-enter">MASUK</button>
+    </form>
+
+    <p class="footer-note">Gak ada password. Gak ada notifikasi. Lo cuma perlu jujur sama diri sendiri.</p>
+  </div>
+
+  <script>
+    // Fungsi generate @nope_username acak
+    function generateNopeId() {
+      const chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
+      let result = 'nope_';
+      for (let i = 0; i < 6; i++) {
+        result += chars.charAt(Math.floor(Math.random() * chars.length));
+      }
+      return result;
+    }
+
+    // Cek atau simpan user di localStorage
+    function handleEntry(email) {
+      const users = JSON.parse(localStorage.getItem('nope_users') || '{}');
+      
+      if (users[email]) {
+        // User lama → redirect ke inner
+        localStorage.setItem('current_user', JSON.stringify({
+          email: email,
+          nope_id: users[email].nope_id
+        }));
+        window.location.href = 'inner.html';
+      } else {
+        // User baru → buat ID & simpan
+        const nope_id = generateNopeId();
+        users[email] = { nope_id, onboarding_done: false };
+        localStorage.setItem('nope_users', JSON.stringify(users));
+        localStorage.setItem('current_user', JSON.stringify({ email, nope_id }));
+        window.location.href = 'onboarding.html';
+      }
+    }
+
+    // Form submit
+    document.getElementById('entryForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const email = document.getElementById('emailInput').value.trim().toLowerCase();
+      if (email) handleEntry(email);
+    });
+  </script>
+</body>
+</html>
