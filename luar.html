@@ -3,16 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NOPE - Rage Identity</title>
+    <title>NOPE - Luar</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: #0a0a0f;
-            --card: #121217;
-            --border: #25252d;
-            --text: #eaeaea;
-            --muted: #7a7a8c;
+            --bg: #050508;
+            --card: #0f0f13;
+            --border: #1e1e28;
+            --text: #d0d0d0;
+            --muted: #6a6a7a;
             --accent1: #ff2d55;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -20,247 +19,212 @@
             background: var(--bg);
             color: var(--text);
             font-family: 'Inter', sans-serif;
-            padding: 14px;
-            max-width: 500px;
-            margin: 0 auto;
-            line-height: 1.3;
-            overflow-x: hidden;
+            padding-bottom: 90px;
+            line-height: 1.5;
+            font-size: 14px;
         }
-        .back-btn {
-            position: absolute;
-            top: 12px;
-            left: 12px;
-            color: var(--muted);
-            font-size: 1.2rem;
-            text-decoration: none;
+        .header {
+            padding: 16px;
+            background: rgba(5,5,8,0.95);
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
-        .title {
+        .logo {
+            font-size: 22px;
+            font-weight: 900;
+            color: var(--accent1);
             text-align: center;
-            font-size: 19px;
-            font-weight: 800;
-            margin: 16px 0 4px;
-            line-height: 1.3;
-            background: linear-gradient(90deg, var(--accent1), #2db34d);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
         }
-        .subtitle {
-            text-align: center;
-            font-size: 11px;
-            color: var(--muted);
-            margin-bottom: 16px;
-            line-height: 1.3;
+        .tabs {
+            display: flex;
+            gap: 6px;
+            margin-top: 12px;
+            overflow-x: auto;
         }
-
-        .zones-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 14px;
-            margin-bottom: 18px;
-        }
-        .zone {
+        .tab {
             background: var(--card);
             border: 1px solid var(--border);
             border-radius: 8px;
-            padding: 10px;
-        }
-        .zone-label {
-            font-size: 12px;
-            font-weight: 600;
-            margin-bottom: 8px;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            color: var(--muted);
-        }
-        .pop-culture { color: #2db34d !important; }
-        .personal-pain { color: #ff9500 !important; }
-        .social-sickness { color: var(--accent1) !important; }
-        .movement { opacity: 0.4 !important; }
-        .hashtag-options {
-            display: grid;
-            gap: 6px;
-        }
-        .hashtag-option {
-            background: rgba(0,0,0,0.3);
-            padding: 6px;
-            border-radius: 4px;
-            text-align: center;
-            font-size: 11px;
-            font-weight: 600;
+            padding: 8px 12px;
+            font-size: 13px;
+            white-space: nowrap;
             cursor: pointer;
         }
-        .hashtag-option.selected {
-            background: rgba(255, 45, 85, 0.25);
-            border: 1px solid var(--accent1);
+        .tab.active {
+            border-color: var(--accent1);
+            background: rgba(255,45,85,0.1);
         }
-        .hashtag-option.locked {
-            opacity: 0.2;
-            cursor: not-allowed;
+        .feed {
+            padding: 0 16px;
+            margin-top: 16px;
         }
-
-        .status {
+        .post {
             background: var(--card);
             border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 10px;
-            margin: 16px 0;
-            font-size: 11px;
+            border-radius: 10px;
+            padding: 14px;
+            margin-bottom: 14px;
         }
-        .status-row {
+        .post-text {
+            margin-bottom: 12px;
+            line-height: 1.6;
+        }
+        .post-meta {
             display: flex;
             justify-content: space-between;
-            margin: 3px 0;
+            font-size: 11px;
+            color: var(--muted);
+            margin-bottom: 10px;
         }
-        .status-value.complete { color: #2db34d; }
-        .status-value.incomplete { color: #ff9500; }
-        .btn {
-            width: 100%;
-            padding: 11px;
-            background: linear-gradient(135deg, var(--accent1), #ff9500);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-weight: 700;
-            font-size: 14px;
+        .post-hashtag {
+            background: rgba(255,45,85,0.15);
+            color: var(--accent1);
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-weight: 600;
+        }
+        .actions {
+            display: flex;
+            gap: 16px;
+            padding-top: 10px;
+            border-top: 1px solid rgba(255,255,255,0.03);
+        }
+        .action {
+            color: var(--muted);
+            font-size: 12px;
             cursor: pointer;
         }
-        .btn:disabled {
-            opacity: 0.4;
-            cursor: not-allowed;
+        .action:hover { color: var(--text); }
+        .quick {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(5,5,8,0.95);
+            border-top: 1px solid var(--border);
+            padding: 12px 16px;
+            z-index: 100;
         }
+        .quick-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            margin-bottom: 8px;
+        }
+        .hashtag-selector {
+            background: rgba(255,45,85,0.15);
+            color: var(--accent1);
+            padding: 3px 9px;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 12px;
+        }
+        textarea {
+            width: 100%;
+            min-height: 45px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            color: var(--text);
+            padding: 8px 10px;
+            font-family: inherit;
+            font-size: 13px;
+            resize: none;
+            margin-bottom: 8px;
+        }
+        .post-btn {
+            width: 100%;
+            padding: 10px;
+            background: var(--accent1);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        .nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(3,3,5,0.95);
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-around;
+            padding: 8px 0;
+            z-index: 100;
+        }
+        .nav a {
+            color: var(--muted);
+            text-align: center;
+            text-decoration: none;
+            font-size: 10px;
+        }
+        .nav a.active { color: var(--accent1); }
+        .nav i { display: block; font-size: 1.1rem; margin-bottom: 3px; }
     </style>
 </head>
 <body>
-    <a href="login.html" class="back-btn" onclick="localStorage.removeItem('nope_logged_in')">←</a>
-    
-    <div class="title">Jangan pilih yang kau suka.<br>Pilih yang kau benci.</div>
-    <div class="subtitle">* Pilih 1 hashtag dari tiap zona — ini yang menentukan siapa yang bisa mendengarmu.</div>
-
-    <div class="zones-grid">
-        <div class="zone">
-            <div class="zone-label pop-culture"><i class="fas fa-film"></i> Pop Culture</div>
-            <div class="hashtag-options" id="popculture"></div>
-        </div>
-        <div class="zone">
-            <div class="zone-label personal-pain"><i class="fas fa-heart-broken"></i> Personal Pain</div>
-            <div class="hashtag-options" id="personalpain"></div>
-        </div>
-        <div class="zone">
-            <div class="zone-label social-sickness"><i class="fas fa-virus"></i> Social Sickness</div>
-            <div class="hashtag-options" id="socialsickness"></div>
-        </div>
-        <div class="zone">
-            <div class="zone-label movement"><i class="fas fa-rocket"></i> Movement<span style="font-size:9px">(terkunci)</span></div>
-            <div class="hashtag-options" id="movement"></div>
+    <div class="header">
+        <div class="logo">NOPE</div>
+        <div class="tabs">
+            <div class="tab active">🔥 Sefrekuensi</div>
+            <div class="tab">👥 Segelombang</div>
+            <div class="tab">✊ Solidaritas</div>
         </div>
     </div>
 
-    <div class="status">
-        <div class="status-row"><span>Pop Culture</span><span class="status-value incomplete" id="s1">–</span></div>
-        <div class="status-row"><span>Personal Pain</span><span class="status-value incomplete" id="s2">–</span></div>
-        <div class="status-row"><span>Social Sickness</span><span class="status-value incomplete" id="s3">–</span></div>
+    <div class="feed">
+        <div class="post">
+            <div class="post-text">Aku lelah jadi versi yang ‘aman’ untuk orang lain.</div>
+            <div class="post-meta">
+                <span class="post-hashtag">#PersonalPain</span>
+                <span>2j</span>
+            </div>
+            <div class="actions">
+                <div class="action">🫠 3</div>
+                <div class="action">💬 1</div>
+            </div>
+        </div>
+        <div class="post">
+            <div class="post-text">Influencer pura-pura spiritual tapi utangnya menumpuk.</div>
+            <div class="post-meta">
+                <span class="post-hashtag">#PopCulture</span>
+                <span>5j</span>
+            </div>
+            <div class="actions">
+                <div class="action">🔥 7</div>
+                <div class="action">💬 0</div>
+            </div>
+        </div>
     </div>
 
-    <button class="btn" id="continueBtn" disabled>LANJUT KE LUAR</button>
+    <div class="quick">
+        <div class="quick-header">
+            <i class="fas fa-fire"></i>
+            <span>Rage tentang</span>
+            <span class="hashtag-selector">#Pilih</span>
+        </div>
+        <textarea placeholder="Tulis yang tak bisa kau simpan..."></textarea>
+        <button class="post-btn">🔥 KIRIM</button>
+    </div>
+
+    <div class="nav">
+        <a href="luar.html" class="active"><i class="fas fa-globe"></i><span>Luar</span></a>
+        <a href="notifications.html"><i class="fas fa-bell"></i><span>Notifikasi</span></a>
+        <a href="onboarding.html"><i class="fas fa-fire"></i><span>Rage</span></a>
+        <a href="profile.html"><i class="fas fa-mirror"></i><span>Inner</span></a>
+    </div>
 
     <script>
-        const ZONE_DATA = {
-            'pop-culture': ['#BellTiketJualSinjal','#InfluencerNgchek','#FilmEndingGaje','#TikTokCringe','#CelebrityFail'],
-            'personal-pain': ['#MagangDigajiSertifikat','#DiajakJalanTapiKempes','#DiphostingGebetan','#MinjemDuitGaBalik','#ProjectLastMinute'],
-            'social-sickness': ['#DramaQueenAnjay','#BacotLambeTurah','#RencanaPlinPlan','#GhostingCulture','#FlexingGaJelas'],
-            'movement': ['#ReformasiSistem','#AksiNyata2024','#VoiceForChange','#YouthPower','#DigitalProtest']
-        };
-
-        let selections = {
-            'pop-culture': null,
-            'personal-pain': null,
-            'social-sickness': null
-        };
-
-        function isComplete() {
-            return selections['pop-culture'] && selections['personal-pain'] && selections['social-sickness'];
-        }
-
-        function renderZones() {
-            for (const [zoneKey, tags] of Object.entries(ZONE_DATA)) {
-                const id = zoneKey.replace(/-/g, '');
-                const container = document.getElementById(id);
-                if (!container) continue;
-
-                container.innerHTML = '';
-                const locked = zoneKey === 'movement';
-
-                tags.forEach(tag => {
-                    const el = document.createElement('div');
-                    el.className = `hashtag-option ${selections[zoneKey] === tag ? 'selected' : ''} ${locked ? 'locked' : ''}`;
-                    el.textContent = tag;
-                    if (!locked) {
-                        el.onclick = () => {
-                            selections[zoneKey] = selections[zoneKey] === tag ? null : tag;
-                            renderZones();
-                            updateStatus();
-                        };
-                    }
-                    container.appendChild(el);
-                });
-            }
-        }
-
-        function updateStatus() {
-            const setStatus = (id, value) => {
-                const el = document.getElementById(id);
-                el.textContent = value || '–';
-                el.className = value ? 'status-value complete' : 'status-value incomplete';
-            };
-            setStatus('s1', selections['pop-culture']);
-            setStatus('s2', selections['personal-pain']);
-            setStatus('s3', selections['social-sickness']);
-            document.getElementById('continueBtn').disabled = !isComplete();
-        }
-
-        function handleContinue() {
-            const username = localStorage.getItem('nope_anon_username');
-            if (!username) {
-                console.warn('No username found. Redirecting to login.');
-                window.location.href = 'login.html';
-                return;
-            }
-
-            const profile = {
-                username: username,
-                selections: {
-                    popCulture: selections['pop-culture'],
-                    personalPain: selections['personal-pain'],
-                    socialSickness: selections['social-sickness']
-                },
-                joinedAt: new Date().toISOString()
-            };
-
-            try {
-                localStorage.setItem('nope_user_profile', JSON.stringify(profile));
-                localStorage.setItem('nope_onboarding_complete', 'true');
-                localStorage.setItem('nope_join_date', profile.joinedAt);
-
-                // Pastikan file luar.html ada di root
-                window.location.href = 'luar.html';
-            } catch (err) {
-                alert('Gagal menyimpan data. Pastikan localStorage diizinkan.');
-                console.error(err);
-            }
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            const username = localStorage.getItem('nope_anon_username');
-            if (!username) {
-                window.location.href = 'login.html';
-                return;
-            }
-
-            renderZones();
-            updateStatus();
-            document.getElementById('continueBtn').addEventListener('click', handleContinue);
+        // Minimal logic for demo
+        document.querySelector('.post-btn').addEventListener('click', () => {
+            alert('Rage terkirim ke Luar 🔥');
         });
     </script>
 </body>
 </html>
+Mau lanjut ke **`profile.html` (Inner)** berikutnya?
