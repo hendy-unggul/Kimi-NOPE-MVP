@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NOPE - Luar</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0a0a0f;
+            --card: #121217;
+            --border: #25252d;
+            --text: #eaeaea;
+            --muted: #7a7a8c;
+            --accent1: #ff2d55;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            font-weight: 300;
+            padding-bottom: 100px;
+            line-height: 1.5;
+        }
+        
+        .app-header {
+            position: sticky;
+            top: 0;
+            background: rgba(10, 10, 15, 0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            z-index: 1000;
+            padding: 16px 20px;
+        }
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 14px;
+        }
+        .logo h1 {
+            font-size: 24px;
+            font-weight: 900;
+            background: linear-gradient(90deg, var(--accent1), #2db34d);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .user-info {
+            font-size: 13px;
+            color: var(--muted);
+        }
+        
+        .feed-tabs {
+            display: flex;
+            gap: 6px;
+            overflow-x: auto;
+            padding-bottom: 6px;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .feed-tabs::-webkit-scrollbar { display: none; }
+        .feed-tab {
+            flex: 1;
+            min-width: 105px;
+            padding: 10px 12px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            color: var(--muted);
+            font-weight: 600;
+            font-size: 13px;
+            cursor: pointer;
+            text-align: center;
+            white-space: nowrap;
+        }
+        .feed-tab.active {
+            color: #fff;
+            border-color: var(--accent1);
+            background: rgba(255, 45, 85, 0.1);
+        }
+        .feed-badge {
+            background: var(--accent1);
+            color: white;
+            font-size: 0.65rem;
+            padding: 1px 6px;
+            border-radius: 8px;
+            margin-left: 4px;
+        }
+        
+        .feed-content {
+            padding: 0 16px 20px;
+        }
+        .feed-empty {
+            text-align: center;
+            padding: 60px 20px 40px;
+            color: var(--muted);
+        }
+        .feed-empty i {
+            font-size: 2.5rem;
+            opacity: 0.5;
+            margin-bottom: 16px;
+        }
+        
+        .post-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 16px;
+        }
+        .post-text {
+            font-size: 15px;
+            line-height: 1.6;
+            margin-bottom: 14px;
+            white-space: pre-wrap;
+        }
+        .post-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: var(--muted);
+            margin-bottom: 12px;
+        }
+        .post-hashtag {
+            background: rgba(255, 45, 85, 0.15);
+            color: var(--accent1);
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-weight: 600;
+        }
+        
+        .post-actions {
+            display: flex;
+            gap: 18px;
+            padding-top: 12px;
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+        .action-btn {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--muted);
+            font-size: 13px;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        .action-btn:hover { color: #fff; }
+        .action-btn.active { color: var(--accent1); }
+        
+        .comment-input {
+            width: 100%;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text);
+            padding: 8px 12px;
+            font-family: 'Inter', sans-serif;
+            font-size: 13px;
+            margin-top: 10px;
+            resize: none;
+            max-height: 80px;
+            display: none;
+        }
+        .comment-input:focus {
+            outline: none;
+            border-color: var(--accent1);
+        }
+        .char-count {
+            font-size: 11px;
+            color: var(--muted);
+            text-align: right;
+            margin-top: 4px;
+        }
+        
+        .quick-post {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(10, 10, 15, 0.95);
+            backdrop-filter: blur(12px);
+            border-top: 1px solid var(--border);
+            padding: 14px 16px;
+            z-index: 1000;
+        }
+        .quick-post-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+        .hashtag-selector {
+            background: rgba(255, 45, 85, 0.15);
+            color: var(--accent1);
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        .quick-textarea {
+            width: 100%;
+            min-height: 50px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text);
+            padding: 10px 12px;
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            resize: none;
+            margin-bottom: 10px;
+        }
+        .post-btn {
+            background: linear-gradient(135deg, var(--accent1), #ff9500);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 8px 20px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        .post-btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+        
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(5, 5, 7, 0.95);
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            z-index: 1000;
+        }
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: var(--muted);
+            text-decoration: none;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .nav-item i { font-size: 1.25rem; margin-bottom: 4px; }
+        .nav-item.active { color: #2db34d; }
+    </style>
+</head>
+<body>
+    <div class="app-header">
+        <div class="header-top">
+            <div class="logo"><h1>NOPE</h1></div>
+            <div class="user-info" id="matchInfo">Loading...</div>
+        </div>
+        <div class="feed-tabs">
+            <button class="feed-tab active" data-feed="exact">
+                🔥 Sefrekuensi <span class="feed-badge" id="exactCount">0</span>
+            </button>
+            <button class="feed-tab" data-feed="strong">
+                👥 Segelombang <span class="feed-badge" id="strongCount">0</span>
+            </button>
+            <button class="feed-tab" data-feed="solidarity">
+                ✊ Solidaritas <span class="feed-badge" id="solidarityCount">∞</span>
+            </button>
+        </div>
+    </div>
+    
+    <div class="feed-content" id="feedContent">
+        <div class="feed-empty">
+            <i class="fas fa-wind"></i>
+            <p>Menunggu jejak yang sefrekuensi...</p>
+        </div>
+    </div>
+    
+    <div class="quick-post">
+        <div class="quick-post-header">
+            <i class="fas fa-fire"></i>
+            <span>Rage tentang</span>
+            <div class="hashtag-selector" id="hashtagSelector">#Pilih</div>
+        </div>
+        <textarea class="quick-textarea" id="rageTextarea" placeholder="Tulis yang tak bisa kau simpan..." maxlength="280"></textarea>
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <div class="char-count" id="charCount">0/280</div>
+            <button class="post-btn" id="postBtn" disabled>🔥 KIRIM</button>
+        </div>
+    </div>
+
+    <div class="bottom-nav">
+        <a href="luar.html" class="nav-item active"><i class="fas fa-globe"></i><span>Luar</span></a>
+        <a href="notifications.html" class="nav-item"><i class="fas fa-bell"></i><span>Notifikasi</span></a>
+        <a href="onboarding.html" class="nav-item"><i class="fas fa-fire"></i><span>Rage</span></a>
+        <a href="profile.html" class="nav-item"><i class="fas fa-mirror"></i><span>Inner</span></a>
+    </div>
+
+    <script>
+        let currentUser = null;
+        let currentFeed = 'exact';
+        let allUsers = [];
+        let allPosts = [];
+        
+        async function init() {
+            const username = localStorage.getItem('nope_anon_username');
+            const isLoggedIn = localStorage.getItem('nope_logged_in') === 'true';
+            const onboardingComplete = localStorage.getItem('nope_onboarding_complete') === 'true';
+            if (!isLoggedIn || !username || !onboardingComplete) {
+                window.location.href = 'onboarding.html';
+                return;
+            }
+            
+            currentUser = JSON.parse(localStorage.getItem('nope_user_profile') || '{}');
+            if (!currentUser.selections) {
+                window.location.href = 'onboarding.html';
+                return;
+            }
+            
+            await loadCommunityData();
+            setupUI();
+            loadFeed('exact');
+        }
+        
+        async function loadCommunityData() {
+            const mockUsers = JSON.parse(localStorage.getItem('nope_mock_users') || '[]');
+            const mockPosts = JSON.parse(localStorage.getItem('nope_mock_posts') || '[]');
+            allUsers = [currentUser, ...mockUsers];
+            allPosts = mockPosts;
+            updateMatchCounts();
+        }
+        
+        function calculateMatches() {
+            const matches = { exact: [], strong: [], weak: [] };
+            allUsers.forEach(user => {
+                if (user.username !== currentUser.username && user.isMock) {
+                    let c = 0;
+                    if (user.selections.popCulture === currentUser.selections.popCulture) c++;
+                    if (user.selections.personalPain === currentUser.selections.personalPain) c++;
+                    if (user.selections.socialSickness === currentUser.selections.socialSickness) c++;
+                    if (c === 3) matches.exact.push(user);
+                    else if (c === 2) matches.strong.push(user);
+                    else if (c === 1) matches.weak.push(user);
+                }
+            });
+            return matches;
+        }
+        
+        function updateMatchCounts() {
+            const m = calculateMatches();
+            document.getElementById('exactCount').textContent = m.exact.length;
+            document.getElementById('strongCount').textContent = m.strong.length;
+            document.getElementById('matchInfo').textContent = `${m.exact.length + m.strong.length + m.weak.length} jiwa sefrekuensi`;
+        }
+        
+        function loadFeed(feedType) {
+            currentFeed = feedType;
+            document.querySelectorAll('.feed-tab').forEach(tab => 
+                tab.classList.toggle('active', tab.dataset.feed === feedType)
+            );
+            document.getElementById('feedContent').innerHTML = `
+                <div class="feed-empty">
+                    <i class="fas fa-wind"></i>
+                    <p>Menunggu jejak yang ${feedType === 'exact' ? 'sefrekuensi' : feedType === 'strong' ? 'segelombang' : 'solidaritas'}...</p>
+                </div>
+            `;
+            setTimeout(() => renderFeed(feedType), 400);
+        }
+        
+        function renderFeed(feedType) {
+            const container = document.getElementById('feedContent');
+            let posts = [];
+            const matches = calculateMatches();
+            
+            if (feedType === 'exact') {
+                const u = matches.exact.map(u => u.username);
+                posts = allPosts.filter(p => u.includes(p.author));
+            } else if (feedType === 'strong') {
+                const u = matches.strong.map(u => u.username);
+                posts = allPosts.filter(p => u.includes(p.author));
+            } else {
+                const weakU = matches.weak.map(u => u.username);
+                const weakP = allPosts.filter(p => weakU.includes(p.author)).slice(0, 12);
+                const trending = [...allPosts].sort((a,b)=>b.likes-a.likes).slice(0,8);
+                posts = [...weakP, ...trending].sort(()=>Math.random()-0.5).slice(0,18);
+            }
+            
+            posts.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+            
+            if (posts.length === 0) {
+                container.innerHTML = `<div class="feed-empty"><i class="fas fa-wind"></i><p>Tak ada jejak.</p></div>`;
+            } else {
+                container.innerHTML = posts.map(p => renderPost(p, feedType)).join('');
+            }
+            updateHashtagSelector();
+        }
+        
+        function renderPost(post, feedType) {
+            const timeAgo = getTimeAgo(post.timestamp);
+            const canComment = (feedType === 'exact');
+            const commentsHtml = canComment ? 
+                `<div class="action-btn comment-btn" data-post-id="${post.id}"><i class="fas fa-comment"></i> <span>${post.comments?.length || 0}</span></div>` : 
+                '';
+            
+            const commentsList = (post.comments || []).map(c => 
+                `<div style="margin-top:10px;padding:8px;background:rgba(255,255,255,0.03);border-radius:6px;font-size:13px;">• ${c.text}</div>`
+            ).join('');
+            
+            return `
+                <div class="post-card" data-post-id="${post.id}">
+                    <div class="post-text">${post.text}</div>
+                    <div class="post-meta">
+                        <span class="post-hashtag">${post.hashtag}</span>
+                        <span>${timeAgo}</span>
+                    </div>
+                    <div class="post-actions">
+                        <div class="action-btn pulse-btn" data-post-id="${post.id}"><i class="fas fa-heart"></i> <span>${post.pulses?.length || 0}</span></div>
+                        ${commentsHtml}
+                    </div>
+                    ${canComment ? `<textarea class="comment-input" data-post-id="${post.id}" placeholder="Respons singkat (max 120)..." maxlength="120"></textarea><div class="char-count">0/120</div>${commentsList}` : ''}
+                </div>
+            `;
+        }
+        
+        function setupUI() {
+            document.querySelectorAll('.feed-tab').forEach(tab => 
+                tab.addEventListener('click', () => loadFeed(tab.dataset.feed))
+            );
+            
+            const txt = document.getElementById('rageTextarea');
+            const btn = document.getElementById('postBtn');
+            const count = document.getElementById('charCount');
+            txt.addEventListener('input', () => {
+                const len = txt.value.trim().length;
+                count.textContent = `${len}/280`;
+                btn.disabled = len < 10 || len > 280;
+            });
+            btn.addEventListener('click', postRage);
+            
+            document.addEventListener('click', (e) => {
+                if (e.target.closest('.pulse-btn')) {
+                    pulsePost(e.target.closest('.pulse-btn').dataset.postId);
+                }
+                if (e.target.closest('.comment-btn')) {
+                    const card = e.target.closest('.post-card');
+                    const input = card.querySelector('.comment-input');
+                    if (input.style.display === 'block') {
+                        input.style.display = 'none';
+                    } else {
+                        input.style.display = 'block';
+                        input.focus();
+                    }
+                }
+            });
+            
+            document.addEventListener('input', (e) => {
+                if (e.target.classList.contains('comment-input')) {
+                    const len = e.target.value.trim().length;
+                    e.target.nextElementSibling.textContent = `${len}/120`;
+                }
+            });
+            
+            document.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter' && !e.shiftKey && e.target.classList.contains('comment-input')) {
+                    e.preventDefault();
+                    submitComment(e.target);
+                }
+            });
+        }
+        
+        function submitComment(input) {
+            const text = input.value.trim();
+            if (text.length < 1 || text.length > 120) return;
+            const postId = input.dataset.postId;
+            const post = allPosts.find(p => p.id === postId);
+            if (!post) return;
+            if (!post.comments) post.comments = [];
+            post.comments.push({ text, timestamp: new Date().toISOString() });
+            localStorage.setItem('nope_mock_posts', JSON.stringify(allPosts));
+            input.value = '';
+            input.style.display = 'none';
+            renderFeed(currentFeed);
+        }
+        
+        function pulsePost(postId) {
+            const post = allPosts.find(p => p.id === postId);
+            if (!post) return;
+            if (!post.pulses) post.pulses = [];
+            post.pulses.push({ timestamp: new Date().toISOString() });
+            localStorage.setItem('nope_mock_posts', JSON.stringify(allPosts));
+            renderFeed(currentFeed);
+        }
+        
+        function postRage() {
+            const txt = document.getElementById('rageTextarea');
+            const text = txt.value.trim();
+            if (text.length < 10 || text.length > 280) return;
+            const hashtag = document.getElementById('hashtagSelector').dataset.hashtag || currentUser.selections.popCulture;
+            const newPost = {
+                id: `post_${Date.now()}`,
+                text,
+                hashtag,
+                author: currentUser.username,
+                timestamp: new Date().toISOString(),
+                pulses: [],
+                comments: []
+            };
+            allPosts.unshift(newPost);
+            localStorage.setItem('nope_mock_posts', JSON.stringify(allPosts));
+            txt.value = '';
+            document.getElementById('charCount').textContent = '0/280';
+            document.getElementById('postBtn').disabled = true;
+            loadFeed(currentFeed);
+        }
+        
+        function updateHashtagSelector() {
+            const sel = document.getElementById('hashtagSelector');
+            sel.textContent = currentUser.selections.popCulture;
+            sel.dataset.hashtag = currentUser.selections.popCulture;
+        }
+        
+        function getTimeAgo(ts) {
+            const diff = (Date.now() - new Date(ts)) / 60000;
+            if (diff < 60) return `${Math.floor(diff)}m`;
+            if (diff < 1440) return `${Math.floor(diff/60)}j`;
+            return `${Math.floor(diff/1440)}h`;
+        }
+        
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
+ 
+
+Let it live. 💫
