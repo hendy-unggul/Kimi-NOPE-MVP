@@ -70,6 +70,7 @@
         .post-text {
             margin-bottom: 12px;
             line-height: 1.6;
+            white-space: pre-wrap;
         }
         .post-meta {
             display: flex;
@@ -97,6 +98,27 @@
             cursor: pointer;
         }
         .action:hover { color: var(--text); }
+        .action.active { color: var(--accent1); }
+        .comment-input {
+            width: 100%;
+            background: rgba(0,0,0,0.3);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            color: var(--text);
+            padding: 6px 10px;
+            font-family: 'Inter', sans-serif;
+            font-size: 13px;
+            margin-top: 8px;
+            resize: none;
+            max-height: 70px;
+            display: none;
+        }
+        .char-count {
+            font-size: 10px;
+            color: var(--muted);
+            text-align: right;
+            margin-top: 4px;
+        }
         .quick {
             position: fixed;
             bottom: 0;
@@ -121,6 +143,7 @@
             border-radius: 10px;
             font-weight: 600;
             font-size: 12px;
+            cursor: pointer;
         }
         textarea {
             width: 100%;
@@ -145,6 +168,10 @@
             font-weight: 600;
             cursor: pointer;
         }
+        .post-btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
         .nav {
             position: fixed;
             bottom: 0;
@@ -155,7 +182,7 @@
             display: flex;
             justify-content: space-around;
             padding: 8px 0;
-            z-index: 100;
+            z-index: 101;
         }
         .nav a {
             color: var(--muted);
@@ -165,40 +192,33 @@
         }
         .nav a.active { color: var(--accent1); }
         .nav i { display: block; font-size: 1.1rem; margin-bottom: 3px; }
+        .empty-feed {
+            text-align: center;
+            padding: 50px 20px 30px;
+            color: var(--muted);
+            font-size: 13px;
+        }
+        .empty-feed i {
+            font-size: 2rem;
+            opacity: 0.4;
+            margin-bottom: 12px;
+        }
     </style>
 </head>
 <body>
     <div class="header">
         <div class="logo">NOPE</div>
         <div class="tabs">
-            <div class="tab active">🔥 Sefrekuensi</div>
-            <div class="tab">👥 Segelombang</div>
-            <div class="tab">✊ Solidaritas</div>
+            <div class="tab active" data-feed="exact">🔥 Sefrekuensi</div>
+            <div class="tab" data-feed="strong">👥 Segelombang</div>
+            <div class="tab" data-feed="solidarity">✊ Solidaritas</div>
         </div>
     </div>
 
-    <div class="feed">
-        <div class="post">
-            <div class="post-text">Aku lelah jadi versi yang ‘aman’ untuk orang lain.</div>
-            <div class="post-meta">
-                <span class="post-hashtag">#PersonalPain</span>
-                <span>2j</span>
-            </div>
-            <div class="actions">
-                <div class="action">🫠 3</div>
-                <div class="action">💬 1</div>
-            </div>
-        </div>
-        <div class="post">
-            <div class="post-text">Influencer pura-pura spiritual tapi utangnya menumpuk.</div>
-            <div class="post-meta">
-                <span class="post-hashtag">#PopCulture</span>
-                <span>5j</span>
-            </div>
-            <div class="actions">
-                <div class="action">🔥 7</div>
-                <div class="action">💬 0</div>
-            </div>
+    <div class="feed" id="feedContent">
+        <div class="empty-feed">
+            <i class="fas fa-wind"></i>
+            <p>Menunggu jejak yang sefrekuensi...</p>
         </div>
     </div>
 
@@ -206,10 +226,10 @@
         <div class="quick-header">
             <i class="fas fa-fire"></i>
             <span>Rage tentang</span>
-            <span class="hashtag-selector">#Pilih</span>
+            <span class="hashtag-selector" id="hashtagSelector">#Pilih</span>
         </div>
-        <textarea placeholder="Tulis yang tak bisa kau simpan..."></textarea>
-        <button class="post-btn">🔥 KIRIM</button>
+        <textarea id="rageTextarea" placeholder="Tulis yang tak bisa kau simpan..."></textarea>
+        <button class="post-btn" id="postBtn" disabled>🔥 KIRIM</button>
     </div>
 
     <div class="nav">
@@ -220,11 +240,136 @@
     </div>
 
     <script>
-        // Minimal logic for demo
-        document.querySelector('.post-btn').addEventListener('click', () => {
-            alert('Rage terkirim ke Luar 🔥');
+        // Cek login & onboarding
+        if (localStorage.getItem('nope_logged_in') !== 'true') {
+            window.location.href = 'login.html';
+        }
+        if (localStorage.getItem('nope_onboarding_complete') !== 'true') {
+            window.location.href = 'onboarding.html';
+        }
+
+        let currentFeed = 'exact';
+        const mockPosts = [
+            {
+                id: '1',
+                text: "Aku lelah jadi versi yang ‘aman’ untuk orang lain.",
+                hashtag: "#SilentBurnout",
+                timestamp: "2025-12-10T20:14:00Z",
+                pulses: 3,
+                comments: (currentFeed === 'exact') ? ["Aku juga.", "Semalam aku nangis baca ini."] : []
+            },
+            {
+                id: '2',
+                text: "Influencer pura-pura spiritual tapi utangnya menumpuk.",
+                hashtag: "#FakeInfluencer",
+                timestamp: "2025-12-10T18:30:00Z",
+                pulses: 7,
+                comments: []
+            }
+        ];
+
+        function getTimeAgo(isoString) {
+            const now = new Date();
+            const past = new Date(isoString);
+            const diffMs = now - past;
+            const diffMins = Math.floor(diffMs / 60000);
+            const diffHours = Math.floor(diffMs / 3600000);
+            const diffDays = Math.floor(diffMs / 86400000);
+            if (diffMins < 60) return `${diffMins}m`;
+            if (diffHours < 24) return `${diffHours}j`;
+            return `${diffDays}h`;
+        }
+
+        function renderFeed() {
+            const container = document.getElementById('feedContent');
+            const postsToShow = currentFeed === 'exact' ? mockPosts : mockPosts.slice(0, 1);
+            
+            if (postsToShow.length === 0) {
+                container.innerHTML = `<div class="empty-feed"><i class="fas fa-wind"></i><p>Tak ada jejak.</p></div>`;
+                return;
+            }
+
+            container.innerHTML = postsToShow.map(post => {
+                const canComment = (currentFeed === 'exact');
+                const commentHtml = canComment ? 
+                    `<div class="action comment-btn" data-id="${post.id}"><i class="fas fa-comment"></i> <span>${post.comments.length}</span></div>` : '';
+
+                const commentsHtml = canComment && post.comments.length > 0 ? 
+                    `<div style="margin-top:10px;padding:8px;background:rgba(0,0,0,0.2);border-radius:6px;font-size:12px;">${post.comments.map(c => `• ${c}`).join('<br>')}</div>` : '';
+
+                return `
+                    <div class="post" data-id="${post.id}">
+                        <div class="post-text">${post.text}</div>
+                        <div class="post-meta">
+                            <span class="post-hashtag">${post.hashtag}</span>
+                            <span>${getTimeAgo(post.timestamp)}</span>
+                        </div>
+                        <div class="actions">
+                            <div class="action pulse-btn" data-id="${post.id}"><i class="fas fa-heart"></i> <span>${post.pulses}</span></div>
+                            ${commentHtml}
+                        </div>
+                        ${commentsHtml}
+                        ${canComment ? `<textarea class="comment-input" data-id="${post.id}" placeholder="Respons (max 120)..." maxlength="120"></textarea><div class="char-count">0/120</div>` : ''}
+                    </div>
+                `;
+            }).join('');
+
+            // Bind event untuk komentar
+            if (currentFeed === 'exact') {
+                document.querySelectorAll('.comment-btn').forEach(btn => {
+                    btn.onclick = (e) => {
+                        const post = e.target.closest('.post');
+                        const input = post.querySelector('.comment-input');
+                        if (input.style.display === 'block') {
+                            input.style.display = 'none';
+                        } else {
+                            input.style.display = 'block';
+                            input.focus();
+                        }
+                    };
+                });
+
+                document.querySelectorAll('.comment-input').forEach(input => {
+                    input.oninput = () => {
+                        const len = input.value.trim().length;
+                        input.nextElementSibling.textContent = `${len}/120`;
+                    };
+                    input.onkeypress = (e) => {
+                        if (e.key === 'Enter' && !e.shiftKey) {
+                            e.preventDefault();
+                            // Simpan komentar (di sini hanya demo)
+                            input.style.display = 'none';
+                            renderFeed(); // Re-render untuk tampilkan komentar
+                        }
+                    };
+                });
+            }
+        }
+
+        // Setup tab switching
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                currentFeed = tab.dataset.feed;
+                renderFeed();
+            });
         });
+
+        // Quick post
+        const textarea = document.getElementById('rageTextarea');
+        const btn = document.getElementById('postBtn');
+        textarea.addEventListener('input', () => {
+            btn.disabled = textarea.value.trim().length < 10;
+        });
+        btn.addEventListener('click', () => {
+            alert('Rage-mu telah dikirim ke Luar 🔥');
+            textarea.value = '';
+            btn.disabled = true;
+        });
+
+        // Load initial feed
+        renderFeed();
     </script>
 </body>
 </html>
-Mau lanjut ke **`profile.html` (Inner)** berikutnya?
