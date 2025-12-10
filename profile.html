@@ -44,6 +44,53 @@
             margin: 0 auto;
             line-height: 1.5;
         }
+        .username-section {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 14px;
+            margin: 20px 0 28px;
+            text-align: center;
+        }
+        .current-username {
+            font-family: 'Courier New', monospace;
+            font-size: 15px;
+            margin-bottom: 10px;
+            word-break: break-all;
+        }
+        .edit-btn {
+            background: rgba(255, 45, 85, 0.15);
+            color: var(--accent1);
+            border: 1px solid var(--accent1);
+            border-radius: 6px;
+            padding: 6px 12px;
+            font-size: 13px;
+            cursor: pointer;
+        }
+        .edit-form {
+            display: none;
+            margin-top: 10px;
+        }
+        .edit-input {
+            width: 100%;
+            padding: 8px 10px;
+            background: rgba(0,0,0,0.3);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            color: var(--text);
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+        .save-btn {
+            background: var(--accent1);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 6px 12px;
+            font-size: 13px;
+            cursor: pointer;
+        }
         .artefak {
             position: relative;
             margin-bottom: 28px;
@@ -159,6 +206,15 @@
             </p>
         </div>
 
+        <div class="username-section">
+            <div class="current-username" id="currentUsername">Memuat...</div>
+            <button class="edit-btn" id="editBtn">Ubah Username</button>
+            <div class="edit-form" id="editForm">
+                <input type="text" class="edit-input" id="usernameInput" maxlength="20" placeholder="Contoh: gelap_7">
+                <button class="save-btn" id="saveBtn">Simpan</button>
+            </div>
+        </div>
+
         <div class="artefak">
             <img src="https://images.unsplash.com/photo-1542744095-fcf48d80b0fd" class="artefak-image" />
         </div>
@@ -168,9 +224,7 @@
                 Tulis. Ledakkan. Tinggalkan di sini.<br>
                 Tak ada yang akan menghakimi.
             </p>
-            <div class="rantbox-list" id="rant-list">
-                <!-- 3 rant terakhir akan muncul di sini -->
-            </div>
+            <div class="rantbox-list" id="rant-list"></div>
         </section>
 
         <h3 class="jejak-title">Jejakmu</h3>
@@ -192,21 +246,54 @@
 
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script>
-        // Inisialisasi Telegram WebApp
         const tg = window.Telegram.WebApp;
         tg.expand();
         tg.ready();
 
-        // Ambil user data dari Telegram
-        const tgUser = tg.initDataUnsafe?.user;
-        const userId = tgUser?.id || 'nope_user_' + Date.now();
-        const username = tgUser?.username || 'NOPE_' + Math.random().toString(36).substr(2, 6).toUpperCase();
+        // Generate username aman
+        function generateSafeUsername() {
+            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+            let randomStr = '';
+            for (let i = 0; i < 6; i++) {
+                randomStr += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            return 'NOPE_' + randomStr;
+        }
 
-        // Simpan ke localStorage (simulasi backend)
-        localStorage.setItem('nope_anon_username', username);
-        localStorage.setItem('nope_logged_in', 'true');
+        // Ambil atau buat username
+        let username = localStorage.getItem('nope_display_username');
+        if (!username) {
+            username = generateSafeUsername();
+            localStorage.setItem('nope_display_username', username);
+        }
 
-        // Cek apakah sudah onboarding
+        // Tampilkan username
+        document.getElementById('currentUsername').textContent = username;
+
+        // Fitur ubah username
+        document.getElementById('editBtn').addEventListener('click', () => {
+            document.getElementById('editForm').style.display = 'block';
+            document.getElementById('usernameInput').value = username;
+        });
+
+        document.getElementById('saveBtn').addEventListener('click', () => {
+            const newUsername = document.getElementById('usernameInput').value.trim();
+            if (newUsername && newUsername.length >= 3) {
+                // Validasi: hanya huruf, angka, underscore
+                if (/^[a-zA-Z0-9_]+$/.test(newUsername)) {
+                    localStorage.setItem('nope_display_username', newUsername);
+                    username = newUsername;
+                    document.getElementById('currentUsername').textContent = username;
+                    document.getElementById('editForm').style.display = 'none';
+                } else {
+                    alert('Username hanya boleh huruf, angka, dan _');
+                }
+            } else {
+                alert('Username minimal 3 karakter');
+            }
+        });
+
+        // Cek onboarding
         if (localStorage.getItem('nope_onboarding_complete') !== 'true') {
             window.location.href = 'onboarding.html';
         }
@@ -217,15 +304,14 @@
             "Kenapa harus selalu ‘move on’? Kadang aku cuma mau nangis di sudut gelap.",
             "Mereka bilang ‘positive vibes only’. Tapi bagaimana kalau jiwaku sedang abu-abu?"
         ];
-        const pulses = 3; // Simulasi: ada 3 emoji pulse baru
+        const pulses = 3;
 
-        // Tampilkan indikator pulse jika > 0
         if (pulses > 0) {
             document.getElementById('pulseIndicator').classList.add('show');
             document.getElementById('pulseCount').textContent = pulses;
         }
 
-        // Render rant
+        // Render rant & jejak (sama seperti sebelumnya)
         const rantList = document.getElementById('rant-list');
         rants.forEach(text => {
             const el = document.createElement('div');
@@ -234,7 +320,6 @@
             rantList.appendChild(el);
         });
 
-        // Render jejak
         const jejakGrid = document.getElementById('jejak-grid');
         const jejakImgs = [
             "https://images.unsplash.com/photo-1542744095-fcf48d80b0fd",
