@@ -1,375 +1,130 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NOPE - Luar</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        :root {
-            --bg: #050508;
-            --card: #0f0f13;
-            --border: #1e1e28;
-            --text: #d0d0d0;
-            --muted: #6a6a7a;
-            --accent1: #ff2d55;
-        }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            background: var(--bg);
-            color: var(--text);
-            font-family: 'Inter', sans-serif;
-            padding-bottom: 90px;
-            line-height: 1.5;
-            font-size: 14px;
-        }
-        .header {
-            padding: 16px;
-            background: rgba(5,5,8,0.95);
-            border-bottom: 1px solid var(--border);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-        .logo {
-            font-size: 22px;
-            font-weight: 900;
-            color: var(--accent1);
-            text-align: center;
-        }
-        .tabs {
-            display: flex;
-            gap: 6px;
-            margin-top: 12px;
-            overflow-x: auto;
-        }
-        .tab {
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 8px 12px;
-            font-size: 13px;
-            white-space: nowrap;
-            cursor: pointer;
-        }
-        .tab.active {
-            border-color: var(--accent1);
-            background: rgba(255,45,85,0.1);
-        }
-        .feed {
-            padding: 0 16px;
-            margin-top: 16px;
-        }
-        .post {
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            padding: 14px;
-            margin-bottom: 14px;
-        }
-        .post-text {
-            margin-bottom: 12px;
-            line-height: 1.6;
-            white-space: pre-wrap;
-        }
-        .post-meta {
-            display: flex;
-            justify-content: space-between;
-            font-size: 11px;
-            color: var(--muted);
-            margin-bottom: 10px;
-        }
-        .post-hashtag {
-            background: rgba(255,45,85,0.15);
-            color: var(--accent1);
-            padding: 2px 8px;
-            border-radius: 10px;
-            font-weight: 600;
-        }
-        .actions {
-            display: flex;
-            gap: 16px;
-            padding-top: 10px;
-            border-top: 1px solid rgba(255,255,255,0.03);
-        }
-        .action {
-            color: var(--muted);
-            font-size: 12px;
-            cursor: pointer;
-        }
-        .action:hover { color: var(--text); }
-        .action.active { color: var(--accent1); }
-        .comment-input {
-            width: 100%;
-            background: rgba(0,0,0,0.3);
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            color: var(--text);
-            padding: 6px 10px;
-            font-family: 'Inter', sans-serif;
-            font-size: 13px;
-            margin-top: 8px;
-            resize: none;
-            max-height: 70px;
-            display: none;
-        }
-        .char-count {
-            font-size: 10px;
-            color: var(--muted);
-            text-align: right;
-            margin-top: 4px;
-        }
-        .quick {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: rgba(5,5,8,0.95);
-            border-top: 1px solid var(--border);
-            padding: 12px 16px;
-            z-index: 100;
-        }
-        .quick-header {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 13px;
-            margin-bottom: 8px;
-        }
-        .hashtag-selector {
-            background: rgba(255,45,85,0.15);
-            color: var(--accent1);
-            padding: 3px 9px;
-            border-radius: 10px;
-            font-weight: 600;
-            font-size: 12px;
-            cursor: pointer;
-        }
-        textarea {
-            width: 100%;
-            min-height: 45px;
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            color: var(--text);
-            padding: 8px 10px;
-            font-family: inherit;
-            font-size: 13px;
-            resize: none;
-            margin-bottom: 8px;
-        }
-        .post-btn {
-            width: 100%;
-            padding: 10px;
-            background: var(--accent1);
-            color: white;
-            border: none;
-            border-radius: 6px;
-            font-weight: 600;
-            cursor: pointer;
-        }
-        .post-btn:disabled {
-            opacity: 0.4;
-            cursor: not-allowed;
-        }
-        .nav {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: rgba(3,3,5,0.95);
-            border-top: 1px solid var(--border);
-            display: flex;
-            justify-content: space-around;
-            padding: 8px 0;
-            z-index: 101;
-        }
-        .nav a {
-            color: var(--muted);
-            text-align: center;
-            text-decoration: none;
-            font-size: 10px;
-        }
-        .nav a.active { color: var(--accent1); }
-        .nav i { display: block; font-size: 1.1rem; margin-bottom: 3px; }
-        .empty-feed {
-            text-align: center;
-            padding: 50px 20px 30px;
-            color: var(--muted);
-            font-size: 13px;
-        }
-        .empty-feed i {
-            font-size: 2rem;
-            opacity: 0.4;
-            margin-bottom: 12px;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NOPE • Luar</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; background: #000; color: #fff; }
+    .nope-tab { @apply px-4 py-2 text-sm font-medium rounded-full; }
+    .nope-tab.active { background: #ff2d55; color: #000; }
+    .nope-tab.inactive { color: #888; }
+    .reaction-btn { 
+      @apply flex flex-col items-center justify-center w-16 h-16 bg-transparent border-none cursor-pointer transition-transform;
+    }
+    .reaction-btn:hover { transform: scale(1.1); }
+    .reaction-text { @apply text-[10px] mt-1 text-center leading-tight; }
+    .comment-box { @apply w-full bg-[#111] rounded-xl p-3 mt-3 text-sm; }
+    .send-btn { @apply mt-2 bg-[#ff2d55] text-black px-4 py-1.5 rounded-full text-sm font-bold; }
+  </style>
 </head>
-<body>
-    <div class="header">
-        <div class="logo">NOPE</div>
-        <div class="tabs">
-            <div class="tab active" data-feed="exact">🔥 Sefrekuensi</div>
-            <div class="tab" data-feed="strong">👥 Segelombang</div>
-            <div class="tab" data-feed="solidarity">✊ Solidaritas</div>
+<body class="min-h-screen bg-black text-white p-4">
+  <div class="max-w-md mx-auto">
+
+    <!-- Header -->
+    <div class="flex justify-between items-center mb-6">
+      <h1 class="text-xl font-bold">NOPE</h1>
+      <div class="flex space-x-2">
+        <div class="w-2 h-2 rounded-full bg-red-500"></div> <!-- fake notif -->
+      </div>
+    </div>
+
+    <!-- Tab Navigation -->
+    <div class="flex space-x-2 mb-6 overflow-x-auto no-scrollbar">
+      <div class="nope-tab active">Sefrekuensi</div>
+      <div class="nope-tab inactive">Segelombang</div>
+      <div class="nope-tab inactive">✊ Solidaritas</div>
+    </div>
+
+    <!-- Feed Placeholder -->
+    <div id="feed-container" class="space-y-6">
+      <!-- Contoh: Sefrekuensi -->
+      <div class="bg-[#111] rounded-2xl p-4">
+        <p class="text-sm mb-3">“Gue capek pura-pura okay pas orang tua bilang ‘kapan nikah?’”</p>
+        
+        <!-- Reactions: hanya 2 untuk Sefrekuensi -->
+        <div class="flex space-x-4 mt-4">
+          <button class="reaction-btn">
+            <span>🫶</span>
+            <span class="reaction-text">Gue ngerti banget</span>
+          </button>
+          <button class="reaction-btn">
+            <span>🤲</span>
+            <span class="reaction-text">Peluk kenceng,<br>gak perlu jawab</span>
+          </button>
         </div>
-    </div>
 
-    <div class="feed" id="feedContent">
-        <div class="empty-feed">
-            <i class="fas fa-wind"></i>
-            <p>Menunggu jejak yang sefrekuensi...</p>
+        <!-- Komentar aktif di Sefrekuensi -->
+        <div class="comment-box">
+          <textarea placeholder="Balas pelan-pelan..." class="w-full bg-transparent border-none focus:outline-none text-white placeholder:text-gray-500 text-sm" rows="2"></textarea>
+          <button class="send-btn">KIRIM</button>
         </div>
-    </div>
+      </div>
 
-    <div class="quick">
-        <div class="quick-header">
-            <i class="fas fa-fire"></i>
-            <span>Rage tentang</span>
-            <span class="hashtag-selector" id="hashtagSelector">#Pilih</span>
+      <!-- Contoh: Segelombang -->
+      <div class="bg-[#111] rounded-2xl p-4">
+        <p class="text-sm mb-3">“Nggak tahan liat influencer pake isu mental health buat jualan skincare.”</p>
+        
+        <!-- Reactions: 5 untuk Segelombang (tanpa komentar) -->
+        <div class="flex flex-wrap gap-3 mt-4">
+          <button class="reaction-btn">
+            <span>🫶</span>
+            <span class="reaction-text">GueDiSini</span>
+          </button>
+          <button class="reaction-btn">
+            <span>🤲</span>
+            <span class="reaction-text">Peluk Lo<br>Diam-Diam</span>
+          </button>
+          <button class="reaction-btn">
+            <span>👏</span>
+            <span class="reaction-text">Bangga Lo<br>Berani Ngomong Ini</span>
+          </button>
+          <button class="reaction-btn">
+            <span>😮‍💨</span>
+            <span class="reaction-text">Napas dulu,<br>lo udah cukup keras</span>
+          </button>
+          <button class="reaction-btn">
+            <span>💥</span>
+            <span class="reaction-text">Gue juga<br>nger asain ini,<br>beneran</span>
+          </button>
         </div>
-        <textarea id="rageTextarea" placeholder="Tulis yang tak bisa kau simpan..."></textarea>
-        <button class="post-btn" id="postBtn" disabled>🔥 KIRIM</button>
+      </div>
+
+      <!-- Contoh: Solidaritas (Artefak Emosional) -->
+      <div class="bg-[#111] rounded-2xl p-4">
+        <p class="text-sm mb-3">“Dulu gue di-bully karena suka warna ungu. Sekarang gue hidup buat itu.”</p>
+        
+        <!-- Hanya 3 emoji, tanpa komentar -->
+        <div class="flex space-x-5 mt-4">
+          <div class="reaction-btn cursor-default opacity-80">
+            <span>🫶</span>
+            <span class="reaction-text">GueDiSini</span>
+          </div>
+          <div class="reaction-btn cursor-default opacity-80">
+            <span>🤲</span>
+            <span class="reaction-text">Peluk Lo<br>Diam-Diam</span>
+          </div>
+          <div class="reaction-btn cursor-default opacity-80">
+            <span>👏</span>
+            <span class="reaction-text">Bangga Lo<br>Berani Ngomong Ini</span>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <div class="nav">
-        <a href="luar.html" class="active"><i class="fas fa-globe"></i><span>Luar</span></a>
-        <a href="notifications.html"><i class="fas fa-bell"></i><span>Notifikasi</span></a>
-        <a href="onboarding.html"><i class="fas fa-fire"></i><span>Rage</span></a>
-        <a href="profile.html"><i class="fas fa-mirror"></i><span>Inner</span></a>
+    <!-- Bottom Nav -->
+    <div class="fixed bottom-0 left-0 right-0 bg-black border-t border-gray-800">
+      <div class="flex justify-around py-2">
+        <div class="text-gray-400 text-xs">Luar</div>
+        <div class="text-gray-600 text-xs">Notifikasi</div>
+        <div class="text-gray-600 text-xs">Rage</div>
+        <div class="text-gray-600 text-xs">Inner</div>
+      </div>
     </div>
-
-    <script>
-        // Cek login & onboarding
-        if (localStorage.getItem('nope_logged_in') !== 'true') {
-            window.location.href = 'login.html';
-        }
-        if (localStorage.getItem('nope_onboarding_complete') !== 'true') {
-            window.location.href = 'onboarding.html';
-        }
-
-        let currentFeed = 'exact';
-        const mockPosts = [
-            {
-                id: '1',
-                text: "Aku lelah jadi versi yang ‘aman’ untuk orang lain.",
-                hashtag: "#SilentBurnout",
-                timestamp: "2025-12-10T20:14:00Z",
-                pulses: 3,
-                comments: (currentFeed === 'exact') ? ["Aku juga.", "Semalam aku nangis baca ini."] : []
-            },
-            {
-                id: '2',
-                text: "Influencer pura-pura spiritual tapi utangnya menumpuk.",
-                hashtag: "#FakeInfluencer",
-                timestamp: "2025-12-10T18:30:00Z",
-                pulses: 7,
-                comments: []
-            }
-        ];
-
-        function getTimeAgo(isoString) {
-            const now = new Date();
-            const past = new Date(isoString);
-            const diffMs = now - past;
-            const diffMins = Math.floor(diffMs / 60000);
-            const diffHours = Math.floor(diffMs / 3600000);
-            const diffDays = Math.floor(diffMs / 86400000);
-            if (diffMins < 60) return `${diffMins}m`;
-            if (diffHours < 24) return `${diffHours}j`;
-            return `${diffDays}h`;
-        }
-
-        function renderFeed() {
-            const container = document.getElementById('feedContent');
-            const postsToShow = currentFeed === 'exact' ? mockPosts : mockPosts.slice(0, 1);
-            
-            if (postsToShow.length === 0) {
-                container.innerHTML = `<div class="empty-feed"><i class="fas fa-wind"></i><p>Tak ada jejak.</p></div>`;
-                return;
-            }
-
-            container.innerHTML = postsToShow.map(post => {
-                const canComment = (currentFeed === 'exact');
-                const commentHtml = canComment ? 
-                    `<div class="action comment-btn" data-id="${post.id}"><i class="fas fa-comment"></i> <span>${post.comments.length}</span></div>` : '';
-
-                const commentsHtml = canComment && post.comments.length > 0 ? 
-                    `<div style="margin-top:10px;padding:8px;background:rgba(0,0,0,0.2);border-radius:6px;font-size:12px;">${post.comments.map(c => `• ${c}`).join('<br>')}</div>` : '';
-
-                return `
-                    <div class="post" data-id="${post.id}">
-                        <div class="post-text">${post.text}</div>
-                        <div class="post-meta">
-                            <span class="post-hashtag">${post.hashtag}</span>
-                            <span>${getTimeAgo(post.timestamp)}</span>
-                        </div>
-                        <div class="actions">
-                            <div class="action pulse-btn" data-id="${post.id}"><i class="fas fa-heart"></i> <span>${post.pulses}</span></div>
-                            ${commentHtml}
-                        </div>
-                        ${commentsHtml}
-                        ${canComment ? `<textarea class="comment-input" data-id="${post.id}" placeholder="Respons (max 120)..." maxlength="120"></textarea><div class="char-count">0/120</div>` : ''}
-                    </div>
-                `;
-            }).join('');
-
-            // Bind event untuk komentar
-            if (currentFeed === 'exact') {
-                document.querySelectorAll('.comment-btn').forEach(btn => {
-                    btn.onclick = (e) => {
-                        const post = e.target.closest('.post');
-                        const input = post.querySelector('.comment-input');
-                        if (input.style.display === 'block') {
-                            input.style.display = 'none';
-                        } else {
-                            input.style.display = 'block';
-                            input.focus();
-                        }
-                    };
-                });
-
-                document.querySelectorAll('.comment-input').forEach(input => {
-                    input.oninput = () => {
-                        const len = input.value.trim().length;
-                        input.nextElementSibling.textContent = `${len}/120`;
-                    };
-                    input.onkeypress = (e) => {
-                        if (e.key === 'Enter' && !e.shiftKey) {
-                            e.preventDefault();
-                            // Simpan komentar (di sini hanya demo)
-                            input.style.display = 'none';
-                            renderFeed(); // Re-render untuk tampilkan komentar
-                        }
-                    };
-                });
-            }
-        }
-
-        // Setup tab switching
-        document.querySelectorAll('.tab').forEach(tab => {
-            tab.addEventListener('click', () => {
-                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-                tab.classList.add('active');
-                currentFeed = tab.dataset.feed;
-                renderFeed();
-            });
-        });
-
-        // Quick post
-        const textarea = document.getElementById('rageTextarea');
-        const btn = document.getElementById('postBtn');
-        textarea.addEventListener('input', () => {
-            btn.disabled = textarea.value.trim().length < 10;
-        });
-        btn.addEventListener('click', () => {
-            alert('Rage-mu telah dikirim ke Luar 🔥');
-            textarea.value = '';
-            btn.disabled = true;
-        });
-
-        // Load initial feed
-        renderFeed();
-    </script>
+  </div>
 </body>
 </html>
