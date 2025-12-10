@@ -3,528 +3,264 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NOPE - Luar</title>
+    <title>NOPE - Rage Identity</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: #050508;          /* lebih gelap dari Inner (#0a0a0f) */
-            --card: #0f0f13;        /* lebih menyatu dengan latar */
-            --border: #1e1e28;      /* lebih redup */
-            --text: #d0d0d0;        /* lebih soft dari Inner (#eaeaea) */
-            --muted: #6a6a7a;       /* lebih gelap */
-            --accent1: #ff2d55;     /* tetap merah darah — satu-satunya warna */
+            --bg: #0a0a0f;
+            --card: #121217;
+            --border: #25252d;
+            --text: #eaeaea;
+            --muted: #7a7a8c;
+            --accent1: #ff2d55;
         }
-
         * { margin: 0; padding: 0; box-sizing: border-box; }
-
         body {
             background: var(--bg);
             color: var(--text);
             font-family: 'Inter', sans-serif;
-            font-weight: 300;
-            padding-bottom: 90px;
-            line-height: 1.5;
-            font-size: 14px;
+            padding: 14px;
+            max-width: 500px;
+            margin: 0 auto;
+            line-height: 1.3;
+            overflow-x: hidden;
         }
-        
-        .app-header {
-            position: sticky;
-            top: 0;
-            background: rgba(5, 5, 8, 0.95);
-            backdrop-filter: blur(8px);
-            border-bottom: 1px solid var(--border);
-            z-index: 1000;
-            padding: 14px 16px;
+        .back-btn {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            color: var(--muted);
+            font-size: 1.2rem;
+            text-decoration: none;
         }
-        .logo h1 {
-            font-size: 22px;
-            font-weight: 900;
-            background: linear-gradient(90deg, var(--accent1), var(--accent1));
+        .title {
+            text-align: center;
+            font-size: 19px;
+            font-weight: 800;
+            margin: 16px 0 4px;
+            line-height: 1.3;
+            background: linear-gradient(90deg, var(--accent1), #2db34d);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
-        .match-info {
-            font-size: 12px;
+        .subtitle {
+            text-align: center;
+            font-size: 11px;
             color: var(--muted);
+            margin-bottom: 16px;
+            line-height: 1.3;
         }
-        
-        .feed-tabs {
-            display: flex;
-            gap: 5px;
-            overflow-x: auto;
-            padding: 8px 0 6px;
-            -ms-overflow-style: none;
-            scrollbar-width: none;
+
+        .zones-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            margin-bottom: 18px;
         }
-        .feed-tabs::-webkit-scrollbar { display: none; }
-        .feed-tab {
-            flex: 1;
-            min-width: 95px;
-            padding: 8px 10px;
+        .zone {
             background: var(--card);
             border: 1px solid var(--border);
             border-radius: 8px;
-            color: var(--muted);
-            font-weight: 600;
+            padding: 10px;
+        }
+        .zone-label {
             font-size: 12px;
-            cursor: pointer;
-            text-align: center;
-            white-space: nowrap;
-        }
-        .feed-tab.active {
-            color: var(--text);
-            border-color: var(--accent1);
-            background: rgba(255, 45, 85, 0.08);
-        }
-        .feed-badge {
-            background: var(--accent1);
-            color: white;
-            font-size: 0.6rem;
-            padding: 1px 5px;
-            border-radius: 6px;
-            margin-left: 4px;
-        }
-        
-        .feed-content {
-            padding: 0 16px 20px;
-        }
-        .feed-empty {
-            text-align: center;
-            padding: 50px 20px 30px;
-            color: var(--muted);
-            font-size: 13px;
-        }
-        .feed-empty i {
-            font-size: 2rem;
-            opacity: 0.4;
-            margin-bottom: 12px;
-        }
-        
-        .post-card {
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            padding: 14px;
-            margin-bottom: 14px;
-        }
-        .post-text {
-            line-height: 1.6;
-            margin-bottom: 12px;
-            white-space: pre-wrap;
-            font-size: 14px;
-        }
-        .post-meta {
-            display: flex;
-            justify-content: space-between;
-            font-size: 11px;
-            color: var(--muted);
-            margin-bottom: 10px;
-        }
-        .post-hashtag {
-            background: rgba(255, 45, 85, 0.15);
-            color: var(--accent1);
-            padding: 2px 7px;
-            border-radius: 10px;
             font-weight: 600;
-        }
-        
-        .post-actions {
-            display: flex;
-            gap: 16px;
-            padding-top: 10px;
-            border-top: 1px solid rgba(255,255,255,0.03);
-        }
-        .action-btn {
+            margin-bottom: 8px;
             display: flex;
             align-items: center;
             gap: 5px;
             color: var(--muted);
-            font-size: 12px;
-            cursor: pointer;
         }
-        .action-btn:hover { color: var(--text); }
-        .action-btn.active { color: var(--accent1); }
-        
-        .comment-input {
-            width: 100%;
+        .pop-culture { color: #2db34d !important; }
+        .personal-pain { color: #ff9500 !important; }
+        .social-sickness { color: var(--accent1) !important; }
+        .movement { opacity: 0.4 !important; }
+        .hashtag-options {
+            display: grid;
+            gap: 6px;
+        }
+        .hashtag-option {
             background: rgba(0,0,0,0.3);
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            color: var(--text);
-            padding: 6px 10px;
-            font-family: 'Inter', sans-serif;
-            font-size: 13px;
-            margin-top: 8px;
-            resize: none;
-            max-height: 70px;
-            display: none;
-        }
-        .comment-input:focus {
-            outline: none;
-            border-color: var(--accent1);
-        }
-        .char-count {
-            font-size: 10px;
-            color: var(--muted);
-            text-align: right;
-            margin-top: 4px;
-        }
-        
-        .quick-post {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: rgba(5, 5, 8, 0.95);
-            backdrop-filter: blur(8px);
-            border-top: 1px solid var(--border);
-            padding: 12px 16px;
-            z-index: 1000;
-        }
-        .quick-post-header {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 8px;
-            font-size: 13px;
-        }
-        .hashtag-selector {
-            background: rgba(255, 45, 85, 0.15);
-            color: var(--accent1);
-            padding: 3px 9px;
-            border-radius: 10px;
+            padding: 6px;
+            border-radius: 4px;
+            text-align: center;
+            font-size: 11px;
             font-weight: 600;
             cursor: pointer;
-            font-size: 12px;
         }
-        .quick-textarea {
-            width: 100%;
-            min-height: 45px;
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            color: var(--text);
-            padding: 8px 10px;
-            font-family: 'Inter', sans-serif;
-            font-size: 13px;
-            resize: none;
-            margin-bottom: 8px;
+        .hashtag-option.selected {
+            background: rgba(255, 45, 85, 0.25);
+            border: 1px solid var(--accent1);
         }
-        .post-btn {
-            background: var(--accent1);
-            color: white;
-            border: none;
-            border-radius: 6px;
-            padding: 7px 18px;
-            font-weight: 600;
-            font-size: 13px;
-            cursor: pointer;
-        }
-        .post-btn:disabled {
-            opacity: 0.3;
+        .hashtag-option.locked {
+            opacity: 0.2;
             cursor: not-allowed;
         }
-        
-        .bottom-nav {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: rgba(3, 3, 5, 0.95);
-            border-top: 1px solid var(--border);
-            display: flex;
-            justify-content: space-around;
-            padding: 8px 0;
-            z-index: 1000;
+
+        .status {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 10px;
+            margin: 16px 0;
+            font-size: 11px;
         }
-        .nav-item {
+        .status-row {
             display: flex;
-            flex-direction: column;
-            align-items: center;
-            color: var(--muted);
-            text-decoration: none;
-            font-size: 10px;
+            justify-content: space-between;
+            margin: 3px 0;
+        }
+        .status-value.complete { color: #2db34d; }
+        .status-value.incomplete { color: #ff9500; }
+        .btn {
+            width: 100%;
+            padding: 11px;
+            background: linear-gradient(135deg, var(--accent1), #ff9500);
+            color: white;
+            border: none;
+            border-radius: 8px;
             font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.4px;
+            font-size: 14px;
+            cursor: pointer;
         }
-        .nav-item i { font-size: 1.1rem; margin-bottom: 3px; }
-        .nav-item.active { color: var(--accent1); }
+        .btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
     </style>
 </head>
 <body>
-    <div class="app-header">
-        <div style="display:flex;justify-content:space-between;align-items:center;">
-            <div class="logo"><h1>NOPE</h1></div>
-            <div class="match-info" id="matchInfo">Loading...</div>
-        </div>
-        <div class="feed-tabs">
-            <button class="feed-tab active" data-feed="exact">
-                🔥 Sefrekuensi <span class="feed-badge" id="exactCount">0</span>
-            </button>
-            <button class="feed-tab" data-feed="strong">
-                👥 Segelombang <span class="feed-badge" id="strongCount">0</span>
-            </button>
-            <button class="feed-tab" data-feed="solidarity">
-                ✊ Solidaritas <span class="feed-badge" id="solidarityCount">∞</span>
-            </button>
-        </div>
-    </div>
+    <a href="login.html" class="back-btn" onclick="localStorage.removeItem('nope_logged_in')">←</a>
     
-    <div class="feed-content" id="feedContent">
-        <div class="feed-empty">
-            <i class="fas fa-wind"></i>
-            <p>Menunggu jejak yang sefrekuensi...</p>
+    <div class="title">Jangan pilih yang kau suka.<br>Pilih yang kau benci.</div>
+    <div class="subtitle">* Pilih 1 hashtag dari tiap zona — ini yang menentukan siapa yang bisa mendengarmu.</div>
+
+    <div class="zones-grid">
+        <div class="zone">
+            <div class="zone-label pop-culture"><i class="fas fa-film"></i> Pop Culture</div>
+            <div class="hashtag-options" id="popculture"></div>
         </div>
-    </div>
-    
-    <div class="quick-post">
-        <div class="quick-post-header">
-            <i class="fas fa-fire"></i>
-            <span>Rage tentang</span>
-            <div class="hashtag-selector" id="hashtagSelector">#Pilih</div>
+        <div class="zone">
+            <div class="zone-label personal-pain"><i class="fas fa-heart-broken"></i> Personal Pain</div>
+            <div class="hashtag-options" id="personalpain"></div>
         </div>
-        <textarea class="quick-textarea" id="rageTextarea" placeholder="Tulis yang tak bisa kau simpan..." maxlength="280"></textarea>
-        <div style="display: flex; justify-content: space-between; align-items: center;">
-            <div class="char-count" id="charCount">0/280</div>
-            <button class="post-btn" id="postBtn" disabled>🔥 KIRIM</button>
+        <div class="zone">
+            <div class="zone-label social-sickness"><i class="fas fa-virus"></i> Social Sickness</div>
+            <div class="hashtag-options" id="socialsickness"></div>
+        </div>
+        <div class="zone">
+            <div class="zone-label movement"><i class="fas fa-rocket"></i> Movement<span style="font-size:9px">(terkunci)</span></div>
+            <div class="hashtag-options" id="movement"></div>
         </div>
     </div>
 
-    <div class="bottom-nav">
-        <a href="luar.html" class="nav-item active"><i class="fas fa-globe"></i><span>Luar</span></a>
-        <a href="notifications.html" class="nav-item"><i class="fas fa-bell"></i><span>Notifikasi</span></a>
-        <a href="onboarding.html" class="nav-item"><i class="fas fa-fire"></i><span>Rage</span></a>
-        <a href="profile.html" class="nav-item"><i class="fas fa-mirror"></i><span>Inner</span></a>
+    <div class="status">
+        <div class="status-row"><span>Pop Culture</span><span class="status-value incomplete" id="s1">–</span></div>
+        <div class="status-row"><span>Personal Pain</span><span class="status-value incomplete" id="s2">–</span></div>
+        <div class="status-row"><span>Social Sickness</span><span class="status-value incomplete" id="s3">–</span></div>
     </div>
+
+    <button class="btn" id="continueBtn" disabled>LANJUT KE LUAR</button>
 
     <script>
-        let currentUser = null;
-        let currentFeed = 'exact';
-        let allUsers = [];
-        let allPosts = [];
-        
-        async function init() {
-            const u = localStorage.getItem('nope_anon_username');
-            const ok = localStorage.getItem('nope_logged_in') === 'true' && localStorage.getItem('nope_onboarding_complete') === 'true';
-            if (!u || !ok) return window.location.href = 'login.html';
-            
-            currentUser = JSON.parse(localStorage.getItem('nope_user_profile') || '{}');
-            if (!currentUser.selections) return window.location.href = 'onboarding.html';
-            
-            await loadMockData();
-            setupUI();
-            loadFeed('exact');
+        const ZONE_DATA = {
+            'pop-culture': ['#BellTiketJualSinjal','#InfluencerNgchek','#FilmEndingGaje','#TikTokCringe','#CelebrityFail'],
+            'personal-pain': ['#MagangDigajiSertifikat','#DiajakJalanTapiKempes','#DiphostingGebetan','#MinjemDuitGaBalik','#ProjectLastMinute'],
+            'social-sickness': ['#DramaQueenAnjay','#BacotLambeTurah','#RencanaPlinPlan','#GhostingCulture','#FlexingGaJelas'],
+            'movement': ['#ReformasiSistem','#AksiNyata2024','#VoiceForChange','#YouthPower','#DigitalProtest']
+        };
+
+        let selections = {
+            'pop-culture': null,
+            'personal-pain': null,
+            'social-sickness': null
+        };
+
+        function isComplete() {
+            return selections['pop-culture'] && selections['personal-pain'] && selections['social-sickness'];
         }
-        
-        async function loadMockData() {
-            const users = JSON.parse(localStorage.getItem('nope_mock_users') || '[]');
-            const posts = JSON.parse(localStorage.getItem('nope_mock_posts') || '[]');
-            allUsers = [currentUser, ...users];
-            allPosts = posts.length ? posts : generateMockPosts();
-            updateMatchCounts();
-        }
-        
-        function generateMockPosts() {
-            const hashtags = [
-                ...Object.values(currentUser.selections),
-                '#RandomRage', '#SilentScream', '#EmptyInside'
-            ];
-            const posts = [];
-            for (let i = 0; i < 20; i++) {
-                posts.push({
-                    id: `mock_${i}`,
-                    text: `Rage contoh ${i+1} — ini adalah jejak emosi yang muncul di Luar.`,
-                    hashtag: hashtags[Math.floor(Math.random() * hashtags.length)],
-                    author: `user_${i}`,
-                    timestamp: new Date(Date.now() - Math.random() * 7 * 24 * 60 * 60 * 1000).toISOString(),
-                    pulses: [],
-                    comments: []
+
+        function renderZones() {
+            for (const [zoneKey, tags] of Object.entries(ZONE_DATA)) {
+                const id = zoneKey.replace(/-/g, '');
+                const container = document.getElementById(id);
+                if (!container) continue;
+
+                container.innerHTML = '';
+                const locked = zoneKey === 'movement';
+
+                tags.forEach(tag => {
+                    const el = document.createElement('div');
+                    el.className = `hashtag-option ${selections[zoneKey] === tag ? 'selected' : ''} ${locked ? 'locked' : ''}`;
+                    el.textContent = tag;
+                    if (!locked) {
+                        el.onclick = () => {
+                            selections[zoneKey] = selections[zoneKey] === tag ? null : tag;
+                            renderZones();
+                            updateStatus();
+                        };
+                    }
+                    container.appendChild(el);
                 });
             }
-            return posts;
         }
-        
-        function calculateMatches() {
-            const m = { exact: [], strong: [], weak: [] };
-            allUsers.forEach(u => {
-                if (u.username !== currentUser.username) {
-                    let c = 0;
-                    if (u.selections?.popCulture === currentUser.selections.popCulture) c++;
-                    if (u.selections?.personalPain === currentUser.selections.personalPain) c++;
-                    if (u.selections?.socialSickness === currentUser.selections.socialSickness) c++;
-                    if (c === 3) m.exact.push(u);
-                    else if (c === 2) m.strong.push(u);
-                    else if (c === 1) m.weak.push(u);
-                }
-            });
-            return m;
-        }
-        
-        function updateMatchCounts() {
-            const m = calculateMatches();
-            document.getElementById('exactCount').textContent = m.exact.length;
-            document.getElementById('strongCount').textContent = m.strong.length;
-            document.getElementById('matchInfo').textContent = `${m.exact.length + m.strong.length + m.weak.length} jiwa`;
-        }
-        
-        function loadFeed(type) {
-            currentFeed = type;
-            document.querySelectorAll('.feed-tab').forEach(t => 
-                t.classList.toggle('active', t.dataset.feed === type)
-            );
-            document.getElementById('feedContent').innerHTML = `<div class="feed-empty"><i class="fas fa-wind"></i><p>Loading...</p></div>`;
-            setTimeout(() => renderFeed(type), 300);
-        }
-        
-        function renderFeed(type) {
-            const container = document.getElementById('feedContent');
-            let posts = [];
-            const matches = calculateMatches();
-            
-            if (type === 'exact') {
-                const u = matches.exact.map(u => u.username);
-                posts = allPosts.filter(p => u.includes(p.author));
-            } else if (type === 'strong') {
-                const u = matches.strong.map(u => u.username);
-                posts = allPosts.filter(p => u.includes(p.author));
-            } else {
-                posts = [...allPosts].sort(() => 0.5 - Math.random()).slice(0, 20);
-            }
-            
-            posts.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
-            
-            if (posts.length === 0) {
-                container.innerHTML = `<div class="feed-empty"><i class="fas fa-wind"></i><p>Tak ada jejak.</p></div>`;
-            } else {
-                container.innerHTML = posts.map(p => renderPost(p, type)).join('');
-            }
-            updateHashtagSelector();
-        }
-        
-        function renderPost(post, feedType) {
-            const time = getTimeAgo(post.timestamp);
-            const canComment = (feedType === 'exact');
-            return `
-                <div class="post-card" data-id="${post.id}">
-                    <div class="post-text">${post.text}</div>
-                    <div class="post-meta">
-                        <span class="post-hashtag">${post.hashtag}</span>
-                        <span>${time}</span>
-                    </div>
-                    <div class="post-actions">
-                        <div class="action-btn pulse-btn" data-id="${post.id}">
-                            <i class="fas fa-heart"></i> <span>${post.pulses?.length || 0}</span>
-                        </div>
-                        ${canComment ? `<div class="action-btn comment-btn" data-id="${post.id}"><i class="fas fa-comment"></i> <span>${post.comments?.length || 0}</span></div>` : ''}
-                    </div>
-                    ${canComment ? `<textarea class="comment-input" data-id="${post.id}" placeholder="Respons (max 120)..." maxlength="120"></textarea><div class="char-count">0/120</div>` : ''}
-                </div>
-            `;
-        }
-        
-        function setupUI() {
-            document.querySelectorAll('.feed-tab').forEach(t => 
-                t.addEventListener('click', () => loadFeed(t.dataset.feed))
-            );
-            
-            const txt = document.getElementById('rageTextarea');
-            const btn = document.getElementById('postBtn');
-            const count = document.getElementById('charCount');
-            txt.addEventListener('input', () => {
-                const len = txt.value.trim().length;
-                count.textContent = `${len}/280`;
-                btn.disabled = len < 10 || len > 280;
-            });
-            btn.addEventListener('click', postRage);
-            
-            document.addEventListener('click', (e) => {
-                if (e.target.closest('.pulse-btn')) {
-                    const id = e.target.closest('.pulse-btn').dataset.id;
-                    pulse(id);
-                }
-                if (e.target.closest('.comment-btn')) {
-                    const card = e.target.closest('.post-card');
-                    const input = card.querySelector('.comment-input');
-                    input.style.display = input.style.display === 'block' ? 'none' : 'block';
-                    if (input.style.display === 'block') input.focus();
-                }
-            });
-            
-            document.addEventListener('input', (e) => {
-                if (e.target.classList.contains('comment-input')) {
-                    e.target.nextElementSibling.textContent = `${e.target.value.trim().length}/120`;
-                }
-            });
-            
-            document.addEventListener('keypress', (e) => {
-                if (e.key === 'Enter' && !e.shiftKey && e.target.classList.contains('comment-input')) {
-                    e.preventDefault();
-                    submitComment(e.target);
-                }
-            });
-        }
-        
-        function submitComment(input) {
-            const text = input.value.trim();
-            if (text.length < 1 || text.length > 120) return;
-            const id = input.dataset.id;
-            const post = allPosts.find(p => p.id === id);
-            if (!post) return;
-            if (!post.comments) post.comments = [];
-            post.comments.push({ text, timestamp: new Date().toISOString() });
-            localStorage.setItem('nope_mock_posts', JSON.stringify(allPosts));
-            input.value = '';
-            input.style.display = 'none';
-            renderFeed(currentFeed);
-        }
-        
-        function pulse(id) {
-            const post = allPosts.find(p => p.id === id);
-            if (!post) return;
-            if (!post.pulses) post.pulses = [];
-            post.pulses.push({ timestamp: new Date().toISOString() });
-            localStorage.setItem('nope_mock_posts', JSON.stringify(allPosts));
-            renderFeed(currentFeed);
-        }
-        
-        function postRage() {
-            const txt = document.getElementById('rageTextarea');
-            const text = txt.value.trim();
-            if (text.length < 10 || text.length > 280) return;
-            const hashtag = document.getElementById('hashtagSelector').dataset.hashtag || currentUser.selections.popCulture;
-            const newPost = {
-                id: `post_${Date.now()}`,
-                text,
-                hashtag,
-                author: currentUser.username,
-                timestamp: new Date().toISOString(),
-                pulses: [],
-                comments: []
+
+        function updateStatus() {
+            const setStatus = (id, value) => {
+                const el = document.getElementById(id);
+                el.textContent = value || '–';
+                el.className = value ? 'status-value complete' : 'status-value incomplete';
             };
-            allPosts.unshift(newPost);
-            localStorage.setItem('nope_mock_posts', JSON.stringify(allPosts));
-            txt.value = '';
-            document.getElementById('charCount').textContent = '0/280';
-            document.getElementById('postBtn').disabled = true;
-            loadFeed(currentFeed);
+            setStatus('s1', selections['pop-culture']);
+            setStatus('s2', selections['personal-pain']);
+            setStatus('s3', selections['social-sickness']);
+            document.getElementById('continueBtn').disabled = !isComplete();
         }
-        
-        function updateHashtagSelector() {
-            const sel = document.getElementById('hashtagSelector');
-            sel.textContent = currentUser.selections.popCulture;
-            sel.dataset.hashtag = currentUser.selections.popCulture;
+
+        function handleContinue() {
+            const username = localStorage.getItem('nope_anon_username');
+            if (!username) {
+                console.warn('No username found. Redirecting to login.');
+                window.location.href = 'login.html';
+                return;
+            }
+
+            const profile = {
+                username: username,
+                selections: {
+                    popCulture: selections['pop-culture'],
+                    personalPain: selections['personal-pain'],
+                    socialSickness: selections['social-sickness']
+                },
+                joinedAt: new Date().toISOString()
+            };
+
+            try {
+                localStorage.setItem('nope_user_profile', JSON.stringify(profile));
+                localStorage.setItem('nope_onboarding_complete', 'true');
+                localStorage.setItem('nope_join_date', profile.joinedAt);
+
+                // Pastikan file luar.html ada di root
+                window.location.href = 'luar.html';
+            } catch (err) {
+                alert('Gagal menyimpan data. Pastikan localStorage diizinkan.');
+                console.error(err);
+            }
         }
-        
-        function getTimeAgo(ts) {
-            const diff = (Date.now() - new Date(ts)) / 60000;
-            if (diff < 60) return `${Math.floor(diff)}m`;
-            if (diff < 1440) return `${Math.floor(diff/60)}j`;
-            return `${Math.floor(diff/1440)}h`;
-        }
-        
-        document.addEventListener('DOMContentLoaded', init);
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const username = localStorage.getItem('nope_anon_username');
+            if (!username) {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            renderZones();
+            updateStatus();
+            document.getElementById('continueBtn').addEventListener('click', handleContinue);
+        });
     </script>
 </body>
 </html>
