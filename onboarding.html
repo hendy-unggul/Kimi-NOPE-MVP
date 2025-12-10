@@ -36,23 +36,22 @@
         }
         .title {
             text-align: center;
-            font-size: 24px;
+            font-size: 26px;
             font-weight: 800;
-            margin: 20px 0 30px;
+            margin: 20px 0 8px;
             background: linear-gradient(90deg, var(--accent1), #2db34d);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
-        .zone-pair {
+        .subtitle {
+            text-align: center;
+            font-size: 13px;
+            color: var(--muted);
             margin-bottom: 30px;
+            line-height: 1.4;
         }
-        .zone-row {
-            display: flex;
-            gap: 20px;
+        .zone-section {
             margin-bottom: 24px;
-        }
-        .zone {
-            flex: 1;
         }
         .zone-label {
             font-size: 14px;
@@ -127,34 +126,31 @@
 <body>
     <a href="login.html" class="back-btn" onclick="localStorage.removeItem('nope_logged_in')">←</a>
     
-    <div class="title">Pilih frekuensi jiwa-mu</div>
+    <div class="title">Jangan pilih yang kau suka.<br>Pilih yang kau benci.</div>
+    <div class="subtitle">* Pilih 1 hashtag dari tiap zona — ini yang akan menentukan siapa yang bisa mendengarmu.</div>
 
-    <!-- PASANGAN 1: ZONA 1 + 2 -->
-    <div class="zone-pair">
-        <div class="zone-row">
-            <div class="zone">
-                <div class="zone-label pop-culture"><i class="fas fa-film"></i> Pop Culture</div>
-                <div class="hashtag-options" id="popCultureOptions"></div>
-            </div>
-            <div class="zone">
-                <div class="zone-label personal-pain"><i class="fas fa-heart-broken"></i> Personal Pain</div>
-                <div class="hashtag-options" id="personalPainOptions"></div>
-            </div>
-        </div>
+    <!-- ZONA 1 -->
+    <div class="zone-section">
+        <div class="zone-label pop-culture"><i class="fas fa-film"></i> Pop Culture</div>
+        <div class="hashtag-options" id="popCultureOptions"></div>
     </div>
 
-    <!-- PASANGAN 2: ZONA 3 + 4 -->
-    <div class="zone-pair">
-        <div class="zone-row">
-            <div class="zone">
-                <div class="zone-label social-sickness"><i class="fas fa-virus"></i> Social Sickness</div>
-                <div class="hashtag-options" id="socialSicknessOptions"></div>
-            </div>
-            <div class="zone">
-                <div class="zone-label movement"><i class="fas fa-rocket"></i> Movement</div>
-                <div class="hashtag-options" id="movementOptions"></div>
-            </div>
-        </div>
+    <!-- ZONA 2 -->
+    <div class="zone-section">
+        <div class="zone-label personal-pain"><i class="fas fa-heart-broken"></i> Personal Pain</div>
+        <div class="hashtag-options" id="personalPainOptions"></div>
+    </div>
+
+    <!-- ZONA 3 -->
+    <div class="zone-section">
+        <div class="zone-label social-sickness"><i class="fas fa-virus"></i> Social Sickness</div>
+        <div class="hashtag-options" id="socialSicknessOptions"></div>
+    </div>
+
+    <!-- ZONA 4 (LOCKED) -->
+    <div class="zone-section">
+        <div class="zone-label movement"><i class="fas fa-rocket"></i> Movement <span style="font-size:11px;color:var(--muted);">(terkunci)</span></div>
+        <div class="hashtag-options" id="movementOptions"></div>
     </div>
 
     <!-- STATUS & KIRIM -->
@@ -172,7 +168,7 @@
             <span class="status-value incomplete" id="statusSocial">–</span>
         </div>
         <div style="margin-top: 12px; color: var(--muted); font-size: 12px;">
-            Pilih 1 dari tiap zona (3 wajib, 1 opsional/terkunci)
+            3 wajib. Movement terbuka berdasarkan undangan.
         </div>
     </div>
 
