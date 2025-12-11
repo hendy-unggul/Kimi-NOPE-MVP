@@ -14,16 +14,16 @@
       @apply bg-[#222] text-gray-300 py-2 px-3 rounded-xl mb-2 text-sm cursor-pointer transition-colors;
     }
     .hashtag-item.selected {
-      @apply bg-[#ff2d55] text-black;
+      @apply bg-[#e0134a] text-white; /* warna pink lebih tua */
     }
     .btn-continue {
-      @apply w-full bg-[#ff2d55] text-black font-bold py-3 rounded-xl mt-4 opacity-50 cursor-not-allowed;
+      @apply w-full bg-[#e0134a] text-white font-bold py-3 rounded-xl mt-4 opacity-50 cursor-not-allowed; /* warna & teks disesuaikan */
     }
     .btn-continue.active {
       @apply opacity-100 cursor-pointer;
     }
     .welcome { @apply text-center mb-6; }
-    .welcome-id { @apply text-[#ff2d55] font-bold; }
+    .welcome-id { @apply text-[#e0134a] font-bold; } /* warna ID disesuaikan */
   </style>
 </head>
 <body class="min-h-screen p-4">
@@ -32,7 +32,7 @@
     <!-- Welcome -->
     <div class="welcome">
       <h1 class="text-3xl font-black mb-1">NOPE</h1>
-      <p class="text-sm text-gray-400">Pilih 3 hal yang beneran lo nggak suka.</p>
+      <p class="text-sm text-gray-400">Pilih 4 hal yang beneran lo nggak suka.</p>
       <p id="welcomeId" class="welcome-id mt-3"></p>
     </div>
 
@@ -46,6 +46,8 @@
           <div class="hashtag-item" data-value="#FilmBioskopMahal">#FilmBioskopMahal</div>
           <div class="hashtag-item" data-value="#NgaretTanpaRasaBersalah">#NgaretTanpaRasaBersalah</div>
           <div class="hashtag-item" data-value="#OrangBilangPositiveVibesOnly">#PositiveVibesOnly</div>
+          <div class="hashtag-item" data-value="#NongkrongMahal">#NongkrongMahal</div>
+          <div class="hashtag-item" data-value="#GhostingTanpaAlasan">#GhostingTanpaAlasan</div>
         </div>
       </div>
 
@@ -57,6 +59,8 @@
           <div class="hashtag-item" data-value="#GakBisaBilangTidak">#GakBisaBilangTidak</div>
           <div class="hashtag-item" data-value="#MauSendiriTapiTakutDibilangJutek">#MauSendiriTapiTakutDibilangJutek</div>
           <div class="hashtag-item" data-value="#DibilangAnakDurhakaKalauNggakNurut">#DibilangAnakDurhakaKalauNggakNurut</div>
+          <div class="hashtag-item" data-value="#CemasTerusPasOrangTidur">#CemasTerusPasOrangTidur</div>
+          <div class="hashtag-item" data-value="#GakPunyaAlasanHidup">#GakPunyaAlasanHidup</div>
         </div>
       </div>
 
@@ -68,10 +72,25 @@
           <div class="hashtag-item" data-value="#MentalHealthDijadiinTrend">#MentalHealthDijadiinTrend</div>
           <div class="hashtag-item" data-value="#KerjaKerasDipujiTapiGajiNggakNaik">#KerjaKerasDipujiTapiGajiNggakNaik</div>
           <div class="hashtag-item" data-value="#NgomonginPrivilegeTapiPakeiPhone">#NgomonginPrivilegeTapiPakeiPhone</div>
+          <div class="hashtag-item" data-value="#KapitalisNgegas">#KapitalisNgegas</div>
+          <div class="hashtag-item" data-value="#LGBTQDijadiinKonten">#LGBTQDijadiinKonten</div>
         </div>
       </div>
 
-      <button type="submit" id="continueBtn" class="btn-continue">LANJUT</button>
+      <!-- #SayNOPE -->
+      <div class="step">
+        <div class="step-title">#SayNOPE</div>
+        <p class="text-xs text-gray-500 mb-3">Yang lo berani lawan, meski sendirian</p>
+        <div class="space-y-2" data-category="movement">
+          <div class="hashtag-item" data-value="#LawanEksploitasiBuruh">#LawanEksploitasiBuruh</div>
+          <div class="hashtag-item" data-value="#TolakDiskriminasiGender">#TolakDiskriminasiGender</div>
+          <div class="hashtag-item" data-value="#HentikanPenggusuranRakyat">#HentikanPenggusuranRakyat</div>
+          <div class="hashtag-item" data-value="#StopKekerasanSeksual">#StopKekerasanSeksual</div>
+          <div class="hashtag-item" data-value="#BoikotPerusahaanRusakBumi">#BoikotPerusahaanRusakBumi</div>
+        </div>
+      </div>
+
+      <button type="submit" id="continueBtn" class="btn-continue">TINGGALKAN JEJAK PERTAMA</button>
     </form>
   </div>
 
@@ -86,7 +105,7 @@
     document.getElementById('welcomeId').textContent = `Hai, @${currentUser.nope_id}.`;
 
     // State pilihan
-    const selections = { pilih: null, personal: null, social: null };
+    const selections = { pilih: null, personal: null, social: null, movement: null };
 
     // Event listener untuk pilihan
     document.querySelectorAll('.hashtag-item').forEach(item => {
@@ -103,7 +122,7 @@
         selections[category] = value;
 
         // Aktifkan tombol jika semua terisi
-        const allSelected = selections.pilih && selections.personal && selections.social;
+        const allSelected = selections.pilih && selections.personal && selections.social && selections.movement;
         document.getElementById('continueBtn').classList.toggle('active', allSelected);
       });
     });
@@ -111,7 +130,7 @@
     // Submit
     document.getElementById('onboardingForm').addEventListener('submit', (e) => {
       e.preventDefault();
-      if (!selections.pilih || !selections.personal || !selections.social) return;
+      if (!selections.pilih || !selections.personal || !selections.social || !selections.movement) return;
 
       // Simpan ke localStorage
       const users = JSON.parse(localStorage.getItem('nope_users') || '{}');
